@@ -29,7 +29,9 @@ idea → guided intake → modular documentation → asset registry
 
 ## Current status
 
-LudoWright is in the **pre-alpha foundation phase**. The current branch establishes the product vision, long-term roadmap, architecture, documentation system, Python package, CLI smoke command, tests, and CI. Project management, asset planning, and ImageGen workflows are not implemented yet.
+LudoWright is in the **pre-alpha foundation phase**. Product vision, long-term roadmap, layered architecture, documentation navigation, the initial Python package, CLI smoke commands, tests, and CI are established. Project initialization, schemas, asset planning, capture profiles, and ImageGen workflows are not implemented yet.
+
+See the ordered implementation program in [`docs/plans/IMPLEMENTATION_PLAN.md`](docs/plans/IMPLEMENTATION_PLAN.md).
 
 ## Development setup
 
@@ -65,6 +67,14 @@ Start with:
 - [`docs/product/ROADMAP.md`](docs/product/ROADMAP.md)
 - [`docs/architecture/SYSTEM_OVERVIEW.md`](docs/architecture/SYSTEM_OVERVIEW.md)
 - [`docs/plans/IMPLEMENTATION_PLAN.md`](docs/plans/IMPLEMENTATION_PLAN.md)
+
+## Contributing and support
+
+- [`CONTRIBUTING.md`](CONTRIBUTING.md) — development workflow and pull-request requirements;
+- [`SUPPORT.md`](SUPPORT.md) — where and how to request help;
+- [`SECURITY.md`](SECURITY.md) — private vulnerability-reporting policy;
+- [`GOVERNANCE.md`](GOVERNANCE.md) — roles and decision process;
+- [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md) — community behavior and enforcement.
 
 ## License
 
