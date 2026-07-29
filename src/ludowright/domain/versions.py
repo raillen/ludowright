@@ -28,12 +28,14 @@ class RevisionVersion:
             raise InvalidVersionError(f"a revision version cannot exceed {MAX_REVISION}")
 
     @classmethod
-    def parse(cls, value: int | str) -> Self:
+    def parse(cls, value: object) -> Self:
         """Parse an integer, decimal string, or canonical `vN` tag."""
         if isinstance(value, bool):
             raise InvalidVersionError("a boolean is not a revision version")
         if isinstance(value, int):
             return cls(value)
+        if not isinstance(value, str):
+            raise InvalidVersionError("a revision version must be an integer or string")
 
         match = _REVISION_PATTERN.fullmatch(value)
         if match is None:
