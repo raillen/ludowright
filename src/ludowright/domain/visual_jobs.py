@@ -79,8 +79,7 @@ class VisualJob:
         if not isinstance(self.input_reference_ids, tuple):
             raise InvalidVisualJobError("job input references must be an immutable tuple")
         if any(
-            not isinstance(reference_id, ReferenceId)
-            for reference_id in self.input_reference_ids
+            not isinstance(reference_id, ReferenceId) for reference_id in self.input_reference_ids
         ):
             raise InvalidVisualJobError("job input references must use typed IDs")
         if len(self.input_reference_ids) != len(set(self.input_reference_ids)):
@@ -138,9 +137,7 @@ class GenerationReceipt:
         if not isinstance(self.model, DisplayName):
             raise InvalidGenerationReceiptError("receipt model must be canonical")
         if not isinstance(self.request_revision, SubjectRevision):
-            raise InvalidGenerationReceiptError(
-                "receipt request revision must be canonical"
-            )
+            raise InvalidGenerationReceiptError("receipt request revision must be canonical")
         self._validate_outputs()
         self._validate_retry()
 
@@ -150,16 +147,11 @@ class GenerationReceipt:
                 "receipt output references must be an immutable tuple"
             )
         if any(
-            not isinstance(reference_id, ReferenceId)
-            for reference_id in self.output_reference_ids
+            not isinstance(reference_id, ReferenceId) for reference_id in self.output_reference_ids
         ):
-            raise InvalidGenerationReceiptError(
-                "receipt output references must use typed IDs"
-            )
+            raise InvalidGenerationReceiptError("receipt output references must use typed IDs")
         if len(self.output_reference_ids) != len(set(self.output_reference_ids)):
-            raise InvalidGenerationReceiptError(
-                "receipt output references must be unique"
-            )
+            raise InvalidGenerationReceiptError("receipt output references must be unique")
         if self.status is ReceiptStatus.SUCCEEDED:
             if not self.output_reference_ids:
                 raise InvalidGenerationReceiptError(
@@ -174,16 +166,12 @@ class GenerationReceipt:
                 "only a successful receipt may contain generated outputs"
             )
         elif self.status is ReceiptStatus.FAILED and self.failure_note is None:
-            raise InvalidGenerationReceiptError(
-                "a failed receipt requires a failure note"
-            )
+            raise InvalidGenerationReceiptError("a failed receipt requires a failure note")
 
     def _validate_retry(self) -> None:
         if self.attempt == 1:
             if self.retry_of is not None:
-                raise InvalidGenerationReceiptError(
-                    "the first attempt cannot be a retry"
-                )
+                raise InvalidGenerationReceiptError("the first attempt cannot be a retry")
         else:
             if not isinstance(self.retry_of, ReceiptId):
                 raise InvalidGenerationReceiptError(
@@ -202,19 +190,11 @@ class GenerationSeries:
 
     def __post_init__(self) -> None:
         if not isinstance(self.job, VisualJob):
-            raise InvalidGenerationReceiptError(
-                "a generation series requires a visual job"
-            )
+            raise InvalidGenerationReceiptError("a generation series requires a visual job")
         if not isinstance(self.receipts, tuple):
-            raise InvalidGenerationReceiptError(
-                "generation receipts must be an immutable tuple"
-            )
-        if any(
-            not isinstance(receipt, GenerationReceipt) for receipt in self.receipts
-        ):
-            raise InvalidGenerationReceiptError(
-                "generation series contains an invalid receipt"
-            )
+            raise InvalidGenerationReceiptError("generation receipts must be an immutable tuple")
+        if any(not isinstance(receipt, GenerationReceipt) for receipt in self.receipts):
+            raise InvalidGenerationReceiptError("generation series contains an invalid receipt")
         self._validate_receipt_history()
 
     def _validate_receipt_history(self) -> None:
@@ -225,17 +205,12 @@ class GenerationSeries:
                 raise InvalidGenerationReceiptError("receipt IDs must be unique")
             seen_ids.add(receipt.id)
             if receipt.job_id != self.job.id:
-                raise InvalidGenerationReceiptError(
-                    "every receipt must belong to the series job"
-                )
+                raise InvalidGenerationReceiptError("every receipt must belong to the series job")
             if receipt.request_revision != self.job.request_revision:
-                raise InvalidGenerationReceiptError(
-                    "receipt request revision must match the job"
-                )
+                raise InvalidGenerationReceiptError("receipt request revision must match the job")
             if (
                 receipt.status is ReceiptStatus.SUCCEEDED
-                and len(receipt.output_reference_ids)
-                != self.job.expected_output_count
+                and len(receipt.output_reference_ids) != self.job.expected_output_count
             ):
                 raise InvalidGenerationReceiptError(
                     "successful receipt output count must match the job"
@@ -284,12 +259,8 @@ class GenerationSeries:
                 "visual review receipt does not belong to the generation series"
             )
         if receipt.status is not ReceiptStatus.SUCCEEDED:
-            raise InvalidVisualReviewError(
-                "only successful generation outputs may be reviewed"
-            )
-        if not set(review.reviewed_reference_ids).issubset(
-            receipt.output_reference_ids
-        ):
+            raise InvalidVisualReviewError("only successful generation outputs may be reviewed")
+        if not set(review.reviewed_reference_ids).issubset(receipt.output_reference_ids):
             raise InvalidVisualReviewError(
                 "visual review references must come from the named receipt"
             )
@@ -324,9 +295,7 @@ class VisualReview:
 
     def _validate_reviewed_outputs(self) -> None:
         if not isinstance(self.reviewed_reference_ids, tuple):
-            raise InvalidVisualReviewError(
-                "reviewed references must be an immutable tuple"
-            )
+            raise InvalidVisualReviewError("reviewed references must be an immutable tuple")
         if not self.reviewed_reference_ids:
             raise InvalidVisualReviewError("a visual review requires output references")
         if any(
@@ -334,9 +303,7 @@ class VisualReview:
             for reference_id in self.reviewed_reference_ids
         ):
             raise InvalidVisualReviewError("reviewed references must use typed IDs")
-        if len(self.reviewed_reference_ids) != len(
-            set(self.reviewed_reference_ids)
-        ):
+        if len(self.reviewed_reference_ids) != len(set(self.reviewed_reference_ids)):
             raise InvalidVisualReviewError("reviewed reference IDs must be unique")
 
     def _validate_outcome_contract(self) -> None:
