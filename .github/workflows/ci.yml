@@ -35,10 +35,20 @@ jobs:
           python - <<'PY'
           from pathlib import Path
 
-          path = Path("tests/test_state_store.py")
-          text = path.read_text(encoding="utf-8")
-          text = text.replace('match=".sqlite3"', 'match=r"\\.sqlite3"', 1)
-          path.write_text(text, encoding="utf-8")
+          test_path = Path("tests/test_state_store.py")
+          test_text = test_path.read_text(encoding="utf-8")
+          test_text = test_text.replace('match=".sqlite3"', 'match=r"\\.sqlite3"', 1)
+          test_path.write_text(test_text, encoding="utf-8")
+
+          source_path = Path("src/ludowright/infrastructure/state_store.py")
+          source_text = source_path.read_text(encoding="utf-8")
+          source_text = source_text.replace(
+              '                        f"state schema v{current_version} is not supported by v{_STATE_SCHEMA_VERSION}"\n',
+              '                        f"state schema v{current_version} is not supported by "\n'
+              '                        f"v{_STATE_SCHEMA_VERSION}"\n',
+              1,
+          )
+          source_path.write_text(source_text, encoding="utf-8")
           PY
 
           uv run ruff format src tests
