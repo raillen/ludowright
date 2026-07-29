@@ -16,12 +16,15 @@ nav:
       - Roadmap: product/ROADMAP.md
   - Architecture:
       - System Overview: architecture/SYSTEM_OVERVIEW.md
+  - Contracts:
+      - Identifiers and Versions: contracts/IDENTIFIERS_AND_VERSIONS.md
   - Implementation:
       - Plan to 1.0: plans/IMPLEMENTATION_PLAN.md
   - Quality:
       - Engineering Baseline: quality/ENGINEERING_QUALITY.md
   - Governance:
       - RFC Template: governance/RFC_TEMPLATE.md
+      - ADR 0001 — Identifiers and Versions: decisions/0001-typed-identifiers-and-revision-versions.md
       - ADR Template: decisions/0000-template.md
   - Operations:
       - Documentation Site: operations/DOCUMENTATION_SITE.md
