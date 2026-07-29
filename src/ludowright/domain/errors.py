@@ -41,3 +41,11 @@ class InvalidApprovalError(DomainValidationError):
 
 class InvalidApprovalTransitionError(InvalidApprovalError):
     """Raised when an approval transition is not allowed."""
+
+
+class InvalidAssetError(DomainValidationError):
+    """Raised when an asset aggregate violates a domain invariant."""
+
+
+class InvalidAssetTransitionError(InvalidAssetError):
+    """Raised when an asset production transition is not allowed."""
