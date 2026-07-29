@@ -6,6 +6,7 @@ from dataclasses import dataclass
 
 from ludowright.contracts.assets import AssetContract
 from ludowright.contracts.capture import CaptureProfileContract
+from ludowright.contracts.cli import CliResponseContract
 from ludowright.contracts.common import ContractModel
 from ludowright.contracts.dependencies import DependencyGraphContract
 from ludowright.contracts.governance import ApprovalContract, DecisionContract
@@ -83,6 +84,12 @@ CONTRACTS: tuple[ContractDefinition, ...] = (
         "dependency-graph.schema.json",
         "LudoWright Dependency Graph",
         DependencyGraphContract,
+    ),
+    ContractDefinition(
+        "cli-response",
+        "cli-response.schema.json",
+        "LudoWright CLI Response",
+        CliResponseContract,
     ),
 )
 
