@@ -1,0 +1,57 @@
+# LudoWright
+
+> **Plan it. Visualize it. Produce it.**
+
+LudoWright is a local-first, repository-native framework for planning, documenting, visualizing, validating, and packaging game projects through Codex.
+
+## What it will connect
+
+```text
+idea → guided intake → modular documentation → asset registry
+→ visual bible → segmented ImageGen jobs → human approval
+→ technical sheets → audit → reproducible package
+```
+
+## Current status
+
+LudoWright is in the **pre-alpha foundation phase**.
+
+The repository currently establishes:
+
+- the product vision and long-term roadmap;
+- the layered Python and Codex architecture;
+- documentation and contribution governance;
+- the initial package and CLI;
+- tests and continuous integration.
+
+Project initialization, persisted schemas, asset planning, capture profiles, ImageGen execution, review workflows, technical sheets, and package generation remain planned work.
+
+## Start here
+
+- [Documentation Atlas](ATLAS.md) — canonical navigation map.
+- [Product Vision](product/PRODUCT_VISION.md) — mission, users, principles, and boundaries.
+- [Roadmap](product/ROADMAP.md) — planned releases and long-term direction.
+- [System Overview](architecture/SYSTEM_OVERVIEW.md) — architecture and dependency rules.
+- [Implementation Plan](plans/IMPLEMENTATION_PLAN.md) — ordered pull requests to the first stable release.
+
+## Repository policies
+
+The following policies live at the repository root because GitHub discovers them there:
+
+- [Contributing](https://github.com/raillen/ludowright/blob/main/CONTRIBUTING.md)
+- [Security](https://github.com/raillen/ludowright/blob/main/SECURITY.md)
+- [Support](https://github.com/raillen/ludowright/blob/main/SUPPORT.md)
+- [Governance](https://github.com/raillen/ludowright/blob/main/GOVERNANCE.md)
+- [Code of Conduct](https://github.com/raillen/ludowright/blob/main/CODE_OF_CONDUCT.md)
+
+## Development setup
+
+```bash
+git clone https://github.com/raillen/ludowright.git
+cd ludowright
+uv sync --extra dev --extra docs
+uv run ludowright --version
+uv run mkdocs serve
+```
+
+See [Documentation Site Operations](operations/DOCUMENTATION_SITE.md) for strict builds and publication details.
