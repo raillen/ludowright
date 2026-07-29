@@ -9,14 +9,12 @@ import re
 import secrets
 from dataclasses import dataclass
 from enum import StrEnum
-from typing import Any, Generic, TypeVar
+from typing import Any
 
 import yaml
 from pydantic import ValidationError
-from yaml.composer import ComposerError
-from yaml.constructor import ConstructorError
 from yaml.events import AliasEvent
-from yaml.nodes import MappingNode
+from yaml.nodes import MappingNode, Node, ScalarNode, SequenceNode
 
 from ludowright.contracts.common import ContractModel
 from ludowright.infrastructure.filesystem import ProjectFilesystem, RepositoryPath
@@ -25,8 +23,20 @@ _DEFAULT_MAX_BYTES = 2_000_000
 _MAX_STRUCTURE_DEPTH = 100
 _MAX_STRUCTURE_NODES = 100_000
 _DIGEST_PATTERN = re.compile(r"^[0-9a-f]{64}$")
-
-TContract = TypeVar("TContract", bound=ContractModel)
+_YAML_MAP_TAG = "tag:yaml.org,2002:map"
+_YAML_SEQUENCE_TAG = "tag:yaml.org,2002:seq"
+_YAML_STRING_TAG = "tag:yaml.org,2002:str"
+_YAML_MERGE_TAG = "tag:yaml.org,2002:merge"
+_YAML_TIMESTAMP_TAG = "tag:yaml.org,2002:timestamp"
+_ALLOWED_YAML_SCALAR_TAGS = frozenset(
+    {
+        "tag:yaml.org,2002:null",
+        "tag:yaml.org,2002:bool",
+        "tag:yaml.org,2002:int",
+        "tag:yaml.org,2002:float",
+        _YAML_STRING_TAG,
+    }
+)
 
 
 class StructuredDocumentError(RuntimeError):
@@ -51,7 +61,7 @@ class StructuredDocumentFormat(StrEnum):
 
 
 @dataclass(frozen=True, slots=True)
-class StructuredDocumentSnapshot(Generic[TContract]):
+class StructuredDocumentSnapshot[TContract: ContractModel]:
     """One validated document together with its exact persisted identity."""
 
     path: RepositoryPath
@@ -62,7 +72,7 @@ class StructuredDocumentSnapshot(Generic[TContract]):
     size_bytes: int
 
 
-class StructuredDocumentRepository(Generic[TContract]):
+class StructuredDocumentRepository[TContract: ContractModel]:
     """Persist one strict Pydantic contract in canonical JSON or YAML."""
 
     def __init__(
@@ -159,7 +169,8 @@ class StructuredDocumentRepository(Generic[TContract]):
         with self._filesystem.lock(self._lock_name, timeout=timeout):
             current_digest = self._current_digest()
             if expected_digest is not None and not _digests_equal(
-                current_digest, expected_digest
+                current_digest,
+                expected_digest,
             ):
                 raise StructuredDocumentConflictError(
                     f"structured document changed before save: {self._path}; "
@@ -198,7 +209,11 @@ class StructuredDocumentRepository(Generic[TContract]):
 
     def _parse_and_validate(self, payload: bytes) -> TContract:
         text = _decode_utf8(payload)
-        parsed = _parse_json(text) if self._format is StructuredDocumentFormat.JSON else _parse_yaml(text)
+        parsed = (
+            _parse_json(text)
+            if self._format is StructuredDocumentFormat.JSON
+            else _parse_yaml(text)
+        )
         _validate_json_compatible_structure(parsed)
         try:
             return self._model.model_validate(parsed)
@@ -220,7 +235,7 @@ class StructuredDocumentRepository(Generic[TContract]):
                 indent=2,
                 sort_keys=True,
             )
-            return f"{text}\n".encode("utf-8")
+            return f"{text}\n".encode()
         text = yaml.dump(
             data,
             Dumper=_CanonicalYamlDumper,
@@ -232,7 +247,7 @@ class StructuredDocumentRepository(Generic[TContract]):
         )
         if not text.endswith("\n"):
             text += "\n"
-        return text.encode("utf-8")
+        return text.encode()
 
     def _current_digest(self) -> str | None:
         try:
@@ -256,7 +271,9 @@ class StructuredDocumentRepository(Generic[TContract]):
         )
 
 
-class JsonDocumentRepository(StructuredDocumentRepository[TContract]):
+class JsonDocumentRepository[TContract: ContractModel](
+    StructuredDocumentRepository[TContract]
+):
     """Canonical JSON repository for one strict contract type."""
 
     def __init__(
@@ -276,7 +293,9 @@ class JsonDocumentRepository(StructuredDocumentRepository[TContract]):
         )
 
 
-class YamlDocumentRepository(StructuredDocumentRepository[TContract]):
+class YamlDocumentRepository[TContract: ContractModel](
+    StructuredDocumentRepository[TContract]
+):
     """Canonical YAML repository for one strict contract type."""
 
     def __init__(
@@ -294,51 +313,6 @@ class YamlDocumentRepository(StructuredDocumentRepository[TContract]):
             format=StructuredDocumentFormat.YAML,
             max_bytes=max_bytes,
         )
-
-
-class _StrictYamlLoader(yaml.SafeLoader):
-    """Safe loader that additionally rejects aliases and duplicate keys."""
-
-    def compose_node(self, parent: Any, index: Any) -> Any:
-        if self.check_event(AliasEvent):
-            event = self.peek_event()
-            raise ComposerError(
-                "while composing a strict document",
-                None,
-                "YAML aliases are not allowed",
-                event.start_mark,
-            )
-        return super().compose_node(parent, index)
-
-    def construct_mapping(self, node: MappingNode, deep: bool = False) -> dict[str, Any]:
-        if not isinstance(node, MappingNode):
-            raise ConstructorError(None, None, "expected a mapping node", node.start_mark)
-        mapping: dict[str, Any] = {}
-        for key_node, value_node in node.value:
-            if key_node.tag == "tag:yaml.org,2002:merge":
-                raise ConstructorError(
-                    "while constructing a strict mapping",
-                    node.start_mark,
-                    "YAML merge keys are not allowed",
-                    key_node.start_mark,
-                )
-            key = self.construct_object(key_node, deep=deep)
-            if not isinstance(key, str):
-                raise ConstructorError(
-                    "while constructing a strict mapping",
-                    node.start_mark,
-                    "YAML mapping keys must be strings",
-                    key_node.start_mark,
-                )
-            if key in mapping:
-                raise ConstructorError(
-                    "while constructing a strict mapping",
-                    node.start_mark,
-                    f"duplicate YAML mapping key: {key!r}",
-                    key_node.start_mark,
-                )
-            mapping[key] = self.construct_object(value_node, deep=deep)
-        return mapping
 
 
 class _CanonicalYamlDumper(yaml.SafeDumper):
@@ -374,25 +348,103 @@ def _reject_json_constant(value: str) -> Any:
 
 def _parse_yaml(text: str) -> Any:
     try:
-        documents = list(yaml.load_all(text, Loader=_StrictYamlLoader))
-    except StructuredDocumentParseError:
-        raise
+        events = tuple(yaml.parse(text, Loader=yaml.SafeLoader))
+    except (yaml.YAMLError, RecursionError, ValueError) as error:
+        raise StructuredDocumentParseError("invalid or unsafe YAML document") from error
+    if any(isinstance(event, AliasEvent) for event in events):
+        raise StructuredDocumentParseError("YAML aliases are not allowed")
+
+    try:
+        documents = list(yaml.compose_all(text, Loader=yaml.SafeLoader))
     except (yaml.YAMLError, RecursionError, ValueError) as error:
         raise StructuredDocumentParseError("invalid or unsafe YAML document") from error
     if len(documents) != 1:
         raise StructuredDocumentParseError("YAML input must contain exactly one document")
-    if documents[0] is None:
+    node = documents[0]
+    if node is None:
         raise StructuredDocumentParseError("structured documents cannot be empty")
-    return documents[0]
+    _validate_yaml_node(node)
+
+    try:
+        parsed = yaml.safe_load(text)
+    except (yaml.YAMLError, RecursionError, ValueError) as error:
+        raise StructuredDocumentParseError("invalid or unsafe YAML document") from error
+    if parsed is None:
+        raise StructuredDocumentParseError("structured documents cannot be empty")
+    return parsed
+
+
+def _validate_yaml_node(root: Node) -> None:
+    remaining = [_MAX_STRUCTURE_NODES]
+
+    def visit(node: Node, depth: int) -> None:
+        remaining[0] -= 1
+        if remaining[0] < 0:
+            raise StructuredDocumentParseError(
+                f"structured document exceeds {_MAX_STRUCTURE_NODES} values"
+            )
+        if depth > _MAX_STRUCTURE_DEPTH:
+            raise StructuredDocumentParseError(
+                f"structured document exceeds {_MAX_STRUCTURE_DEPTH} nesting levels"
+            )
+
+        if isinstance(node, MappingNode):
+            if node.tag != _YAML_MAP_TAG:
+                raise StructuredDocumentParseError(
+                    f"YAML mapping tag is not allowed: {node.tag}"
+                )
+            keys: set[str] = set()
+            for key_node, value_node in node.value:
+                if key_node.tag == _YAML_MERGE_TAG:
+                    raise StructuredDocumentParseError("YAML merge keys are not allowed")
+                if not isinstance(key_node, ScalarNode) or key_node.tag != _YAML_STRING_TAG:
+                    raise StructuredDocumentParseError("YAML mapping keys must be strings")
+                if key_node.value in keys:
+                    raise StructuredDocumentParseError(
+                        f"duplicate YAML mapping key: {key_node.value!r}"
+                    )
+                keys.add(key_node.value)
+                visit(value_node, depth + 1)
+            return
+
+        if isinstance(node, SequenceNode):
+            if node.tag != _YAML_SEQUENCE_TAG:
+                raise StructuredDocumentParseError(
+                    f"YAML sequence tag is not allowed: {node.tag}"
+                )
+            for child in node.value:
+                visit(child, depth + 1)
+            return
+
+        if isinstance(node, ScalarNode):
+            if node.tag == _YAML_TIMESTAMP_TAG:
+                raise StructuredDocumentParseError(
+                    "YAML date and timestamp values must be quoted strings"
+                )
+            if node.tag not in _ALLOWED_YAML_SCALAR_TAGS:
+                raise StructuredDocumentParseError(
+                    f"YAML scalar tag is not allowed: {node.tag}"
+                )
+            return
+
+        raise StructuredDocumentParseError(
+            f"unsupported YAML node type: {type(node).__name__}"
+        )
+
+    visit(root, 0)
 
 
 def _decode_utf8(payload: bytes) -> str:
     if payload.startswith(b"\xef\xbb\xbf"):
-        raise StructuredDocumentFormatError("structured documents cannot contain a UTF-8 BOM")
+        raise StructuredDocumentFormatError(
+            "structured documents cannot contain a UTF-8 BOM"
+        )
     try:
         return payload.decode("utf-8")
     except UnicodeDecodeError as error:
-        raise StructuredDocumentFormatError("structured documents must use UTF-8") from error
+        raise StructuredDocumentFormatError(
+            "structured documents must use UTF-8"
+        ) from error
 
 
 def _validate_json_compatible_structure(value: Any) -> None:
