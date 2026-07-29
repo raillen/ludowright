@@ -7,17 +7,15 @@ on:
       - main
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
-  patch:
+  quality:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out dependency graph branch
+      - name: Check out repository
         uses: actions/checkout@v7
-        with:
-          ref: agent/dependency-invalidation-graph
 
       - name: Install uv
         uses: astral-sh/setup-uv@v7
@@ -30,69 +28,5 @@ jobs:
       - name: Install project and quality tools
         run: uv sync --extra dev --extra docs
 
-      - name: Apply graph integration fixes
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-
-          domain_path = Path("src/ludowright/domain/dependencies.py")
-          domain_text = domain_path.read_text(encoding="utf-8")
-          domain_text = domain_text.replace(
-              "    ) -> Self:\n        return DependencyGraph(\n",
-              "    ) -> DependencyGraph:\n        return DependencyGraph(\n",
-              1,
-          )
-          domain_text = domain_text.replace(
-              "                if source == root and initial_edges is not None:\n"
-              "                    if edge.identity not in initial_edges:\n"
-              "                        continue\n",
-              "                if (\n"
-              "                    source == root\n"
-              "                    and initial_edges is not None\n"
-              "                    and edge.identity not in initial_edges\n"
-              "                ):\n"
-              "                    continue\n",
-              1,
-          )
-          domain_path.write_text(domain_text, encoding="utf-8")
-
-          test_path = Path("tests/test_dependencies.py")
-          test_text = test_path.read_text(encoding="utf-8")
-          test_text = test_text.replace(
-              '    with pytest.raises(InvalidDependencyGraphError, match="strongest"):\n'
-              '        DependencyGraphContract.model_validate(payload)\n',
-              '    with pytest.raises(ValidationError, match="strongest"):\n'
-              '        DependencyGraphContract.model_validate(payload)\n',
-              1,
-          )
-          test_path.write_text(test_text, encoding="utf-8")
-
-          docs_path = Path("docs/contracts/JSON_SCHEMAS.md")
-          docs_text = docs_path.read_text(encoding="utf-8")
-          docs_text = docs_text.replace(
-              "| Migration receipt | `migration-receipt.schema.json` |\n",
-              "| Migration receipt | `migration-receipt.schema.json` |\n"
-              "| Dependency graph | `dependency-graph.schema.json` |\n",
-              1,
-          )
-          docs_path.write_text(docs_text, encoding="utf-8")
-          PY
-          uv run ruff format src tests
-          uv run ruff check --fix src tests
-          uv run ruff format src tests
-          uv run python -m ludowright.contracts publish
-
-      - name: Validate complete dependency graph
+      - name: Run LudoWright quality gate
         run: uv run ludowright quality check
-
-      - name: Commit validated graph integration
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add src tests docs schemas
-          if git diff --cached --quiet; then
-            echo "No dependency graph integration changes to commit."
-          else
-            git commit -m "Finalize dependency graph publication"
-            git push origin HEAD:agent/dependency-invalidation-graph
-          fi
