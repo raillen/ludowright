@@ -5,7 +5,7 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass, replace
 from enum import StrEnum
-from typing import Protocol, Self, TypeVar
+from typing import Self
 
 from ludowright.domain.assets import AssetFamily, AssetSubtype
 from ludowright.domain.errors import (
@@ -82,7 +82,10 @@ class HexColor:
     value: str
 
     def __post_init__(self) -> None:
-        if not isinstance(self.value, str) or _HEX_COLOR_PATTERN.fullmatch(self.value) is None:
+        if (
+            not isinstance(self.value, str)
+            or _HEX_COLOR_PATTERN.fullmatch(self.value) is None
+        ):
             raise InvalidCaptureProfileError(
                 "a capture color must use canonical uppercase #RRGGBB notation"
             )
@@ -239,7 +242,9 @@ class CaptureView:
         if not isinstance(self.role, ReferenceRole):
             raise InvalidCaptureProfileError("capture view role must be canonical")
         if not isinstance(self.required, bool):
-            raise InvalidCaptureProfileError("capture view required flag must be boolean")
+            raise InvalidCaptureProfileError(
+                "capture view required flag must be boolean"
+            )
 
 
 @dataclass(frozen=True, slots=True)
@@ -256,7 +261,9 @@ class CaptureRequirement:
             CaptureRequirementKind.STATE: AssetStateId,
         }
         if not isinstance(self.kind, CaptureRequirementKind):
-            raise InvalidCaptureProfileError("capture requirement kind must be canonical")
+            raise InvalidCaptureProfileError(
+                "capture requirement kind must be canonical"
+            )
         if not isinstance(self.id, expected_types[self.kind]):
             raise InvalidCaptureProfileError(
                 "capture requirement ID must match its requirement kind"
@@ -294,9 +301,13 @@ class CaptureSheet:
                 "capture sheet requires an immutable non-empty view tuple"
             )
         if any(not isinstance(view_id, CaptureViewId) for view_id in self.view_ids):
-            raise InvalidCaptureProfileError("capture sheet view IDs must be typed")
+            raise InvalidCaptureProfileError(
+                "capture sheet view IDs must be typed"
+            )
         if len(self.view_ids) != len(set(self.view_ids)):
-            raise InvalidCaptureProfileError("capture sheet view IDs must be unique")
+            raise InvalidCaptureProfileError(
+                "capture sheet view IDs must be unique"
+            )
         if not isinstance(self.subject_modes, frozenset) or not self.subject_modes:
             raise InvalidCaptureProfileError(
                 "capture sheet requires immutable subject modes"
@@ -330,14 +341,6 @@ class CaptureProfileRef:
             raise InvalidCaptureProfileError(
                 "profile reference requires a profile version"
             )
-
-
-class _Identified(Protocol):
-    @property
-    def id(self) -> Identifier: ...
-
-
-_T = TypeVar("_T", bound=_Identified)
 
 
 @dataclass(frozen=True, slots=True)
@@ -374,9 +377,13 @@ class CaptureProfile:
         if not isinstance(self.name, DisplayName):
             raise InvalidCaptureProfileError("capture profile name must be canonical")
         if self.family is not None and not isinstance(self.family, AssetFamily):
-            raise InvalidCaptureProfileError("capture profile family must be canonical")
+            raise InvalidCaptureProfileError(
+                "capture profile family must be canonical"
+            )
         if self.subtype is not None and not isinstance(self.subtype, AssetSubtype):
-            raise InvalidCaptureProfileError("capture profile subtype must be canonical")
+            raise InvalidCaptureProfileError(
+                "capture profile subtype must be canonical"
+            )
         if self.family is AssetFamily.OTHER and self.subtype is None:
             raise InvalidCaptureProfileError(
                 "the 'other' profile family requires a subtype"
@@ -388,21 +395,9 @@ class CaptureProfile:
             raise InvalidCaptureProfileError(
                 "capture profile requirement collections must be tuples"
             )
-        self._validate_items(self.views, CaptureView, "view")
-        self._validate_items(self.requirements, CaptureRequirement, "requirement")
-        self._validate_items(self.sheets, CaptureSheet, "sheet")
-
-    @staticmethod
-    def _validate_items(items: tuple[_T, ...], expected: type[_T], label: str) -> None:
-        if any(not isinstance(item, expected) for item in items):
-            raise InvalidCaptureProfileError(
-                f"capture profile contains an invalid {label}"
-            )
-        ids = tuple(item.id for item in items)
-        if len(ids) != len(set(ids)):
-            raise InvalidCaptureProfileError(
-                f"capture profile {label} IDs must be unique"
-            )
+        _validate_views(self.views)
+        _validate_requirements(self.requirements)
+        _validate_sheets(self.sheets)
 
     def _validate_resolved_contract(self) -> None:
         if self.family is None:
@@ -482,13 +477,75 @@ class CaptureProfile:
             background=self.background or parent.background,
             lighting=self.lighting or parent.lighting,
             validation=self.validation or parent.validation,
-            views=_merge_requirements(parent.views, self.views),
-            requirements=_merge_requirements(parent.requirements, self.requirements),
-            sheets=_merge_requirements(parent.sheets, self.sheets),
+            views=_merge_views(parent.views, self.views),
+            requirements=_merge_capture_requirements(
+                parent.requirements,
+                self.requirements,
+            ),
+            sheets=_merge_sheets(parent.sheets, self.sheets),
         )
 
 
-def _merge_requirements(base: tuple[_T, ...], overrides: tuple[_T, ...]) -> tuple[_T, ...]:
+def _validate_views(items: tuple[CaptureView, ...]) -> None:
+    if any(not isinstance(item, CaptureView) for item in items):
+        raise InvalidCaptureProfileError(
+            "capture profile contains an invalid view"
+        )
+    ids = tuple(item.id for item in items)
+    if len(ids) != len(set(ids)):
+        raise InvalidCaptureProfileError(
+            "capture profile view IDs must be unique"
+        )
+
+
+def _validate_requirements(items: tuple[CaptureRequirement, ...]) -> None:
+    if any(not isinstance(item, CaptureRequirement) for item in items):
+        raise InvalidCaptureProfileError(
+            "capture profile contains an invalid requirement"
+        )
+    ids = tuple(item.id for item in items)
+    if len(ids) != len(set(ids)):
+        raise InvalidCaptureProfileError(
+            "capture profile requirement IDs must be unique"
+        )
+
+
+def _validate_sheets(items: tuple[CaptureSheet, ...]) -> None:
+    if any(not isinstance(item, CaptureSheet) for item in items):
+        raise InvalidCaptureProfileError(
+            "capture profile contains an invalid sheet"
+        )
+    ids = tuple(item.id for item in items)
+    if len(ids) != len(set(ids)):
+        raise InvalidCaptureProfileError(
+            "capture profile sheet IDs must be unique"
+        )
+
+
+def _merge_views(
+    base: tuple[CaptureView, ...],
+    overrides: tuple[CaptureView, ...],
+) -> tuple[CaptureView, ...]:
+    override_by_id = {item.id: item for item in overrides}
+    merged = [override_by_id.pop(item.id, item) for item in base]
+    merged.extend(override_by_id.values())
+    return tuple(merged)
+
+
+def _merge_capture_requirements(
+    base: tuple[CaptureRequirement, ...],
+    overrides: tuple[CaptureRequirement, ...],
+) -> tuple[CaptureRequirement, ...]:
+    override_by_id = {item.id: item for item in overrides}
+    merged = [override_by_id.pop(item.id, item) for item in base]
+    merged.extend(override_by_id.values())
+    return tuple(merged)
+
+
+def _merge_sheets(
+    base: tuple[CaptureSheet, ...],
+    overrides: tuple[CaptureSheet, ...],
+) -> tuple[CaptureSheet, ...]:
     override_by_id = {item.id: item for item in overrides}
     merged = [override_by_id.pop(item.id, item) for item in base]
     merged.extend(override_by_id.values())
