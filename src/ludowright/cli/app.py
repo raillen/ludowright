@@ -9,6 +9,7 @@ import typer
 from rich.console import Console
 
 from ludowright import __version__
+from ludowright.cli.quality import quality_app
 
 app = typer.Typer(
     name="ludowright",
@@ -16,6 +17,7 @@ app = typer.Typer(
     no_args_is_help=True,
     invoke_without_command=True,
 )
+app.add_typer(quality_app, name="quality")
 console = Console()
 
 
