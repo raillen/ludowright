@@ -292,8 +292,8 @@ def patch_migration_manager() -> None:
 '''
     text = replace_between(
         text,
-        "    def apply(\n",
-        "    def _apply_plan(\n",
+        "    def apply(",
+        "    def _apply_plan(",
         methods,
         "migration apply and rollback methods",
     )
