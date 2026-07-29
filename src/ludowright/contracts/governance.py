@@ -95,9 +95,7 @@ class DecisionRevisionContract(ContractModel):
             status=self.status,
             note=_review_note(self.note),
             superseded_by=(
-                DecisionId(self.superseded_by)
-                if self.superseded_by is not None
-                else None
+                DecisionId(self.superseded_by) if self.superseded_by is not None else None
             ),
         )
 
@@ -151,9 +149,7 @@ class ApprovalRevisionContract(ContractModel):
             status=self.status,
             note=_review_note(self.note),
             superseded_by=(
-                ApprovalId(self.superseded_by)
-                if self.superseded_by is not None
-                else None
+                ApprovalId(self.superseded_by) if self.superseded_by is not None else None
             ),
         )
 

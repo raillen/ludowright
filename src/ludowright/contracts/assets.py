@@ -55,9 +55,7 @@ class AssetComponentContract(ContractModel):
             name=DisplayName(self.name),
             status=self.status,
             required=self.required,
-            parent_id=(
-                ComponentId(self.parent_id) if self.parent_id is not None else None
-            ),
+            parent_id=(ComponentId(self.parent_id) if self.parent_id is not None else None),
             owner=self.owner.to_domain() if self.owner is not None else None,
         )
 

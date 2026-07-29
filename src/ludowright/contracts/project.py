@@ -72,9 +72,7 @@ class ProjectContract(ContractModel):
             identity=ProjectIdentity(
                 id=ProjectId(self.id),
                 name=DisplayName(self.name),
-                codename=(
-                    DisplayName(self.codename) if self.codename is not None else None
-                ),
+                codename=(DisplayName(self.codename) if self.codename is not None else None),
             ),
             dimensions=self.dimensions,
             targets=frozenset(target.to_domain() for target in self.targets),

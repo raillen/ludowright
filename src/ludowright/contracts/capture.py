@@ -91,9 +91,7 @@ class LightingContract(ContractModel):
             mode=self.mode,
             shadows=self.shadows,
             custom_label=(
-                DisplayName(self.custom_label)
-                if self.custom_label is not None
-                else None
+                DisplayName(self.custom_label) if self.custom_label is not None else None
             ),
         )
 
@@ -226,21 +224,11 @@ class CaptureProfileContract(ContractModel):
             subtype=AssetSubtype(self.subtype) if self.subtype is not None else None,
             parent=self.parent.to_domain() if self.parent is not None else None,
             camera=self.camera.to_domain() if self.camera is not None else None,
-            background=(
-                self.background.to_domain()
-                if self.background is not None
-                else None
-            ),
+            background=(self.background.to_domain() if self.background is not None else None),
             lighting=self.lighting.to_domain() if self.lighting is not None else None,
-            validation=(
-                self.validation.to_domain()
-                if self.validation is not None
-                else None
-            ),
+            validation=(self.validation.to_domain() if self.validation is not None else None),
             views=tuple(view.to_domain() for view in self.views),
-            requirements=tuple(
-                requirement.to_domain() for requirement in self.requirements
-            ),
+            requirements=tuple(requirement.to_domain() for requirement in self.requirements),
             sheets=tuple(sheet.to_domain() for sheet in self.sheets),
         )
 
