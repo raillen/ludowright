@@ -81,3 +81,15 @@ class InvalidCaptureProfileInheritanceError(InvalidCaptureProfileError):
 
 class InvalidEventError(DomainValidationError):
     """Raised when an event type, payload, or immutable record is invalid."""
+
+
+class InvalidDependencyGraphError(DomainValidationError):
+    """Raised when dependency nodes, edges, or invalidations are inconsistent."""
+
+
+class DependencyCycleError(InvalidDependencyGraphError):
+    """Raised when dependency edges would create a directed cycle."""
+
+
+class DependencyRefreshError(InvalidDependencyGraphError):
+    """Raised when a stale node cannot be safely refreshed from its inputs."""
