@@ -8,6 +8,7 @@ from ludowright.contracts.assets import AssetContract
 from ludowright.contracts.capture import CaptureProfileContract
 from ludowright.contracts.common import ContractModel
 from ludowright.contracts.governance import ApprovalContract, DecisionContract
+from ludowright.contracts.migrations import MigrationReceiptContract
 from ludowright.contracts.project import ProjectContract
 from ludowright.contracts.visual import (
     GenerationReceiptContract,
@@ -69,6 +70,12 @@ CONTRACTS: tuple[ContractDefinition, ...] = (
         "capture-profile.schema.json",
         "LudoWright Capture Profile",
         CaptureProfileContract,
+    ),
+    ContractDefinition(
+        "migration-receipt",
+        "migration-receipt.schema.json",
+        "LudoWright Migration Receipt",
+        MigrationReceiptContract,
     ),
 )
 

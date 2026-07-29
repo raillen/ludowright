@@ -28,6 +28,7 @@ nav:
       - Structured Repositories: contracts/STRUCTURED_REPOSITORIES.md
       - Event Log: contracts/EVENT_LOG.md
       - SQLite State Store: contracts/STATE_STORE.md
+      - Migrations: contracts/MIGRATIONS.md
   - Implementation:
       - Plan to 1.0: plans/IMPLEMENTATION_PLAN.md
   - Quality:
@@ -45,6 +46,7 @@ nav:
       - ADR 0009 — Structured Repositories: decisions/0009-canonical-structured-document-repositories.md
       - ADR 0010 — Hash-Chained Event Log: decisions/0010-hash-chained-append-only-event-log.md
       - ADR 0011 — Rebuildable SQLite State Index: decisions/0011-rebuildable-sqlite-state-index.md
+      - ADR 0012 — Explicit Backed-Up Migrations: decisions/0012-explicit-backed-up-schema-migrations.md
       - ADR Template: decisions/0000-template.md
   - Operations:
       - Documentation Site: operations/DOCUMENTATION_SITE.md

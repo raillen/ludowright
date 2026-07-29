@@ -88,15 +88,17 @@ WAL allows concurrent readers and serialized writers. `synchronous=FULL` favors 
 
 ## Schema version
 
-The initial database uses:
+The current database uses:
 
 ```text
-PRAGMA user_version = 1
+PRAGMA user_version = 2
 ```
 
-A new empty database is initialized as version 1. A database with another non-zero version is rejected with `UnsupportedStateSchemaError`.
+Fresh databases are created at v2. Existing v1 databases require the explicit migration framework documented in [`MIGRATIONS.md`](MIGRATIONS.md).
 
-Schema migration is deliberately deferred to the next implementation PR. The state store must not guess how to upgrade an unknown version.
+A new empty database is initialized as version 2. A v1 database is rejected until the explicit v1→v2 migration is applied. Other non-zero versions are rejected with `UnsupportedStateSchemaError`.
+
+Schema migration is explicit and backed up. The state store must not guess how to upgrade an unknown version.
 
 ## Tables
 
@@ -128,6 +130,18 @@ Stores one derived index record per entity type and ID:
 
 The source digest identifies the exact indexed file revision. Formatting-only changes therefore appear as changed until the index is refreshed intentionally.
 
+### `migration_history`
+
+Stores one immutable row per applied state-schema migration:
+
+- migration ID;
+- run ID;
+- source and target versions;
+- canonical UTC timestamp;
+- LudoWright tool version.
+
+The external rollback receipt remains authoritative for backup restoration because rolling back to v1 removes this v2-only table.
+
 ### `event_checkpoint`
 
 Stores one singleton checkpoint:
@@ -156,11 +170,13 @@ BEGIN
 PRAGMA query_only = ON
 ```
 
-Writes use:
+Writes acquire the shared `sqlite-state-store-write` project lock and then use:
 
 ```text
 BEGIN IMMEDIATE
 ```
+
+Migration apply and rollback operations acquire the same lock across backup, schema mutation, digest calculation, and database replacement. This prevents a StateStore write from falling between the rollback snapshot and the migrated state.
 
 Successful operations commit. Any exception rolls back. Connections are always closed.
 
@@ -297,7 +313,7 @@ Incompatible changes require the migration framework planned for the next PR, in
 
 This state store does not yet provide:
 
-- schema migrations;
+- canonical-file migrations;
 - automatic event replay into domain-specific tables;
 - a dependency graph;
 - full-text search;

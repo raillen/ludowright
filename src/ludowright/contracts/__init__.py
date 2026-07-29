@@ -3,6 +3,10 @@
 from ludowright.contracts.assets import AssetContract
 from ludowright.contracts.capture import CaptureProfileContract
 from ludowright.contracts.governance import ApprovalContract, DecisionContract
+from ludowright.contracts.migrations import (
+    MigrationReceiptContract,
+    MigrationRunStatus,
+)
 from ludowright.contracts.project import ProjectContract
 from ludowright.contracts.publication import (
     DEFAULT_SCHEMA_ROOT,
@@ -35,6 +39,8 @@ __all__ = [
     "CaptureProfileContract",
     "DecisionContract",
     "GenerationReceiptContract",
+    "MigrationReceiptContract",
+    "MigrationRunStatus",
     "ProjectContract",
     "VisualJobContract",
     "VisualReferenceContract",
