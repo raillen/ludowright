@@ -47,6 +47,12 @@ jobs:
           if anchor not in text:
               raise SystemExit("LockMetadata insertion anchor not found")
           text = text.replace(anchor, replacement, 1)
+          text = text.replace(
+              '            "repository path segments may use lowercase letters, digits, dots, hyphens, and underscores"\n',
+              '            "repository path segments may use lowercase letters, digits, dots, "\n'
+              '            "hyphens, and underscores"\n',
+              1,
+          )
           path.write_text(text, encoding="utf-8")
 
           path = Path("tests/test_filesystem.py")
