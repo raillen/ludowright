@@ -56,7 +56,7 @@ RELEASE_CHECKS: tuple[CheckSpec, ...] = (
 
 
 def _execute(command: tuple[str, ...]) -> int:
-    completed = subprocess.run(command, check=False)  # noqa: S603
+    completed = subprocess.run(command, check=False)
     return completed.returncode
 
 
