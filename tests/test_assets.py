@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import FrozenInstanceError, replace
+from dataclasses import FrozenInstanceError
 
 import pytest
 from hypothesis import given
@@ -30,6 +30,7 @@ from ludowright.domain import (
     VariantId,
 )
 
+AssetItem = AssetComponent | AssetVariant | AssetState
 
 _STATUS_PATH = (
     AssetStatus.SPECIFIED,
@@ -40,7 +41,7 @@ _STATUS_PATH = (
 )
 
 
-def complete_item(item: AssetComponent | AssetVariant | AssetState):
+def complete_item(item: AssetItem) -> AssetItem:
     current = item
     for status in _STATUS_PATH:
         current = current.transition_status(status)
@@ -123,6 +124,31 @@ def test_owner_supports_people_teams_roles_and_automation() -> None:
             kind=kind,
         )
         assert owner.kind is kind
+
+
+@pytest.mark.parametrize(
+    "factory",
+    [
+        lambda: AssetOwner(  # type: ignore[arg-type]
+            id="owner",
+            label=DisplayName("Owner"),
+            kind=OwnerKind.PERSON,
+        ),
+        lambda: AssetOwner(  # type: ignore[arg-type]
+            id=OwnerId("owner"),
+            label="Owner",
+            kind=OwnerKind.PERSON,
+        ),
+        lambda: AssetOwner(  # type: ignore[arg-type]
+            id=OwnerId("owner"),
+            label=DisplayName("Owner"),
+            kind="person",
+        ),
+    ],
+)
+def test_invalid_owner_fields_are_rejected(factory: object) -> None:
+    with pytest.raises(InvalidAssetError):
+        factory()  # type: ignore[operator]
 
 
 def test_component_hierarchy_supports_nested_parts() -> None:
@@ -208,7 +234,9 @@ def test_component_cycles_are_rejected() -> None:
     ],
 )
 def test_decomposition_ids_must_be_unique(
-    collection: tuple[AssetComponent, ...] | tuple[AssetVariant, ...] | tuple[AssetState, ...],
+    collection: tuple[AssetComponent, ...]
+    | tuple[AssetVariant, ...]
+    | tuple[AssetState, ...],
     message: str,
 ) -> None:
     kwargs: dict[str, object]
@@ -232,15 +260,17 @@ def test_decomposition_collections_must_be_immutable_tuples() -> None:
         )
 
 
-def test_decomposition_rejects_wrong_item_types() -> None:
-    with pytest.raises(InvalidAssetError, match="invalid component"):
-        make_asset(components=("body",))  # type: ignore[arg-type]
-
-    with pytest.raises(InvalidAssetError, match="invalid variant"):
-        make_asset(variants=("summer",))  # type: ignore[arg-type]
-
-    with pytest.raises(InvalidAssetError, match="invalid state"):
-        make_asset(states=("open",))  # type: ignore[arg-type]
+@pytest.mark.parametrize(
+    ("field", "message"),
+    [
+        ("components", "invalid component"),
+        ("variants", "invalid variant"),
+        ("states", "invalid state"),
+    ],
+)
+def test_decomposition_rejects_wrong_item_types(field: str, message: str) -> None:
+    with pytest.raises(InvalidAssetError, match=message):
+        make_asset(**{field: ("invalid",)})  # type: ignore[arg-type]
 
 
 def test_variants_and_states_are_distinct_production_concepts() -> None:
@@ -290,6 +320,8 @@ def test_required_items_block_asset_completion() -> None:
     open_state = complete_item(
         AssetState(AssetStateId("open"), DisplayName("Open"))
     )
+    assert isinstance(open_state, AssetState)
+
     asset = make_asset(
         status=AssetStatus.IN_REVIEW,
         components=(body,),
@@ -332,6 +364,10 @@ def test_completed_required_items_allow_asset_completion() -> None:
     closed = complete_item(
         AssetState(AssetStateId("closed"), DisplayName("Closed"))
     )
+    assert isinstance(body, AssetComponent)
+    assert isinstance(backpack, AssetComponent)
+    assert isinstance(closed, AssetState)
+
     asset = make_asset(
         status=AssetStatus.IN_REVIEW,
         components=(body, backpack),
@@ -344,7 +380,7 @@ def test_completed_required_items_allow_asset_completion() -> None:
     assert completed.is_completion_ready is True
 
 
-def test_completed_asset_cannot_be_constructed_with_incomplete_required_items() -> None:
+def test_completed_asset_cannot_contain_incomplete_required_items() -> None:
     body = AssetComponent(ComponentId("base-body"), DisplayName("Base Body"))
 
     with pytest.raises(InvalidAssetError, match="incomplete required"):
