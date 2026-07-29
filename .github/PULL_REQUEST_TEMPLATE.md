@@ -16,10 +16,13 @@ Describe the change and the problem it solves.
 List the commands and manual checks performed.
 
 ```bash
-uv run ruff check .
-uv run ruff format --check .
-uv run mypy src
-uv run pytest --cov=ludowright --cov-report=term-missing
+uv run ludowright quality check
+```
+
+For release-related changes:
+
+```bash
+uv run ludowright quality release
 ```
 
 ## Contracts and compatibility
