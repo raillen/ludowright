@@ -42,7 +42,7 @@ def _run_group(
         "mode": mode,
         "passed": passed,
     }
-    command = f"quality {mode}"
+    command = "quality check" if mode == "quality" else "quality release"
     json_output = json_requested(context, local_json)
 
     if json_output:
@@ -113,7 +113,7 @@ def check(
     """Run the normal pull-request quality gate."""
     _run_group(
         context,
-        "check",
+        "quality",
         QUALITY_CHECKS,
         local_json=json_output,
         dry_run=dry_run,
