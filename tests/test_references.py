@@ -69,7 +69,7 @@ def test_source_uri_accepts_credential_free_https() -> None:
         "",
         " https://example.com/reference.png",
         "http://example.com/reference.png",
-        "https://user:secret@example.com/reference.png",
+        "https://example-user@example.com/reference.png",
         "https://example.com/reference.png#fragment",
         "not-a-uri",
         "https://example.com/" + "x" * 2_050,
