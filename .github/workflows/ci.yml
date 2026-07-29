@@ -7,17 +7,15 @@ on:
       - main
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
-  patch:
+  quality:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out SQLite branch
+      - name: Check out repository
         uses: actions/checkout@v7
-        with:
-          ref: agent/sqlite-state-store
 
       - name: Install uv
         uses: astral-sh/setup-uv@v7
@@ -30,42 +28,5 @@ jobs:
       - name: Install project and quality tools
         run: uv sync --extra dev --extra docs
 
-      - name: Apply formatter and lint fixes
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-
-          test_path = Path("tests/test_state_store.py")
-          test_text = test_path.read_text(encoding="utf-8")
-          test_text = test_text.replace('match=".sqlite3"', 'match=r"\\.sqlite3"', 1)
-          test_path.write_text(test_text, encoding="utf-8")
-
-          source_path = Path("src/ludowright/infrastructure/state_store.py")
-          source_text = source_path.read_text(encoding="utf-8")
-          source_text = source_text.replace(
-              '                        f"state schema v{current_version} is not supported by v{_STATE_SCHEMA_VERSION}"\n',
-              '                        f"state schema v{current_version} is not supported by "\n'
-              '                        f"v{_STATE_SCHEMA_VERSION}"\n',
-              1,
-          )
-          source_path.write_text(source_text, encoding="utf-8")
-          PY
-
-          uv run ruff format src tests
-          uv run ruff check --fix src tests
-          uv run ruff format src tests
-
-      - name: Validate full quality gate
+      - name: Run LudoWright quality gate
         run: uv run ludowright quality check
-
-      - name: Commit validated fixes
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add src tests
-          if git diff --cached --quiet; then
-            echo "No fixes to commit."
-          else
-            git commit -m "Format SQLite state-store implementation"
-            git push origin HEAD:agent/sqlite-state-store
-          fi
