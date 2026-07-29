@@ -28,6 +28,9 @@ This is the main navigation map for humans and agents. Each subject should have 
 - [`contracts/ASSET_DOMAIN.md`](contracts/ASSET_DOMAIN.md) — asset families, subtypes, ownership, decomposition, hierarchy, priority, status, and completion rules.
 - [`contracts/REFERENCES_AND_VISUAL_JOBS.md`](contracts/REFERENCES_AND_VISUAL_JOBS.md) — visual provenance, revision-bound references, immutable generation jobs, attempt receipts, retries, and reviews.
 - [`contracts/CAPTURE_PROFILES.md`](contracts/CAPTURE_PROFILES.md) — camera, background, lighting, validation, required views, isolated items, technical sheets, and exact versioned inheritance.
+- [`contracts/JSON_SCHEMAS.md`](contracts/JSON_SCHEMAS.md) — generated Draft 2020-12 schemas, registry, fixtures, checksums, drift checking, and compatibility policy.
+
+Published machine-readable contracts are stored under `schemas/v1/`. The source models live under `src/ludowright/contracts/`.
 
 Planned canonical contracts:
 
@@ -69,11 +72,12 @@ Future bounded changes should receive their own plan under `plans/`.
 
 ## Quality
 
-- [`quality/ENGINEERING_QUALITY.md`](quality/ENGINEERING_QUALITY.md) — pre-commit, unified quality commands, coverage, property tests, dependency audits, secret scanning, CI, and failure policy.
+- [`quality/ENGINEERING_QUALITY.md`](quality/ENGINEERING_QUALITY.md) — pre-commit, unified quality commands, coverage, property tests, schema drift, dependency audits, secret scanning, CI, and failure policy.
+- [`contracts/JSON_SCHEMAS.md`](contracts/JSON_SCHEMAS.md) — schema-generation, checksum, fixture, and compatibility validation rules.
 
 Planned detailed documents:
 
-- schema and CLI contract testing;
+- CLI contract testing;
 - snapshot testing;
 - agent evals;
 - release verification;
@@ -115,6 +119,7 @@ Planned operational documents:
 
 ## Decisions
 
+- [`decisions/0007-generated-versioned-json-schemas.md`](decisions/0007-generated-versioned-json-schemas.md) — accepted strict Pydantic adapters, checked-in generated schemas, fixtures, checksum manifest, and drift enforcement.
 - [`decisions/0006-exact-versioned-capture-profile-inheritance.md`](decisions/0006-exact-versioned-capture-profile-inheritance.md) — accepted exact parent revisions, deterministic override-by-ID ordering, and separate/assembled sheet requirements.
 - [`decisions/0005-immutable-visual-jobs-and-receipts.md`](decisions/0005-immutable-visual-jobs-and-receipts.md) — accepted immutable visual jobs, append-only attempt receipts, retry semantics, and output-bound reviews.
 - [`decisions/0004-decomposed-asset-aggregate.md`](decisions/0004-decomposed-asset-aggregate.md) — accepted decomposed asset aggregate, shared production status, ownership, and completion model.
