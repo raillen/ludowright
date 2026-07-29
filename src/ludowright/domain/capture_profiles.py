@@ -82,10 +82,7 @@ class HexColor:
     value: str
 
     def __post_init__(self) -> None:
-        if (
-            not isinstance(self.value, str)
-            or _HEX_COLOR_PATTERN.fullmatch(self.value) is None
-        ):
+        if not isinstance(self.value, str) or _HEX_COLOR_PATTERN.fullmatch(self.value) is None:
             raise InvalidCaptureProfileError(
                 "a capture color must use canonical uppercase #RRGGBB notation"
             )
@@ -127,9 +124,7 @@ class CameraSpec:
                 "camera framing margin must be between 0 and 50 percent"
             )
         if self.projection is CameraProjection.PERSPECTIVE:
-            if isinstance(self.focal_length_mm, bool) or not isinstance(
-                self.focal_length_mm, int
-            ):
+            if isinstance(self.focal_length_mm, bool) or not isinstance(self.focal_length_mm, int):
                 raise InvalidCaptureProfileError(
                     "perspective camera requires an integer focal length"
                 )
@@ -138,9 +133,7 @@ class CameraSpec:
                     "perspective focal length must be between 10 and 300 mm"
                 )
         elif self.focal_length_mm is not None:
-            raise InvalidCaptureProfileError(
-                "only perspective cameras may define a focal length"
-            )
+            raise InvalidCaptureProfileError("only perspective cameras may define a focal length")
 
 
 @dataclass(frozen=True, slots=True)
@@ -155,9 +148,7 @@ class BackgroundSpec:
             if not isinstance(self.color, HexColor):
                 raise InvalidCaptureProfileError("solid background requires a color")
         elif self.color is not None:
-            raise InvalidCaptureProfileError(
-                "only solid backgrounds may define a color"
-            )
+            raise InvalidCaptureProfileError("only solid backgrounds may define a color")
 
 
 @dataclass(frozen=True, slots=True)
@@ -173,13 +164,9 @@ class LightingSpec:
             raise InvalidCaptureProfileError("shadow mode must be canonical")
         if self.mode is LightingMode.CUSTOM:
             if not isinstance(self.custom_label, DisplayName):
-                raise InvalidCaptureProfileError(
-                    "custom lighting requires a descriptive label"
-                )
+                raise InvalidCaptureProfileError("custom lighting requires a descriptive label")
         elif self.custom_label is not None:
-            raise InvalidCaptureProfileError(
-                "only custom lighting may define a custom label"
-            )
+            raise InvalidCaptureProfileError("only custom lighting may define a custom label")
 
 
 @dataclass(frozen=True, slots=True)
@@ -192,9 +179,7 @@ class CaptureValidation:
 
     def __post_init__(self) -> None:
         if not isinstance(self.dimensions, PixelDimensions):
-            raise InvalidCaptureProfileError(
-                "capture validation requires pixel dimensions"
-            )
+            raise InvalidCaptureProfileError("capture validation requires pixel dimensions")
         flags = (
             self.require_full_subject,
             self.require_consistent_scale,
@@ -202,13 +187,9 @@ class CaptureValidation:
             self.allow_occlusion,
         )
         if any(not isinstance(flag, bool) for flag in flags):
-            raise InvalidCaptureProfileError(
-                "capture validation flags must be boolean"
-            )
+            raise InvalidCaptureProfileError("capture validation flags must be boolean")
         if self.require_full_subject and self.allow_occlusion:
-            raise InvalidCaptureProfileError(
-                "full-subject validation cannot allow occlusion"
-            )
+            raise InvalidCaptureProfileError("full-subject validation cannot allow occlusion")
 
 
 @dataclass(frozen=True, slots=True)
@@ -225,26 +206,18 @@ class CaptureView:
             raise InvalidCaptureProfileError("capture view requires a typed ID")
         if not isinstance(self.name, DisplayName):
             raise InvalidCaptureProfileError("capture view name must be canonical")
-        if isinstance(self.azimuth_degrees, bool) or not isinstance(
-            self.azimuth_degrees, int
-        ):
+        if isinstance(self.azimuth_degrees, bool) or not isinstance(self.azimuth_degrees, int):
             raise InvalidCaptureProfileError("view azimuth must be an integer")
         if not 0 <= self.azimuth_degrees <= 359:
             raise InvalidCaptureProfileError("view azimuth must be between 0 and 359")
-        if isinstance(self.elevation_degrees, bool) or not isinstance(
-            self.elevation_degrees, int
-        ):
+        if isinstance(self.elevation_degrees, bool) or not isinstance(self.elevation_degrees, int):
             raise InvalidCaptureProfileError("view elevation must be an integer")
         if not -90 <= self.elevation_degrees <= 90:
-            raise InvalidCaptureProfileError(
-                "view elevation must be between -90 and 90"
-            )
+            raise InvalidCaptureProfileError("view elevation must be between -90 and 90")
         if not isinstance(self.role, ReferenceRole):
             raise InvalidCaptureProfileError("capture view role must be canonical")
         if not isinstance(self.required, bool):
-            raise InvalidCaptureProfileError(
-                "capture view required flag must be boolean"
-            )
+            raise InvalidCaptureProfileError("capture view required flag must be boolean")
 
 
 @dataclass(frozen=True, slots=True)
@@ -261,21 +234,15 @@ class CaptureRequirement:
             CaptureRequirementKind.STATE: AssetStateId,
         }
         if not isinstance(self.kind, CaptureRequirementKind):
-            raise InvalidCaptureProfileError(
-                "capture requirement kind must be canonical"
-            )
+            raise InvalidCaptureProfileError("capture requirement kind must be canonical")
         if not isinstance(self.id, expected_types[self.kind]):
             raise InvalidCaptureProfileError(
                 "capture requirement ID must match its requirement kind"
             )
         if not isinstance(self.name, DisplayName):
-            raise InvalidCaptureProfileError(
-                "capture requirement name must be canonical"
-            )
+            raise InvalidCaptureProfileError("capture requirement name must be canonical")
         if not isinstance(self.required, bool):
-            raise InvalidCaptureProfileError(
-                "capture requirement required flag must be boolean"
-            )
+            raise InvalidCaptureProfileError("capture requirement required flag must be boolean")
 
 
 @dataclass(frozen=True, slots=True)
@@ -301,28 +268,16 @@ class CaptureSheet:
                 "capture sheet requires an immutable non-empty view tuple"
             )
         if any(not isinstance(view_id, CaptureViewId) for view_id in self.view_ids):
-            raise InvalidCaptureProfileError(
-                "capture sheet view IDs must be typed"
-            )
+            raise InvalidCaptureProfileError("capture sheet view IDs must be typed")
         if len(self.view_ids) != len(set(self.view_ids)):
-            raise InvalidCaptureProfileError(
-                "capture sheet view IDs must be unique"
-            )
+            raise InvalidCaptureProfileError("capture sheet view IDs must be unique")
         if not isinstance(self.subject_modes, frozenset) or not self.subject_modes:
-            raise InvalidCaptureProfileError(
-                "capture sheet requires immutable subject modes"
-            )
-        if any(
-            not isinstance(mode, CaptureSubjectMode) for mode in self.subject_modes
-        ):
-            raise InvalidCaptureProfileError(
-                "capture sheet subject modes must be canonical"
-            )
+            raise InvalidCaptureProfileError("capture sheet requires immutable subject modes")
+        if any(not isinstance(mode, CaptureSubjectMode) for mode in self.subject_modes):
+            raise InvalidCaptureProfileError("capture sheet subject modes must be canonical")
         for flag in (self.separate_files, self.assembled_sheet, self.required):
             if not isinstance(flag, bool):
-                raise InvalidCaptureProfileError(
-                    "capture sheet output flags must be boolean"
-                )
+                raise InvalidCaptureProfileError("capture sheet output flags must be boolean")
         if not self.separate_files and not self.assembled_sheet:
             raise InvalidCaptureProfileError(
                 "capture sheet must request separate files or an assembled sheet"
@@ -338,9 +293,7 @@ class CaptureProfileRef:
         if not isinstance(self.id, CaptureProfileId):
             raise InvalidCaptureProfileError("profile reference requires a typed ID")
         if not isinstance(self.version, ProfileVersion):
-            raise InvalidCaptureProfileError(
-                "profile reference requires a profile version"
-            )
+            raise InvalidCaptureProfileError("profile reference requires a profile version")
 
 
 @dataclass(frozen=True, slots=True)
@@ -377,17 +330,11 @@ class CaptureProfile:
         if not isinstance(self.name, DisplayName):
             raise InvalidCaptureProfileError("capture profile name must be canonical")
         if self.family is not None and not isinstance(self.family, AssetFamily):
-            raise InvalidCaptureProfileError(
-                "capture profile family must be canonical"
-            )
+            raise InvalidCaptureProfileError("capture profile family must be canonical")
         if self.subtype is not None and not isinstance(self.subtype, AssetSubtype):
-            raise InvalidCaptureProfileError(
-                "capture profile subtype must be canonical"
-            )
+            raise InvalidCaptureProfileError("capture profile subtype must be canonical")
         if self.family is AssetFamily.OTHER and self.subtype is None:
-            raise InvalidCaptureProfileError(
-                "the 'other' profile family requires a subtype"
-            )
+            raise InvalidCaptureProfileError("the 'other' profile family requires a subtype")
 
     def _validate_collections(self) -> None:
         collections = (self.views, self.requirements, self.sheets)
@@ -401,9 +348,7 @@ class CaptureProfile:
 
     def _validate_resolved_contract(self) -> None:
         if self.family is None:
-            raise InvalidCaptureProfileError(
-                "resolved capture profile requires an asset family"
-            )
+            raise InvalidCaptureProfileError("resolved capture profile requires an asset family")
         for value, label in (
             (self.camera, "camera"),
             (self.background, "background"),
@@ -411,13 +356,9 @@ class CaptureProfile:
             (self.validation, "validation rules"),
         ):
             if value is None:
-                raise InvalidCaptureProfileError(
-                    f"resolved capture profile requires {label}"
-                )
+                raise InvalidCaptureProfileError(f"resolved capture profile requires {label}")
         if not self.views:
-            raise InvalidCaptureProfileError(
-                "resolved capture profile requires at least one view"
-            )
+            raise InvalidCaptureProfileError("resolved capture profile requires at least one view")
         self._validate_sheet_references()
 
     def _validate_sheet_references(self) -> None:
@@ -488,38 +429,26 @@ class CaptureProfile:
 
 def _validate_views(items: tuple[CaptureView, ...]) -> None:
     if any(not isinstance(item, CaptureView) for item in items):
-        raise InvalidCaptureProfileError(
-            "capture profile contains an invalid view"
-        )
+        raise InvalidCaptureProfileError("capture profile contains an invalid view")
     ids = tuple(item.id for item in items)
     if len(ids) != len(set(ids)):
-        raise InvalidCaptureProfileError(
-            "capture profile view IDs must be unique"
-        )
+        raise InvalidCaptureProfileError("capture profile view IDs must be unique")
 
 
 def _validate_requirements(items: tuple[CaptureRequirement, ...]) -> None:
     if any(not isinstance(item, CaptureRequirement) for item in items):
-        raise InvalidCaptureProfileError(
-            "capture profile contains an invalid requirement"
-        )
+        raise InvalidCaptureProfileError("capture profile contains an invalid requirement")
     ids = tuple(item.id for item in items)
     if len(ids) != len(set(ids)):
-        raise InvalidCaptureProfileError(
-            "capture profile requirement IDs must be unique"
-        )
+        raise InvalidCaptureProfileError("capture profile requirement IDs must be unique")
 
 
 def _validate_sheets(items: tuple[CaptureSheet, ...]) -> None:
     if any(not isinstance(item, CaptureSheet) for item in items):
-        raise InvalidCaptureProfileError(
-            "capture profile contains an invalid sheet"
-        )
+        raise InvalidCaptureProfileError("capture profile contains an invalid sheet")
     ids = tuple(item.id for item in items)
     if len(ids) != len(set(ids)):
-        raise InvalidCaptureProfileError(
-            "capture profile sheet IDs must be unique"
-        )
+        raise InvalidCaptureProfileError("capture profile sheet IDs must be unique")
 
 
 def _merge_views(
