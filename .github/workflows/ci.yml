@@ -42,6 +42,18 @@ jobs:
               "    ) -> DependencyGraph:\n        return DependencyGraph(\n",
               1,
           )
+          domain_text = domain_text.replace(
+              "                if source == root and initial_edges is not None:\n"
+              "                    if edge.identity not in initial_edges:\n"
+              "                        continue\n",
+              "                if (\n"
+              "                    source == root\n"
+              "                    and initial_edges is not None\n"
+              "                    and edge.identity not in initial_edges\n"
+              "                ):\n"
+              "                    continue\n",
+              1,
+          )
           domain_path.write_text(domain_text, encoding="utf-8")
 
           test_path = Path("tests/test_dependencies.py")
