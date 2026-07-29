@@ -234,9 +234,7 @@ def test_component_cycles_are_rejected() -> None:
     ],
 )
 def test_decomposition_ids_must_be_unique(
-    collection: tuple[AssetComponent, ...]
-    | tuple[AssetVariant, ...]
-    | tuple[AssetState, ...],
+    collection: tuple[AssetComponent, ...] | tuple[AssetVariant, ...] | tuple[AssetState, ...],
     message: str,
 ) -> None:
     kwargs: dict[str, object]
@@ -317,9 +315,7 @@ def test_required_items_block_asset_completion() -> None:
         DisplayName("Festival Hat"),
         required=False,
     )
-    open_state = complete_item(
-        AssetState(AssetStateId("open"), DisplayName("Open"))
-    )
+    open_state = complete_item(AssetState(AssetStateId("open"), DisplayName("Open")))
     assert isinstance(open_state, AssetState)
 
     asset = make_asset(
@@ -355,15 +351,9 @@ def test_optional_items_do_not_block_completion() -> None:
 
 
 def test_completed_required_items_allow_asset_completion() -> None:
-    body = complete_item(
-        AssetComponent(ComponentId("base-body"), DisplayName("Base Body"))
-    )
-    backpack = complete_item(
-        AssetComponent(ComponentId("backpack"), DisplayName("Backpack"))
-    )
-    closed = complete_item(
-        AssetState(AssetStateId("closed"), DisplayName("Closed"))
-    )
+    body = complete_item(AssetComponent(ComponentId("base-body"), DisplayName("Base Body")))
+    backpack = complete_item(AssetComponent(ComponentId("backpack"), DisplayName("Backpack")))
+    closed = complete_item(AssetState(AssetStateId("closed"), DisplayName("Closed")))
     assert isinstance(body, AssetComponent)
     assert isinstance(backpack, AssetComponent)
     assert isinstance(closed, AssetState)
