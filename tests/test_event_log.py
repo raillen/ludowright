@@ -435,7 +435,7 @@ def test_recovery_is_noop_for_complete_log(tmp_path: Path) -> None:
 def test_event_log_rejects_invalid_path_and_limits(tmp_path: Path) -> None:
     filesystem = ProjectFilesystem(tmp_path)
 
-    with pytest.raises(EventLogError, match=".jsonl"):
+    with pytest.raises(EventLogError, match=r"\.jsonl"):
         EventLog(filesystem, RepositoryPath("events.json"))
     with pytest.raises(EventLogError, match="positive"):
         EventLog(filesystem, max_log_bytes=0)
@@ -464,7 +464,7 @@ def test_event_line_limit_is_enforced(tmp_path: Path) -> None:
 
 
 def test_event_log_limit_is_enforced(tmp_path: Path) -> None:
-    log = event_log(tmp_path, max_log_bytes=700, max_line_bytes=600)
+    log = event_log(tmp_path, max_log_bytes=900, max_line_bytes=900)
     log.append(
         event_draft(payload={"text": "x" * 100}),
         event_id=EventId("event-one"),

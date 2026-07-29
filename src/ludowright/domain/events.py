@@ -20,7 +20,7 @@ _MAX_PAYLOAD_DEPTH = 64
 _MAX_PAYLOAD_VALUES = 50_000
 
 
-type FrozenJsonScalar = None | bool | int | float | str
+type FrozenJsonScalar = bool | int | float | str | None
 type FrozenJsonValue = (
     FrozenJsonScalar | tuple["FrozenJsonValue", ...] | Mapping[str, "FrozenJsonValue"]
 )
@@ -55,10 +55,7 @@ class EventHash:
     value: str
 
     def __post_init__(self) -> None:
-        if (
-            not isinstance(self.value, str)
-            or _EVENT_HASH_PATTERN.fullmatch(self.value) is None
-        ):
+        if not isinstance(self.value, str) or _EVENT_HASH_PATTERN.fullmatch(self.value) is None:
             raise InvalidEventError("event hash must be lowercase SHA-256")
 
     def __str__(self) -> str:
@@ -153,13 +150,9 @@ def thaw_json_object(value: Mapping[str, FrozenJsonValue]) -> dict[str, object]:
 def _freeze_json(value: object, *, depth: int, remaining: list[int]) -> FrozenJsonValue:
     remaining[0] -= 1
     if remaining[0] < 0:
-        raise InvalidEventError(
-            f"event payload cannot exceed {_MAX_PAYLOAD_VALUES} values"
-        )
+        raise InvalidEventError(f"event payload cannot exceed {_MAX_PAYLOAD_VALUES} values")
     if depth > _MAX_PAYLOAD_DEPTH:
-        raise InvalidEventError(
-            f"event payload cannot exceed {_MAX_PAYLOAD_DEPTH} nesting levels"
-        )
+        raise InvalidEventError(f"event payload cannot exceed {_MAX_PAYLOAD_DEPTH} nesting levels")
     if value is None or isinstance(value, (str, bool, int)):
         return value
     if isinstance(value, float):
@@ -167,9 +160,7 @@ def _freeze_json(value: object, *, depth: int, remaining: list[int]) -> FrozenJs
             raise InvalidEventError("event payload cannot contain non-finite numbers")
         return value
     if isinstance(value, (list, tuple)):
-        return tuple(
-            _freeze_json(item, depth=depth + 1, remaining=remaining) for item in value
-        )
+        return tuple(_freeze_json(item, depth=depth + 1, remaining=remaining) for item in value)
     if isinstance(value, Mapping):
         keys = tuple(value)
         if any(not isinstance(key, str) for key in keys):
@@ -182,9 +173,7 @@ def _freeze_json(value: object, *, depth: int, remaining: list[int]) -> FrozenJs
                 remaining=remaining,
             )
         return MappingProxyType(result)
-    raise InvalidEventError(
-        f"event payload cannot contain {type(value).__name__} values"
-    )
+    raise InvalidEventError(f"event payload cannot contain {type(value).__name__} values")
 
 
 def _thaw_json(value: FrozenJsonValue) -> object:

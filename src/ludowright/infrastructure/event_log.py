@@ -172,13 +172,9 @@ class EventLog:
             )
             line = _serialize_record(record)
             if len(line) > self._max_line_bytes:
-                raise EventLogError(
-                    f"event line exceeds {self._max_line_bytes} bytes: {len(line)}"
-                )
+                raise EventLogError(f"event line exceeds {self._max_line_bytes} bytes: {len(line)}")
             if len(payload) + len(line) > self._max_log_bytes:
-                raise EventLogError(
-                    f"event log would exceed {self._max_log_bytes} bytes"
-                )
+                raise EventLogError(f"event log would exceed {self._max_log_bytes} bytes")
             self._filesystem.write_bytes(self._path, payload + line)
             return record
 
@@ -224,9 +220,7 @@ class EventLog:
         expected_sequence = 1
         for line_number, line in enumerate(payload.splitlines(keepends=True), start=1):
             if line == b"\n":
-                raise CorruptEventLogError(
-                    f"event log contains a blank line at {line_number}"
-                )
+                raise CorruptEventLogError(f"event log contains a blank line at {line_number}")
             if len(line) > self._max_line_bytes:
                 raise CorruptEventLogError(
                     f"event line {line_number} exceeds {self._max_line_bytes} bytes"
@@ -268,9 +262,7 @@ def _parse_record(line: bytes, *, line_number: int) -> EventRecord:
     try:
         text = line[:-1].decode("utf-8")
     except UnicodeDecodeError as error:
-        raise CorruptEventLogError(
-            f"event line {line_number} is not UTF-8"
-        ) from error
+        raise CorruptEventLogError(f"event line {line_number} is not UTF-8") from error
     try:
         raw = json.loads(
             text,
@@ -280,22 +272,17 @@ def _parse_record(line: bytes, *, line_number: int) -> EventRecord:
     except CorruptEventLogError:
         raise
     except (json.JSONDecodeError, RecursionError, ValueError) as error:
-        raise CorruptEventLogError(
-            f"event line {line_number} is invalid JSON"
-        ) from error
+        raise CorruptEventLogError(f"event line {line_number} is invalid JSON") from error
     if not isinstance(raw, dict):
         raise CorruptEventLogError(f"event line {line_number} must be a JSON object")
     if frozenset(raw) != _EVENT_KEYS:
         missing = sorted(_EVENT_KEYS - frozenset(raw))
         extra = sorted(frozenset(raw) - _EVENT_KEYS)
         raise CorruptEventLogError(
-            f"event line {line_number} has an invalid field set; "
-            f"missing={missing}, extra={extra}"
+            f"event line {line_number} has an invalid field set; missing={missing}, extra={extra}"
         )
     if raw["schema_version"] != EventRecord.schema_version:
-        raise CorruptEventLogError(
-            f"event line {line_number} uses unsupported schema version"
-        )
+        raise CorruptEventLogError(f"event line {line_number} uses unsupported schema version")
     if not isinstance(raw["payload"], dict):
         raise CorruptEventLogError(f"event line {line_number} payload must be an object")
 
@@ -307,15 +294,11 @@ def _parse_record(line: bytes, *, line_number: int) -> EventRecord:
             occurred_at=_parse_timestamp(raw["occurred_at"]),
             correlation_id=CorrelationId(raw["correlation_id"]),
             causation_id=(
-                EventId(raw["causation_id"])
-                if raw["causation_id"] is not None
-                else None
+                EventId(raw["causation_id"]) if raw["causation_id"] is not None else None
             ),
             payload=raw["payload"],
             previous_hash=(
-                EventHash(raw["previous_hash"])
-                if raw["previous_hash"] is not None
-                else None
+                EventHash(raw["previous_hash"]) if raw["previous_hash"] is not None else None
             ),
             event_hash=EventHash(raw["hash"]),
         )
@@ -420,9 +403,13 @@ def _canonical_json(value: dict[str, object]) -> bytes:
 def _format_timestamp(value: datetime) -> str:
     if not isinstance(value, datetime) or value.tzinfo is None:
         raise EventLogError("event timestamp must be timezone-aware")
-    return value.astimezone(UTC).isoformat(timespec="microseconds").replace(
-        "+00:00",
-        "Z",
+    return (
+        value.astimezone(UTC)
+        .isoformat(timespec="microseconds")
+        .replace(
+            "+00:00",
+            "Z",
+        )
     )
 
 
