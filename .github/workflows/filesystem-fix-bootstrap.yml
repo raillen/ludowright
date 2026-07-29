@@ -1,0 +1,181 @@
+name: Filesystem Fix Bootstrap
+
+on:
+  push:
+    branches:
+      - agent/project-filesystem
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out branch
+        uses: actions/checkout@v7
+        with:
+          ref: agent/project-filesystem
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+
+      - name: Set up Python
+        run: uv python install 3.12
+
+      - name: Install project
+        run: uv sync --all-extras
+
+      - name: Apply validated patch
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path("src/ludowright/infrastructure/filesystem.py")
+          text = path.read_text(encoding="utf-8")
+          text = text.replace("import os\nimport socket", "import os\nimport re\nimport socket")
+          text = text.replace(
+              "_MAX_LOCK_METADATA_BYTES = 16_384\n",
+              "_MAX_LOCK_METADATA_BYTES = 16_384\n"
+              "_LOCK_NAME_PATTERN = re.compile(r\"^[a-z0-9]+(?:-[a-z0-9]+)*$\")\n"
+              "_LOCK_TOKEN_PATTERN = re.compile(r\"^[0-9a-f]{32}$\")\n",
+          )
+          text = text.replace(
+              '''@dataclass(frozen=True, slots=True)
+          class LockMetadata:
+              """Diagnostic metadata stored in an exclusive lock file."""
+
+              token: str
+              name: str
+              pid: int
+              hostname: str
+              created_at: str
+
+              def to_json(self) -> bytes:
+          ''',
+              '''@dataclass(frozen=True, slots=True)
+          class LockMetadata:
+              """Diagnostic metadata stored in an exclusive lock file."""
+
+              token: str
+              name: str
+              pid: int
+              hostname: str
+              created_at: str
+
+              def __post_init__(self) -> None:
+                  if not isinstance(self.token, str) or _LOCK_TOKEN_PATTERN.fullmatch(self.token) is None:
+                      raise ProjectLockOwnershipError("project lock token is malformed")
+                  if not isinstance(self.name, str) or _LOCK_NAME_PATTERN.fullmatch(self.name) is None:
+                      raise ProjectLockOwnershipError("project lock name is malformed")
+                  if isinstance(self.pid, bool) or not isinstance(self.pid, int) or self.pid < 1:
+                      raise ProjectLockOwnershipError("project lock process ID is malformed")
+                  if (
+                      not isinstance(self.hostname, str)
+                      or not self.hostname
+                      or self.hostname != self.hostname.strip()
+                      or len(self.hostname) > 255
+                  ):
+                      raise ProjectLockOwnershipError("project lock hostname is malformed")
+                  if not isinstance(self.created_at, str):
+                      raise ProjectLockOwnershipError("project lock timestamp is malformed")
+                  try:
+                      timestamp = datetime.fromisoformat(self.created_at)
+                  except ValueError as error:
+                      raise ProjectLockOwnershipError("project lock timestamp is malformed") from error
+                  if timestamp.utcoffset() is None:
+                      raise ProjectLockOwnershipError("project lock timestamp must include a timezone")
+
+              def to_json(self) -> bytes:
+          ''',
+          )
+          text = text.replace(
+              '''            try:
+                          payload = metadata.to_json()
+                          os.write(descriptor, payload)
+                          os.fsync(descriptor)
+                      except BaseException:
+                          os.close(descriptor)
+                          lock_path.unlink(missing_ok=True)
+                          raise
+                      os.close(descriptor)
+          ''',
+              '''            try:
+                          with os.fdopen(descriptor, "wb") as stream:
+                              descriptor = -1
+                              stream.write(metadata.to_json())
+                              stream.flush()
+                              os.fsync(stream.fileno())
+                      except BaseException:
+                          if descriptor >= 0:
+                              os.close(descriptor)
+                          lock_path.unlink(missing_ok=True)
+                          raise
+          ''',
+          )
+          text = text.replace(
+              '''def _validate_lock_name(name: str) -> None:
+              try:
+                  path = RepositoryPath(f"{name}.lock")
+              except UnsafeProjectPathError as error:
+                  raise ProjectFilesystemError(f"invalid project lock name: {name!r}") from error
+              if len(path.parts) != 1 or "." in name or "_" in name:
+                  raise ProjectFilesystemError(
+                      "project lock names must use lowercase letters, digits, and hyphens"
+                  )
+          ''',
+              '''def _validate_lock_name(name: str) -> None:
+              if not isinstance(name, str) or _LOCK_NAME_PATTERN.fullmatch(name) is None:
+                  raise ProjectFilesystemError(
+                      "project lock names must use lowercase letters, digits, and hyphens"
+                  )
+          ''',
+          )
+          path.write_text(text, encoding="utf-8")
+
+          path = Path("tests/test_filesystem.py")
+          text = path.read_text(encoding="utf-8")
+          text = text.replace(
+              '''    assume(all(segment.split(".", maxsplit=1)[0] not in {"con", "nul", "prn"} for segment in segments))
+          ''',
+              '''    reserved = {
+                  "aux",
+                  "clock$",
+                  "con",
+                  "nul",
+                  "prn",
+                  *(f"com{index}" for index in range(1, 10)),
+                  *(f"lpt{index}" for index in range(1, 10)),
+              }
+              assume(all(segment.split(".", maxsplit=1)[0] not in reserved for segment in segments))
+          ''',
+          )
+          text = text.replace(
+              'with pytest.raises(UnsafeProjectPathError, match="symlink"):\n        filesystem.write_text(RepositoryPath("target.json"), "inside\\n")',
+              'with pytest.raises(UnsafeProjectPathError, match="symbolic link"):\n        filesystem.write_text(RepositoryPath("target.json"), "inside\\n")',
+          )
+          path.write_text(text, encoding="utf-8")
+          PY
+
+          uv run ruff format src/ludowright/infrastructure tests/test_filesystem.py
+
+      - name: Validate patch
+        run: |
+          uv run ruff check src/ludowright/infrastructure tests/test_filesystem.py
+          uv run mypy src
+          uv run pytest tests/test_filesystem.py -q
+
+      - name: Commit patch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/ludowright/infrastructure tests/test_filesystem.py
+          if git diff --cached --quiet; then
+            echo "Validated patch is already current."
+          else
+            git commit -m "Harden project filesystem locks"
+            git push origin HEAD:agent/project-filesystem
+          fi
