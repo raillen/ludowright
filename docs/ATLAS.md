@@ -26,12 +26,11 @@ This is the main navigation map for humans and agents. Each subject should have 
 - [`contracts/PROJECT_DOMAIN.md`](contracts/PROJECT_DOMAIN.md) — project identity, dimensions, targets, engine, production stage, lifecycle, and transition invariants.
 - [`contracts/DECISIONS_AND_APPROVALS.md`](contracts/DECISIONS_AND_APPROVALS.md) — decision states, revision-bound approval states, immutable logical histories, and superseding relationships.
 - [`contracts/ASSET_DOMAIN.md`](contracts/ASSET_DOMAIN.md) — asset families, subtypes, ownership, decomposition, hierarchy, priority, status, and completion rules.
+- [`contracts/REFERENCES_AND_VISUAL_JOBS.md`](contracts/REFERENCES_AND_VISUAL_JOBS.md) — visual provenance, revision-bound references, immutable generation jobs, attempt receipts, retries, and reviews.
 
 Planned canonical contracts:
 
 - project manifest;
-- visual-generation job;
-- generation receipt;
 - capture profile;
 - CLI JSON output;
 - release manifest.
@@ -49,7 +48,9 @@ Planned documents:
 
 ## Visual production
 
-Planned documents:
+The visual reference and job foundation is defined in [`contracts/REFERENCES_AND_VISUAL_JOBS.md`](contracts/REFERENCES_AND_VISUAL_JOBS.md).
+
+Planned detailed documents:
 
 - visual bible schema;
 - asset-family taxonomy;
@@ -58,7 +59,7 @@ Planned documents:
 - garments and props;
 - creatures, vehicles, architecture, foliage, UI, VFX, and modular kits;
 - deterministic technical-sheet assembly;
-- provenance and licensing.
+- provenance and licensing operations.
 
 ## Implementation
 
@@ -89,8 +90,9 @@ Planned detailed documents:
 - archive extraction and packaging safety;
 - template and plugin trust;
 - secret handling;
-- external-reference provenance;
 - visual-content safeguards.
+
+External-reference URI and credential rules are canonical in [`contracts/REFERENCES_AND_VISUAL_JOBS.md`](contracts/REFERENCES_AND_VISUAL_JOBS.md).
 
 ## Governance and operations
 
@@ -113,6 +115,7 @@ Planned operational documents:
 
 ## Decisions
 
+- [`decisions/0005-immutable-visual-jobs-and-receipts.md`](decisions/0005-immutable-visual-jobs-and-receipts.md) — accepted immutable visual jobs, append-only attempt receipts, retry semantics, and output-bound reviews.
 - [`decisions/0004-decomposed-asset-aggregate.md`](decisions/0004-decomposed-asset-aggregate.md) — accepted decomposed asset aggregate, shared production status, ownership, and completion model.
 - [`decisions/0003-revision-bound-approvals.md`](decisions/0003-revision-bound-approvals.md) — accepted revision-bound approvals, immutable logical histories, and superseding relationships.
 - [`decisions/0002-immutable-project-aggregate.md`](decisions/0002-immutable-project-aggregate.md) — accepted immutable project aggregate and separate stage/lifecycle model.

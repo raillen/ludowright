@@ -78,6 +78,18 @@ class JobId(Identifier):
     kind = "job"
 
 
+class ReceiptId(Identifier):
+    """Identifier for one immutable generation attempt receipt."""
+
+    kind = "receipt"
+
+
+class ReviewId(Identifier):
+    """Identifier for one immutable visual review record."""
+
+    kind = "review"
+
+
 class DecisionId(Identifier):
     """Identifier for a recorded project decision."""
 
