@@ -1,0 +1,181 @@
+# System Overview
+
+## Architectural goal
+
+LudoWright must provide a guided Codex experience without placing state, business rules, or validation exclusively inside prompts. The system therefore separates deterministic product behavior from agent orchestration.
+
+## System layers
+
+```text
+User
+  ↓
+Codex adapter: skill, agents, hooks, ImageGen execution
+  ↓
+Application layer: commands, use cases, workflows, event handling
+  ↓
+Domain core: entities, policies, state machines, dependencies, validation
+  ↓
+Infrastructure: filesystem, SQLite, YAML/JSON, ODS, images, Git, packaging
+```
+
+Dependency direction points inward. Domain code must not import CLI, Codex, filesystem, database, ODS, Pillow, or Git implementations.
+
+## Major modules
+
+### Core domain
+
+Owns:
+
+- projects and lifecycle stages;
+- decisions and approvals;
+- documents and canonical-source relationships;
+- assets, components, variants, states, and dependencies;
+- visual bibles and capture profiles;
+- visual jobs, generations, references, and receipts;
+- audits, issues, milestones, packages, and releases;
+- IDs, versions, status transitions, and validation policies.
+
+### Application
+
+Coordinates domain behavior through explicit use cases:
+
+- initialize project;
+- answer guided intake;
+- generate or refresh documents;
+- discover and decompose assets;
+- plan visual jobs;
+- record a generation result;
+- approve, reject, or supersede a reference;
+- assemble sheets;
+- run audits;
+- build a release package.
+
+Application code depends on ports, not concrete infrastructure.
+
+### CLI
+
+Provides stable human-readable and JSON interfaces. Commands must be scriptable, have predictable exit codes, and support non-interactive operation. Destructive and migration commands require dry-run support.
+
+### Codex adapter
+
+Provides:
+
+- `$ludowright` skill;
+- guided conversation policy;
+- specialized agents;
+- job-to-ImageGen execution;
+- review checkpoints;
+- resumable next-action suggestions;
+- agent eval fixtures.
+
+It calls application use cases through the CLI initially. A typed in-process or MCP-like adapter may be added only if CLI boundaries prove insufficient.
+
+### Infrastructure
+
+Implements:
+
+- local project filesystem;
+- SQLite state and query index;
+- YAML/JSON serialization;
+- JSON Lines event log;
+- ODS export;
+- image normalization and composition;
+- checksums and provenance;
+- Git metadata;
+- ZIP packaging;
+- atomic writes, locks, backups, and migrations.
+
+## Canonical state model
+
+Human-editable structured files remain the canonical product data where practical. SQLite provides indexed state, workflow progress, and query support. The event log records significant changes. Derived artifacts include:
+
+- rendered Markdown sections;
+- ODS workbooks;
+- technical sheets;
+- reports;
+- package indexes;
+- ZIP releases.
+
+Derived outputs must contain or reference their source version and generation metadata.
+
+## Source-of-truth rules
+
+- A decision record is canonical for rationale and status.
+- Structured asset specifications are canonical for asset data.
+- The visual bible and capture profiles are canonical for visual-generation requirements.
+- Approved individual references are canonical visual inputs.
+- Contact sheets and spreadsheets are derived.
+- Chat messages are never canonical.
+
+## Project lifecycle
+
+Initial lifecycle:
+
+```text
+new
+→ intake_in_progress
+→ requirements_ready
+→ documentation_ready
+→ assets_planned
+→ visual_plan_ready
+→ generation_in_progress
+→ review_in_progress
+→ package_ready
+→ released
+```
+
+The lifecycle is not strictly linear. Changes may invalidate later stages and return the project to an earlier readiness state without deleting historical outputs.
+
+## Invalidation model
+
+Every generated or derived item records dependencies. When an input changes, LudoWright marks dependents stale instead of silently regenerating or deleting them.
+
+Examples:
+
+- changing camera perspective invalidates relevant capture profiles, environment references, and some UI decisions;
+- changing a character body proportion invalidates clothing-fit references and consolidated sheets;
+- rejecting an approved reference invalidates jobs and sheets that depended on it;
+- changing an asset ID requires an explicit migration.
+
+## Visual-generation architecture
+
+The core creates a structured job. Codex executes it through ImageGen, then records the result. A visual job identifies:
+
+- asset and component;
+- operation and required view;
+- approved reference inputs;
+- compiled prompt and constraints;
+- expected output path and format;
+- validation checks;
+- approval requirements.
+
+Each technical view is generated separately. Clothing, hair, accessories, and props are independent components. Consolidated technical sheets are composed deterministically from approved files.
+
+## Persistence and file safety
+
+- writes should be atomic;
+- destructive migrations create backups;
+- approved files are immutable by default;
+- replacements create new versions and superseding relationships;
+- paths are repository-relative and normalized;
+- package builders reject traversal and external paths;
+- checksums detect unexpected modifications.
+
+## Extension boundary
+
+The initial codebase is modular but not a plugin platform. Public extension APIs arrive only after core schemas and workflows stabilize. Future plugins may add templates, capture profiles, validators, generators, and exporters without replacing domain invariants.
+
+## Initial technology choices
+
+- Python 3.12+;
+- `uv` for development and installation workflows;
+- Typer and Rich for CLI;
+- Pydantic and JSON Schema for contracts;
+- Jinja2 for templates;
+- SQLite and YAML/JSON for persistence;
+- Pillow for image processing;
+- ODFPy for ODS export;
+- pytest, Hypothesis, Ruff, mypy, and pre-commit for quality;
+- MkDocs Material for public documentation.
+
+Each material choice should receive an ADR before it becomes difficult to reverse.
