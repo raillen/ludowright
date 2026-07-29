@@ -12,8 +12,8 @@ from ludowright.contracts.publication import (
     write_publication,
 )
 from ludowright.contracts.registry import (
-    CONTRACTS,
     CONTRACT_BY_NAME,
+    CONTRACTS,
     JSON_SCHEMA_DRAFT,
     SCHEMA_VERSION,
 )
@@ -25,17 +25,17 @@ from ludowright.contracts.visual import (
 )
 
 __all__ = [
-    "ApprovalContract",
-    "AssetContract",
     "CONTRACTS",
     "CONTRACT_BY_NAME",
-    "CaptureProfileContract",
     "DEFAULT_SCHEMA_ROOT",
+    "JSON_SCHEMA_DRAFT",
+    "SCHEMA_VERSION",
+    "ApprovalContract",
+    "AssetContract",
+    "CaptureProfileContract",
     "DecisionContract",
     "GenerationReceiptContract",
-    "JSON_SCHEMA_DRAFT",
     "ProjectContract",
-    "SCHEMA_VERSION",
     "VisualJobContract",
     "VisualReferenceContract",
     "VisualReviewContract",
