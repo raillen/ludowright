@@ -22,6 +22,8 @@ This is the main navigation map for humans and agents. Each subject should have 
 
 ## Contracts
 
+- [`contracts/IDENTIFIERS_AND_VERSIONS.md`](contracts/IDENTIFIERS_AND_VERSIONS.md) — display names, slugs, typed entity IDs, and schema/template/profile revisions.
+
 Planned canonical contracts:
 
 - project manifest;
@@ -110,9 +112,10 @@ Planned operational documents:
 
 ## Decisions
 
+- [`decisions/0001-typed-identifiers-and-revision-versions.md`](decisions/0001-typed-identifiers-and-revision-versions.md) — accepted identifier, display-name, slug, and contract-revision architecture.
 - [`decisions/0000-template.md`](decisions/0000-template.md) — canonical Architecture Decision Record template.
 
-Accepted Architecture Decision Records will follow the naming pattern:
+Accepted Architecture Decision Records follow the naming pattern:
 
 ```text
 NNNN-short-decision-title.md
