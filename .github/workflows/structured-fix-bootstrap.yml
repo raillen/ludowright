@@ -1,0 +1,132 @@
+name: Structured Repository Fix Bootstrap
+
+on:
+  push:
+    branches:
+      - agent/structured-repositories
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out branch
+        uses: actions/checkout@v7
+        with:
+          ref: agent/structured-repositories
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+
+      - name: Set up Python
+        run: uv python install 3.12
+
+      - name: Apply validated fixes
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path("src/ludowright/infrastructure/filesystem.py")
+          text = path.read_text(encoding="utf-8")
+          constants = '''PROJECT_MARKER = RepositoryPath(".ludowright/project.json")
+          LOCK_DIRECTORY = RepositoryPath(".ludowright/locks")
+
+
+          '''
+          text = text.replace(constants, "")
+          anchor = '''
+
+          @dataclass(frozen=True, slots=True)
+          class LockMetadata:
+          '''
+          text = text.replace(anchor, f"\n\n{constants}@dataclass(frozen=True, slots=True)\nclass LockMetadata:\n")
+          path.write_text(text, encoding="utf-8")
+
+          path = Path("tests/test_filesystem.py")
+          text = path.read_text(encoding="utf-8")
+          text = text.replace("import os\n", "import os\nimport string\n")
+          text = text.replace(
+              '_SAFE_SEGMENT_ALPHABET = "abcdefghijklmnopqrstuvwxyz0123456789-_"',
+              '_SAFE_SEGMENT_ALPHABET = string.ascii_lowercase + string.digits + "-_"',
+          )
+          path.write_text(text, encoding="utf-8")
+
+          path = Path("pyproject.toml")
+          text = path.read_text(encoding="utf-8")
+          text = text.replace(
+              '  "ruff>=0.12,<1",\n',
+              '  "ruff>=0.12,<1",\n  "types-pyyaml>=6.0.12,<7",\n',
+          )
+          path.write_text(text, encoding="utf-8")
+
+          path = Path("src/ludowright/infrastructure/structured.py")
+          text = path.read_text(encoding="utf-8")
+          text = text.replace(
+              "from typing import Any, Generic, TypeVar",
+              "from typing import Any, cast",
+          )
+          text = text.replace('\nTContract = TypeVar("TContract", bound=ContractModel)\n', "\n")
+          text = text.replace(
+              "class StructuredDocumentSnapshot(Generic[TContract]):",
+              "class StructuredDocumentSnapshot[TContract: ContractModel]:",
+          )
+          text = text.replace(
+              "class StructuredDocumentRepository(Generic[TContract]):",
+              "class StructuredDocumentRepository[TContract: ContractModel]:",
+          )
+          text = text.replace(
+              "class JsonDocumentRepository(StructuredDocumentRepository[TContract]):",
+              "class JsonDocumentRepository[TContract: ContractModel](StructuredDocumentRepository[TContract]):",
+          )
+          text = text.replace(
+              "class YamlDocumentRepository(StructuredDocumentRepository[TContract]):",
+              "class YamlDocumentRepository[TContract: ContractModel](StructuredDocumentRepository[TContract]):",
+          )
+          text = text.replace(
+              "        text = yaml.dump(\n",
+              "        text = cast(\n            str,\n            yaml.dump(\n",
+          )
+          text = text.replace(
+              "            width=100,\n        )\n        if not text.endswith",
+              "                width=100,\n            ),\n        )\n        if not text.endswith",
+          )
+          text = text.replace('.encode("utf-8")', ".encode()")
+          path.write_text(text, encoding="utf-8")
+
+          path = Path("tests/test_structured_repositories.py")
+          text = path.read_text(encoding="utf-8")
+          text = text.replace(
+              '@pytest.mark.parametrize(\n    (path, repository_type),',
+              '@pytest.mark.parametrize(\n    "path,repository_type",',
+          )
+          path.write_text(text, encoding="utf-8")
+          PY
+
+          uv run ruff format \
+            src/ludowright/infrastructure \
+            tests/test_filesystem.py \
+            tests/test_structured_repositories.py
+
+      - name: Validate fixes
+        run: |
+          uv sync --extra dev --extra docs
+          uv run ruff check src tests
+          uv run mypy src
+          uv run pytest tests/test_filesystem.py tests/test_structured_repositories.py -q
+
+      - name: Commit fixes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add pyproject.toml src/ludowright/infrastructure tests/test_filesystem.py tests/test_structured_repositories.py
+          if git diff --cached --quiet; then
+            echo "Validated fixes are already current."
+          else
+            git commit -m "Fix structured repository quality gates"
+            git push origin HEAD:agent/structured-repositories
+          fi
