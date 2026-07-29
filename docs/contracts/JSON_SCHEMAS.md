@@ -35,6 +35,7 @@ It uses JSON Schema Draft 2020-12 and contains:
 | Visual review | `visual-review.schema.json` |
 | Capture profile | `capture-profile.schema.json` |
 | Migration receipt | `migration-receipt.schema.json` |
+| Dependency graph | `dependency-graph.schema.json` |
 
 Every top-level contract contains:
 

@@ -2,6 +2,13 @@
 
 from ludowright.contracts.assets import AssetContract
 from ludowright.contracts.capture import CaptureProfileContract
+from ludowright.contracts.dependencies import (
+    DependencyEdgeContract,
+    DependencyGraphContract,
+    DependencyKeyContract,
+    DependencyNodeContract,
+    InvalidationCauseContract,
+)
 from ludowright.contracts.governance import ApprovalContract, DecisionContract
 from ludowright.contracts.migrations import (
     MigrationReceiptContract,
@@ -38,7 +45,12 @@ __all__ = [
     "AssetContract",
     "CaptureProfileContract",
     "DecisionContract",
+    "DependencyEdgeContract",
+    "DependencyGraphContract",
+    "DependencyKeyContract",
+    "DependencyNodeContract",
     "GenerationReceiptContract",
+    "InvalidationCauseContract",
     "MigrationReceiptContract",
     "MigrationRunStatus",
     "ProjectContract",

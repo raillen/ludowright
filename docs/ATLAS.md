@@ -16,9 +16,9 @@ This is the main navigation map for humans and agents. Each subject should have 
 ## Architecture
 
 - [`architecture/SYSTEM_OVERVIEW.md`](architecture/SYSTEM_OVERVIEW.md) — system boundaries, layers, modules, state, and integration model.
+- [`contracts/DEPENDENCY_GRAPH.md`](contracts/DEPENDENCY_GRAPH.md) — canonical dependency direction, revision tracking, stale propagation, impact explanation, refresh, and cycle policy.
 - `architecture/COMPONENTS.md` — planned detailed component responsibilities.
 - `architecture/DATA_MODEL.md` — planned canonical entities and relationships.
-- `architecture/DEPENDENCY_GRAPH.md` — planned impact graph and invalidation model.
 
 ## Contracts
 
@@ -34,6 +34,7 @@ This is the main navigation map for humans and agents. Each subject should have 
 - [`contracts/EVENT_LOG.md`](contracts/EVENT_LOG.md) — immutable events, JSON Lines replay, correlation, causation, sequence, hash chaining, and explicit tail recovery.
 - [`contracts/STATE_STORE.md`](contracts/STATE_STORE.md) — rebuildable SQLite workflow state, entity indexes, event checkpoints, transactions, and canonical-source consistency.
 - [`contracts/MIGRATIONS.md`](contracts/MIGRATIONS.md) — contiguous plans, dry runs, consistent backups, receipts, transactional apply, and guarded rollback.
+- [`contracts/DEPENDENCY_GRAPH.md`](contracts/DEPENDENCY_GRAPH.md) — typed nodes and edges, observed revisions, freshness states, invalidation paths, refresh rules, and canonical graph persistence.
 
 Published machine-readable contracts are stored under `schemas/v1/`. The source models live under `src/ludowright/contracts/`.
 
@@ -58,6 +59,7 @@ Planned documents:
 
 - [`contracts/REFERENCES_AND_VISUAL_JOBS.md`](contracts/REFERENCES_AND_VISUAL_JOBS.md) — provenance, immutable generation jobs, receipts, retries, and reviews.
 - [`contracts/CAPTURE_PROFILES.md`](contracts/CAPTURE_PROFILES.md) — reusable camera, view, isolation, validation, and technical-sheet requirements.
+- [`contracts/DEPENDENCY_GRAPH.md`](contracts/DEPENDENCY_GRAPH.md) — revision-aware invalidation from approved references and asset components to jobs, outputs, sheets, and packages.
 
 Planned detailed documents:
 
@@ -83,6 +85,7 @@ Future bounded changes should receive their own plan under `plans/`.
 - [`contracts/EVENT_LOG.md`](contracts/EVENT_LOG.md) — replay integrity, chained hashes, sequence, concurrency, corruption, and incomplete-tail recovery tests.
 - [`contracts/STATE_STORE.md`](contracts/STATE_STORE.md) — WAL, strict tables, rollback, concurrency, checkpoint, source-digest, corruption, and rebuild tests.
 - [`contracts/MIGRATIONS.md`](contracts/MIGRATIONS.md) — catalog, dry-run, backup, failure rollback, explicit restore, tampering, and concurrency tests.
+- [`contracts/DEPENDENCY_GRAPH.md`](contracts/DEPENDENCY_GRAPH.md) — cycle rejection, revision propagation, impact-path selection, refresh blocking, contract round-trip, and repository conflict tests.
 
 Planned detailed documents:
 
@@ -100,6 +103,7 @@ Planned detailed documents:
 - [`contracts/EVENT_LOG.md`](contracts/EVENT_LOG.md) — canonical event lines, integrity-chain meaning, parser limits, atomic append, and explicit recovery boundaries.
 - [`contracts/STATE_STORE.md`](contracts/STATE_STORE.md) — SQLite sidecar safety, parameterized operations, strict schemas, short transactions, and corruption isolation.
 - [`contracts/MIGRATIONS.md`](contracts/MIGRATIONS.md) — trusted migration code, durable backups, strict receipts, digest-guarded rollback, and fail-closed versions.
+- [`contracts/DEPENDENCY_GRAPH.md`](contracts/DEPENDENCY_GRAPH.md) — bounded graph documents, typed identities, cycle rejection, deterministic causes, and optimistic write conflicts.
 
 Planned detailed documents:
 
@@ -132,6 +136,7 @@ Planned operational documents:
 
 ## Decisions
 
+- [`decisions/0013-versioned-acyclic-dependency-invalidation-graph.md`](decisions/0013-versioned-acyclic-dependency-invalidation-graph.md) — accepted typed revision-aware DAG dependencies, stale and review propagation, persisted impact paths, safe refresh, and canonical JSON persistence.
 - [`decisions/0012-explicit-backed-up-schema-migrations.md`](decisions/0012-explicit-backed-up-schema-migrations.md) — accepted explicit contiguous migration plans, dry runs, durable SQLite backups, strict receipts, transactional apply, and guarded rollback.
 - [`decisions/0011-rebuildable-sqlite-state-index.md`](decisions/0011-rebuildable-sqlite-state-index.md) — accepted SQLite as a rebuildable derived index with WAL, strict short transactions, source digests, event checkpoints, and explicit consistency states.
 - [`decisions/0010-hash-chained-append-only-event-log.md`](decisions/0010-hash-chained-append-only-event-log.md) — accepted canonical JSON Lines events, correlation, causation, contiguous replay, chained SHA-256 integrity, atomic append, and explicit tail recovery.

@@ -1,0 +1,40 @@
+{
+  "edges": [
+    {
+      "invalidation_mode": "stale",
+      "observed_source_revision": 1,
+      "relation": "assembled-from",
+      "source": {
+        "id": "maya-front",
+        "kind": "reference"
+      },
+      "target": {
+        "id": "maya-model-sheet",
+        "kind": "technical-sheet"
+      }
+    }
+  ],
+  "kind": "dependency-graph",
+  "nodes": [
+    {
+      "freshness": "fresh",
+      "invalidations": [],
+      "key": {
+        "id": "maya-front",
+        "kind": "reference"
+      },
+      "revision": 1
+    },
+    {
+      "freshness": "fresh",
+      "invalidations": [],
+      "key": {
+        "id": "maya-model-sheet",
+        "kind": "technical-sheet"
+      },
+      "revision": 1
+    }
+  ],
+  "revision": 1,
+  "schema_version": 1
+}

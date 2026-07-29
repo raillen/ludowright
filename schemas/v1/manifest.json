@@ -61,6 +61,12 @@
       "name": "migration-receipt",
       "schema_id": "https://schemas.ludowright.dev/v1/migration-receipt.schema.json",
       "sha256": "411ce1608834a1c2c7774bcf7478109ce8bfae22df7ce4615f03354d1c92d815"
+    },
+    {
+      "file": "dependency-graph.schema.json",
+      "name": "dependency-graph",
+      "schema_id": "https://schemas.ludowright.dev/v1/dependency-graph.schema.json",
+      "sha256": "1ab40fc7d08bab63bc7145ab96a98bc90932b923dd6af2b2dc655af6b5c90c83"
     }
   ]
 }

@@ -7,6 +7,7 @@ from dataclasses import dataclass
 from ludowright.contracts.assets import AssetContract
 from ludowright.contracts.capture import CaptureProfileContract
 from ludowright.contracts.common import ContractModel
+from ludowright.contracts.dependencies import DependencyGraphContract
 from ludowright.contracts.governance import ApprovalContract, DecisionContract
 from ludowright.contracts.migrations import MigrationReceiptContract
 from ludowright.contracts.project import ProjectContract
@@ -76,6 +77,12 @@ CONTRACTS: tuple[ContractDefinition, ...] = (
         "migration-receipt.schema.json",
         "LudoWright Migration Receipt",
         MigrationReceiptContract,
+    ),
+    ContractDefinition(
+        "dependency-graph",
+        "dependency-graph.schema.json",
+        "LudoWright Dependency Graph",
+        DependencyGraphContract,
     ),
 )
 
