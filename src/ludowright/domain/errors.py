@@ -69,3 +69,11 @@ class InvalidGenerationReceiptError(DomainValidationError):
 
 class InvalidVisualReviewError(DomainValidationError):
     """Raised when a visual review record violates its contract."""
+
+
+class InvalidCaptureProfileError(DomainValidationError):
+    """Raised when a capture profile or requirement is invalid."""
+
+
+class InvalidCaptureProfileInheritanceError(InvalidCaptureProfileError):
+    """Raised when capture-profile inheritance cannot be resolved safely."""

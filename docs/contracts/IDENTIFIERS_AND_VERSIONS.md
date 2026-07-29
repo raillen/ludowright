@@ -112,6 +112,9 @@ The current identifier types are:
 | `JobId` | Immutable workflow or generation specification |
 | `ReceiptId` | One immutable terminal generation attempt |
 | `ReviewId` | One immutable visual review record |
+| `CaptureProfileId` | Reusable capture-profile lineage |
+| `CaptureViewId` | Required or optional view within a profile |
+| `CaptureSheetId` | Technical-sheet requirement within a profile |
 | `DecisionId` | Recorded decision |
 | `ApprovalId` | Approval request and immutable approval history |
 | `PackageId` | Reproducible project or production package |

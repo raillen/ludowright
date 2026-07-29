@@ -90,6 +90,24 @@ class ReviewId(Identifier):
     kind = "review"
 
 
+class CaptureProfileId(Identifier):
+    """Identifier for a reusable capture-profile lineage."""
+
+    kind = "capture-profile"
+
+
+class CaptureViewId(Identifier):
+    """Identifier for a required capture view within a profile."""
+
+    kind = "capture-view"
+
+
+class CaptureSheetId(Identifier):
+    """Identifier for a technical-sheet requirement within a profile."""
+
+    kind = "capture-sheet"
+
+
 class DecisionId(Identifier):
     """Identifier for a recorded project decision."""
 
