@@ -4,9 +4,9 @@ This is the main navigation map for humans and agents. Each subject should have 
 
 ## Project entry points
 
-- [`../README.md`](../README.md) — project overview, status, setup, and primary links.
-- [`../PROJECT_START.md`](../PROJECT_START.md) — orientation for contributors and agents.
-- [`../AGENTS.md`](../AGENTS.md) — concise operational rules for Codex and other repository agents.
+- [Repository README](https://github.com/raillen/ludowright/blob/main/README.md) — project overview, status, setup, and primary links.
+- [Project Start](https://github.com/raillen/ludowright/blob/main/PROJECT_START.md) — orientation for contributors and agents.
+- [Agent Guide](https://github.com/raillen/ludowright/blob/main/AGENTS.md) — concise operational rules for Codex and other repository agents.
 
 ## Product
 
@@ -76,7 +76,7 @@ Planned documents:
 
 ## Security
 
-- [`../SECURITY.md`](../SECURITY.md) — vulnerability reporting and current security requirements.
+- [Security Policy](https://github.com/raillen/ludowright/blob/main/SECURITY.md) — vulnerability reporting and current security requirements.
 
 Planned detailed documents:
 
@@ -90,13 +90,14 @@ Planned detailed documents:
 
 ## Governance and operations
 
-- [`../CONTRIBUTING.md`](../CONTRIBUTING.md) — development, testing, compatibility, and pull-request workflow.
-- [`../GOVERNANCE.md`](../GOVERNANCE.md) — roles, decisions, ADR/RFC thresholds, releases, and maintainership.
+- [Contributing](https://github.com/raillen/ludowright/blob/main/CONTRIBUTING.md) — development, testing, compatibility, and pull-request workflow.
+- [Governance](https://github.com/raillen/ludowright/blob/main/GOVERNANCE.md) — roles, decisions, ADR/RFC thresholds, releases, and maintainership.
 - [`governance/RFC_TEMPLATE.md`](governance/RFC_TEMPLATE.md) — required structure for cross-cutting proposals.
-- [`../CODE_OF_CONDUCT.md`](../CODE_OF_CONDUCT.md) — community behavior and enforcement.
-- [`../SUPPORT.md`](../SUPPORT.md) — support channels and required diagnostic information.
-- [`.github/PULL_REQUEST_TEMPLATE.md`](../.github/PULL_REQUEST_TEMPLATE.md) — required PR review checklist.
-- [`.github/ISSUE_TEMPLATE/`](../.github/ISSUE_TEMPLATE/) — structured bug and feature intake.
+- [Code of Conduct](https://github.com/raillen/ludowright/blob/main/CODE_OF_CONDUCT.md) — community behavior and enforcement.
+- [Support](https://github.com/raillen/ludowright/blob/main/SUPPORT.md) — support channels and required diagnostic information.
+- [Pull Request Template](https://github.com/raillen/ludowright/blob/main/.github/PULL_REQUEST_TEMPLATE.md) — required PR review checklist.
+- [Issue Templates](https://github.com/raillen/ludowright/tree/main/.github/ISSUE_TEMPLATE) — structured bug and feature intake.
+- [`operations/DOCUMENTATION_SITE.md`](operations/DOCUMENTATION_SITE.md) — local preview, strict validation, and Pages publication.
 
 Planned operational documents:
 

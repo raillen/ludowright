@@ -43,7 +43,7 @@ Requirements:
 ```bash
 git clone https://github.com/raillen/ludowright.git
 cd ludowright
-uv sync --extra dev
+uv sync --extra dev --extra docs
 uv run ludowright --version
 uv run ludowright status
 ```
@@ -55,9 +55,22 @@ uv run ruff check .
 uv run ruff format --check .
 uv run mypy src
 uv run pytest
+uv run mkdocs build --strict --clean
 ```
 
 ## Documentation
+
+The documentation site is configured for:
+
+```text
+https://raillen.github.io/ludowright/
+```
+
+Preview it locally with:
+
+```bash
+uv run mkdocs serve
+```
 
 Start with:
 
@@ -67,6 +80,7 @@ Start with:
 - [`docs/product/ROADMAP.md`](docs/product/ROADMAP.md)
 - [`docs/architecture/SYSTEM_OVERVIEW.md`](docs/architecture/SYSTEM_OVERVIEW.md)
 - [`docs/plans/IMPLEMENTATION_PLAN.md`](docs/plans/IMPLEMENTATION_PLAN.md)
+- [`docs/operations/DOCUMENTATION_SITE.md`](docs/operations/DOCUMENTATION_SITE.md)
 
 ## Contributing and support
 
