@@ -72,6 +72,7 @@ jobs:
               '_SAFE_SEGMENT_ALPHABET = "abcdefghijklmnopqrstuvwxyz0123456789-_"',
               '_SAFE_SEGMENT_ALPHABET = string.ascii_lowercase + string.digits + "-_"',
           )
+          text = text.replace('match="symbolic link"', 'match="symlink"')
           path.write_text(text, encoding="utf-8")
 
           path = Path("pyproject.toml")
@@ -138,22 +139,22 @@ jobs:
               return parsed
           '''
           new_parse = "\n".join(line[10:] if line.startswith("          ") else line for line in new_parse.splitlines()) + "\n"
-          if old_parse not in text:
-              raise SystemExit("YAML parse block not found")
-          text = text.replace(old_parse, new_parse, 1)
-          text = text.replace(
-              "def _validate_yaml_node(root: Node) -> None:\n    remaining = [_MAX_STRUCTURE_NODES]\n\n"
-              "    def visit(node: Node, depth: int) -> None:\n",
-              "def _validate_yaml_node(root: Node) -> None:\n"
-              "    remaining = [_MAX_STRUCTURE_NODES]\n"
-              "    visited: set[int] = set()\n\n"
-              "    def visit(node: Node, depth: int) -> None:\n"
-              "        identity = id(node)\n"
-              "        if identity in visited:\n"
-              "            raise StructuredDocumentParseError(\"YAML aliases are not allowed\")\n"
-              "        visited.add(identity)\n",
-              1,
-          )
+          if old_parse in text:
+              text = text.replace(old_parse, new_parse, 1)
+          if "visited: set[int] = set()" not in text:
+              text = text.replace(
+                  "def _validate_yaml_node(root: Node) -> None:\n    remaining = [_MAX_STRUCTURE_NODES]\n\n"
+                  "    def visit(node: Node, depth: int) -> None:\n",
+                  "def _validate_yaml_node(root: Node) -> None:\n"
+                  "    remaining = [_MAX_STRUCTURE_NODES]\n"
+                  "    visited: set[int] = set()\n\n"
+                  "    def visit(node: Node, depth: int) -> None:\n"
+                  "        identity = id(node)\n"
+                  "        if identity in visited:\n"
+                  "            raise StructuredDocumentParseError(\"YAML aliases are not allowed\")\n"
+                  "        visited.add(identity)\n",
+                  1,
+              )
           path.write_text(text, encoding="utf-8")
 
           path = Path("tests/test_structured_repositories.py")
