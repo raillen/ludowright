@@ -27,6 +27,9 @@ jobs:
       - name: Set up Python
         run: uv python install 3.12
 
+      - name: Install project and quality tools
+        run: uv sync --extra dev --extra docs
+
       - name: Apply fixes
         run: |
           python - <<'PY'
@@ -112,7 +115,7 @@ jobs:
           uv run ruff check --fix src tests
           uv run ruff format src tests
 
-      - name: Install project and quality tools
+      - name: Refresh dependencies after pyproject changes
         run: uv sync --extra dev --extra docs
 
       - name: Validate fixes
