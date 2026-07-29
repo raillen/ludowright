@@ -157,7 +157,7 @@ edge observed_source_revision: 4
 
 If the body advances to revision 5, the edge is outdated and its target is invalidated according to the edge policy.
 
-An edge cannot claim to have observed a revision newer than its source node.
+An edge cannot claim to have observed a revision newer than its source node. A propagating edge can only be connected while its source is fresh; informational `none` edges may still describe non-fresh sources.
 
 ## Invalidation modes
 
@@ -177,7 +177,7 @@ fresh < review-required < stale
 
 ## Publishing a revision
 
-`publish_revision(key, revision)` requires a strictly newer node revision.
+`publish_revision(key, revision)` requires a strictly newer node revision and is reserved for root inputs without propagating incoming dependencies. Derived nodes must use `refresh()` so their consumed input revisions are reconciled instead of bypassed.
 
 The operation:
 
@@ -263,13 +263,13 @@ The domain rejects:
 - indirect cycles;
 - cycles involving non-propagating edges.
 
-Rejecting all cycles keeps topological planning, stale propagation, impact explanations, and future rebuild ordering deterministic.
+Rejecting all cycles keeps topological planning, stale propagation, impact explanations, and future rebuild ordering deterministic. Cycle validation uses iterative topological traversal so valid deep DAGs remain supported within the published resource limits.
 
 Lineage or cross-reference relationships that naturally require a bidirectional view must be represented as separate query metadata rather than cyclic dependency edges.
 
 ## Structural mutation
 
-Node and edge identities are unique.
+Node identities are unique. The graph allows at most one edge for each ordered source-target pair, so relation and invalidation policy cannot become ambiguous across parallel edges.
 
 A connected node cannot be removed. Callers must explicitly disconnect every edge first. This prevents accidental loss of dependency meaning.
 

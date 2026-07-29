@@ -277,6 +277,10 @@ class DependencyGraph:
             raise InvalidDependencyGraphError("dependency graph edges must be unique")
 
         edge_pairs = {(edge.source, edge.target) for edge in ordered_edges}
+        if len(edge_pairs) != len(ordered_edges):
+            raise InvalidDependencyGraphError(
+                "a dependency graph allows only one edge per source-target pair"
+            )
         for edge in ordered_edges:
             if edge.source not in node_map or edge.target not in node_map:
                 raise InvalidDependencyGraphError(
@@ -345,6 +349,17 @@ class DependencyGraph:
     ) -> Self:
         source_node = self.get_node(source)
         self.get_node(target)
+        if any(edge.source == source and edge.target == target for edge in self.edges):
+            raise InvalidDependencyGraphError(
+                f"dependency edge already exists: {source.token} -> {target.token}"
+            )
+        if (
+            invalidation_mode is not InvalidationMode.NONE
+            and source_node.freshness is not FreshnessState.FRESH
+        ):
+            raise InvalidDependencyGraphError(
+                "a propagating dependency edge requires a fresh source"
+            )
         edge = DependencyEdge(
             source=source,
             target=target,
@@ -352,10 +367,6 @@ class DependencyGraph:
             invalidation_mode=invalidation_mode,
             observed_source_revision=source_node.revision,
         )
-        if any(current.identity == edge.identity for current in self.edges):
-            raise InvalidDependencyGraphError(
-                f"dependency edge already exists: {source.token} -> {target.token}"
-            )
         return replace(
             self,
             revision=_next_revision(self.revision),
@@ -417,7 +428,7 @@ class DependencyGraph:
         revision: RevisionVersion,
         reason: InvalidationReason = SOURCE_CHANGED,
     ) -> InvalidationResult:
-        """Publish a newer source revision and invalidate outdated dependents."""
+        """Publish a newer root-input revision and invalidate outdated dependents."""
         current = self.get_node(key)
         if not isinstance(revision, RevisionVersion):
             raise TypeError("publishing a dependency revision requires RevisionVersion")
@@ -427,6 +438,15 @@ class DependencyGraph:
             )
         if not isinstance(reason, InvalidationReason):
             raise TypeError("publishing a revision requires InvalidationReason")
+        propagating_inputs = tuple(
+            edge
+            for edge in self.dependencies_of(key)
+            if edge.invalidation_mode is not InvalidationMode.NONE
+        )
+        if propagating_inputs:
+            raise DependencyRefreshError(
+                f"cannot publish dependent node {key.token}; use refresh instead"
+            )
 
         updated = replace(
             current,
@@ -724,28 +744,36 @@ def _assert_acyclic(
     nodes: tuple[DependencyKey, ...],
     edges: tuple[DependencyEdge, ...],
 ) -> None:
-    adjacency: dict[DependencyKey, tuple[DependencyKey, ...]] = {}
-    for node in nodes:
-        adjacency[node] = tuple(edge.target for edge in edges if edge.source == node)
-    visiting: set[DependencyKey] = set()
-    visited: set[DependencyKey] = set()
-    stack: list[DependencyKey] = []
+    adjacency: dict[DependencyKey, list[DependencyKey]] = {node: [] for node in nodes}
+    indegree = {node: 0 for node in nodes}
+    for edge in edges:
+        adjacency[edge.source].append(edge.target)
+        indegree[edge.target] += 1
+    for targets in adjacency.values():
+        targets.sort(key=_key_sort_key)
 
-    def visit(node: DependencyKey) -> None:
-        if node in visited:
-            return
-        if node in visiting:
-            start = stack.index(node)
-            cycle = (*stack[start:], node)
-            rendered = " -> ".join(item.token for item in cycle)
-            raise DependencyCycleError(f"dependency cycle detected: {rendered}")
-        visiting.add(node)
-        stack.append(node)
-        for target in sorted(adjacency[node], key=_key_sort_key):
-            visit(target)
-        stack.pop()
-        visiting.remove(node)
-        visited.add(node)
+    pending = deque(
+        sorted(
+            (node for node, count in indegree.items() if count == 0),
+            key=_key_sort_key,
+        )
+    )
+    visited = 0
+    while pending:
+        node = pending.popleft()
+        visited += 1
+        for target in adjacency[node]:
+            indegree[target] -= 1
+            if indegree[target] == 0:
+                pending.append(target)
 
-    for node in sorted(nodes, key=_key_sort_key):
-        visit(node)
+    if visited != len(nodes):
+        remaining = tuple(
+            sorted(
+                (node for node, count in indegree.items() if count > 0),
+                key=_key_sort_key,
+            )
+        )
+        rendered = ", ".join(node.token for node in remaining[:12])
+        suffix = "" if len(remaining) <= 12 else ", ..."
+        raise DependencyCycleError(f"dependency cycle detected among: {rendered}{suffix}")

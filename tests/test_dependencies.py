@@ -487,6 +487,90 @@ def test_edge_cannot_observe_a_future_source_revision() -> None:
         )
 
 
+def test_publish_revision_cannot_bypass_dependent_refresh() -> None:
+    source = node(DependencyNodeKind.REFERENCE, "maya-front")
+    target = node(DependencyNodeKind.VISUAL_JOB, "maya-turnaround")
+    graph = DependencyGraph.empty().add_node(source).add_node(target)
+    graph = graph.connect(
+        source.key,
+        target.key,
+        DependencyRelation.REQUIRES,
+        InvalidationMode.STALE,
+    )
+    graph = graph.publish_revision(source.key, RevisionVersion(2)).graph
+
+    with pytest.raises(DependencyRefreshError, match="use refresh"):
+        graph.publish_revision(target.key, RevisionVersion(2))
+
+    assert graph.get_node(target.key).freshness is FreshnessState.STALE
+
+
+def test_connect_rejects_nonfresh_propagating_source() -> None:
+    source = node(DependencyNodeKind.REFERENCE, "rejected-front")
+    target = node(DependencyNodeKind.VISUAL_JOB, "turnaround")
+    graph = DependencyGraph.empty().add_node(source).add_node(target)
+    graph = graph.invalidate(source.key, SOURCE_REJECTED).graph
+
+    with pytest.raises(InvalidDependencyGraphError, match="requires a fresh source"):
+        graph.connect(
+            source.key,
+            target.key,
+            DependencyRelation.REQUIRES,
+            InvalidationMode.STALE,
+        )
+
+    informational = graph.connect(
+        source.key,
+        target.key,
+        DependencyRelation.REFERENCES,
+        InvalidationMode.NONE,
+    )
+    assert informational.get_node(target.key).freshness is FreshnessState.FRESH
+
+
+def test_graph_rejects_parallel_edges_for_one_ordered_pair() -> None:
+    source = node(DependencyNodeKind.DOCUMENT, "visual-bible")
+    target = node(DependencyNodeKind.CAPTURE_PROFILE, "humanoid")
+    graph = DependencyGraph.empty().add_node(source).add_node(target)
+    graph = graph.connect(
+        source.key,
+        target.key,
+        DependencyRelation.DERIVES_FROM,
+        InvalidationMode.STALE,
+    )
+
+    with pytest.raises(InvalidDependencyGraphError, match="already exists"):
+        graph.connect(
+            source.key,
+            target.key,
+            DependencyRelation.REFERENCES,
+            InvalidationMode.REVIEW,
+        )
+
+
+def test_deep_acyclic_graph_uses_iterative_cycle_validation() -> None:
+    nodes = tuple(node(DependencyNodeKind.DOCUMENT, f"node-{index:04d}") for index in range(1_500))
+    edges = tuple(
+        DependencyEdge(
+            source=nodes[index].key,
+            target=nodes[index + 1].key,
+            relation=DependencyRelation.REQUIRES,
+            invalidation_mode=InvalidationMode.STALE,
+            observed_source_revision=RevisionVersion(1),
+        )
+        for index in range(len(nodes) - 1)
+    )
+
+    graph = DependencyGraph(
+        revision=RevisionVersion(1),
+        nodes=nodes,
+        edges=edges,
+    )
+
+    assert len(graph.nodes) == 1_500
+    assert len(graph.edges) == 1_499
+
+
 def test_reason_is_extensible_but_canonical() -> None:
     assert InvalidationReason("palette-changed").value == "palette-changed"
     with pytest.raises(InvalidDependencyGraphError, match="canonical slug"):

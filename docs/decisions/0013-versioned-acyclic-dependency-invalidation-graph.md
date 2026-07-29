@@ -74,6 +74,10 @@ Dependency declarations and invalidation state are important project data. Keepi
 
 ### Positive
 
+- Propagating edges require fresh sources, preventing new dependents from starting from already invalid inputs.
+- Root publication and derived refresh are separate operations, so consumed input revisions cannot be bypassed.
+- One edge per ordered node pair keeps invalidation policy unambiguous.
+- Iterative cycle validation supports deep valid DAGs without Python recursion limits.
 - Changes produce explicit downstream impact.
 - Every stale or review-required node can explain its root cause and path.
 - Refresh cannot falsely declare an output fresh while required inputs remain blocked.
