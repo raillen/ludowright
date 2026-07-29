@@ -332,9 +332,7 @@ class Asset:
             current: ComponentId | None = component.id
             while current is not None:
                 if current in visited:
-                    raise InvalidAssetError(
-                        "asset component hierarchy cannot contain cycles"
-                    )
+                    raise InvalidAssetError("asset component hierarchy cannot contain cycles")
                 visited.add(current)
                 current = parents[current]
 
