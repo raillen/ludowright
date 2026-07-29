@@ -1,0 +1,1 @@
+"""LudoWright command-line interface."""
