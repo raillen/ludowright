@@ -1,0 +1,15 @@
+{
+  "command": "status",
+  "data": {
+    "status": "foundation",
+    "version": "0.1.0.dev0"
+  },
+  "error": null,
+  "kind": "cli-response",
+  "meta": {
+    "ludowright_version": "0.1.0.dev0",
+    "output": "json"
+  },
+  "ok": true,
+  "schema_version": 1
+}

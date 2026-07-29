@@ -30,6 +30,7 @@ nav:
       - SQLite State Store: contracts/STATE_STORE.md
       - Migrations: contracts/MIGRATIONS.md
       - Dependency Graph: contracts/DEPENDENCY_GRAPH.md
+      - Command-Line Interface: contracts/CLI.md
   - Implementation:
       - Plan to 1.0: plans/IMPLEMENTATION_PLAN.md
   - Quality:
@@ -49,6 +50,7 @@ nav:
       - ADR 0011 — Rebuildable SQLite State Index: decisions/0011-rebuildable-sqlite-state-index.md
       - ADR 0012 — Explicit Backed-Up Migrations: decisions/0012-explicit-backed-up-schema-migrations.md
       - ADR 0013 — Dependency Invalidation Graph: decisions/0013-versioned-acyclic-dependency-invalidation-graph.md
+      - ADR 0014 — Stable Dual-Surface CLI: decisions/0014-stable-dual-surface-cli-contract.md
       - ADR Template: decisions/0000-template.md
   - Operations:
       - Documentation Site: operations/DOCUMENTATION_SITE.md
