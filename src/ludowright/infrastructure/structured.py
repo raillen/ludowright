@@ -13,7 +13,6 @@ from typing import Any
 
 import yaml
 from pydantic import ValidationError
-from yaml.events import AliasEvent
 from yaml.nodes import MappingNode, Node, ScalarNode, SequenceNode
 
 from ludowright.contracts.common import ContractModel
@@ -202,8 +201,7 @@ class StructuredDocumentRepository[TContract: ContractModel]:
     def _validate_instance(self, value: TContract) -> TContract:
         if not isinstance(value, self._model):
             raise TypeError(
-                f"structured repository requires {self._model.__name__}, "
-                f"not {type(value).__name__}"
+                f"structured repository requires {self._model.__name__}, not {type(value).__name__}"
             )
         return value
 
@@ -271,9 +269,7 @@ class StructuredDocumentRepository[TContract: ContractModel]:
         )
 
 
-class JsonDocumentRepository[TContract: ContractModel](
-    StructuredDocumentRepository[TContract]
-):
+class JsonDocumentRepository[TContract: ContractModel](StructuredDocumentRepository[TContract]):
     """Canonical JSON repository for one strict contract type."""
 
     def __init__(
@@ -293,9 +289,7 @@ class JsonDocumentRepository[TContract: ContractModel](
         )
 
 
-class YamlDocumentRepository[TContract: ContractModel](
-    StructuredDocumentRepository[TContract]
-):
+class YamlDocumentRepository[TContract: ContractModel](StructuredDocumentRepository[TContract]):
     """Canonical YAML repository for one strict contract type."""
 
     def __init__(
@@ -348,16 +342,11 @@ def _reject_json_constant(value: str) -> Any:
 
 def _parse_yaml(text: str) -> Any:
     try:
-        events = tuple(yaml.parse(text, Loader=yaml.SafeLoader))
-    except (yaml.YAMLError, RecursionError, ValueError) as error:
-        raise StructuredDocumentParseError("invalid or unsafe YAML document") from error
-    if any(isinstance(event, AliasEvent) for event in events):
-        raise StructuredDocumentParseError("YAML aliases are not allowed")
-
-    try:
         documents = list(yaml.compose_all(text, Loader=yaml.SafeLoader))
     except (yaml.YAMLError, RecursionError, ValueError) as error:
         raise StructuredDocumentParseError("invalid or unsafe YAML document") from error
+    if not documents:
+        raise StructuredDocumentParseError("structured documents cannot be empty")
     if len(documents) != 1:
         raise StructuredDocumentParseError("YAML input must contain exactly one document")
     node = documents[0]
@@ -376,8 +365,13 @@ def _parse_yaml(text: str) -> Any:
 
 def _validate_yaml_node(root: Node) -> None:
     remaining = [_MAX_STRUCTURE_NODES]
+    visited: set[int] = set()
 
     def visit(node: Node, depth: int) -> None:
+        identity = id(node)
+        if identity in visited:
+            raise StructuredDocumentParseError("YAML aliases are not allowed")
+        visited.add(identity)
         remaining[0] -= 1
         if remaining[0] < 0:
             raise StructuredDocumentParseError(
@@ -390,9 +384,7 @@ def _validate_yaml_node(root: Node) -> None:
 
         if isinstance(node, MappingNode):
             if node.tag != _YAML_MAP_TAG:
-                raise StructuredDocumentParseError(
-                    f"YAML mapping tag is not allowed: {node.tag}"
-                )
+                raise StructuredDocumentParseError(f"YAML mapping tag is not allowed: {node.tag}")
             keys: set[str] = set()
             for key_node, value_node in node.value:
                 if key_node.tag == _YAML_MERGE_TAG:
@@ -409,9 +401,7 @@ def _validate_yaml_node(root: Node) -> None:
 
         if isinstance(node, SequenceNode):
             if node.tag != _YAML_SEQUENCE_TAG:
-                raise StructuredDocumentParseError(
-                    f"YAML sequence tag is not allowed: {node.tag}"
-                )
+                raise StructuredDocumentParseError(f"YAML sequence tag is not allowed: {node.tag}")
             for child in node.value:
                 visit(child, depth + 1)
             return
@@ -422,29 +412,21 @@ def _validate_yaml_node(root: Node) -> None:
                     "YAML date and timestamp values must be quoted strings"
                 )
             if node.tag not in _ALLOWED_YAML_SCALAR_TAGS:
-                raise StructuredDocumentParseError(
-                    f"YAML scalar tag is not allowed: {node.tag}"
-                )
+                raise StructuredDocumentParseError(f"YAML scalar tag is not allowed: {node.tag}")
             return
 
-        raise StructuredDocumentParseError(
-            f"unsupported YAML node type: {type(node).__name__}"
-        )
+        raise StructuredDocumentParseError(f"unsupported YAML node type: {type(node).__name__}")
 
     visit(root, 0)
 
 
 def _decode_utf8(payload: bytes) -> str:
     if payload.startswith(b"\xef\xbb\xbf"):
-        raise StructuredDocumentFormatError(
-            "structured documents cannot contain a UTF-8 BOM"
-        )
+        raise StructuredDocumentFormatError("structured documents cannot contain a UTF-8 BOM")
     try:
         return payload.decode("utf-8")
     except UnicodeDecodeError as error:
-        raise StructuredDocumentFormatError(
-            "structured documents must use UTF-8"
-        ) from error
+        raise StructuredDocumentFormatError("structured documents must use UTF-8") from error
 
 
 def _validate_json_compatible_structure(value: Any) -> None:

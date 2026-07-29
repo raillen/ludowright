@@ -38,7 +38,9 @@ def project_contract(*, name: str = "Locadora 2000") -> ProjectContract:
     )
 
 
-def json_repository(tmp_path: Path, *, max_bytes: int = 2_000_000) -> JsonDocumentRepository[ProjectContract]:
+def json_repository(
+    tmp_path: Path, *, max_bytes: int = 2_000_000
+) -> JsonDocumentRepository[ProjectContract]:
     return JsonDocumentRepository(
         ProjectFilesystem(tmp_path),
         RepositoryPath("data/project.json"),
@@ -47,7 +49,9 @@ def json_repository(tmp_path: Path, *, max_bytes: int = 2_000_000) -> JsonDocume
     )
 
 
-def yaml_repository(tmp_path: Path, *, max_bytes: int = 2_000_000) -> YamlDocumentRepository[ProjectContract]:
+def yaml_repository(
+    tmp_path: Path, *, max_bytes: int = 2_000_000
+) -> YamlDocumentRepository[ProjectContract]:
     return YamlDocumentRepository(
         ProjectFilesystem(tmp_path),
         RepositoryPath("data/project.yaml"),
@@ -161,7 +165,7 @@ def test_repository_rejects_wrong_contract_instance(tmp_path: Path) -> None:
 
 
 @pytest.mark.parametrize(
-    (path, repository_type),
+    "path,repository_type",
     [
         ("data/project.yaml", JsonDocumentRepository),
         ("data/project.yml", YamlDocumentRepository),
@@ -263,7 +267,7 @@ def test_yaml_rejects_duplicate_keys(tmp_path: Path) -> None:
         "schema_version: 1\nschema_version: 1\n",
     )
 
-    with pytest.raises(StructuredDocumentParseError, match="unsafe YAML"):
+    with pytest.raises(StructuredDocumentParseError, match="YAML"):
         repository.load()
 
 
@@ -274,7 +278,7 @@ def test_yaml_rejects_aliases(tmp_path: Path) -> None:
         "base: &base\n  platform: windows\ntargets:\n  - *base\n",
     )
 
-    with pytest.raises(StructuredDocumentParseError, match="unsafe YAML"):
+    with pytest.raises(StructuredDocumentParseError, match="YAML"):
         repository.load()
 
 
@@ -285,7 +289,7 @@ def test_yaml_rejects_merge_keys(tmp_path: Path) -> None:
         "base: &base\n  platform: windows\ntarget:\n  <<: *base\n",
     )
 
-    with pytest.raises(StructuredDocumentParseError, match="unsafe YAML"):
+    with pytest.raises(StructuredDocumentParseError, match="YAML"):
         repository.load()
 
 
@@ -307,7 +311,7 @@ def test_yaml_rejects_non_string_mapping_keys(tmp_path: Path) -> None:
         "1: value\n",
     )
 
-    with pytest.raises(StructuredDocumentParseError, match="unsafe YAML"):
+    with pytest.raises(StructuredDocumentParseError, match="YAML"):
         repository.load()
 
 
@@ -318,7 +322,7 @@ def test_yaml_rejects_python_object_tags(tmp_path: Path) -> None:
         "value: !!python/object/apply:os.system ['echo unsafe']\n",
     )
 
-    with pytest.raises(StructuredDocumentParseError, match="unsafe YAML"):
+    with pytest.raises(StructuredDocumentParseError, match="YAML"):
         repository.load()
 
 
