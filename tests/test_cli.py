@@ -94,9 +94,12 @@ def test_no_color_disables_ansi_sequences() -> None:
     assert "\x1b[" not in result.stdout
 
 
-def test_diagnostics_json_outside_project() -> None:
-    with runner.isolated_filesystem():
-        payload, exit_code, _raw = json_response(["diagnostics", "--json"])
+def test_diagnostics_json_outside_project(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.chdir(tmp_path)
+    payload, exit_code, _raw = json_response(["diagnostics", "--json"])
 
     assert exit_code == int(CliExitCode.SUCCESS)
     assert payload["command"] == "diagnostics"
@@ -110,13 +113,16 @@ def test_diagnostics_json_outside_project() -> None:
     assert isinstance(data["platform"], dict)
 
 
-def test_diagnostics_discovers_nearest_project() -> None:
-    with runner.isolated_filesystem():
-        marker = Path(".ludowright/project.json")
-        marker.parent.mkdir(parents=True)
-        marker.write_text("{}\n", encoding="utf-8")
-        payload, exit_code, _raw = json_response(["--json", "diagnostics"])
-        expected_root = Path.cwd().resolve().as_posix()
+def test_diagnostics_discovers_nearest_project(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.chdir(tmp_path)
+    marker = Path(".ludowright/project.json")
+    marker.parent.mkdir(parents=True)
+    marker.write_text("{}\n", encoding="utf-8")
+    payload, exit_code, _raw = json_response(["--json", "diagnostics"])
+    expected_root = tmp_path.resolve().as_posix()
 
     assert exit_code == int(CliExitCode.SUCCESS)
     data = payload["data"]
@@ -130,9 +136,12 @@ def test_diagnostics_discovers_nearest_project() -> None:
     }
 
 
-def test_diagnostics_human_output_uses_rich_table() -> None:
-    with runner.isolated_filesystem():
-        result = runner.invoke(app, ["diagnostics"])
+def test_diagnostics_human_output_uses_rich_table(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.chdir(tmp_path)
+    result = runner.invoke(app, ["diagnostics"])
 
     assert result.exit_code == int(CliExitCode.SUCCESS)
     assert "LudoWright diagnostics" in result.stdout
@@ -141,9 +150,7 @@ def test_diagnostics_human_output_uses_rich_table() -> None:
 
 
 def test_quality_dry_run_json_contract() -> None:
-    payload, exit_code, _raw = json_response(
-        ["quality", "check", "--dry-run", "--json"]
-    )
+    payload, exit_code, _raw = json_response(["quality", "check", "--dry-run", "--json"])
 
     assert exit_code == int(CliExitCode.SUCCESS)
     assert payload["command"] == "quality check"

@@ -36,6 +36,7 @@ It uses JSON Schema Draft 2020-12 and contains:
 | Capture profile | `capture-profile.schema.json` |
 | Migration receipt | `migration-receipt.schema.json` |
 | Dependency graph | `dependency-graph.schema.json` |
+| CLI response | `cli-response.schema.json` |
 
 Every top-level contract contains:
 

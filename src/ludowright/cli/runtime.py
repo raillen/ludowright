@@ -6,7 +6,6 @@ import json
 from collections.abc import Callable, Mapping
 from dataclasses import dataclass
 from enum import IntEnum
-from typing import TypeVar
 
 import typer
 from rich.console import Console
@@ -70,9 +69,8 @@ class CliFailure(RuntimeError):
 
 
 CommandData = dict[str, object]
-T = TypeVar("T", bound=CommandData)
-DataFactory = Callable[[], T]
-HumanRenderer = Callable[[Console, T], None]
+DataFactory = Callable[[], CommandData]
+HumanRenderer = Callable[[Console, CommandData], None]
 
 
 def settings_from_context(context: typer.Context) -> CliSettings:
@@ -97,20 +95,30 @@ def run_command(
     context: typer.Context,
     command: str,
     local_json: bool,
-    action: DataFactory[T],
-    render_human: HumanRenderer[T],
+    action: DataFactory,
+    render_human: HumanRenderer,
 ) -> None:
     """Execute one command and render a stable success or expected failure."""
     json_output = json_requested(context, local_json)
     try:
         data = action()
-    except CliFailure as failure:
-        emit_failure(command=command, failure=failure, json_output=json_output, context=context)
+    except CliFailure as expected_failure:
+        emit_failure(
+            command=command,
+            failure=expected_failure,
+            json_output=json_output,
+            context=context,
+        )
     except Exception as error:
-        failure = _known_failure(error)
-        if failure is None:
+        mapped_failure = _known_failure(error)
+        if mapped_failure is None:
             raise
-        emit_failure(command=command, failure=failure, json_output=json_output, context=context)
+        emit_failure(
+            command=command,
+            failure=mapped_failure,
+            json_output=json_output,
+            context=context,
+        )
     else:
         if json_output:
             response = CliResponseContract.success(

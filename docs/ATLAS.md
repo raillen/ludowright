@@ -35,13 +35,13 @@ This is the main navigation map for humans and agents. Each subject should have 
 - [`contracts/STATE_STORE.md`](contracts/STATE_STORE.md) — rebuildable SQLite workflow state, entity indexes, event checkpoints, transactions, and canonical-source consistency.
 - [`contracts/MIGRATIONS.md`](contracts/MIGRATIONS.md) — contiguous plans, dry runs, consistent backups, receipts, transactional apply, and guarded rollback.
 - [`contracts/DEPENDENCY_GRAPH.md`](contracts/DEPENDENCY_GRAPH.md) — typed nodes and edges, observed revisions, freshness states, invalidation paths, refresh rules, and canonical graph persistence.
+- [`contracts/CLI.md`](contracts/CLI.md) — dual human/JSON surfaces, response envelope, error codes, exit codes, version output, diagnostics, and compatibility rules.
 
 Published machine-readable contracts are stored under `schemas/v1/`. The source models live under `src/ludowright/contracts/`.
 
 Planned canonical contracts:
 
 - project manifest;
-- CLI JSON output;
 - release manifest.
 
 ## Codex integration
@@ -86,10 +86,10 @@ Future bounded changes should receive their own plan under `plans/`.
 - [`contracts/STATE_STORE.md`](contracts/STATE_STORE.md) — WAL, strict tables, rollback, concurrency, checkpoint, source-digest, corruption, and rebuild tests.
 - [`contracts/MIGRATIONS.md`](contracts/MIGRATIONS.md) — catalog, dry-run, backup, failure rollback, explicit restore, tampering, and concurrency tests.
 - [`contracts/DEPENDENCY_GRAPH.md`](contracts/DEPENDENCY_GRAPH.md) — cycle rejection, revision propagation, impact-path selection, refresh blocking, contract round-trip, and repository conflict tests.
+- [`contracts/CLI.md`](contracts/CLI.md) — envelope invariants, deterministic JSON, global options, diagnostics, quality failures, and exit-code tests.
 
 Planned detailed documents:
 
-- CLI contract testing;
 - snapshot testing;
 - agent evals;
 - release verification;
@@ -104,6 +104,7 @@ Planned detailed documents:
 - [`contracts/STATE_STORE.md`](contracts/STATE_STORE.md) — SQLite sidecar safety, parameterized operations, strict schemas, short transactions, and corruption isolation.
 - [`contracts/MIGRATIONS.md`](contracts/MIGRATIONS.md) — trusted migration code, durable backups, strict receipts, digest-guarded rollback, and fail-closed versions.
 - [`contracts/DEPENDENCY_GRAPH.md`](contracts/DEPENDENCY_GRAPH.md) — bounded graph documents, typed identities, cycle rejection, deterministic causes, and optimistic write conflicts.
+- [`contracts/CLI.md`](contracts/CLI.md) — bounded machine output, expected-error mapping, read-only diagnostics, no-color policy, and traceback boundaries.
 
 Planned detailed documents:
 
@@ -136,6 +137,7 @@ Planned operational documents:
 
 ## Decisions
 
+- [`decisions/0014-stable-dual-surface-cli-contract.md`](decisions/0014-stable-dual-surface-cli-contract.md) — accepted Rich human output, one canonical JSON envelope, stable semantic errors and process codes, version output, and read-only diagnostics.
 - [`decisions/0013-versioned-acyclic-dependency-invalidation-graph.md`](decisions/0013-versioned-acyclic-dependency-invalidation-graph.md) — accepted typed revision-aware DAG dependencies, stale and review propagation, persisted impact paths, safe refresh, and canonical JSON persistence.
 - [`decisions/0012-explicit-backed-up-schema-migrations.md`](decisions/0012-explicit-backed-up-schema-migrations.md) — accepted explicit contiguous migration plans, dry runs, durable SQLite backups, strict receipts, transactional apply, and guarded rollback.
 - [`decisions/0011-rebuildable-sqlite-state-index.md`](decisions/0011-rebuildable-sqlite-state-index.md) — accepted SQLite as a rebuildable derived index with WAL, strict short transactions, source digests, event checkpoints, and explicit consistency states.

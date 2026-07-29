@@ -1,0 +1,123 @@
+{
+  "$defs": {
+    "CliErrorCode": {
+      "description": "Stable machine-readable categories for command failures.",
+      "enum": [
+        "checks-failed",
+        "invalid-input",
+        "project-not-found",
+        "conflict",
+        "corrupt-state",
+        "blocked",
+        "internal-error"
+      ],
+      "title": "CliErrorCode",
+      "type": "string"
+    },
+    "CliErrorContract": {
+      "additionalProperties": false,
+      "description": "One stable CLI error with optional JSON-compatible detail.",
+      "properties": {
+        "code": {
+          "$ref": "#/$defs/CliErrorCode"
+        },
+        "details": {
+          "additionalProperties": true,
+          "title": "Details",
+          "type": "object"
+        },
+        "message": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "title": "CliErrorContract",
+      "type": "object"
+    },
+    "CliMetaContract": {
+      "additionalProperties": false,
+      "description": "Metadata shared by every JSON response.",
+      "properties": {
+        "ludowright_version": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+-]*$",
+          "title": "Ludowright Version",
+          "type": "string"
+        },
+        "output": {
+          "const": "json",
+          "default": "json",
+          "title": "Output",
+          "type": "string"
+        }
+      },
+      "required": [
+        "ludowright_version"
+      ],
+      "title": "CliMetaContract",
+      "type": "object"
+    }
+  },
+  "$id": "https://schemas.ludowright.dev/v1/cli-response.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Success or failure envelope emitted by commands in JSON mode.",
+  "properties": {
+    "command": {
+      "maxLength": 120,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:[ -][a-z0-9]+)*$",
+      "title": "Command",
+      "type": "string"
+    },
+    "data": {
+      "additionalProperties": true,
+      "title": "Data",
+      "type": "object"
+    },
+    "error": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/CliErrorContract"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "kind": {
+      "const": "cli-response",
+      "default": "cli-response",
+      "title": "Kind",
+      "type": "string"
+    },
+    "meta": {
+      "$ref": "#/$defs/CliMetaContract"
+    },
+    "ok": {
+      "title": "Ok",
+      "type": "boolean"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "command",
+    "ok",
+    "meta"
+  ],
+  "title": "LudoWright CLI Response",
+  "type": "object"
+}

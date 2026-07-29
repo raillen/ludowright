@@ -13,7 +13,6 @@ from ludowright.cli.quality import quality_app
 from ludowright.cli.runtime import (
     CliSettings,
     canonical_json,
-    command_console,
     run_command,
 )
 from ludowright.contracts.cli import CliResponseContract
