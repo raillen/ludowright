@@ -59,7 +59,7 @@ Before a release-related change is considered complete, run:
 uv run ludowright quality release
 ```
 
-The quality gate covers pre-commit hooks, tests with branch coverage, strict documentation validation, dependency auditing, and secret scanning. See `docs/quality/ENGINEERING_QUALITY.md`.
+The quality gate covers pre-commit hooks, tests with branch coverage, generated-schema drift, strict documentation validation, dependency auditing, and secret scanning. See `docs/quality/ENGINEERING_QUALITY.md`.
 
 ## Branches and commits
 
@@ -106,6 +106,31 @@ Use the smallest suitable level:
 
 Tests that require real ImageGen calls must be optional. Normal CI should use deterministic fakes and fixtures.
 
+## Generated JSON Schemas
+
+Published schemas live under `schemas/vN/` and are generated from `src/ludowright/contracts/`.
+
+After changing a contract model, run:
+
+```bash
+uv run python -m ludowright.contracts publish
+uv run python -m ludowright.contracts check
+```
+
+Do not edit generated schema JSON manually.
+
+A schema-related change must include, as applicable:
+
+- the domain and Pydantic contract change;
+- regenerated schema files;
+- an updated checksum manifest;
+- canonical fixture changes or additions;
+- compatibility analysis;
+- migration guidance for incompatible changes;
+- documentation and ADR updates.
+
+Never delete an old fixture merely because a new model rejects it. Either preserve compatibility or introduce a new schema version with an explicit migration path.
+
 ## Generated and visual artifacts
 
 Every generated artifact must preserve provenance when applicable:
@@ -125,9 +150,10 @@ Do not silently change persisted project data.
 
 Changes to schemas, manifests, state storage, templates, capture profiles, or public CLI JSON require:
 
-- an explicit version change;
+- an explicit version change when incompatible;
 - migration or compatibility handling;
-- contract tests;
+- contract tests and retained fixtures;
+- regenerated publication artifacts;
 - documentation;
 - changelog entry.
 
