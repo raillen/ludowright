@@ -23,6 +23,7 @@ nav:
       - Asset Domain: contracts/ASSET_DOMAIN.md
       - References and Visual Jobs: contracts/REFERENCES_AND_VISUAL_JOBS.md
       - Capture Profiles: contracts/CAPTURE_PROFILES.md
+      - JSON Schema Publication: contracts/JSON_SCHEMAS.md
   - Implementation:
       - Plan to 1.0: plans/IMPLEMENTATION_PLAN.md
   - Quality:
@@ -35,6 +36,7 @@ nav:
       - ADR 0004 — Asset Aggregate: decisions/0004-decomposed-asset-aggregate.md
       - ADR 0005 — Visual Jobs and Receipts: decisions/0005-immutable-visual-jobs-and-receipts.md
       - ADR 0006 — Capture Profile Inheritance: decisions/0006-exact-versioned-capture-profile-inheritance.md
+      - ADR 0007 — Generated JSON Schemas: decisions/0007-generated-versioned-json-schemas.md
       - ADR Template: decisions/0000-template.md
   - Operations:
       - Documentation Site: operations/DOCUMENTATION_SITE.md
