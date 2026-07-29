@@ -26,6 +26,7 @@ nav:
       - JSON Schema Publication: contracts/JSON_SCHEMAS.md
       - Project Filesystem: contracts/PROJECT_FILESYSTEM.md
       - Structured Repositories: contracts/STRUCTURED_REPOSITORIES.md
+      - Event Log: contracts/EVENT_LOG.md
   - Implementation:
       - Plan to 1.0: plans/IMPLEMENTATION_PLAN.md
   - Quality:
@@ -41,6 +42,7 @@ nav:
       - ADR 0007 — Generated JSON Schemas: decisions/0007-generated-versioned-json-schemas.md
       - ADR 0008 — Safe Project Filesystem: decisions/0008-safe-project-filesystem-boundary.md
       - ADR 0009 — Structured Repositories: decisions/0009-canonical-structured-document-repositories.md
+      - ADR 0010 — Hash-Chained Event Log: decisions/0010-hash-chained-append-only-event-log.md
       - ADR Template: decisions/0000-template.md
   - Operations:
       - Documentation Site: operations/DOCUMENTATION_SITE.md

@@ -117,6 +117,8 @@ The current identifier types are:
 | `CaptureSheetId` | Technical-sheet requirement within a profile |
 | `DecisionId` | Recorded decision |
 | `ApprovalId` | Approval request and immutable approval history |
+| `EventId` | One immutable project event-log record |
+| `CorrelationId` | Logical operation grouping one or more events |
 | `PackageId` | Reproducible project or production package |
 
 Each type uses the same slug grammar but remains a distinct runtime value object.
