@@ -26,9 +26,23 @@ def test_revision_parsing_and_canonical_forms() -> None:
 
 @pytest.mark.parametrize(
     "value",
-    [True, 0, -1, "", "0", "v0", "01", "v01", "1.0", "V1", "version-1"],
+    [
+        True,
+        0,
+        -1,
+        1.0,
+        None,
+        "",
+        "0",
+        "v0",
+        "01",
+        "v01",
+        "1.0",
+        "V1",
+        "version-1",
+    ],
 )
-def test_invalid_revisions_are_rejected(value: bool | int | str) -> None:
+def test_invalid_revisions_are_rejected(value: object) -> None:
     with pytest.raises(InvalidVersionError):
         SchemaVersion.parse(value)
 
