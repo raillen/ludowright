@@ -289,12 +289,11 @@ class Asset:
             raise InvalidAssetError("an asset owner must be canonical")
 
     def _validate_collections(self) -> None:
-        collections: tuple[tuple[object, ...], ...] = (
-            self.components,
-            self.variants,
-            self.states,
-        )
-        if any(not isinstance(collection, tuple) for collection in collections):
+        if not isinstance(self.components, tuple):
+            raise InvalidAssetError("asset decomposition collections must be tuples")
+        if not isinstance(self.variants, tuple):
+            raise InvalidAssetError("asset decomposition collections must be tuples")
+        if not isinstance(self.states, tuple):
             raise InvalidAssetError("asset decomposition collections must be tuples")
         if any(not isinstance(item, AssetComponent) for item in self.components):
             raise InvalidAssetError("an asset contains an invalid component")
@@ -302,13 +301,21 @@ class Asset:
             raise InvalidAssetError("an asset contains an invalid variant")
         if any(not isinstance(item, AssetState) for item in self.states):
             raise InvalidAssetError("an asset contains an invalid state")
-        self._ensure_unique_ids(self.components, "component")
-        self._ensure_unique_ids(self.variants, "variant")
-        self._ensure_unique_ids(self.states, "state")
+        self._ensure_unique_ids(
+            tuple(component.id for component in self.components),
+            "component",
+        )
+        self._ensure_unique_ids(
+            tuple(variant.id for variant in self.variants),
+            "variant",
+        )
+        self._ensure_unique_ids(
+            tuple(state.id for state in self.states),
+            "state",
+        )
 
     @staticmethod
-    def _ensure_unique_ids(items: tuple[object, ...], item_kind: str) -> None:
-        ids = [item.id for item in items]  # type: ignore[attr-defined]
+    def _ensure_unique_ids(ids: tuple[Identifier, ...], item_kind: str) -> None:
         if len(ids) != len(set(ids)):
             raise InvalidAssetError(f"asset {item_kind} IDs must be unique")
 
@@ -325,19 +332,26 @@ class Asset:
             current: ComponentId | None = component.id
             while current is not None:
                 if current in visited:
-                    raise InvalidAssetError("asset component hierarchy cannot contain cycles")
+                    raise InvalidAssetError(
+                        "asset component hierarchy cannot contain cycles"
+                    )
                 visited.add(current)
                 current = parents[current]
 
     @property
     def incomplete_required_items(self) -> tuple[Identifier, ...]:
         """Return required decomposed items that are not completed."""
-        items = (*self.components, *self.variants, *self.states)
-        return tuple(
-            item.id
-            for item in items
-            if item.required and item.status is not AssetStatus.COMPLETED
-        )
+        incomplete: list[Identifier] = []
+        for component in self.components:
+            if component.required and component.status is not AssetStatus.COMPLETED:
+                incomplete.append(component.id)
+        for variant in self.variants:
+            if variant.required and variant.status is not AssetStatus.COMPLETED:
+                incomplete.append(variant.id)
+        for state in self.states:
+            if state.required and state.status is not AssetStatus.COMPLETED:
+                incomplete.append(state.id)
+        return tuple(incomplete)
 
     @property
     def is_completion_ready(self) -> bool:
@@ -350,15 +364,19 @@ class Asset:
             return False
         if target is self.status:
             return True
-        if target not in _STATUS_TRANSITIONS[self.status]:
+        if target is AssetStatus.COMPLETED and not self.is_completion_ready:
             return False
-        return target is not AssetStatus.COMPLETED or self.is_completion_ready
+        return target in _STATUS_TRANSITIONS[self.status]
 
     def transition_status(self, target: AssetStatus) -> Self:
-        """Return a new asset in an allowed production status."""
+        """Return a new aggregate in an allowed production status."""
+        if not isinstance(target, AssetStatus):
+            raise InvalidAssetTransitionError("an asset target status must be valid")
+        if target is self.status:
+            return self
         if not self.can_transition_status(target):
-            target_value = target.value if isinstance(target, AssetStatus) else repr(target)
             raise InvalidAssetTransitionError(
-                f"cannot transition asset from {self.status.value!r} to {target_value!r}"
+                f"cannot transition asset {self.id.value!r} from {self.status.value!r} "
+                f"to {target.value!r}"
             )
-        return self if target is self.status else replace(self, status=target)
+        return replace(self, status=target)
