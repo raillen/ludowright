@@ -48,6 +48,24 @@ class ComponentId(Identifier):
     kind = "component"
 
 
+class VariantId(Identifier):
+    """Identifier for a production variant belonging to an asset."""
+
+    kind = "variant"
+
+
+class AssetStateId(Identifier):
+    """Identifier for a functional or visual state belonging to an asset."""
+
+    kind = "asset-state"
+
+
+class OwnerId(Identifier):
+    """Identifier for a person, team, role, or automation owner."""
+
+    kind = "owner"
+
+
 class ReferenceId(Identifier):
     """Identifier for an external, candidate, approved, or rejected reference."""
 
