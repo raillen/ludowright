@@ -51,20 +51,21 @@ def test_review_note_preserves_normalized_multiline_text() -> None:
         "unsupported\u200bformat",
         "x" * 4_001,
         unicodedata.normalize("NFD", "Aprovação"),
+        None,
     ],
 )
-def test_invalid_review_notes_are_rejected(value: str) -> None:
+def test_invalid_review_notes_are_rejected(value: object) -> None:
     with pytest.raises(ValueError):
-        ReviewNote(value)
+        ReviewNote(value)  # type: ignore[arg-type]
 
 
 @pytest.mark.parametrize(
     "value",
-    ["", " contains-space", "contains space", "ação", "/path", "x" * 129],
+    ["", " contains-space", "contains space", "ação", "/path", "x" * 129, None],
 )
-def test_invalid_subject_revisions_are_rejected(value: str) -> None:
+def test_invalid_subject_revisions_are_rejected(value: object) -> None:
     with pytest.raises(InvalidApprovalError):
-        SubjectRevision(value)
+        SubjectRevision(value)  # type: ignore[arg-type]
 
 
 def test_subject_revision_supports_checksums_versions_and_git_shas() -> None:
@@ -73,11 +74,30 @@ def test_subject_revision_supports_checksums_versions_and_git_shas() -> None:
     assert str(SubjectRevision("git:0123456789abcdef")) == "git:0123456789abcdef"
 
 
-def test_approval_subject_requires_a_typed_identifier() -> None:
+def test_approval_subject_requires_canonical_value_types() -> None:
     with pytest.raises(InvalidApprovalError, match="typed identifier"):
         ApprovalSubject(
             id=Identifier("generic"),
             revision=SubjectRevision("v1"),
+        )
+
+    with pytest.raises(InvalidApprovalError, match="typed identifier"):
+        ApprovalSubject(
+            id="ref-maya-front",  # type: ignore[arg-type]
+            revision=SubjectRevision("v1"),
+        )
+
+    with pytest.raises(InvalidApprovalError, match="subject revision"):
+        ApprovalSubject(
+            id=ReferenceId("ref-maya-front"),
+            revision="v1",  # type: ignore[arg-type]
+        )
+
+    with pytest.raises(InvalidApprovalError, match="display name"):
+        ApprovalSubject(
+            id=ReferenceId("ref-maya-front"),
+            revision=SubjectRevision("v1"),
+            label="Maya",  # type: ignore[arg-type]
         )
 
 
@@ -159,11 +179,25 @@ def test_rejected_and_withdrawn_decisions_are_terminal() -> None:
 
 
 def test_invalid_decision_histories_are_rejected() -> None:
-    with pytest.raises(InvalidDecisionError, match="cannot be empty"):
+    with pytest.raises(InvalidDecisionError, match="non-empty tuple"):
         Decision(
             id=DecisionId("decision-empty"),
             title=DisplayName("Empty history"),
             history=(),
+        )
+
+    with pytest.raises(InvalidDecisionError, match="non-empty tuple"):
+        Decision(
+            id=DecisionId("decision-list-history"),
+            title=DisplayName("Mutable history"),
+            history=[DecisionRevision(1, DecisionStatus.PROPOSED)],  # type: ignore[arg-type]
+        )
+
+    with pytest.raises(InvalidDecisionError, match="invalid revision"):
+        Decision(
+            id=DecisionId("decision-invalid-revision"),
+            title=DisplayName("Invalid revision"),
+            history=("proposed",),  # type: ignore[arg-type]
         )
 
     with pytest.raises(InvalidDecisionError, match="begin with proposed"):
@@ -195,6 +229,35 @@ def test_invalid_decision_histories_are_rejected() -> None:
                     superseded_by=DecisionId("decision-replacement"),
                 ),
             ),
+        )
+
+
+def test_decision_revision_requires_canonical_types() -> None:
+    with pytest.raises(InvalidDecisionError, match="positive integer"):
+        DecisionRevision(True, DecisionStatus.PROPOSED)
+
+    with pytest.raises(InvalidDecisionError, match="valid status"):
+        DecisionRevision(1, "proposed")  # type: ignore[arg-type]
+
+    with pytest.raises(InvalidDecisionError, match="review note"):
+        DecisionRevision(1, DecisionStatus.PROPOSED, note="note")  # type: ignore[arg-type]
+
+
+def test_decision_requires_canonical_types() -> None:
+    revision = (DecisionRevision(1, DecisionStatus.PROPOSED),)
+
+    with pytest.raises(InvalidDecisionError, match="decision ID"):
+        Decision(
+            id="decision-invalid",  # type: ignore[arg-type]
+            title=DisplayName("Invalid ID"),
+            history=revision,
+        )
+
+    with pytest.raises(InvalidDecisionError, match="display name"):
+        Decision(
+            id=DecisionId("decision-invalid-title"),
+            title="Invalid title",  # type: ignore[arg-type]
+            history=revision,
         )
 
 
@@ -298,11 +361,25 @@ def test_pending_approval_cannot_be_revoked_or_superseded() -> None:
 
 
 def test_invalid_approval_histories_are_rejected() -> None:
-    with pytest.raises(InvalidApprovalError, match="cannot be empty"):
+    with pytest.raises(InvalidApprovalError, match="non-empty tuple"):
         Approval(
             id=ApprovalId("approval-empty"),
             subject=make_subject(),
             history=(),
+        )
+
+    with pytest.raises(InvalidApprovalError, match="non-empty tuple"):
+        Approval(
+            id=ApprovalId("approval-list-history"),
+            subject=make_subject(),
+            history=[ApprovalRevision(1, ApprovalStatus.PENDING)],  # type: ignore[arg-type]
+        )
+
+    with pytest.raises(InvalidApprovalError, match="invalid revision"):
+        Approval(
+            id=ApprovalId("approval-invalid-revision"),
+            subject=make_subject(),
+            history=("pending",),  # type: ignore[arg-type]
         )
 
     with pytest.raises(InvalidApprovalError, match="begin with pending"):
@@ -330,6 +407,35 @@ def test_invalid_approval_histories_are_rejected() -> None:
                 ApprovalRevision(1, ApprovalStatus.PENDING),
                 ApprovalRevision(2, ApprovalStatus.REVOKED),
             ),
+        )
+
+
+def test_approval_revision_requires_canonical_types() -> None:
+    with pytest.raises(InvalidApprovalError, match="positive integer"):
+        ApprovalRevision(True, ApprovalStatus.PENDING)
+
+    with pytest.raises(InvalidApprovalError, match="valid status"):
+        ApprovalRevision(1, "pending")  # type: ignore[arg-type]
+
+    with pytest.raises(InvalidApprovalError, match="review note"):
+        ApprovalRevision(1, ApprovalStatus.PENDING, note="note")  # type: ignore[arg-type]
+
+
+def test_approval_requires_canonical_types() -> None:
+    revision = (ApprovalRevision(1, ApprovalStatus.PENDING),)
+
+    with pytest.raises(InvalidApprovalError, match="approval ID"):
+        Approval(
+            id="approval-invalid",  # type: ignore[arg-type]
+            subject=make_subject(),
+            history=revision,
+        )
+
+    with pytest.raises(InvalidApprovalError, match="approval subject"):
+        Approval(
+            id=ApprovalId("approval-invalid-subject"),
+            subject="subject",  # type: ignore[arg-type]
+            history=revision,
         )
 
 
