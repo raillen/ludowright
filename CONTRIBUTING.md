@@ -39,21 +39,27 @@ Requirements:
 - Git.
 
 ```bash
-uv sync --extra dev
+uv sync --extra dev --extra docs
+uv run pre-commit install
 uv run ludowright --version
 uv run ludowright status
 ```
 
 ## Required checks
 
-Run the relevant checks before opening a pull request:
+Run the complete quality gate before opening a pull request:
 
 ```bash
-uv run ruff check .
-uv run ruff format --check .
-uv run mypy src
-uv run pytest --cov=ludowright --cov-report=term-missing
+uv run ludowright quality check
 ```
+
+Before a release-related change is considered complete, run:
+
+```bash
+uv run ludowright quality release
+```
+
+The quality gate covers pre-commit hooks, tests with branch coverage, strict documentation validation, dependency auditing, and secret scanning. See `docs/quality/ENGINEERING_QUALITY.md`.
 
 ## Branches and commits
 
@@ -91,6 +97,7 @@ Prefer squash merging unless preserving individual commits is important to under
 Use the smallest suitable level:
 
 - unit tests for domain rules;
+- property tests for invariants across many valid inputs;
 - contract tests for schemas, manifests, and machine-readable CLI output;
 - snapshot tests for generated documents and sheets;
 - integration tests for storage and filesystem boundaries;
