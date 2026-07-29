@@ -33,9 +33,10 @@ jobs:
       - name: Integrate StateStore v2 and migration publication
         run: |
           uv run python scripts/integrate_migration_v2.py
-          uv run ruff format src tests scripts
-          uv run ruff check --fix src tests scripts
-          uv run ruff format src tests scripts
+          rm scripts/integrate_migration_v2.py
+          uv run ruff format src tests
+          uv run ruff check --fix src tests
+          uv run ruff format src tests
           uv run python -m ludowright.contracts publish
 
       - name: Validate complete migration framework
