@@ -14,6 +14,7 @@ app = typer.Typer(
     name="ludowright",
     help="Plan, document, visualize, validate, and package game projects.",
     no_args_is_help=True,
+    invoke_without_command=True,
 )
 console = Console()
 
