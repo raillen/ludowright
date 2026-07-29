@@ -2,6 +2,12 @@
 
 from ludowright.contracts.assets import AssetContract
 from ludowright.contracts.capture import CaptureProfileContract
+from ludowright.contracts.cli import (
+    CliErrorCode,
+    CliErrorContract,
+    CliMetaContract,
+    CliResponseContract,
+)
 from ludowright.contracts.dependencies import (
     DependencyEdgeContract,
     DependencyGraphContract,
@@ -44,6 +50,10 @@ __all__ = [
     "ApprovalContract",
     "AssetContract",
     "CaptureProfileContract",
+    "CliErrorCode",
+    "CliErrorContract",
+    "CliMetaContract",
+    "CliResponseContract",
     "DecisionContract",
     "DependencyEdgeContract",
     "DependencyGraphContract",
