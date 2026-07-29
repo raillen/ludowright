@@ -105,6 +105,9 @@ The current identifier types are:
 | `ProjectId` | Game project |
 | `AssetId` | Planned or produced asset |
 | `ComponentId` | Component belonging to an asset |
+| `VariantId` | Alternative production variant belonging to an asset |
+| `AssetStateId` | Functional or visual state belonging to an asset |
+| `OwnerId` | Responsible person, team, role, or automation identity |
 | `ReferenceId` | External, candidate, approved, rejected, or archived reference |
 | `JobId` | Workflow or generation job |
 | `DecisionId` | Recorded decision |
