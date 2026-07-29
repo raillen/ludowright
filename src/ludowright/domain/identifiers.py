@@ -120,6 +120,18 @@ class ApprovalId(Identifier):
     kind = "approval"
 
 
+class EventId(Identifier):
+    """Identifier for one immutable event-log record."""
+
+    kind = "event"
+
+
+class CorrelationId(Identifier):
+    """Identifier grouping events that belong to one logical operation."""
+
+    kind = "correlation"
+
+
 class PackageId(Identifier):
     """Identifier for a reproducible project or production package."""
 
