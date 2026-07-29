@@ -65,9 +65,10 @@ Future bounded changes should receive their own plan under `plans/`.
 
 ## Quality
 
-Planned documents:
+- [`quality/ENGINEERING_QUALITY.md`](quality/ENGINEERING_QUALITY.md) — pre-commit, unified quality commands, coverage, property tests, dependency audits, secret scanning, CI, and failure policy.
 
-- test strategy;
+Planned detailed documents:
+
 - schema and CLI contract testing;
 - snapshot testing;
 - agent evals;

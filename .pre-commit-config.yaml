@@ -1,0 +1,36 @@
+minimum_pre_commit_version: "4.0.0"
+
+repos:
+  - repo: local
+    hooks:
+      - id: ruff-check
+        name: Ruff lint
+        entry: uv run ruff check
+        language: system
+        types_or: [python, pyi]
+
+      - id: ruff-format
+        name: Ruff formatting
+        entry: uv run ruff format --check
+        language: system
+        types_or: [python, pyi]
+
+      - id: mypy
+        name: Mypy strict type checking
+        entry: uv run mypy src
+        language: system
+        pass_filenames: false
+        types_or: [python, pyi]
+
+      - id: detect-secrets
+        name: Detect committed secrets
+        entry: uv run detect-secrets-hook
+        language: system
+        types: [text]
+        exclude: >-
+          (?x)^(
+            \.git/.*|
+            site/.*|
+            htmlcov/.*|
+            \.coverage
+          )$

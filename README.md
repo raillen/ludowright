@@ -48,15 +48,25 @@ uv run ludowright --version
 uv run ludowright status
 ```
 
-Run the baseline checks:
+Install the local hooks once:
 
 ```bash
-uv run ruff check .
-uv run ruff format --check .
-uv run mypy src
-uv run pytest
-uv run mkdocs build --strict --clean
+uv run pre-commit install
 ```
+
+Run the complete pull-request quality gate:
+
+```bash
+uv run ludowright quality check
+```
+
+Run the release gate, including package build verification:
+
+```bash
+uv run ludowright quality release
+```
+
+Both commands support `--dry-run` and `--json`.
 
 ## Documentation
 
@@ -80,6 +90,7 @@ Start with:
 - [`docs/product/ROADMAP.md`](docs/product/ROADMAP.md)
 - [`docs/architecture/SYSTEM_OVERVIEW.md`](docs/architecture/SYSTEM_OVERVIEW.md)
 - [`docs/plans/IMPLEMENTATION_PLAN.md`](docs/plans/IMPLEMENTATION_PLAN.md)
+- [`docs/quality/ENGINEERING_QUALITY.md`](docs/quality/ENGINEERING_QUALITY.md)
 - [`docs/operations/DOCUMENTATION_SITE.md`](docs/operations/DOCUMENTATION_SITE.md)
 
 ## Contributing and support

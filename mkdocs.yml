@@ -18,6 +18,8 @@ nav:
       - System Overview: architecture/SYSTEM_OVERVIEW.md
   - Implementation:
       - Plan to 1.0: plans/IMPLEMENTATION_PLAN.md
+  - Quality:
+      - Engineering Baseline: quality/ENGINEERING_QUALITY.md
   - Governance:
       - RFC Template: governance/RFC_TEMPLATE.md
       - ADR Template: decisions/0000-template.md
