@@ -25,3 +25,19 @@ class InvalidProjectError(DomainValidationError):
 
 class InvalidProjectTransitionError(InvalidProjectError):
     """Raised when a project stage or lifecycle transition is not allowed."""
+
+
+class InvalidDecisionError(DomainValidationError):
+    """Raised when a decision or its immutable history is invalid."""
+
+
+class InvalidDecisionTransitionError(InvalidDecisionError):
+    """Raised when a decision transition is not allowed."""
+
+
+class InvalidApprovalError(DomainValidationError):
+    """Raised when an approval request or its immutable history is invalid."""
+
+
+class InvalidApprovalTransitionError(InvalidApprovalError):
+    """Raised when an approval transition is not allowed."""
