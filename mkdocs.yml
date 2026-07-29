@@ -24,6 +24,8 @@ nav:
       - References and Visual Jobs: contracts/REFERENCES_AND_VISUAL_JOBS.md
       - Capture Profiles: contracts/CAPTURE_PROFILES.md
       - JSON Schema Publication: contracts/JSON_SCHEMAS.md
+      - Project Filesystem: contracts/PROJECT_FILESYSTEM.md
+      - Structured Repositories: contracts/STRUCTURED_REPOSITORIES.md
   - Implementation:
       - Plan to 1.0: plans/IMPLEMENTATION_PLAN.md
   - Quality:
@@ -37,6 +39,8 @@ nav:
       - ADR 0005 — Visual Jobs and Receipts: decisions/0005-immutable-visual-jobs-and-receipts.md
       - ADR 0006 — Capture Profile Inheritance: decisions/0006-exact-versioned-capture-profile-inheritance.md
       - ADR 0007 — Generated JSON Schemas: decisions/0007-generated-versioned-json-schemas.md
+      - ADR 0008 — Safe Project Filesystem: decisions/0008-safe-project-filesystem-boundary.md
+      - ADR 0009 — Structured Repositories: decisions/0009-canonical-structured-document-repositories.md
       - ADR Template: decisions/0000-template.md
   - Operations:
       - Documentation Site: operations/DOCUMENTATION_SITE.md

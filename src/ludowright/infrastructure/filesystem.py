@@ -19,9 +19,7 @@ from typing import Self
 _MAX_REPOSITORY_PATH_LENGTH = 1_024
 _MAX_SEGMENT_LENGTH = 255
 _MAX_LOCK_METADATA_BYTES = 16_384
-_ALLOWED_SEGMENT_CHARACTERS = frozenset(
-    "abcdefghijklmnopqrstuvwxyz0123456789._-"
-)
+_ALLOWED_SEGMENT_CHARACTERS = frozenset("abcdefghijklmnopqrstuvwxyz0123456789._-")
 _RESERVED_WINDOWS_NAMES = {
     "aux",
     "clock$",
@@ -90,10 +88,6 @@ class RepositoryPath:
         return self.value
 
 
-PROJECT_MARKER = RepositoryPath(".ludowright/project.json")
-LOCK_DIRECTORY = RepositoryPath(".ludowright/locks")
-
-
 def _validate_repository_path(value: str) -> None:
     if not isinstance(value, str):
         raise UnsafeProjectPathError("a repository path must be a string")
@@ -110,9 +104,7 @@ def _validate_repository_path(value: str) -> None:
 
     path = PurePosixPath(value)
     if path.is_absolute() or path.as_posix() != value:
-        raise UnsafeProjectPathError(
-            "a repository path must be relative and already normalized"
-        )
+        raise UnsafeProjectPathError("a repository path must be relative and already normalized")
 
     for segment in path.parts:
         _validate_repository_segment(segment)
@@ -127,15 +119,18 @@ def _validate_repository_segment(segment: str) -> None:
         raise UnsafeProjectPathError("repository paths cannot contain dot traversal")
     if any(character not in _ALLOWED_SEGMENT_CHARACTERS for character in segment):
         raise UnsafeProjectPathError(
-            "repository path segments may use lowercase letters, digits, dots, hyphens, and underscores"
+            "repository path segments may use lowercase letters, digits, dots, "
+            "hyphens, and underscores"
         )
     if segment.endswith("."):
         raise UnsafeProjectPathError("repository path segments cannot end with a dot")
     basename = segment.split(".", maxsplit=1)[0]
     if basename in _RESERVED_WINDOWS_NAMES:
-        raise UnsafeProjectPathError(
-            f"repository path segment {segment!r} is reserved on Windows"
-        )
+        raise UnsafeProjectPathError(f"repository path segment {segment!r} is reserved on Windows")
+
+
+PROJECT_MARKER = RepositoryPath(".ludowright/project.json")
+LOCK_DIRECTORY = RepositoryPath(".ludowright/locks")
 
 
 @dataclass(frozen=True, slots=True)
@@ -212,17 +207,15 @@ class ProjectFilesystem:
             if os.path.lexists(marker_path):
                 marker_stat = os.lstat(marker_path)
                 if stat.S_ISLNK(marker_stat.st_mode):
-                    raise UnsafeProjectPathError("project marker cannot be a symbolic link")
+                    raise UnsafeProjectPathError("project marker cannot be a symlink")
                 if stat.S_ISREG(marker_stat.st_mode):
                     return cls(directory)
                 raise ProjectFilesystemError("project marker must be a regular file")
 
-        raise ProjectRootNotFoundError(
-            f"no {marker.value!r} marker found from {current}"
-        )
+        raise ProjectRootNotFoundError(f"no {marker.value!r} marker found from {current}")
 
     def resolve(self, path: RepositoryPath, *, must_exist: bool = False) -> Path:
-        """Resolve a repository path without following an escaping symbolic link."""
+        """Resolve a repository path without following an escaping symlink."""
         if not isinstance(path, RepositoryPath):
             raise UnsafeProjectPathError("project paths must use RepositoryPath")
         candidate = self._root.joinpath(*path.parts)
@@ -251,9 +244,7 @@ class ProjectFilesystem:
             if os.path.lexists(target):
                 target_stat = os.lstat(target)
                 if stat.S_ISLNK(target_stat.st_mode):
-                    raise UnsafeProjectPathError(
-                        f"directory path contains symbolic link: {target}"
-                    )
+                    raise UnsafeProjectPathError(f"directory path contains symlink: {target}")
                 if not stat.S_ISDIR(target_stat.st_mode):
                     raise ProjectFilesystemError(
                         f"directory path contains a non-directory: {target}"
@@ -263,9 +254,7 @@ class ProjectFilesystem:
                 target.mkdir(mode=mode)
             except FileExistsError:
                 target_stat = os.lstat(target)
-                if stat.S_ISLNK(target_stat.st_mode) or not stat.S_ISDIR(
-                    target_stat.st_mode
-                ):
+                if stat.S_ISLNK(target_stat.st_mode) or not stat.S_ISDIR(target_stat.st_mode):
                     raise UnsafeProjectPathError(
                         f"directory path changed during creation: {target}"
                     ) from None
@@ -390,9 +379,7 @@ class ProjectFilesystem:
         try:
             candidate.relative_to(self._root)
         except ValueError as error:
-            raise UnsafeProjectPathError(
-                f"project path escapes the root: {candidate}"
-            ) from error
+            raise UnsafeProjectPathError(f"project path escapes the root: {candidate}") from error
 
     def _assert_safe_existing_prefix(self, candidate: Path) -> None:
         relative = candidate.relative_to(self._root)
@@ -403,9 +390,7 @@ class ProjectFilesystem:
                 return
             current_stat = os.lstat(current)
             if stat.S_ISLNK(current_stat.st_mode):
-                raise UnsafeProjectPathError(
-                    f"project path contains symbolic link: {current}"
-                )
+                raise UnsafeProjectPathError(f"project path contains symlink: {current}")
 
     def _assert_safe_write_target(self, target: Path) -> None:
         self._assert_lexically_inside(target)
@@ -414,7 +399,7 @@ class ProjectFilesystem:
             return
         target_stat = os.lstat(target)
         if stat.S_ISLNK(target_stat.st_mode):
-            raise UnsafeProjectPathError("atomic writes cannot replace a symbolic link")
+            raise UnsafeProjectPathError("atomic writes cannot replace a symlink")
         if not stat.S_ISREG(target_stat.st_mode):
             raise ProjectFilesystemError("atomic writes require a regular-file target")
 
@@ -539,6 +524,8 @@ def _validate_size_limit(value: int) -> None:
 
 
 def _validate_lock_name(name: str) -> None:
+    if not name:
+        raise ProjectFilesystemError("project lock name cannot be empty")
     try:
         path = RepositoryPath(f"{name}.lock")
     except UnsafeProjectPathError as error:

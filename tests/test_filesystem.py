@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import os
 import stat
+import string
 from pathlib import Path
 
 import pytest
@@ -90,7 +91,7 @@ def test_repository_path_parent_and_child_preserve_canonical_form() -> None:
     assert RepositoryPath("root.json").parent is None
 
 
-_SAFE_SEGMENT_ALPHABET = "abcdefghijklmnopqrstuvwxyz0123456789-_"
+_SAFE_SEGMENT_ALPHABET = string.ascii_lowercase + string.digits + "-_"
 
 
 @given(
@@ -101,7 +102,9 @@ _SAFE_SEGMENT_ALPHABET = "abcdefghijklmnopqrstuvwxyz0123456789-_"
     )
 )
 def test_repository_path_round_trip_for_safe_segments(segments: list[str]) -> None:
-    assume(all(segment.split(".", maxsplit=1)[0] not in {"con", "nul", "prn"} for segment in segments))
+    assume(
+        all(segment.split(".", maxsplit=1)[0] not in {"con", "nul", "prn"} for segment in segments)
+    )
     value = "/".join(segments)
 
     path = RepositoryPath(value)
@@ -195,9 +198,9 @@ def test_resolve_and_writes_reject_symlink_ancestor(tmp_path: Path) -> None:
         pytest.skip("symbolic links are unavailable")
 
     unsafe = RepositoryPath("assets/escape/payload.json")
-    with pytest.raises(UnsafeProjectPathError, match="symbolic link"):
+    with pytest.raises(UnsafeProjectPathError, match="symlink"):
         filesystem.resolve(unsafe)
-    with pytest.raises(UnsafeProjectPathError, match="symbolic link"):
+    with pytest.raises(UnsafeProjectPathError, match="symlink"):
         filesystem.write_text(unsafe, "{}\n")
 
     assert not (outside / "payload.json").exists()
