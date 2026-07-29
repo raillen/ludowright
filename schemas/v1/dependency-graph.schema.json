@@ -1,0 +1,236 @@
+{
+  "$defs": {
+    "DependencyEdgeContract": {
+      "additionalProperties": false,
+      "properties": {
+        "invalidation_mode": {
+          "$ref": "#/$defs/InvalidationMode"
+        },
+        "observed_source_revision": {
+          "maximum": 2147483647,
+          "minimum": 1,
+          "title": "Observed Source Revision",
+          "type": "integer"
+        },
+        "relation": {
+          "$ref": "#/$defs/DependencyRelation"
+        },
+        "source": {
+          "$ref": "#/$defs/DependencyKeyContract"
+        },
+        "target": {
+          "$ref": "#/$defs/DependencyKeyContract"
+        }
+      },
+      "required": [
+        "source",
+        "target",
+        "relation",
+        "invalidation_mode",
+        "observed_source_revision"
+      ],
+      "title": "DependencyEdgeContract",
+      "type": "object"
+    },
+    "DependencyKeyContract": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/DependencyNodeKind"
+        }
+      },
+      "required": [
+        "kind",
+        "id"
+      ],
+      "title": "DependencyKeyContract",
+      "type": "object"
+    },
+    "DependencyNodeContract": {
+      "additionalProperties": false,
+      "properties": {
+        "freshness": {
+          "$ref": "#/$defs/FreshnessState",
+          "default": "fresh"
+        },
+        "invalidations": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/InvalidationCauseContract"
+          },
+          "maxItems": 256,
+          "title": "Invalidations",
+          "type": "array"
+        },
+        "key": {
+          "$ref": "#/$defs/DependencyKeyContract"
+        },
+        "revision": {
+          "maximum": 2147483647,
+          "minimum": 1,
+          "title": "Revision",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "key",
+        "revision"
+      ],
+      "title": "DependencyNodeContract",
+      "type": "object"
+    },
+    "DependencyNodeKind": {
+      "description": "Stable kinds of canonical or derived project items.",
+      "enum": [
+        "project",
+        "decision",
+        "approval",
+        "document",
+        "asset",
+        "component",
+        "variant",
+        "asset-state",
+        "reference",
+        "capture-profile",
+        "visual-job",
+        "generation-receipt",
+        "visual-review",
+        "technical-sheet",
+        "workbook",
+        "package",
+        "release",
+        "other"
+      ],
+      "title": "DependencyNodeKind",
+      "type": "string"
+    },
+    "DependencyRelation": {
+      "description": "Meaning of a dependency from one source to one dependent target.",
+      "enum": [
+        "requires",
+        "derives-from",
+        "references",
+        "generated-from",
+        "assembled-from",
+        "approved-by",
+        "packages",
+        "supersedes",
+        "other"
+      ],
+      "title": "DependencyRelation",
+      "type": "string"
+    },
+    "FreshnessState": {
+      "description": "Current usability of a node relative to its dependencies.",
+      "enum": [
+        "fresh",
+        "review-required",
+        "stale"
+      ],
+      "title": "FreshnessState",
+      "type": "string"
+    },
+    "InvalidationCauseContract": {
+      "additionalProperties": false,
+      "properties": {
+        "affected": {
+          "$ref": "#/$defs/DependencyKeyContract"
+        },
+        "path": {
+          "items": {
+            "$ref": "#/$defs/DependencyKeyContract"
+          },
+          "maxItems": 1024,
+          "minItems": 1,
+          "title": "Path",
+          "type": "array"
+        },
+        "reason": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Reason",
+          "type": "string"
+        },
+        "root": {
+          "$ref": "#/$defs/DependencyKeyContract"
+        },
+        "state": {
+          "$ref": "#/$defs/FreshnessState"
+        }
+      },
+      "required": [
+        "root",
+        "affected",
+        "reason",
+        "state",
+        "path"
+      ],
+      "title": "InvalidationCauseContract",
+      "type": "object"
+    },
+    "InvalidationMode": {
+      "description": "How a source problem affects a dependent target.",
+      "enum": [
+        "stale",
+        "review",
+        "none"
+      ],
+      "title": "InvalidationMode",
+      "type": "string"
+    }
+  },
+  "$id": "https://schemas.ludowright.dev/v1/dependency-graph.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "edges": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/DependencyEdgeContract"
+      },
+      "maxItems": 500000,
+      "title": "Edges",
+      "type": "array"
+    },
+    "kind": {
+      "const": "dependency-graph",
+      "default": "dependency-graph",
+      "title": "Kind",
+      "type": "string"
+    },
+    "nodes": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/DependencyNodeContract"
+      },
+      "maxItems": 100000,
+      "title": "Nodes",
+      "type": "array"
+    },
+    "revision": {
+      "maximum": 2147483647,
+      "minimum": 1,
+      "title": "Revision",
+      "type": "integer"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "revision"
+  ],
+  "title": "LudoWright Dependency Graph",
+  "type": "object"
+}

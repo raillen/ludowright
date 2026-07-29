@@ -143,15 +143,11 @@ class InvalidationCause:
     path: tuple[DependencyKey, ...]
 
     def __post_init__(self) -> None:
-        if not isinstance(self.root, DependencyKey) or not isinstance(
-            self.affected, DependencyKey
-        ):
+        if not isinstance(self.root, DependencyKey) or not isinstance(self.affected, DependencyKey):
             raise InvalidDependencyGraphError("an invalidation cause requires typed keys")
         if not isinstance(self.reason, InvalidationReason):
             raise InvalidDependencyGraphError("an invalidation cause requires a typed reason")
-        if self.state is FreshnessState.FRESH or not isinstance(
-            self.state, FreshnessState
-        ):
+        if self.state is FreshnessState.FRESH or not isinstance(self.state, FreshnessState):
             raise InvalidDependencyGraphError("an invalidation cause must be non-fresh")
         if not isinstance(self.path, tuple) or not self.path:
             raise InvalidDependencyGraphError("an invalidation path cannot be empty")
@@ -191,9 +187,7 @@ class DependencyNode:
             raise InvalidDependencyGraphError(
                 "node invalidations must target the containing dependency node"
             )
-        identities = tuple(
-            (cause.root, cause.reason.value) for cause in self.invalidations
-        )
+        identities = tuple((cause.root, cause.reason.value) for cause in self.invalidations)
         if len(identities) != len(set(identities)):
             raise InvalidDependencyGraphError(
                 "a node cannot contain duplicate invalidation roots and reasons"
@@ -218,9 +212,7 @@ class DependencyEdge:
     observed_source_revision: RevisionVersion
 
     def __post_init__(self) -> None:
-        if not isinstance(self.source, DependencyKey) or not isinstance(
-            self.target, DependencyKey
-        ):
+        if not isinstance(self.source, DependencyKey) or not isinstance(self.target, DependencyKey):
             raise InvalidDependencyGraphError("dependency edges require typed endpoints")
         if self.source == self.target:
             raise InvalidDependencyGraphError("a dependency node cannot depend on itself")
@@ -325,9 +317,7 @@ class DependencyGraph:
         if not isinstance(node, DependencyNode):
             raise TypeError("dependency graphs require DependencyNode values")
         if any(current.key == node.key for current in self.nodes):
-            raise InvalidDependencyGraphError(
-                f"dependency node already exists: {node.key.token}"
-            )
+            raise InvalidDependencyGraphError(f"dependency node already exists: {node.key.token}")
         return replace(
             self,
             revision=_next_revision(self.revision),
@@ -404,10 +394,7 @@ class DependencyGraph:
                 edge.target
                 for edge in self.edges
                 if edge.source == key
-                and (
-                    include_nonpropagating
-                    or edge.invalidation_mode is not InvalidationMode.NONE
-                )
+                and (include_nonpropagating or edge.invalidation_mode is not InvalidationMode.NONE)
             )
         visited: set[DependencyKey] = set()
         pending = deque([key])
@@ -416,10 +403,7 @@ class DependencyGraph:
             for edge in self.edges:
                 if edge.source != current:
                     continue
-                if (
-                    not include_nonpropagating
-                    and edge.invalidation_mode is InvalidationMode.NONE
-                ):
+                if not include_nonpropagating and edge.invalidation_mode is InvalidationMode.NONE:
                     continue
                 if edge.target not in visited:
                     visited.add(edge.target)
@@ -561,7 +545,7 @@ class DependencyGraph:
         nodes: dict[DependencyKey, DependencyNode],
         *,
         revision: RevisionVersion | None = None,
-    ) -> Self:
+    ) -> DependencyGraph:
         return DependencyGraph(
             revision=revision or self.revision,
             nodes=tuple(nodes.values()),
@@ -574,16 +558,11 @@ class DependencyGraph:
         root: DependencyKey,
         reason: InvalidationReason,
         root_state: FreshnessState | None,
-        initial_edges: frozenset[
-            tuple[DependencyKey, DependencyKey, DependencyRelation]
-        ]
-        | None,
+        initial_edges: frozenset[tuple[DependencyKey, DependencyKey, DependencyRelation]] | None,
     ) -> InvalidationResult:
         nodes = self._node_map()
         best: dict[DependencyKey, tuple[FreshnessState, tuple[DependencyKey, ...]]] = {}
-        pending: deque[tuple[DependencyKey, FreshnessState, tuple[DependencyKey, ...]]] = (
-            deque()
-        )
+        pending: deque[tuple[DependencyKey, FreshnessState, tuple[DependencyKey, ...]]] = deque()
 
         if root_state is not None:
             best[root] = (root_state, (root,))
@@ -593,18 +572,19 @@ class DependencyGraph:
 
         outgoing: dict[DependencyKey, tuple[DependencyEdge, ...]] = {}
         for source in nodes:
-            outgoing[source] = tuple(
-                edge for edge in self.edges if edge.source == source
-            )
+            outgoing[source] = tuple(edge for edge in self.edges if edge.source == source)
 
         while pending:
             source, source_state, path = pending.popleft()
             for edge in outgoing[source]:
                 if edge.invalidation_mode is InvalidationMode.NONE:
                     continue
-                if source == root and initial_edges is not None:
-                    if edge.identity not in initial_edges:
-                        continue
+                if (
+                    source == root
+                    and initial_edges is not None
+                    and edge.identity not in initial_edges
+                ):
+                    continue
                 edge_state = _state_for_mode(edge.invalidation_mode)
                 candidate_state = _stronger_state(source_state, edge_state)
                 candidate_path = (*path, edge.target)
@@ -707,9 +687,7 @@ def _better_impact(
         return candidate_severity > current_severity
     if len(candidate_path) != len(current_path):
         return len(candidate_path) < len(current_path)
-    return tuple(item.token for item in candidate_path) < tuple(
-        item.token for item in current_path
-    )
+    return tuple(item.token for item in candidate_path) < tuple(item.token for item in current_path)
 
 
 def _merge_cause(
@@ -748,9 +726,7 @@ def _assert_acyclic(
 ) -> None:
     adjacency: dict[DependencyKey, tuple[DependencyKey, ...]] = {}
     for node in nodes:
-        adjacency[node] = tuple(
-            edge.target for edge in edges if edge.source == node
-        )
+        adjacency[node] = tuple(edge.target for edge in edges if edge.source == node)
     visiting: set[DependencyKey] = set()
     visited: set[DependencyKey] = set()
     stack: list[DependencyKey] = []

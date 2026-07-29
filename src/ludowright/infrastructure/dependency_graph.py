@@ -102,9 +102,7 @@ class DependencyGraphRepository:
         )
 
     def canonical_bytes(self, graph: DependencyGraph) -> bytes:
-        return self._repository.canonical_bytes(
-            DependencyGraphContract.from_domain(graph)
-        )
+        return self._repository.canonical_bytes(DependencyGraphContract.from_domain(graph))
 
 
 def _to_domain_snapshot(

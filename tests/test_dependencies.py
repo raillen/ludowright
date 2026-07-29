@@ -250,10 +250,13 @@ def test_nonpropagating_edge_remains_informational() -> None:
     assert result.impacts == ()
     assert result.graph.get_node(target.key).freshness is FreshnessState.FRESH
     assert graph.dependents_of(source.key) == (target.key,)
-    assert graph.dependents_of(
-        source.key,
-        include_nonpropagating=False,
-    ) == ()
+    assert (
+        graph.dependents_of(
+            source.key,
+            include_nonpropagating=False,
+        )
+        == ()
+    )
 
 
 def test_stronger_transitive_path_wins_over_shorter_soft_path() -> None:
@@ -421,7 +424,7 @@ def test_contract_rejects_invalid_persisted_freshness() -> None:
         "edges": [],
     }
 
-    with pytest.raises(InvalidDependencyGraphError, match="strongest"):
+    with pytest.raises(ValidationError, match="strongest"):
         DependencyGraphContract.model_validate(payload)
     assert asset.token == "asset:maya"
 

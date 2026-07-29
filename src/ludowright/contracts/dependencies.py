@@ -85,8 +85,7 @@ class DependencyNodeContract(ContractModel):
             revision=value.revision.value,
             freshness=value.freshness,
             invalidations=tuple(
-                InvalidationCauseContract.from_domain(item)
-                for item in value.invalidations
+                InvalidationCauseContract.from_domain(item) for item in value.invalidations
             ),
         )
 
