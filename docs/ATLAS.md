@@ -23,6 +23,7 @@ This is the main navigation map for humans and agents. Each subject should have 
 ## Contracts
 
 - [`contracts/IDENTIFIERS_AND_VERSIONS.md`](contracts/IDENTIFIERS_AND_VERSIONS.md) — display names, slugs, typed entity IDs, and schema/template/profile revisions.
+- [`contracts/PROJECT_DOMAIN.md`](contracts/PROJECT_DOMAIN.md) — project identity, dimensions, targets, engine, production stage, lifecycle, and transition invariants.
 
 Planned canonical contracts:
 
@@ -112,6 +113,7 @@ Planned operational documents:
 
 ## Decisions
 
+- [`decisions/0002-immutable-project-aggregate.md`](decisions/0002-immutable-project-aggregate.md) — accepted immutable project aggregate and separate stage/lifecycle model.
 - [`decisions/0001-typed-identifiers-and-revision-versions.md`](decisions/0001-typed-identifiers-and-revision-versions.md) — accepted identifier, display-name, slug, and contract-revision architecture.
 - [`decisions/0000-template.md`](decisions/0000-template.md) — canonical Architecture Decision Record template.
 
