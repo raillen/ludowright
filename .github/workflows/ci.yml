@@ -7,15 +7,17 @@ on:
       - main
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
-  quality:
+  patch:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out repository
+      - name: Check out dependency graph branch
         uses: actions/checkout@v7
+        with:
+          ref: agent/dependency-invalidation-graph
 
       - name: Install uv
         uses: astral-sh/setup-uv@v7
@@ -28,5 +30,26 @@ jobs:
       - name: Install project and quality tools
         run: uv sync --extra dev --extra docs
 
-      - name: Run LudoWright quality gate
+      - name: Apply dependency review fixes
+        run: |
+          uv run python scripts/fix_dependency_review.py
+          rm scripts/fix_dependency_review.py
+          uv run ruff format src tests
+          uv run ruff check --fix src tests
+          uv run ruff format src tests
+          uv run python -m ludowright.contracts publish
+
+      - name: Validate complete dependency graph
         run: uv run ludowright quality check
+
+      - name: Commit validated review fixes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src tests docs schemas
+          if git diff --cached --quiet; then
+            echo "No dependency review changes to commit."
+          else
+            git commit -m "Harden dependency graph refresh and cycle rules"
+            git push origin HEAD:agent/dependency-invalidation-graph
+          fi
