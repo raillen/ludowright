@@ -30,7 +30,7 @@ jobs:
       - name: Install project and quality tools
         run: uv sync --extra dev --extra docs
 
-      - name: Apply fixes
+      - name: Apply inherited fixes
         run: |
           python - <<'PY'
           from pathlib import Path
@@ -73,39 +73,6 @@ jobs:
                   '  "ruff>=0.12,<1",\n  "types-pyyaml>=6.0.12,<7",\n',
                   1,
               )
-          path.write_text(text, encoding="utf-8")
-
-          path = Path("src/ludowright/infrastructure/structured.py")
-          text = path.read_text(encoding="utf-8")
-          text = text.replace("from typing import Any, Generic, TypeVar", "from typing import Any, cast")
-          text = text.replace('\nTContract = TypeVar("TContract", bound=ContractModel)\n', "\n")
-          text = text.replace(
-              "class StructuredDocumentSnapshot(Generic[TContract]):",
-              "class StructuredDocumentSnapshot[TContract: ContractModel]:",
-          )
-          text = text.replace(
-              "class StructuredDocumentRepository(Generic[TContract]):",
-              "class StructuredDocumentRepository[TContract: ContractModel]:",
-          )
-          text = text.replace(
-              "class JsonDocumentRepository(StructuredDocumentRepository[TContract]):",
-              "class JsonDocumentRepository[TContract: ContractModel](StructuredDocumentRepository[TContract]):",
-          )
-          text = text.replace(
-              "class YamlDocumentRepository(StructuredDocumentRepository[TContract]):",
-              "class YamlDocumentRepository[TContract: ContractModel](StructuredDocumentRepository[TContract]):",
-          )
-          text = text.replace(
-              "        text = yaml.dump(\n",
-              "        text = cast(\n            str,\n            yaml.dump(\n",
-              1,
-          )
-          text = text.replace(
-              "            width=100,\n        )\n        if not text.endswith",
-              "                width=100,\n            ),\n        )\n        if not text.endswith",
-              1,
-          )
-          text = text.replace('.encode("utf-8")', ".encode()")
           path.write_text(text, encoding="utf-8")
 
           path = Path("tests/test_structured_repositories.py")
