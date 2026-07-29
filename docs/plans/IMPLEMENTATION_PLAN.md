@@ -1,0 +1,455 @@
+# Implementation Plan to LudoWright 1.0
+
+This plan divides the first stable release into small, ordered, testable pull requests. A later PR may be split further, but unrelated steps should not be combined merely to reduce PR count.
+
+## Phase A — Repository foundation
+
+### PR 1 — Product and repository foundation
+
+- product vision, roadmap, architecture overview, ATLAS, AGENTS, and project start;
+- Python package skeleton;
+- CI and baseline tests;
+- Apache-2.0 license.
+
+Exit: repository installs, imports, tests, and clearly explains the product.
+
+### PR 2 — Community and governance baseline
+
+- contributing guide;
+- code of conduct;
+- security policy;
+- support policy;
+- governance;
+- issue and PR templates;
+- labels and CODEOWNERS guidance.
+
+### PR 3 — Documentation site
+
+- MkDocs Material;
+- navigation generated from canonical docs;
+- link checking;
+- GitHub Pages workflow;
+- local preview instructions.
+
+### PR 4 — Engineering quality baseline
+
+- pre-commit;
+- Hypothesis;
+- coverage policy;
+- dependency and secret scanning;
+- release-quality command group.
+
+## Phase B — Domain and contracts
+
+### PR 5 — Core identifiers and versions
+
+- typed project, asset, component, reference, job, decision, and package IDs;
+- schema, template, and profile versions;
+- slug and naming validation.
+
+### PR 6 — Project domain model
+
+- project identity, stage, targets, engine, dimensions, and lifecycle;
+- status transitions and invariants.
+
+### PR 7 — Decision and approval model
+
+- decision states;
+- approval states;
+- superseding relationships;
+- immutable history.
+
+### PR 8 — Asset domain model
+
+- families, subtypes, components, variants, states, priorities, ownership, and status.
+
+### PR 9 — Reference and visual-job model
+
+- reference provenance;
+- visual jobs;
+- generation receipts;
+- review outcomes;
+- retry and superseding behavior.
+
+### PR 10 — Capture-profile model
+
+- views, components, states, variations, camera, background, lighting, validation, and sheet requirements;
+- profile inheritance rules.
+
+### PR 11 — JSON Schema publication
+
+- generated and versioned schemas;
+- contract fixtures;
+- compatibility tests.
+
+## Phase C — State, storage, and migrations
+
+### PR 12 — Project filesystem abstraction
+
+- project-root discovery;
+- normalized repository-relative paths;
+- atomic writes;
+- locks and safe directory creation.
+
+### PR 13 — YAML and JSON repositories
+
+- structured file adapters;
+- canonical formatting;
+- round-trip and corruption tests.
+
+### PR 14 — Event log
+
+- append-only JSON Lines events;
+- event types and correlation IDs;
+- replay-oriented tests.
+
+### PR 15 — SQLite state store
+
+- indexed state and workflow progress;
+- transaction policy;
+- consistency checks against canonical files.
+
+### PR 16 — Migration framework
+
+- schema migration discovery;
+- dry run;
+- backup;
+- rollback metadata;
+- migration tests.
+
+### PR 17 — Dependency and invalidation graph
+
+- typed edges;
+- stale propagation;
+- impact explanation;
+- cycle checks.
+
+## Phase D — CLI and project lifecycle
+
+### PR 18 — CLI foundation
+
+- Typer application;
+- Rich output;
+- JSON output envelope;
+- stable errors and exit codes;
+- `--version` and diagnostics.
+
+### PR 19 — Project initialization
+
+- `ludowright init`;
+- template selection;
+- initial manifest and directories;
+- non-interactive mode;
+- dry run.
+
+### PR 20 — Project status
+
+- readiness stages;
+- blockers;
+- stale outputs;
+- recommended next actions;
+- human and JSON output.
+
+### PR 21 — Decision commands
+
+- record, list, supersede, and inspect decisions;
+- approval commands and audit trail.
+
+### PR 22 — Structural audit
+
+- missing paths;
+- corrupt state;
+- mismatched versions;
+- unexpected approved-file mutations;
+- repair guidance.
+
+## Phase E — Guided documentation
+
+### PR 23 — Interview question model
+
+- question types;
+- dependencies;
+- validation;
+- answer provenance;
+- pending-question calculation.
+
+### PR 24 — Interview CLI
+
+- next question;
+- answer recording;
+- skip and defer policies;
+- resumability;
+- JSON interaction contract.
+
+### PR 25 — Document template engine
+
+- Jinja2 environment;
+- template inheritance;
+- project overrides;
+- deterministic rendering;
+- snapshot tests.
+
+### PR 26 — Product document set
+
+- vision, audience, pillars, loops, scope, risk, platform, and success templates.
+
+### PR 27 — Architecture and implementation document set
+
+- system overview, contracts, modules, UI/UX, implementation, quality, security, operations, ADRs, and plans.
+
+### PR 28 — ATLAS generation
+
+- document index;
+- canonical-source metadata;
+- broken-link and orphan detection.
+
+### PR 29 — Incremental document refresh
+
+- source hashes;
+- stale marking;
+- affected-document planning;
+- preservation of approved manual sections.
+
+### PR 30 — Documentation audit
+
+- missing canonical topics;
+- duplicate sources;
+- contradictions and stale references;
+- report output.
+
+## Phase F — Asset registry
+
+### PR 31 — Asset taxonomy
+
+- initial families and subtypes;
+- taxonomy extension data;
+- naming policy.
+
+### PR 32 — Asset registry commands
+
+- create, update, list, inspect, archive, and validate assets;
+- batch import and export.
+
+### PR 33 — Asset discovery from documents
+
+- candidate extraction workflow;
+- user confirmation;
+- duplicate and ambiguity handling.
+
+### PR 34 — Asset decomposition
+
+- components, variants, states, and dependencies;
+- capture-profile recommendation;
+- guided corrections.
+
+### PR 35 — ODS export
+
+- derived workbook;
+- views for overview, components, references, status, priority, and dependencies;
+- deterministic formatting and validation.
+
+### PR 36 — Asset audit
+
+- orphans;
+- missing specs;
+- invalid dependencies;
+- missing capture profiles;
+- incomplete production metadata.
+
+## Phase G — Visual foundation
+
+### PR 37 — Visual bible schema
+
+- shape language, proportions, palette, materials, lighting, camera, level of detail, budget, and negative constraints.
+
+### PR 38 — Prompt compiler
+
+- layered prompt templates;
+- structured constraints;
+- negative constraints;
+- reference resolution;
+- prompt hashing.
+
+### PR 39 — Humanoid and wearable profiles
+
+- body base;
+- per-view images;
+- hair, garments, footwear, accessories, props, details, and assembled outputs;
+- neutral representation policy.
+
+### PR 40 — Creature and animal profiles
+
+- quadrupeds, birds, fish, insects, and fantasy creatures;
+- anatomy-specific views and states.
+
+### PR 41 — Environment and hard-surface profiles
+
+- props, vehicles, buildings, modular kits, interiors, and connection matrices.
+
+### PR 42 — Foliage, UI, VFX, and animation profiles
+
+- trees and plants;
+- UI components;
+- VFX concepts;
+- pose and animation references.
+
+### PR 43 — Visual-job planner
+
+- required-job derivation;
+- dependency ordering;
+- batching;
+- cost and workload estimates;
+- ready and blocked states.
+
+## Phase H — Codex and ImageGen
+
+### PR 44 — Codex skill installer
+
+- project-local `$ludowright` skill;
+- installation, update, verification, and removal;
+- version checks.
+
+### PR 45 — Codex orchestration policy
+
+- inspect status first;
+- ask only unresolved questions;
+- record decisions;
+- run validations;
+- require approval checkpoints;
+- resume safely.
+
+### PR 46 — ImageGen job execution
+
+- translate a ready visual job into an ImageGen operation;
+- enforce output path and one-view-per-image policy;
+- record prompt and inputs.
+
+### PR 47 — Generation receipts
+
+- checksums;
+- model and tool metadata when available;
+- references and prompt hash;
+- timestamps;
+- output validation.
+
+### PR 48 — Review workflow
+
+- approve, approve with notes, correct, reject, supersede;
+- reviewer separation;
+- dependency invalidation.
+
+### PR 49 — Codex specialist agents
+
+- interviewer;
+- game-design architect;
+- technical architect;
+- asset planner;
+- visual director;
+- generation operator;
+- consistency reviewer;
+- quality auditor;
+- release verifier.
+
+### PR 50 — Agent eval suite
+
+- state inspection;
+- no decision reinvention;
+- approved-reference enforcement;
+- prompt receipt creation;
+- selective regeneration;
+- approval and safety rules.
+
+## Phase I — Sheets, audits, and packages
+
+### PR 51 — Image normalization
+
+- dimensions;
+- padding;
+- orientation metadata;
+- alignment guides;
+- thumbnails;
+- transparent and neutral backgrounds.
+
+### PR 52 — Technical sheet assembly
+
+- turnarounds;
+- component and prop sheets;
+- detail and scale sheets;
+- deterministic layouts.
+
+### PR 53 — Package manifest
+
+- included files;
+- checksums;
+- source versions;
+- licensing and provenance;
+- missing or excluded items.
+
+### PR 54 — Package builder
+
+- safe ZIP generation;
+- package index;
+- release directory;
+- reproducibility tests.
+
+### PR 55 — Global project audit
+
+- product, documents, assets, references, jobs, approvals, sheets, and package readiness;
+- machine-readable report.
+
+### PR 56 — Release verifier
+
+- blocking gates;
+- warning policy;
+- release summary;
+- signed or checksum-verifiable manifest preparation.
+
+## Phase J — Examples and public beta
+
+### PR 57 — Minimal example
+
+A small project exercising initialization, documentation, assets, jobs, approval, sheet assembly, and packaging with fixture images.
+
+### PR 58 — 2D example
+
+A sprite-oriented game showing profile customization and non-3D asset workflows.
+
+### PR 59 — Low-poly 3D example
+
+A complete character and environment reference flow with segmented components.
+
+### PR 60 — Modular environment example
+
+Buildings, foliage, roads, sockets, modules, and connection rules.
+
+### PR 61 — Installation and tutorial set
+
+Linux, Windows, macOS, Codex skill, first project, character workflow, custom profile, troubleshooting, update, and uninstall.
+
+### PR 62 — Public beta and 1.0 readiness
+
+- clean-room installation tests;
+- end-to-end validation;
+- migration matrix;
+- security review;
+- documentation audit;
+- beta feedback fixes;
+- release candidate and stable release checklist.
+
+## Cross-cutting requirements
+
+Every PR must consider:
+
+- typed public interfaces;
+- deterministic behavior;
+- tests appropriate to the risk;
+- documentation and ATLAS updates;
+- migration or compatibility impact;
+- security and path safety;
+- human and JSON CLI behavior;
+- Codex behavior and evals when affected;
+- provenance for generated outputs.
+
+## Definition of 1.0 readiness
+
+LudoWright 1.0 is ready only when a clean environment can install the package and skill, initialize a project, complete guided intake, generate modular documents, build an asset registry and ODS export, plan and record visual-generation jobs, approve references, assemble technical sheets, audit the project, and build a reproducible package without relying on hidden conversation state.
