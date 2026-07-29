@@ -29,6 +29,8 @@ This is the main navigation map for humans and agents. Each subject should have 
 - [`contracts/REFERENCES_AND_VISUAL_JOBS.md`](contracts/REFERENCES_AND_VISUAL_JOBS.md) — visual provenance, revision-bound references, immutable generation jobs, attempt receipts, retries, and reviews.
 - [`contracts/CAPTURE_PROFILES.md`](contracts/CAPTURE_PROFILES.md) — camera, background, lighting, validation, required views, isolated items, technical sheets, and exact versioned inheritance.
 - [`contracts/JSON_SCHEMAS.md`](contracts/JSON_SCHEMAS.md) — generated Draft 2020-12 schemas, registry, fixtures, checksums, drift checking, and compatibility policy.
+- [`contracts/PROJECT_FILESYSTEM.md`](contracts/PROJECT_FILESYSTEM.md) — root discovery, canonical repository paths, symlink rejection, atomic writes, bounded reads, and exclusive locks.
+- [`contracts/STRUCTURED_REPOSITORIES.md`](contracts/STRUCTURED_REPOSITORIES.md) — strict JSON/YAML parsing, canonical serialization, document digests, snapshots, and conflict detection.
 
 Published machine-readable contracts are stored under `schemas/v1/`. The source models live under `src/ludowright/contracts/`.
 
@@ -74,6 +76,7 @@ Future bounded changes should receive their own plan under `plans/`.
 
 - [`quality/ENGINEERING_QUALITY.md`](quality/ENGINEERING_QUALITY.md) — pre-commit, unified quality commands, coverage, property tests, schema drift, dependency audits, secret scanning, CI, and failure policy.
 - [`contracts/JSON_SCHEMAS.md`](contracts/JSON_SCHEMAS.md) — schema-generation, checksum, fixture, and compatibility validation rules.
+- [`contracts/STRUCTURED_REPOSITORIES.md`](contracts/STRUCTURED_REPOSITORIES.md) — parser limits, deterministic round trips, duplicate-key rejection, and optimistic concurrency tests.
 
 Planned detailed documents:
 
@@ -86,11 +89,12 @@ Planned detailed documents:
 ## Security
 
 - [Security Policy](https://github.com/raillen/ludowright/blob/main/SECURITY.md) — vulnerability reporting and current security requirements.
+- [`contracts/PROJECT_FILESYSTEM.md`](contracts/PROJECT_FILESYSTEM.md) — local path containment, symbolic-link policy, atomic replacement, and lock ownership.
+- [`contracts/STRUCTURED_REPOSITORIES.md`](contracts/STRUCTURED_REPOSITORIES.md) — bounded UTF-8 parsing, safe YAML restrictions, duplicate-key rejection, and exact-byte conflict detection.
 
 Planned detailed documents:
 
 - threat model;
-- local file safety;
 - archive extraction and packaging safety;
 - template and plugin trust;
 - secret handling;
@@ -119,6 +123,8 @@ Planned operational documents:
 
 ## Decisions
 
+- [`decisions/0009-canonical-structured-document-repositories.md`](decisions/0009-canonical-structured-document-repositories.md) — accepted strict JSON/YAML loaders, deterministic serialization, exact-byte snapshots, locks, and optimistic digest conflicts.
+- [`decisions/0008-safe-project-filesystem-boundary.md`](decisions/0008-safe-project-filesystem-boundary.md) — accepted canonical relative paths, symlink denial, atomic file replacement, bounded reads, and exclusive project locks.
 - [`decisions/0007-generated-versioned-json-schemas.md`](decisions/0007-generated-versioned-json-schemas.md) — accepted strict Pydantic adapters, checked-in generated schemas, fixtures, checksum manifest, and drift enforcement.
 - [`decisions/0006-exact-versioned-capture-profile-inheritance.md`](decisions/0006-exact-versioned-capture-profile-inheritance.md) — accepted exact parent revisions, deterministic override-by-ID ordering, and separate/assembled sheet requirements.
 - [`decisions/0005-immutable-visual-jobs-and-receipts.md`](decisions/0005-immutable-visual-jobs-and-receipts.md) — accepted immutable visual jobs, append-only attempt receipts, retry semantics, and output-bound reviews.
