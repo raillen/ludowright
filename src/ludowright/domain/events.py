@@ -55,7 +55,10 @@ class EventHash:
     value: str
 
     def __post_init__(self) -> None:
-        if not isinstance(self.value, str) or _EVENT_HASH_PATTERN.fullmatch(self.value) is None:
+        if (
+            not isinstance(self.value, str)
+            or _EVENT_HASH_PATTERN.fullmatch(self.value) is None
+        ):
             raise InvalidEventError("event hash must be lowercase SHA-256")
 
     def __str__(self) -> str:
@@ -98,7 +101,11 @@ class EventRecord:
     causation_id: EventId | None = None
 
     def __post_init__(self) -> None:
-        if isinstance(self.sequence, bool) or not isinstance(self.sequence, int) or self.sequence < 1:
+        if (
+            isinstance(self.sequence, bool)
+            or not isinstance(self.sequence, int)
+            or self.sequence < 1
+        ):
             raise InvalidEventError("event sequence must be a positive integer")
         if not isinstance(self.event_id, EventId):
             raise InvalidEventError("event record requires an event ID")
@@ -164,10 +171,11 @@ def _freeze_json(value: object, *, depth: int, remaining: list[int]) -> FrozenJs
             _freeze_json(item, depth=depth + 1, remaining=remaining) for item in value
         )
     if isinstance(value, Mapping):
+        keys = tuple(value)
+        if any(not isinstance(key, str) for key in keys):
+            raise InvalidEventError("event payload object keys must be strings")
         result: dict[str, FrozenJsonValue] = {}
-        for key in sorted(value):
-            if not isinstance(key, str):
-                raise InvalidEventError("event payload object keys must be strings")
+        for key in sorted(keys):
             result[key] = _freeze_json(
                 value[key],
                 depth=depth + 1,
