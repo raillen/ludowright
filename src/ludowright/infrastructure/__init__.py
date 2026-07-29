@@ -1,5 +1,10 @@
 """Infrastructure adapters for safe local project operations."""
 
+from ludowright.infrastructure.dependency_graph import (
+    DEFAULT_DEPENDENCY_GRAPH_PATH,
+    DependencyGraphRepository,
+    DependencyGraphSnapshot,
+)
 from ludowright.infrastructure.event_log import (
     DEFAULT_EVENT_LOG_PATH,
     CorruptEventLogError,
@@ -64,6 +69,7 @@ from ludowright.infrastructure.structured import (
 )
 
 __all__ = [
+    "DEFAULT_DEPENDENCY_GRAPH_PATH",
     "DEFAULT_EVENT_LOG_PATH",
     "DEFAULT_STATE_STORE_PATH",
     "LOCK_DIRECTORY",
@@ -72,6 +78,8 @@ __all__ = [
     "STATE_SCHEMA_VERSION",
     "TARGET_STATE_SCHEMA_VERSION",
     "CorruptEventLogError",
+    "DependencyGraphRepository",
+    "DependencyGraphSnapshot",
     "EventCheckpoint",
     "EventIndexState",
     "EventLog",
