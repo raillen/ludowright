@@ -42,12 +42,17 @@ dev = [
   "pytest-cov>=6.2,<7",
   "ruff>=0.12,<1",
 ]
+docs = [
+  "mkdocs>=1.6.1,<2",
+  "mkdocs-material>=9.7,<10",
+]
 
 [project.scripts]
 ludowright = "ludowright.cli.app:main"
 
 [project.urls]
 Homepage = "https://github.com/raillen/ludowright"
+Documentation = "https://raillen.github.io/ludowright/"
 Repository = "https://github.com/raillen/ludowright"
 Issues = "https://github.com/raillen/ludowright/issues"
 
