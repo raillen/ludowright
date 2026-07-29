@@ -17,3 +17,11 @@ class InvalidNameError(DomainValidationError):
 
 class InvalidVersionError(DomainValidationError):
     """Raised when a revision version is malformed or unsupported."""
+
+
+class InvalidProjectError(DomainValidationError):
+    """Raised when a project aggregate violates a domain invariant."""
+
+
+class InvalidProjectTransitionError(InvalidProjectError):
+    """Raised when a project stage or lifecycle transition is not allowed."""
