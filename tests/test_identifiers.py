@@ -84,10 +84,7 @@ def test_display_name_preserves_valid_unicode() -> None:
 
 
 _SLUG_SOURCE_ALPHABET = (
-    "abcdefghijklmnopqrstuvwxyz"
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    "0123456789"
-    " áéíóúâêôãõç-_/.,:;!?()[]"
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 áéíóúâêôãõç-_/.,:;!?()[]"
 )
 
 
