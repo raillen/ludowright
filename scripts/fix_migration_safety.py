@@ -438,7 +438,7 @@ def patch_documentation() -> None:
 
     path = "docs/contracts/MIGRATIONS.md"
     text = read(path)
-    marker = "## Failure behavior\n"
+    marker = "## Error model\n"
     paragraph = (
         "Migration apply shares the StateStore write lock from the pre-migration backup through "
         "post-commit validation and digest calculation. If any apply or validation step fails, "
