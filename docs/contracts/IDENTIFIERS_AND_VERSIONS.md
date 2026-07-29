@@ -109,7 +109,9 @@ The current identifier types are:
 | `AssetStateId` | Functional or visual state belonging to an asset |
 | `OwnerId` | Responsible person, team, role, or automation identity |
 | `ReferenceId` | External, candidate, approved, rejected, or archived reference |
-| `JobId` | Workflow or generation job |
+| `JobId` | Immutable workflow or generation specification |
+| `ReceiptId` | One immutable terminal generation attempt |
+| `ReviewId` | One immutable visual review record |
 | `DecisionId` | Recorded decision |
 | `ApprovalId` | Approval request and immutable approval history |
 | `PackageId` | Reproducible project or production package |
