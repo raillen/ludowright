@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "kind": "capture-profile",
+  "id": "character-base",
+  "version": 1,
+  "name": "Character Base",
+  "family": "character",
+  "camera": {
+    "projection": "orthographic",
+    "framing_margin_percent": 10
+  },
+  "background": {
+    "mode": "transparent"
+  },
+  "lighting": {
+    "mode": "studio",
+    "shadows": "soft"
+  },
+  "validation": {
+    "width": 2048,
+    "height": 2048,
+    "require_full_subject": true,
+    "require_consistent_scale": true,
+    "require_neutral_pose": true,
+    "allow_occlusion": false
+  },
+  "views": [
+    {
+      "id": "front",
+      "name": "Front",
+      "azimuth_degrees": 0,
+      "elevation_degrees": 0,
+      "role": "identity",
+      "required": true
+    }
+  ],
+  "requirements": [],
+  "sheets": []
+}
