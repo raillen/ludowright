@@ -62,18 +62,10 @@ class ProjectLifecycle(StrEnum):
 
 _STAGE_TRANSITIONS: dict[ProjectStage, frozenset[ProjectStage]] = {
     ProjectStage.CONCEPT: frozenset({ProjectStage.PRE_PRODUCTION}),
-    ProjectStage.PRE_PRODUCTION: frozenset(
-        {ProjectStage.CONCEPT, ProjectStage.PRODUCTION}
-    ),
-    ProjectStage.PRODUCTION: frozenset(
-        {ProjectStage.PRE_PRODUCTION, ProjectStage.VALIDATION}
-    ),
-    ProjectStage.VALIDATION: frozenset(
-        {ProjectStage.PRODUCTION, ProjectStage.RELEASED}
-    ),
-    ProjectStage.RELEASED: frozenset(
-        {ProjectStage.VALIDATION, ProjectStage.POST_RELEASE}
-    ),
+    ProjectStage.PRE_PRODUCTION: frozenset({ProjectStage.CONCEPT, ProjectStage.PRODUCTION}),
+    ProjectStage.PRODUCTION: frozenset({ProjectStage.PRE_PRODUCTION, ProjectStage.VALIDATION}),
+    ProjectStage.VALIDATION: frozenset({ProjectStage.PRODUCTION, ProjectStage.RELEASED}),
+    ProjectStage.RELEASED: frozenset({ProjectStage.VALIDATION, ProjectStage.POST_RELEASE}),
     ProjectStage.POST_RELEASE: frozenset({ProjectStage.RELEASED}),
 }
 
@@ -94,12 +86,8 @@ _LIFECYCLE_TRANSITIONS: dict[ProjectLifecycle, frozenset[ProjectLifecycle]] = {
             ProjectLifecycle.ARCHIVED,
         }
     ),
-    ProjectLifecycle.CANCELLED: frozenset(
-        {ProjectLifecycle.ACTIVE, ProjectLifecycle.ARCHIVED}
-    ),
-    ProjectLifecycle.COMPLETED: frozenset(
-        {ProjectLifecycle.ACTIVE, ProjectLifecycle.ARCHIVED}
-    ),
+    ProjectLifecycle.CANCELLED: frozenset({ProjectLifecycle.ACTIVE, ProjectLifecycle.ARCHIVED}),
+    ProjectLifecycle.COMPLETED: frozenset({ProjectLifecycle.ACTIVE, ProjectLifecycle.ARCHIVED}),
     ProjectLifecycle.ARCHIVED: frozenset(),
 }
 
@@ -133,10 +121,7 @@ class EngineSpec:
             raise InvalidProjectError(
                 f"an engine version cannot exceed {MAX_ENGINE_VERSION_LENGTH} characters"
             )
-        if any(
-            unicodedata.category(character).startswith("C")
-            for character in self.version
-        ):
+        if any(unicodedata.category(character).startswith("C") for character in self.version):
             raise InvalidProjectError("an engine version cannot contain control characters")
 
 
@@ -196,9 +181,7 @@ class Project:
             return True
         if target not in _LIFECYCLE_TRANSITIONS[self.lifecycle]:
             return False
-        if target is ProjectLifecycle.COMPLETED and self.stage not in _COMPLETABLE_STAGES:
-            return False
-        return True
+        return target is not ProjectLifecycle.COMPLETED or self.stage in _COMPLETABLE_STAGES
 
     def transition_lifecycle(self, target: ProjectLifecycle) -> Project:
         """Return a new project in an allowed lifecycle state."""
