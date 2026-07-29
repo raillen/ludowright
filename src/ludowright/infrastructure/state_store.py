@@ -31,6 +31,7 @@ from ludowright.infrastructure.filesystem import (
 DEFAULT_STATE_STORE_PATH = RepositoryPath(".ludowright/state.sqlite3")
 STATE_SCHEMA_VERSION = 2
 _STATE_STORE_LOCK = "sqlite-state-store-init"
+STATE_STORE_WRITE_LOCK = "sqlite-state-store-write"
 _DEFAULT_BUSY_TIMEOUT_MS = 5_000
 _DEFAULT_SOURCE_LIMIT = 16 * 1024 * 1024
 _DIGEST_LENGTH = 64
@@ -542,6 +543,21 @@ class StateStore:
 
     @contextmanager
     def _transaction(self, *, write: bool) -> Iterator[sqlite3.Connection]:
+        if write:
+            with (
+                self._filesystem.lock(
+                    STATE_STORE_WRITE_LOCK,
+                    timeout=self._busy_timeout_ms / 1000,
+                ),
+                self._database_transaction(write=True) as connection,
+            ):
+                yield connection
+            return
+        with self._database_transaction(write=False) as connection:
+            yield connection
+
+    @contextmanager
+    def _database_transaction(self, *, write: bool) -> Iterator[sqlite3.Connection]:
         self._assert_safe_database_files()
         try:
             with self._connect() as connection:

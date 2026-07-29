@@ -116,6 +116,9 @@ The external receipt remains the primary rollback artifact because it survives r
 
 ## Consequences
 
+- StateStore writes and migration apply/rollback share one project write lock, so the rollback snapshot and migrated state cannot straddle a normal indexed-state write.
+- A failure after SQLite commit triggers verified automatic restoration from the durable backup before the receipt becomes `failed`.
+
 ### Positive
 
 - users and agents can inspect changes before applying them;

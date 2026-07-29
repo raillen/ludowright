@@ -8,6 +8,7 @@ import sqlite3
 from concurrent.futures import ThreadPoolExecutor
 from datetime import UTC, datetime
 from pathlib import Path
+from threading import Event
 
 import pytest
 from pydantic import ValidationError
@@ -138,6 +139,10 @@ def load_receipt(path: Path) -> MigrationReceiptContract:
 def failing_migration(_connection: sqlite3.Connection) -> None:
     _connection.execute("CREATE TABLE should_rollback (value TEXT) STRICT")
     raise RuntimeError("deliberate migration failure")
+
+
+def create_v3_marker(connection: sqlite3.Connection) -> None:
+    connection.execute("CREATE TABLE state_v3_marker (value TEXT) STRICT")
 
 
 def test_migration_catalog_discovers_contiguous_plan() -> None:
@@ -383,6 +388,96 @@ def test_concurrent_apply_produces_one_migration_and_one_noop(tmp_path: Path) ->
     assert sorted(results) == [False, True]
     assert database_version(tmp_path / ".ludowright/state.sqlite3") == 2
     assert len(receipt_paths(tmp_path)) == 1
+
+
+def test_post_commit_validation_failure_restores_v1_backup(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    database = create_v1_database(tmp_path)
+    manager = StateMigrationManager(ProjectFilesystem(tmp_path))
+
+    def fail_validation(_database: Path, _expected_version: int) -> None:
+        raise MigrationExecutionError("post-commit validation failed")
+
+    monkeypatch.setattr(manager, "_validate_target", fail_validation)
+
+    with pytest.raises(MigrationExecutionError, match="post-commit validation failed"):
+        manager.apply()
+
+    assert database_version(database) == 1
+    assert "migration_history" not in table_names(database)
+    receipt = load_receipt(receipt_paths(tmp_path)[0])
+    assert receipt.status is MigrationRunStatus.FAILED
+    assert receipt.failure is not None
+    assert "database restored from backup" in receipt.failure
+
+
+def test_state_write_waits_until_migration_backup_window_closes(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    filesystem = ProjectFilesystem(tmp_path)
+    state = StateStore(filesystem)
+    catalog = MigrationCatalog(
+        (
+            MigrationStep(
+                "state-v2-to-v3-test-marker",
+                2,
+                3,
+                "add a test-only v3 marker",
+                create_v3_marker,
+            ),
+        )
+    )
+    manager = StateMigrationManager(filesystem, catalog=catalog)
+    backup_complete = Event()
+    writer_started = Event()
+    writer_finished = Event()
+    original_copy = manager._create_consistent_copy
+
+    def controlled_copy(source: Path, target: Path) -> None:
+        original_copy(source, target)
+        if target.name == "state-before.sqlite3":
+            backup_complete.set()
+            assert writer_started.wait(5.0)
+            assert not writer_finished.wait(0.2)
+
+    monkeypatch.setattr(manager, "_create_consistent_copy", controlled_copy)
+
+    pending = WorkflowProgress(
+        workflow_id="concurrent-write",
+        workflow_type="migration-test",
+        status="complete",
+        current_step=None,
+        context={"preserved": True},
+        source_event_sequence=None,
+        updated_at=datetime_from_text("2026-07-29T16:30:00.123456Z"),
+    )
+
+    def write_state() -> None:
+        writer_started.set()
+        state.save_workflow(pending)
+        writer_finished.set()
+
+    with ThreadPoolExecutor(max_workers=2) as executor:
+        migration_future = executor.submit(
+            manager.apply,
+            target_version=3,
+            timeout=10.0,
+        )
+        assert backup_complete.wait(5.0)
+        writer_future = executor.submit(write_state)
+        migrated = migration_future.result(timeout=10.0)
+        writer_future.result(timeout=10.0)
+
+    assert migrated.applied is True
+    assert writer_finished.is_set()
+    assert state.get_workflow("concurrent-write") == pending
+    assert database_version(tmp_path / ".ludowright/state.sqlite3") == 3
+    assert migrated.receipt is not None
+    with pytest.raises(MigrationRollbackError, match="changed after migration"):
+        manager.rollback(migrated.receipt.run_id)
 
 
 def test_migration_receipt_contract_rejects_invalid_states() -> None:

@@ -170,11 +170,13 @@ BEGIN
 PRAGMA query_only = ON
 ```
 
-Writes use:
+Writes acquire the shared `sqlite-state-store-write` project lock and then use:
 
 ```text
 BEGIN IMMEDIATE
 ```
+
+Migration apply and rollback operations acquire the same lock across backup, schema mutation, digest calculation, and database replacement. This prevents a StateStore write from falling between the rollback snapshot and the migrated state.
 
 Successful operations commit. Any exception rolls back. Connections are always closed.
 

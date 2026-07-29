@@ -27,6 +27,7 @@ from ludowright.infrastructure.filesystem import (
 from ludowright.infrastructure.state_store import (
     DEFAULT_STATE_STORE_PATH,
     STATE_SCHEMA_VERSION,
+    STATE_STORE_WRITE_LOCK,
 )
 from ludowright.infrastructure.structured import JsonDocumentRepository
 
@@ -248,67 +249,95 @@ class StateMigrationManager:
         timeout: float = 0.0,
     ) -> MigrationApplyResult:
         """Back up, apply, validate, and persist rollback metadata."""
-        with self._filesystem.lock(_MIGRATION_LOCK, timeout=timeout):
-            plan = self.plan(target_version=target_version)
-            if not plan.requires_migration:
-                return MigrationApplyResult(plan=plan, receipt=None)
+        with (
+            self._filesystem.lock(_MIGRATION_LOCK, timeout=timeout),
+            self._filesystem.lock(STATE_STORE_WRITE_LOCK, timeout=timeout),
+        ):
+            return self._apply_locked(target_version=target_version)
 
-            run_id = _new_run_id()
-            run_directory = _BACKUP_ROOT.child(run_id)
-            self._filesystem.ensure_directory(run_directory)
-            backup_path = run_directory.child("state-before.sqlite3")
-            receipt_path = run_directory.child("rollback.json")
-            backup_absolute = self._filesystem.resolve(backup_path)
+    def _apply_locked(self, *, target_version: int) -> MigrationApplyResult:
+        plan = self.plan(target_version=target_version)
+        if not plan.requires_migration:
+            return MigrationApplyResult(plan=plan, receipt=None)
 
-            self._create_consistent_copy(self._database_path, backup_absolute)
-            before_digest = _sha256_file(backup_absolute)
-            receipt_repository = JsonDocumentRepository(
-                self._filesystem,
-                receipt_path,
-                MigrationReceiptContract,
-                max_bytes=128_000,
-            )
-            prepared = MigrationReceiptContract(
-                run_id=run_id,
-                status=MigrationRunStatus.PREPARED,
-                database_path=self._path.value,
-                backup_path=backup_path.value,
-                source_version=plan.source_version,
-                target_version=plan.target_version,
-                migration_ids=plan.migration_ids,
-                started_at=_format_timestamp(datetime.now(UTC)),
-                before_digest=before_digest,
-                backup_digest=before_digest,
-            )
-            receipt_snapshot = receipt_repository.create(prepared)
+        run_id = _new_run_id()
+        run_directory = _BACKUP_ROOT.child(run_id)
+        self._filesystem.ensure_directory(run_directory)
+        backup_path = run_directory.child("state-before.sqlite3")
+        receipt_path = run_directory.child("rollback.json")
+        backup_absolute = self._filesystem.resolve(backup_path)
 
+        self._create_consistent_copy(self._database_path, backup_absolute)
+        before_digest = _sha256_file(backup_absolute)
+        receipt_repository = JsonDocumentRepository(
+            self._filesystem,
+            receipt_path,
+            MigrationReceiptContract,
+            max_bytes=128_000,
+        )
+        prepared = MigrationReceiptContract(
+            run_id=run_id,
+            status=MigrationRunStatus.PREPARED,
+            database_path=self._path.value,
+            backup_path=backup_path.value,
+            source_version=plan.source_version,
+            target_version=plan.target_version,
+            migration_ids=plan.migration_ids,
+            started_at=_format_timestamp(datetime.now(UTC)),
+            before_digest=before_digest,
+            backup_digest=before_digest,
+        )
+        receipt_snapshot = receipt_repository.create(prepared)
+
+        try:
+            self._apply_plan(self._database_path, plan, run_id=run_id)
+            after_digest = self._logical_digest(self._database_path)
+        except BaseException as error:
+            restore_error: BaseException | None = None
             try:
-                self._apply_plan(self._database_path, plan, run_id=run_id)
-                after_digest = self._logical_digest(self._database_path)
-            except BaseException as error:
-                failed = prepared.model_copy(
-                    update={
-                        "status": MigrationRunStatus.FAILED,
-                        "completed_at": _format_timestamp(datetime.now(UTC)),
-                        "failure": _safe_failure_text(error),
-                    }
+                self._restore_failed_apply(
+                    backup_absolute,
+                    source_version=plan.source_version,
+                    before_digest=before_digest,
                 )
-                receipt_repository.replace(receipt_snapshot, failed)
-                if isinstance(error, MigrationError):
-                    raise
-                raise MigrationExecutionError(
-                    f"state migration {run_id} failed; backup retained"
-                ) from error
+            except BaseException as recovery_error:
+                restore_error = recovery_error
 
-            completed = prepared.model_copy(
+            if restore_error is None:
+                detail = f"{_safe_failure_text(error)}; database restored from backup"
+            else:
+                detail = (
+                    f"{_safe_failure_text(error)}; automatic restore failed: "
+                    f"{_safe_failure_text(restore_error)}"
+                )
+            failed = prepared.model_copy(
                 update={
-                    "status": MigrationRunStatus.COMPLETED,
+                    "status": MigrationRunStatus.FAILED,
                     "completed_at": _format_timestamp(datetime.now(UTC)),
-                    "after_digest": after_digest,
+                    "failure": _safe_failure_text(RuntimeError(detail)),
                 }
             )
-            receipt_repository.replace(receipt_snapshot, completed)
-            return MigrationApplyResult(plan=plan, receipt=completed)
+            receipt_repository.replace(receipt_snapshot, failed)
+
+            if restore_error is not None:
+                raise MigrationExecutionError(
+                    f"state migration {run_id} failed and automatic restore failed; backup retained"
+                ) from error
+            if isinstance(error, MigrationError):
+                raise
+            raise MigrationExecutionError(
+                f"state migration {run_id} failed; database restored from backup"
+            ) from error
+
+        completed = prepared.model_copy(
+            update={
+                "status": MigrationRunStatus.COMPLETED,
+                "completed_at": _format_timestamp(datetime.now(UTC)),
+                "after_digest": after_digest,
+            }
+        )
+        receipt_repository.replace(receipt_snapshot, completed)
+        return MigrationApplyResult(plan=plan, receipt=completed)
 
     def rollback(self, run_id: str, *, timeout: float = 0.0) -> MigrationReceiptContract:
         """Restore one completed migration backup when the database is unchanged."""
@@ -317,6 +346,13 @@ class StateMigrationManager:
         except (TypeError, ValueError) as error:
             raise MigrationRollbackError("migration run ID must be canonical") from error
 
+        with (
+            self._filesystem.lock(_MIGRATION_LOCK, timeout=timeout),
+            self._filesystem.lock(STATE_STORE_WRITE_LOCK, timeout=timeout),
+        ):
+            return self._rollback_locked(run_id)
+
+    def _rollback_locked(self, run_id: str) -> MigrationReceiptContract:
         run_directory = _BACKUP_ROOT.child(run_id)
         receipt_path = run_directory.child("rollback.json")
         receipt_repository = JsonDocumentRepository(
@@ -325,59 +361,74 @@ class StateMigrationManager:
             MigrationReceiptContract,
             max_bytes=128_000,
         )
-
-        with self._filesystem.lock(_MIGRATION_LOCK, timeout=timeout):
-            snapshot = receipt_repository.load()
-            receipt = snapshot.value
-            if receipt.status is not MigrationRunStatus.COMPLETED:
-                raise MigrationRollbackError(f"migration {run_id} is not in completed state")
-            if receipt.after_digest is None:
-                raise MigrationRollbackError("completed receipt lacks post-migration digest")
-            current_digest = self._logical_digest(self._database_path)
-            if current_digest != receipt.after_digest:
-                raise MigrationRollbackError(
-                    "state database changed after migration; rollback would destroy newer work"
-                )
-
-            backup_path = RepositoryPath(receipt.backup_path)
-            backup_absolute = self._filesystem.resolve(backup_path)
-            if _sha256_file(backup_absolute) != receipt.backup_digest:
-                raise MigrationRollbackError("migration backup digest is invalid")
-
-            pre_rollback = run_directory.child("state-before-rollback.sqlite3")
-            pre_rollback_absolute = self._filesystem.resolve(pre_rollback)
-            self._create_consistent_copy(self._database_path, pre_rollback_absolute)
-            pre_rollback_digest = _sha256_file(pre_rollback_absolute)
-
-            try:
-                self._replace_database_from_backup(backup_absolute)
-                restored_version = self.inspect_version()
-                if restored_version != receipt.source_version:
-                    raise MigrationRollbackError(
-                        "restored database version does not match migration source"
-                    )
-                restored_digest = self._logical_digest(self._database_path)
-                if restored_digest != receipt.before_digest:
-                    raise MigrationRollbackError(
-                        "restored database content does not match migration backup"
-                    )
-            except BaseException as error:
-                self._replace_database_from_backup(pre_rollback_absolute)
-                if isinstance(error, MigrationRollbackError):
-                    raise
-                raise MigrationRollbackError(
-                    f"rollback of migration {run_id} failed; current database restored"
-                ) from error
-
-            rolled_back = receipt.model_copy(
-                update={
-                    "status": MigrationRunStatus.ROLLED_BACK,
-                    "rolled_back_at": _format_timestamp(datetime.now(UTC)),
-                    "pre_rollback_digest": pre_rollback_digest,
-                }
+        snapshot = receipt_repository.load()
+        receipt = snapshot.value
+        if receipt.status is not MigrationRunStatus.COMPLETED:
+            raise MigrationRollbackError(f"migration {run_id} is not in completed state")
+        if receipt.after_digest is None:
+            raise MigrationRollbackError("completed receipt lacks post-migration digest")
+        current_digest = self._logical_digest(self._database_path)
+        if current_digest != receipt.after_digest:
+            raise MigrationRollbackError(
+                "state database changed after migration; rollback would destroy newer work"
             )
-            receipt_repository.replace(snapshot, rolled_back)
-            return rolled_back
+
+        backup_path = RepositoryPath(receipt.backup_path)
+        backup_absolute = self._filesystem.resolve(backup_path)
+        if _sha256_file(backup_absolute) != receipt.backup_digest:
+            raise MigrationRollbackError("migration backup digest is invalid")
+
+        pre_rollback = run_directory.child("state-before-rollback.sqlite3")
+        pre_rollback_absolute = self._filesystem.resolve(pre_rollback)
+        self._create_consistent_copy(self._database_path, pre_rollback_absolute)
+        pre_rollback_digest = _sha256_file(pre_rollback_absolute)
+
+        try:
+            self._replace_database_from_backup(backup_absolute)
+            restored_version = self.inspect_version()
+            if restored_version != receipt.source_version:
+                raise MigrationRollbackError(
+                    "restored database version does not match migration source"
+                )
+            restored_digest = self._logical_digest(self._database_path)
+            if restored_digest != receipt.before_digest:
+                raise MigrationRollbackError(
+                    "restored database content does not match migration backup"
+                )
+        except BaseException as error:
+            self._replace_database_from_backup(pre_rollback_absolute)
+            if isinstance(error, MigrationRollbackError):
+                raise
+            raise MigrationRollbackError(
+                f"rollback of migration {run_id} failed; current database restored"
+            ) from error
+
+        rolled_back = receipt.model_copy(
+            update={
+                "status": MigrationRunStatus.ROLLED_BACK,
+                "rolled_back_at": _format_timestamp(datetime.now(UTC)),
+                "pre_rollback_digest": pre_rollback_digest,
+            }
+        )
+        receipt_repository.replace(snapshot, rolled_back)
+        return rolled_back
+
+    def _restore_failed_apply(
+        self,
+        backup: Path,
+        *,
+        source_version: int,
+        before_digest: str,
+    ) -> None:
+        self._replace_database_from_backup(backup)
+        restored_version = self.inspect_version()
+        if restored_version != source_version:
+            raise MigrationExecutionError("automatic restore produced an unexpected schema version")
+        restored_digest = self._logical_digest(self._database_path)
+        if restored_digest != before_digest:
+            raise MigrationExecutionError(
+                "automatic restore does not match the pre-migration backup"
+            )
 
     def _apply_plan(self, database: Path, plan: MigrationPlan, *, run_id: str) -> None:
         if not plan.requires_migration:

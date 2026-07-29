@@ -270,6 +270,9 @@ Symlink or non-regular temporary paths fail closed.
 
 ## Error model
 
+Migration apply shares the StateStore write lock from the pre-migration backup through post-commit validation and digest calculation. If any apply or validation step fails, LudoWright restores the verified backup before persisting the failed receipt. The receipt records whether automatic restoration succeeded; a restoration failure retains the durable backup and raises a distinct execution error.
+
+
 | Error | Meaning |
 |---|---|
 | `MigrationError` | Base migration configuration or persistence failure |
