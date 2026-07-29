@@ -92,12 +92,12 @@ def test_state_store_initializes_strict_wal_schema(tmp_path: Path) -> None:
     database = tmp_path / ".ludowright/state.sqlite3"
 
     assert state.path == DEFAULT_STATE_STORE_PATH
-    assert state.schema_version == 1
+    assert state.schema_version == 2
     assert database.is_file()
 
     connection = sqlite3.connect(database)
     try:
-        assert connection.execute("PRAGMA user_version").fetchone()[0] == 1
+        assert connection.execute("PRAGMA user_version").fetchone()[0] == 2
         assert connection.execute("PRAGMA journal_mode").fetchone()[0].lower() == "wal"
         tables = {
             row[0]
@@ -108,6 +108,7 @@ def test_state_store_initializes_strict_wal_schema(tmp_path: Path) -> None:
         assert {
             "event_checkpoint",
             "indexed_entity",
+            "migration_history",
             "workflow_progress",
         }.issubset(tables)
     finally:

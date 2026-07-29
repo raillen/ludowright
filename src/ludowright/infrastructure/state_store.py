@@ -29,7 +29,7 @@ from ludowright.infrastructure.filesystem import (
 )
 
 DEFAULT_STATE_STORE_PATH = RepositoryPath(".ludowright/state.sqlite3")
-_STATE_SCHEMA_VERSION = 1
+STATE_SCHEMA_VERSION = 2
 _STATE_STORE_LOCK = "sqlite-state-store-init"
 _DEFAULT_BUSY_TIMEOUT_MS = 5_000
 _DEFAULT_SOURCE_LIMIT = 16 * 1024 * 1024
@@ -211,7 +211,7 @@ class StateStore:
 
     @property
     def schema_version(self) -> int:
-        return _STATE_SCHEMA_VERSION
+        return STATE_SCHEMA_VERSION
 
     def save_workflow(self, progress: WorkflowProgress) -> None:
         """Insert or replace one workflow progress record."""
@@ -498,19 +498,19 @@ class StateStore:
         try:
             with self._connect() as connection:
                 current_version = int(connection.execute("PRAGMA user_version").fetchone()[0])
-                if current_version not in {0, _STATE_SCHEMA_VERSION}:
+                if current_version not in {0, STATE_SCHEMA_VERSION}:
                     raise UnsupportedStateSchemaError(
                         f"state schema v{current_version} is not supported by "
-                        f"v{_STATE_SCHEMA_VERSION}"
+                        f"v{STATE_SCHEMA_VERSION}"
                     )
-                if current_version == _STATE_SCHEMA_VERSION:
+                if current_version == STATE_SCHEMA_VERSION:
                     self._validate_schema(connection)
                     return
                 connection.execute("BEGIN IMMEDIATE")
                 try:
                     for statement in _SCHEMA_STATEMENTS:
                         connection.execute(statement)
-                    connection.execute(f"PRAGMA user_version = {_STATE_SCHEMA_VERSION}")
+                    connection.execute(f"PRAGMA user_version = {STATE_SCHEMA_VERSION}")
                     connection.commit()
                 except BaseException:
                     connection.rollback()
@@ -526,7 +526,12 @@ class StateStore:
                 "SELECT name FROM sqlite_master WHERE type = 'table'"
             ).fetchall()
         }
-        expected = {"event_checkpoint", "indexed_entity", "workflow_progress"}
+        expected = {
+            "event_checkpoint",
+            "indexed_entity",
+            "migration_history",
+            "workflow_progress",
+        }
         if not expected.issubset(tables):
             raise StateStoreCorruptionError(
                 f"SQLite state schema is incomplete: missing {sorted(expected - tables)}"
@@ -626,6 +631,16 @@ _SCHEMA_STATEMENTS = (
             OR (last_sequence > 0 AND last_event_hash IS NOT NULL)
         )
     ) STRICT
+    """,
+    """
+    CREATE TABLE migration_history (
+        migration_id TEXT PRIMARY KEY,
+        run_id TEXT NOT NULL,
+        source_version INTEGER NOT NULL CHECK(source_version >= 1),
+        target_version INTEGER NOT NULL CHECK(target_version = source_version + 1),
+        applied_at TEXT NOT NULL,
+        tool_version TEXT NOT NULL
+    ) STRICT, WITHOUT ROWID
     """,
 )
 

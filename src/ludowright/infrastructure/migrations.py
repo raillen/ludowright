@@ -6,9 +6,9 @@ import hashlib
 import os
 import sqlite3
 import stat
-import tempfile
 import uuid
-from collections.abc import Callable
+from collections.abc import Callable, Iterator
+from contextlib import contextmanager
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path
@@ -24,10 +24,13 @@ from ludowright.infrastructure.filesystem import (
     RepositoryPath,
     UnsafeProjectPathError,
 )
-from ludowright.infrastructure.state_store import DEFAULT_STATE_STORE_PATH
+from ludowright.infrastructure.state_store import (
+    DEFAULT_STATE_STORE_PATH,
+    STATE_SCHEMA_VERSION,
+)
 from ludowright.infrastructure.structured import JsonDocumentRepository
 
-TARGET_STATE_SCHEMA_VERSION = 2
+TARGET_STATE_SCHEMA_VERSION = STATE_SCHEMA_VERSION
 _DEFAULT_BUSY_TIMEOUT_MS = 5_000
 _MIGRATION_LOCK = "sqlite-state-migration"
 _BACKUP_ROOT = RepositoryPath(".ludowright/backups/migrations")
@@ -148,9 +151,7 @@ class MigrationCatalog:
         while current < target_version:
             step = self._by_source.get(current)
             if step is None:
-                raise MigrationPlanError(
-                    f"no migration is registered from schema v{current}"
-                )
+                raise MigrationPlanError(f"no migration is registered from schema v{current}")
             planned.append(step)
             current = step.target_version
         return MigrationPlan(
@@ -253,10 +254,10 @@ class StateMigrationManager:
                 return MigrationApplyResult(plan=plan, receipt=None)
 
             run_id = _new_run_id()
-            run_directory = _BACKUP_ROOT.join(run_id)
+            run_directory = _BACKUP_ROOT.child(run_id)
             self._filesystem.ensure_directory(run_directory)
-            backup_path = run_directory.join("state-before.sqlite3")
-            receipt_path = run_directory.join("rollback.json")
+            backup_path = run_directory.child("state-before.sqlite3")
+            receipt_path = run_directory.child("rollback.json")
             backup_absolute = self._filesystem.resolve(backup_path)
 
             self._create_consistent_copy(self._database_path, backup_absolute)
@@ -316,8 +317,8 @@ class StateMigrationManager:
         except (TypeError, ValueError) as error:
             raise MigrationRollbackError("migration run ID must be canonical") from error
 
-        run_directory = _BACKUP_ROOT.join(run_id)
-        receipt_path = run_directory.join("rollback.json")
+        run_directory = _BACKUP_ROOT.child(run_id)
+        receipt_path = run_directory.child("rollback.json")
         receipt_repository = JsonDocumentRepository(
             self._filesystem,
             receipt_path,
@@ -329,9 +330,7 @@ class StateMigrationManager:
             snapshot = receipt_repository.load()
             receipt = snapshot.value
             if receipt.status is not MigrationRunStatus.COMPLETED:
-                raise MigrationRollbackError(
-                    f"migration {run_id} is not in completed state"
-                )
+                raise MigrationRollbackError(f"migration {run_id} is not in completed state")
             if receipt.after_digest is None:
                 raise MigrationRollbackError("completed receipt lacks post-migration digest")
             current_digest = self._logical_digest(self._database_path)
@@ -345,7 +344,7 @@ class StateMigrationManager:
             if _sha256_file(backup_absolute) != receipt.backup_digest:
                 raise MigrationRollbackError("migration backup digest is invalid")
 
-            pre_rollback = run_directory.join("state-before-rollback.sqlite3")
+            pre_rollback = run_directory.child("state-before-rollback.sqlite3")
             pre_rollback_absolute = self._filesystem.resolve(pre_rollback)
             self._create_consistent_copy(self._database_path, pre_rollback_absolute)
             pre_rollback_digest = _sha256_file(pre_rollback_absolute)
@@ -394,9 +393,7 @@ class StateMigrationManager:
                             f"migration source changed from v{plan.source_version} to v{current}"
                         )
                     for step in plan.steps:
-                        observed = int(
-                            connection.execute("PRAGMA user_version").fetchone()[0]
-                        )
+                        observed = int(connection.execute("PRAGMA user_version").fetchone()[0])
                         if observed != step.source_version:
                             raise MigrationExecutionError(
                                 f"migration {step.migration_id} expected v{step.source_version}, "
@@ -446,9 +443,7 @@ class StateMigrationManager:
                     connection,
                     "migration_history",
                 ):
-                    raise MigrationExecutionError(
-                        "migrated database lacks migration_history table"
-                    )
+                    raise MigrationExecutionError("migrated database lacks migration_history table")
         except sqlite3.DatabaseError as error:
             raise MigrationExecutionError("cannot validate migrated SQLite database") from error
 
@@ -490,12 +485,18 @@ class StateMigrationManager:
 
     def _temporary_path(self, purpose: str) -> Path:
         token = uuid.uuid4().hex
-        relative = _TEMP_ROOT.join(f"{purpose}-{token}.sqlite3")
+        relative = _TEMP_ROOT.child(f"{purpose}-{token}.sqlite3")
         return self._filesystem.resolve(relative)
 
-    def _connect(self, database: Path, *, readonly: bool) -> sqlite3.Connection:
+    @contextmanager
+    def _connect(
+        self,
+        database: Path,
+        *,
+        readonly: bool,
+    ) -> Iterator[sqlite3.Connection]:
         if readonly:
-            uri = f"file:{database.as_posix()}?mode=ro"
+            uri = f"{database.resolve().as_uri()}?mode=ro"
             connection = sqlite3.connect(
                 uri,
                 uri=True,
@@ -508,12 +509,15 @@ class StateMigrationManager:
                 timeout=self._busy_timeout_ms / 1000,
                 isolation_level=None,
             )
-        connection.execute(f"PRAGMA busy_timeout = {self._busy_timeout_ms}")
-        connection.execute("PRAGMA foreign_keys = ON")
-        connection.execute("PRAGMA trusted_schema = OFF")
-        if not readonly:
-            connection.execute("PRAGMA synchronous = FULL")
-        return connection
+        try:
+            connection.execute(f"PRAGMA busy_timeout = {self._busy_timeout_ms}")
+            connection.execute("PRAGMA foreign_keys = ON")
+            connection.execute("PRAGMA trusted_schema = OFF")
+            if not readonly:
+                connection.execute("PRAGMA synchronous = FULL")
+            yield connection
+        finally:
+            connection.close()
 
     def _assert_safe_database_files(self, *, require_database: bool) -> None:
         candidates = (self._database_path, *self._sidecars)
@@ -528,9 +532,7 @@ class StateMigrationManager:
                     f"migration database path cannot be a symlink: {candidate}"
                 )
             if not stat.S_ISREG(candidate_stat.st_mode):
-                raise MigrationError(
-                    f"migration database path must be a regular file: {candidate}"
-                )
+                raise MigrationError(f"migration database path must be a regular file: {candidate}")
 
 
 def _migrate_state_v1_to_v2(connection: sqlite3.Connection) -> None:
@@ -569,9 +571,13 @@ def _new_run_id() -> str:
 def _format_timestamp(value: datetime) -> str:
     if not isinstance(value, datetime) or value.tzinfo is None:
         raise MigrationError("migration timestamp must be timezone-aware")
-    return value.astimezone(UTC).isoformat(timespec="microseconds").replace(
-        "+00:00",
-        "Z",
+    return (
+        value.astimezone(UTC)
+        .isoformat(timespec="microseconds")
+        .replace(
+            "+00:00",
+            "Z",
+        )
     )
 
 
@@ -604,9 +610,7 @@ def _remove_sqlite_files(path: Path) -> None:
                     f"temporary migration path became a symlink: {candidate}"
                 )
             if not stat.S_ISREG(candidate_stat.st_mode):
-                raise MigrationError(
-                    f"temporary migration path is not a regular file: {candidate}"
-                )
+                raise MigrationError(f"temporary migration path is not a regular file: {candidate}")
             os.unlink(candidate)
 
 

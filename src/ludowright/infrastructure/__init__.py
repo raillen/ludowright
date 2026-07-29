@@ -38,6 +38,7 @@ from ludowright.infrastructure.migrations import (
 )
 from ludowright.infrastructure.state_store import (
     DEFAULT_STATE_STORE_PATH,
+    STATE_SCHEMA_VERSION,
     EventCheckpoint,
     EventIndexState,
     IndexedEntity,
@@ -68,6 +69,7 @@ __all__ = [
     "LOCK_DIRECTORY",
     "PROJECT_MARKER",
     "STATE_MIGRATIONS",
+    "STATE_SCHEMA_VERSION",
     "TARGET_STATE_SCHEMA_VERSION",
     "CorruptEventLogError",
     "EventCheckpoint",

@@ -55,6 +55,12 @@
       "name": "capture-profile",
       "schema_id": "https://schemas.ludowright.dev/v1/capture-profile.schema.json",
       "sha256": "6ad7ef46bd2f5b5bc010d6c3f1556e06ca030e628076351d200479a50fc860fb"
+    },
+    {
+      "file": "migration-receipt.schema.json",
+      "name": "migration-receipt",
+      "schema_id": "https://schemas.ludowright.dev/v1/migration-receipt.schema.json",
+      "sha256": "411ce1608834a1c2c7774bcf7478109ce8bfae22df7ce4615f03354d1c92d815"
     }
   ]
 }

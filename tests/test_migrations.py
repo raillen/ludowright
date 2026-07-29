@@ -3,10 +3,10 @@
 from __future__ import annotations
 
 import hashlib
-import json
 import os
 import sqlite3
 from concurrent.futures import ThreadPoolExecutor
+from datetime import UTC, datetime
 from pathlib import Path
 
 import pytest
@@ -23,6 +23,7 @@ from ludowright.infrastructure import (
     ProjectFilesystem,
     StateMigrationManager,
     StateStore,
+    UnsafeProjectPathError,
     UnsupportedStateSchemaError,
     WorkflowProgress,
 )
@@ -360,7 +361,7 @@ def test_rollback_refuses_backup_symlink(tmp_path: Path) -> None:
     backup.unlink()
     backup.symlink_to(outside)
 
-    with pytest.raises(Exception, match="symlink"):
+    with pytest.raises(UnsafeProjectPathError, match="symlink"):
         manager.rollback(applied.receipt.run_id)
 
 
@@ -389,10 +390,7 @@ def test_migration_receipt_contract_rejects_invalid_states() -> None:
         "run_id": "migration-example",
         "status": "prepared",
         "database_path": ".ludowright/state.sqlite3",
-        "backup_path": (
-            ".ludowright/backups/migrations/"
-            "migration-example/state-before.sqlite3"
-        ),
+        "backup_path": (".ludowright/backups/migrations/migration-example/state-before.sqlite3"),
         "source_version": 1,
         "target_version": 2,
         "migration_ids": ["state-v1-to-v2-migration-history"],
@@ -402,22 +400,12 @@ def test_migration_receipt_contract_rejects_invalid_states() -> None:
     }
 
     with pytest.raises(ValidationError):
-        MigrationReceiptContract.model_validate(
-            {**base, "status": "completed"}
-        )
+        MigrationReceiptContract.model_validate({**base, "status": "completed"})
     with pytest.raises(ValidationError):
-        MigrationReceiptContract.model_validate(
-            {**base, "target_version": 1}
-        )
+        MigrationReceiptContract.model_validate({**base, "target_version": 1})
     with pytest.raises(ValidationError):
-        MigrationReceiptContract.model_validate(
-            {**base, "migration_ids": ["same", "same"]}
-        )
+        MigrationReceiptContract.model_validate({**base, "migration_ids": ["same", "same"]})
 
 
-def datetime_from_text(value: str):
-    from datetime import datetime
-
-    return datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%fZ").replace(
-        tzinfo=__import__("datetime").UTC
-    )
+def datetime_from_text(value: str) -> datetime:
+    return datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%fZ").replace(tzinfo=UTC)

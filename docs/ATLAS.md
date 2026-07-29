@@ -33,6 +33,7 @@ This is the main navigation map for humans and agents. Each subject should have 
 - [`contracts/STRUCTURED_REPOSITORIES.md`](contracts/STRUCTURED_REPOSITORIES.md) — strict JSON/YAML parsing, canonical serialization, document digests, snapshots, and conflict detection.
 - [`contracts/EVENT_LOG.md`](contracts/EVENT_LOG.md) — immutable events, JSON Lines replay, correlation, causation, sequence, hash chaining, and explicit tail recovery.
 - [`contracts/STATE_STORE.md`](contracts/STATE_STORE.md) — rebuildable SQLite workflow state, entity indexes, event checkpoints, transactions, and canonical-source consistency.
+- [`contracts/MIGRATIONS.md`](contracts/MIGRATIONS.md) — contiguous plans, dry runs, consistent backups, receipts, transactional apply, and guarded rollback.
 
 Published machine-readable contracts are stored under `schemas/v1/`. The source models live under `src/ludowright/contracts/`.
 
@@ -81,6 +82,7 @@ Future bounded changes should receive their own plan under `plans/`.
 - [`contracts/STRUCTURED_REPOSITORIES.md`](contracts/STRUCTURED_REPOSITORIES.md) — parser limits, deterministic round trips, duplicate-key rejection, and optimistic concurrency tests.
 - [`contracts/EVENT_LOG.md`](contracts/EVENT_LOG.md) — replay integrity, chained hashes, sequence, concurrency, corruption, and incomplete-tail recovery tests.
 - [`contracts/STATE_STORE.md`](contracts/STATE_STORE.md) — WAL, strict tables, rollback, concurrency, checkpoint, source-digest, corruption, and rebuild tests.
+- [`contracts/MIGRATIONS.md`](contracts/MIGRATIONS.md) — catalog, dry-run, backup, failure rollback, explicit restore, tampering, and concurrency tests.
 
 Planned detailed documents:
 
@@ -97,6 +99,7 @@ Planned detailed documents:
 - [`contracts/STRUCTURED_REPOSITORIES.md`](contracts/STRUCTURED_REPOSITORIES.md) — bounded UTF-8 parsing, safe YAML restrictions, duplicate-key rejection, and exact-byte conflict detection.
 - [`contracts/EVENT_LOG.md`](contracts/EVENT_LOG.md) — canonical event lines, integrity-chain meaning, parser limits, atomic append, and explicit recovery boundaries.
 - [`contracts/STATE_STORE.md`](contracts/STATE_STORE.md) — SQLite sidecar safety, parameterized operations, strict schemas, short transactions, and corruption isolation.
+- [`contracts/MIGRATIONS.md`](contracts/MIGRATIONS.md) — trusted migration code, durable backups, strict receipts, digest-guarded rollback, and fail-closed versions.
 
 Planned detailed documents:
 
@@ -129,6 +132,7 @@ Planned operational documents:
 
 ## Decisions
 
+- [`decisions/0012-explicit-backed-up-schema-migrations.md`](decisions/0012-explicit-backed-up-schema-migrations.md) — accepted explicit contiguous migration plans, dry runs, durable SQLite backups, strict receipts, transactional apply, and guarded rollback.
 - [`decisions/0011-rebuildable-sqlite-state-index.md`](decisions/0011-rebuildable-sqlite-state-index.md) — accepted SQLite as a rebuildable derived index with WAL, strict short transactions, source digests, event checkpoints, and explicit consistency states.
 - [`decisions/0010-hash-chained-append-only-event-log.md`](decisions/0010-hash-chained-append-only-event-log.md) — accepted canonical JSON Lines events, correlation, causation, contiguous replay, chained SHA-256 integrity, atomic append, and explicit tail recovery.
 - [`decisions/0009-canonical-structured-document-repositories.md`](decisions/0009-canonical-structured-document-repositories.md) — accepted strict JSON/YAML loaders, deterministic serialization, exact-byte snapshots, locks, and optimistic digest conflicts.
