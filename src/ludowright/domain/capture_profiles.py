@@ -333,7 +333,8 @@ class CaptureProfileRef:
 
 
 class _Identified(Protocol):
-    id: Identifier
+    @property
+    def id(self) -> Identifier: ...
 
 
 _T = TypeVar("_T", bound=_Identified)
@@ -360,11 +361,10 @@ class CaptureProfile:
         self._validate_collections()
         if self.parent is None:
             self._validate_resolved_contract()
-        else:
-            if not isinstance(self.parent, CaptureProfileRef):
-                raise InvalidCaptureProfileError(
-                    "capture profile parent must be an exact profile reference"
-                )
+        elif not isinstance(self.parent, CaptureProfileRef):
+            raise InvalidCaptureProfileError(
+                "capture profile parent must be an exact profile reference"
+            )
 
     def _validate_identity(self) -> None:
         if not isinstance(self.id, CaptureProfileId):
@@ -483,9 +483,7 @@ class CaptureProfile:
             lighting=self.lighting or parent.lighting,
             validation=self.validation or parent.validation,
             views=_merge_requirements(parent.views, self.views),
-            requirements=_merge_requirements(
-                parent.requirements, self.requirements
-            ),
+            requirements=_merge_requirements(parent.requirements, self.requirements),
             sheets=_merge_requirements(parent.sheets, self.sheets),
         )
 
