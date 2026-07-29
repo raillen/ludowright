@@ -29,9 +29,7 @@ def validate_slug(value: str) -> str:
     if not value:
         raise InvalidIdentifierError("a slug cannot be empty")
     if len(value) > MAX_SLUG_LENGTH:
-        raise InvalidIdentifierError(
-            f"a slug cannot exceed {MAX_SLUG_LENGTH} characters"
-        )
+        raise InvalidIdentifierError(f"a slug cannot exceed {MAX_SLUG_LENGTH} characters")
     if not value.isascii():
         raise InvalidIdentifierError("a slug must contain ASCII characters only")
     if _SLUG_PATTERN.fullmatch(value) is None:
