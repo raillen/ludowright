@@ -33,6 +33,35 @@ jobs:
       - name: Apply migration safety fixes
         run: |
           uv run python scripts/fix_migration_safety.py
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path("src/ludowright/infrastructure/migrations.py")
+          text = path.read_text(encoding="utf-8")
+          text = text.replace(
+              "        with self._filesystem.lock(_MIGRATION_LOCK, timeout=timeout):\n"
+              "            with self._filesystem.lock(STATE_STORE_WRITE_LOCK, timeout=timeout):\n"
+              "                return self._apply_locked(target_version=target_version)\n",
+              "        with (\n"
+              "            self._filesystem.lock(_MIGRATION_LOCK, timeout=timeout),\n"
+              "            self._filesystem.lock(STATE_STORE_WRITE_LOCK, timeout=timeout),\n"
+              "        ):\n"
+              "            return self._apply_locked(target_version=target_version)\n",
+              1,
+          )
+          text = text.replace(
+              "        with self._filesystem.lock(_MIGRATION_LOCK, timeout=timeout):\n"
+              "            with self._filesystem.lock(STATE_STORE_WRITE_LOCK, timeout=timeout):\n"
+              "                return self._rollback_locked(run_id)\n",
+              "        with (\n"
+              "            self._filesystem.lock(_MIGRATION_LOCK, timeout=timeout),\n"
+              "            self._filesystem.lock(STATE_STORE_WRITE_LOCK, timeout=timeout),\n"
+              "        ):\n"
+              "            return self._rollback_locked(run_id)\n",
+              1,
+          )
+          path.write_text(text, encoding="utf-8")
+          PY
           rm scripts/fix_migration_safety.py
           uv run ruff format src tests
           uv run ruff check --fix src tests
