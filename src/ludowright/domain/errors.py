@@ -49,3 +49,23 @@ class InvalidAssetError(DomainValidationError):
 
 class InvalidAssetTransitionError(InvalidAssetError):
     """Raised when an asset production transition is not allowed."""
+
+
+class InvalidReferenceError(DomainValidationError):
+    """Raised when a visual reference or its provenance is invalid."""
+
+
+class InvalidReferenceTransitionError(InvalidReferenceError):
+    """Raised when a visual reference transition is not allowed."""
+
+
+class InvalidVisualJobError(DomainValidationError):
+    """Raised when a deterministic visual job specification is invalid."""
+
+
+class InvalidGenerationReceiptError(DomainValidationError):
+    """Raised when a generation receipt or retry series is invalid."""
+
+
+class InvalidVisualReviewError(DomainValidationError):
+    """Raised when a visual review record violates its contract."""
