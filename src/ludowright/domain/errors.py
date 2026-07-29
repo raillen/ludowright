@@ -77,3 +77,7 @@ class InvalidCaptureProfileError(DomainValidationError):
 
 class InvalidCaptureProfileInheritanceError(InvalidCaptureProfileError):
     """Raised when capture-profile inheritance cannot be resolved safely."""
+
+
+class InvalidEventError(DomainValidationError):
+    """Raised when an event type, payload, or immutable record is invalid."""
