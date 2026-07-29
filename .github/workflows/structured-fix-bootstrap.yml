@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - agent/structured-repositories
+  workflow_dispatch:
 
 permissions:
   contents: write
