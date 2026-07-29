@@ -66,6 +66,12 @@ class DecisionId(Identifier):
     kind = "decision"
 
 
+class ApprovalId(Identifier):
+    """Identifier for a review approval request and its immutable history."""
+
+    kind = "approval"
+
+
 class PackageId(Identifier):
     """Identifier for a reproducible project or production package."""
 

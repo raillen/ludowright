@@ -19,6 +19,7 @@ nav:
   - Contracts:
       - Identifiers and Versions: contracts/IDENTIFIERS_AND_VERSIONS.md
       - Project Domain: contracts/PROJECT_DOMAIN.md
+      - Decisions and Approvals: contracts/DECISIONS_AND_APPROVALS.md
   - Implementation:
       - Plan to 1.0: plans/IMPLEMENTATION_PLAN.md
   - Quality:
@@ -27,6 +28,7 @@ nav:
       - RFC Template: governance/RFC_TEMPLATE.md
       - ADR 0001 — Identifiers and Versions: decisions/0001-typed-identifiers-and-revision-versions.md
       - ADR 0002 — Project Aggregate: decisions/0002-immutable-project-aggregate.md
+      - ADR 0003 — Revision-Bound Approvals: decisions/0003-revision-bound-approvals.md
       - ADR Template: decisions/0000-template.md
   - Operations:
       - Documentation Site: operations/DOCUMENTATION_SITE.md

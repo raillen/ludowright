@@ -98,7 +98,7 @@ CON → con-item
 
 ## Typed identifiers
 
-The initial identifier types are:
+The current identifier types are:
 
 | Type | Entity |
 |---|---|
@@ -108,6 +108,7 @@ The initial identifier types are:
 | `ReferenceId` | External, candidate, approved, rejected, or archived reference |
 | `JobId` | Workflow or generation job |
 | `DecisionId` | Recorded decision |
+| `ApprovalId` | Approval request and immutable approval history |
 | `PackageId` | Reproducible project or production package |
 
 Each type uses the same slug grammar but remains a distinct runtime value object.
