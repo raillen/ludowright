@@ -172,7 +172,10 @@ def test_released_project_can_complete_and_reactivate() -> None:
 def test_cancelled_project_can_reactivate() -> None:
     cancelled = make_project().transition_lifecycle(ProjectLifecycle.CANCELLED)
 
-    assert cancelled.transition_lifecycle(ProjectLifecycle.ACTIVE).lifecycle is ProjectLifecycle.ACTIVE
+    assert (
+        cancelled.transition_lifecycle(ProjectLifecycle.ACTIVE).lifecycle
+        is ProjectLifecycle.ACTIVE
+    )
 
 
 def test_archived_project_is_terminal() -> None:
