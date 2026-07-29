@@ -7,17 +7,15 @@ on:
       - main
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
-  patch:
+  quality:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out feature branch
+      - name: Check out repository
         uses: actions/checkout@v7
-        with:
-          ref: agent/structured-repositories
 
       - name: Install uv
         uses: astral-sh/setup-uv@v7
@@ -30,166 +28,5 @@ jobs:
       - name: Install project and quality tools
         run: uv sync --extra dev --extra docs
 
-      - name: Apply validated fixes
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-
-          path = Path("src/ludowright/infrastructure/filesystem.py")
-          text = path.read_text(encoding="utf-8")
-          constants = (
-              'PROJECT_MARKER = RepositoryPath(".ludowright/project.json")\n'
-              'LOCK_DIRECTORY = RepositoryPath(".ludowright/locks")\n\n\n'
-          )
-          text = text.replace(constants, "", 1)
-          anchor = "\n\n@dataclass(frozen=True, slots=True)\nclass LockMetadata:"
-          replacement = f"\n\n{constants}@dataclass(frozen=True, slots=True)\nclass LockMetadata:"
-          if anchor not in text:
-              raise SystemExit("LockMetadata insertion anchor not found")
-          text = text.replace(anchor, replacement, 1)
-          text = text.replace(
-              '            "repository path segments may use lowercase letters, digits, dots, hyphens, and underscores"\n',
-              '            "repository path segments may use lowercase letters, digits, dots, "\n'
-              '            "hyphens, and underscores"\n',
-              1,
-          )
-          text = text.replace("symbolic link", "symlink")
-          text = text.replace(
-              "def _validate_lock_name(name: str) -> None:\n    try:\n",
-              "def _validate_lock_name(name: str) -> None:\n"
-              "    if not name:\n"
-              "        raise ProjectFilesystemError(\"project lock name cannot be empty\")\n"
-              "    try:\n",
-              1,
-          )
-          path.write_text(text, encoding="utf-8")
-
-          path = Path("tests/test_filesystem.py")
-          text = path.read_text(encoding="utf-8")
-          if "import string\n" not in text:
-              text = text.replace("import os\n", "import os\nimport string\n", 1)
-          text = text.replace(
-              '_SAFE_SEGMENT_ALPHABET = "abcdefghijklmnopqrstuvwxyz0123456789-_"',
-              '_SAFE_SEGMENT_ALPHABET = string.ascii_lowercase + string.digits + "-_"',
-          )
-          text = text.replace('match="symbolic link"', 'match="symlink"')
-          path.write_text(text, encoding="utf-8")
-
-          path = Path("pyproject.toml")
-          text = path.read_text(encoding="utf-8")
-          if '"types-pyyaml>=6.0.12,<7"' not in text:
-              text = text.replace(
-                  '  "ruff>=0.12,<1",\n',
-                  '  "ruff>=0.12,<1",\n  "types-pyyaml>=6.0.12,<7",\n',
-                  1,
-              )
-          path.write_text(text, encoding="utf-8")
-
-          path = Path("src/ludowright/infrastructure/structured.py")
-          text = path.read_text(encoding="utf-8")
-          text = text.replace("from yaml.events import AliasEvent\n", "")
-          old_parse = '''def _parse_yaml(text: str) -> Any:
-              try:
-                  events = tuple(yaml.parse(text, Loader=yaml.SafeLoader))
-              except (yaml.YAMLError, RecursionError, ValueError) as error:
-                  raise StructuredDocumentParseError("invalid or unsafe YAML document") from error
-              if any(isinstance(event, AliasEvent) for event in events):
-                  raise StructuredDocumentParseError("YAML aliases are not allowed")
-
-              try:
-                  documents = list(yaml.compose_all(text, Loader=yaml.SafeLoader))
-              except (yaml.YAMLError, RecursionError, ValueError) as error:
-                  raise StructuredDocumentParseError("invalid or unsafe YAML document") from error
-              if len(documents) != 1:
-                  raise StructuredDocumentParseError("YAML input must contain exactly one document")
-              node = documents[0]
-              if node is None:
-                  raise StructuredDocumentParseError("structured documents cannot be empty")
-              _validate_yaml_node(node)
-
-              try:
-                  parsed = yaml.safe_load(text)
-              except (yaml.YAMLError, RecursionError, ValueError) as error:
-                  raise StructuredDocumentParseError("invalid or unsafe YAML document") from error
-              if parsed is None:
-                  raise StructuredDocumentParseError("structured documents cannot be empty")
-              return parsed
-          '''
-          old_parse = "\n".join(line[10:] if line.startswith("          ") else line for line in old_parse.splitlines()) + "\n"
-          new_parse = '''def _parse_yaml(text: str) -> Any:
-              try:
-                  documents = list(yaml.compose_all(text, Loader=yaml.SafeLoader))
-              except (yaml.YAMLError, RecursionError, ValueError) as error:
-                  raise StructuredDocumentParseError("invalid or unsafe YAML document") from error
-              if not documents:
-                  raise StructuredDocumentParseError("structured documents cannot be empty")
-              if len(documents) != 1:
-                  raise StructuredDocumentParseError("YAML input must contain exactly one document")
-              node = documents[0]
-              if node is None:
-                  raise StructuredDocumentParseError("structured documents cannot be empty")
-              _validate_yaml_node(node)
-
-              try:
-                  parsed = yaml.safe_load(text)
-              except (yaml.YAMLError, RecursionError, ValueError) as error:
-                  raise StructuredDocumentParseError("invalid or unsafe YAML document") from error
-              if parsed is None:
-                  raise StructuredDocumentParseError("structured documents cannot be empty")
-              return parsed
-          '''
-          new_parse = "\n".join(line[10:] if line.startswith("          ") else line for line in new_parse.splitlines()) + "\n"
-          if old_parse in text:
-              text = text.replace(old_parse, new_parse, 1)
-          if "visited: set[int] = set()" not in text:
-              text = text.replace(
-                  "def _validate_yaml_node(root: Node) -> None:\n    remaining = [_MAX_STRUCTURE_NODES]\n\n"
-                  "    def visit(node: Node, depth: int) -> None:\n",
-                  "def _validate_yaml_node(root: Node) -> None:\n"
-                  "    remaining = [_MAX_STRUCTURE_NODES]\n"
-                  "    visited: set[int] = set()\n\n"
-                  "    def visit(node: Node, depth: int) -> None:\n"
-                  "        identity = id(node)\n"
-                  "        if identity in visited:\n"
-                  "            raise StructuredDocumentParseError(\"YAML aliases are not allowed\")\n"
-                  "        visited.add(identity)\n",
-                  1,
-              )
-          path.write_text(text, encoding="utf-8")
-
-          path = Path("tests/test_structured_repositories.py")
-          text = path.read_text(encoding="utf-8")
-          text = text.replace(
-              '@pytest.mark.parametrize(\n    (path, repository_type),',
-              '@pytest.mark.parametrize(\n    "path,repository_type",',
-              1,
-          )
-          text = text.replace('match="unsafe YAML"', 'match="YAML"')
-          path.write_text(text, encoding="utf-8")
-          PY
-
-          uv run ruff format src tests
-          uv run ruff check --fix src tests
-          uv run ruff format src tests
-
-      - name: Refresh dependencies after pyproject changes
-        run: uv sync --extra dev --extra docs
-
-      - name: Validate fixes
-        run: |
-          uv run ruff check src tests
-          uv run ruff format --check src tests
-          uv run mypy src
-          uv run pytest --no-cov tests/test_filesystem.py tests/test_structured_repositories.py -q
-
-      - name: Commit validated fixes
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add pyproject.toml src tests
-          if git diff --cached --quiet; then
-            echo "No fixes to commit."
-          else
-            git commit -m "Fix structured repository quality gates"
-            git push origin HEAD:agent/structured-repositories
-          fi
+      - name: Run LudoWright quality gate
+        run: uv run ludowright quality check
