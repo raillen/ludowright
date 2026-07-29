@@ -12,8 +12,6 @@ from contextlib import contextmanager
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from enum import StrEnum
-from pathlib import Path
-from types import MappingProxyType
 
 from ludowright.domain import (
     EventHash,
@@ -106,7 +104,11 @@ class IndexedEntity:
         if not isinstance(self.source_path, RepositoryPath):
             raise StateStoreError("indexed entity source must use RepositoryPath")
         _validate_digest(self.source_digest, "source digest")
-        if isinstance(self.revision, bool) or not isinstance(self.revision, int) or self.revision < 1:
+        if (
+            isinstance(self.revision, bool)
+            or not isinstance(self.revision, int)
+            or self.revision < 1
+        ):
             raise StateStoreError("indexed entity revision must be a positive integer")
         _validate_slug_value(self.status, "entity status")
         object.__setattr__(self, "updated_at", _normalize_timestamp(self.updated_at))
@@ -498,7 +500,8 @@ class StateStore:
                 current_version = int(connection.execute("PRAGMA user_version").fetchone()[0])
                 if current_version not in {0, _STATE_SCHEMA_VERSION}:
                     raise UnsupportedStateSchemaError(
-                        f"state schema v{current_version} is not supported by v{_STATE_SCHEMA_VERSION}"
+                        f"state schema v{current_version} is not supported by "
+                        f"v{_STATE_SCHEMA_VERSION}"
                     )
                 if current_version == _STATE_SCHEMA_VERSION:
                     self._validate_schema(connection)
@@ -579,13 +582,9 @@ class StateStore:
                 continue
             candidate_stat = os.lstat(candidate)
             if stat.S_ISLNK(candidate_stat.st_mode):
-                raise UnsafeProjectPathError(
-                    f"SQLite state path cannot be a symlink: {candidate}"
-                )
+                raise UnsafeProjectPathError(f"SQLite state path cannot be a symlink: {candidate}")
             if not stat.S_ISREG(candidate_stat.st_mode):
-                raise StateStoreError(
-                    f"SQLite state path must be a regular file: {candidate}"
-                )
+                raise StateStoreError(f"SQLite state path must be a regular file: {candidate}")
 
 
 _SCHEMA_STATEMENTS = (
@@ -669,9 +668,7 @@ def _checkpoint_from_row(row: sqlite3.Row) -> EventCheckpoint:
         return EventCheckpoint(
             last_sequence=row["last_sequence"],
             last_event_hash=(
-                EventHash(row["last_event_hash"])
-                if row["last_event_hash"] is not None
-                else None
+                EventHash(row["last_event_hash"]) if row["last_event_hash"] is not None else None
             ),
             log_digest=row["log_digest"],
             updated_at=_parse_timestamp(row["updated_at"]),
@@ -728,9 +725,13 @@ def _normalize_timestamp(value: datetime) -> datetime:
 
 
 def _format_timestamp(value: datetime) -> str:
-    return _normalize_timestamp(value).isoformat(timespec="microseconds").replace(
-        "+00:00",
-        "Z",
+    return (
+        _normalize_timestamp(value)
+        .isoformat(timespec="microseconds")
+        .replace(
+            "+00:00",
+            "Z",
+        )
     )
 
 

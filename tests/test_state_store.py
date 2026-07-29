@@ -24,8 +24,8 @@ from ludowright.infrastructure import (
     StateStore,
     StateStoreCorruptionError,
     StateStoreError,
-    UnsupportedStateSchemaError,
     UnsafeProjectPathError,
+    UnsupportedStateSchemaError,
     WorkflowProgress,
 )
 
@@ -117,7 +117,7 @@ def test_state_store_initializes_strict_wal_schema(tmp_path: Path) -> None:
 def test_state_store_rejects_invalid_configuration(tmp_path: Path) -> None:
     filesystem = ProjectFilesystem(tmp_path)
 
-    with pytest.raises(StateStoreError, match=".sqlite3"):
+    with pytest.raises(StateStoreError, match=r"\.sqlite3"):
         StateStore(filesystem, RepositoryPath(".ludowright/state.db"))
     with pytest.raises(StateStoreError, match="positive"):
         StateStore(filesystem, busy_timeout_ms=0)
@@ -188,9 +188,7 @@ def test_workflow_context_is_deeply_immutable(tmp_path: Path) -> None:
     loaded = store(tmp_path).get_workflow(progress.workflow_id)
 
     assert loaded is not None
-    assert loaded.context["answers"] == (
-        {"id": "platform", "value": "windows"},
-    )
+    assert loaded.context["answers"] == ({"id": "platform", "value": "windows"},)
     with pytest.raises(TypeError):
         loaded.context["new"] = True  # type: ignore[index]
 
