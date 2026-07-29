@@ -117,7 +117,11 @@ class DecisionRevision:
     superseded_by: DecisionId | None = None
 
     def __post_init__(self) -> None:
-        if isinstance(self.sequence, bool) or not isinstance(self.sequence, int) or self.sequence < 1:
+        if (
+            isinstance(self.sequence, bool)
+            or not isinstance(self.sequence, int)
+            or self.sequence < 1
+        ):
             raise InvalidDecisionError("a decision revision sequence must be a positive integer")
         if not isinstance(self.status, DecisionStatus):
             raise InvalidDecisionError("a decision revision requires a valid status")
@@ -279,7 +283,11 @@ class ApprovalRevision:
     superseded_by: ApprovalId | None = None
 
     def __post_init__(self) -> None:
-        if isinstance(self.sequence, bool) or not isinstance(self.sequence, int) or self.sequence < 1:
+        if (
+            isinstance(self.sequence, bool)
+            or not isinstance(self.sequence, int)
+            or self.sequence < 1
+        ):
             raise InvalidApprovalError("an approval revision sequence must be a positive integer")
         if not isinstance(self.status, ApprovalStatus):
             raise InvalidApprovalError("an approval revision requires a valid status")
