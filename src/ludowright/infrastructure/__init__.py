@@ -1,5 +1,14 @@
 """Infrastructure adapters for safe local project operations."""
 
+from ludowright.infrastructure.event_log import (
+    DEFAULT_EVENT_LOG_PATH,
+    CorruptEventLogError,
+    EventLog,
+    EventLogError,
+    EventLogRecovery,
+    EventLogSnapshot,
+    IncompleteEventLogTailError,
+)
 from ludowright.infrastructure.filesystem import (
     LOCK_DIRECTORY,
     PROJECT_MARKER,
@@ -26,8 +35,15 @@ from ludowright.infrastructure.structured import (
 )
 
 __all__ = [
+    "DEFAULT_EVENT_LOG_PATH",
     "LOCK_DIRECTORY",
     "PROJECT_MARKER",
+    "CorruptEventLogError",
+    "EventLog",
+    "EventLogError",
+    "EventLogRecovery",
+    "EventLogSnapshot",
+    "IncompleteEventLogTailError",
     "JsonDocumentRepository",
     "LockMetadata",
     "ProjectFilesystem",
