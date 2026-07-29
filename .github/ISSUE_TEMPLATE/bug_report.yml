@@ -1,0 +1,98 @@
+name: Bug report
+description: Report reproducible incorrect behavior in LudoWright
+title: "[Bug]: "
+labels:
+  - type/bug
+  - status/needs-triage
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting a problem. Remove secrets, private assets, personal data, and unlicensed reference material before submitting.
+
+  - type: input
+    id: version
+    attributes:
+      label: LudoWright version
+      description: Provide the release, commit SHA, or output of `ludowright --version`.
+      placeholder: 0.1.0 or commit SHA
+    validations:
+      required: true
+
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Operating system, Python version, and uv version.
+      placeholder: Ubuntu 24.04, Python 3.12.4, uv 0.x
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - CLI
+        - Core and domain
+        - Project state and migrations
+        - Documentation generation
+        - Asset registry
+        - Visual generation and ImageGen
+        - Sheets and packaging
+        - Codex integration
+        - Installation and release
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: List exact commands, inputs, and the smallest safe project state needed to reproduce the problem.
+      placeholder: |
+        1. Run ...
+        2. Create ...
+        3. Observe ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: Include sanitized error output or logs.
+    validations:
+      required: true
+
+  - type: input
+    id: schema
+    attributes:
+      label: Project or schema version
+      description: Provide the schema version when the problem involves an existing LudoWright project.
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+      description: Include relevant links, screenshots, or suspected cause. Do not disclose vulnerabilities publicly.
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Submission checks
+      options:
+        - label: I searched existing issues for duplicates.
+          required: true
+        - label: I removed secrets, private data, and materials I cannot legally share.
+          required: true
+        - label: This is not a security vulnerability. Security reports follow SECURITY.md.
+          required: true

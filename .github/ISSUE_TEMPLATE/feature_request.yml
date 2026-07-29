@@ -1,0 +1,91 @@
+name: Feature request
+description: Propose a concrete improvement to LudoWright
+title: "[Feature]: "
+labels:
+  - type/feature
+  - status/needs-design
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Describe the user problem before prescribing an implementation. Large or cross-cutting proposals may be converted into an RFC.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What concrete workflow, limitation, or production risk needs to be addressed?
+    validations:
+      required: true
+
+  - type: textarea
+    id: users
+    attributes:
+      label: Affected users and workflow
+      description: Who needs this, and at which point in the LudoWright workflow?
+    validations:
+      required: true
+
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Desired outcome
+      description: Describe observable behavior and acceptance criteria rather than only a preferred implementation.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Primary area
+      options:
+        - CLI
+        - Core and domain
+        - Project state and migrations
+        - Documentation generation
+        - Asset registry
+        - Capture profiles
+        - Visual generation and ImageGen
+        - Sheets and packaging
+        - Codex integration
+        - Extension system
+        - Documentation and tutorials
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Explain current workarounds and meaningful trade-offs.
+
+  - type: textarea
+    id: compatibility
+    attributes:
+      label: Compatibility and migration impact
+      description: Note effects on schemas, manifests, directory layout, CLI JSON, project state, templates, or plugins.
+
+  - type: textarea
+    id: security
+    attributes:
+      label: Security, privacy, and external-service impact
+      description: Identify untrusted input, destructive operations, uploads, credentials, or approval changes.
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Examples and evidence
+      description: Add safe links, sample workflows, project examples, or prior art.
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Submission checks
+      options:
+        - label: I searched existing issues and the roadmap for related work.
+          required: true
+        - label: The proposal fits LudoWright's documented product boundary.
+          required: true
+        - label: I described the problem and desired outcome, not only an implementation preference.
+          required: true

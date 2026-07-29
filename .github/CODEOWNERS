@@ -1,0 +1,19 @@
+# Default ownership
+* @raillen
+
+# Security, governance, and releases
+/SECURITY.md @raillen
+/GOVERNANCE.md @raillen
+/.github/ @raillen
+
+# Canonical architecture and contracts
+/docs/architecture/ @raillen
+/docs/contracts/ @raillen
+/docs/decisions/ @raillen
+/src/ludowright/domain/ @raillen
+/src/ludowright/schemas/ @raillen
+/src/ludowright/migrations/ @raillen
+
+# Codex and visual-generation integration
+/integrations/codex/ @raillen
+/src/ludowright/vision/ @raillen

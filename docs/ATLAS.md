@@ -2,6 +2,12 @@
 
 This is the main navigation map for humans and agents. Each subject should have one canonical source.
 
+## Project entry points
+
+- [`../README.md`](../README.md) — project overview, status, setup, and primary links.
+- [`../PROJECT_START.md`](../PROJECT_START.md) — orientation for contributors and agents.
+- [`../AGENTS.md`](../AGENTS.md) — concise operational rules for Codex and other repository agents.
+
 ## Product
 
 - [`product/PRODUCT_VISION.md`](product/PRODUCT_VISION.md) — mission, users, value, principles, boundaries, and success measures.
@@ -70,7 +76,9 @@ Planned documents:
 
 ## Security
 
-Planned documents:
+- [`../SECURITY.md`](../SECURITY.md) — vulnerability reporting and current security requirements.
+
+Planned detailed documents:
 
 - threat model;
 - local file safety;
@@ -82,18 +90,27 @@ Planned documents:
 
 ## Governance and operations
 
-Planned documents:
+- [`../CONTRIBUTING.md`](../CONTRIBUTING.md) — development, testing, compatibility, and pull-request workflow.
+- [`../GOVERNANCE.md`](../GOVERNANCE.md) — roles, decisions, ADR/RFC thresholds, releases, and maintainership.
+- [`governance/RFC_TEMPLATE.md`](governance/RFC_TEMPLATE.md) — required structure for cross-cutting proposals.
+- [`../CODE_OF_CONDUCT.md`](../CODE_OF_CONDUCT.md) — community behavior and enforcement.
+- [`../SUPPORT.md`](../SUPPORT.md) — support channels and required diagnostic information.
+- [`.github/PULL_REQUEST_TEMPLATE.md`](../.github/PULL_REQUEST_TEMPLATE.md) — required PR review checklist.
+- [`.github/ISSUE_TEMPLATE/`](../.github/ISSUE_TEMPLATE/) — structured bug and feature intake.
+
+Planned operational documents:
 
 - compatibility policy;
 - versioning and deprecation;
 - migration policy;
 - release process;
-- contribution workflow;
 - extension governance.
 
 ## Decisions
 
-Architecture Decision Records will live in `docs/decisions/` and follow the naming pattern:
+- [`decisions/0000-template.md`](decisions/0000-template.md) — canonical Architecture Decision Record template.
+
+Accepted Architecture Decision Records will follow the naming pattern:
 
 ```text
 NNNN-short-decision-title.md
