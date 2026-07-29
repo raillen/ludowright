@@ -27,11 +27,11 @@ This is the main navigation map for humans and agents. Each subject should have 
 - [`contracts/DECISIONS_AND_APPROVALS.md`](contracts/DECISIONS_AND_APPROVALS.md) — decision states, revision-bound approval states, immutable logical histories, and superseding relationships.
 - [`contracts/ASSET_DOMAIN.md`](contracts/ASSET_DOMAIN.md) — asset families, subtypes, ownership, decomposition, hierarchy, priority, status, and completion rules.
 - [`contracts/REFERENCES_AND_VISUAL_JOBS.md`](contracts/REFERENCES_AND_VISUAL_JOBS.md) — visual provenance, revision-bound references, immutable generation jobs, attempt receipts, retries, and reviews.
+- [`contracts/CAPTURE_PROFILES.md`](contracts/CAPTURE_PROFILES.md) — camera, background, lighting, validation, required views, isolated items, technical sheets, and exact versioned inheritance.
 
 Planned canonical contracts:
 
 - project manifest;
-- capture profile;
 - CLI JSON output;
 - release manifest.
 
@@ -48,13 +48,13 @@ Planned documents:
 
 ## Visual production
 
-The visual reference and job foundation is defined in [`contracts/REFERENCES_AND_VISUAL_JOBS.md`](contracts/REFERENCES_AND_VISUAL_JOBS.md).
+- [`contracts/REFERENCES_AND_VISUAL_JOBS.md`](contracts/REFERENCES_AND_VISUAL_JOBS.md) — provenance, immutable generation jobs, receipts, retries, and reviews.
+- [`contracts/CAPTURE_PROFILES.md`](contracts/CAPTURE_PROFILES.md) — reusable camera, view, isolation, validation, and technical-sheet requirements.
 
 Planned detailed documents:
 
 - visual bible schema;
 - asset-family taxonomy;
-- capture-profile design;
 - segmented character references;
 - garments and props;
 - creatures, vehicles, architecture, foliage, UI, VFX, and modular kits;
@@ -115,6 +115,7 @@ Planned operational documents:
 
 ## Decisions
 
+- [`decisions/0006-exact-versioned-capture-profile-inheritance.md`](decisions/0006-exact-versioned-capture-profile-inheritance.md) — accepted exact parent revisions, deterministic override-by-ID ordering, and separate/assembled sheet requirements.
 - [`decisions/0005-immutable-visual-jobs-and-receipts.md`](decisions/0005-immutable-visual-jobs-and-receipts.md) — accepted immutable visual jobs, append-only attempt receipts, retry semantics, and output-bound reviews.
 - [`decisions/0004-decomposed-asset-aggregate.md`](decisions/0004-decomposed-asset-aggregate.md) — accepted decomposed asset aggregate, shared production status, ownership, and completion model.
 - [`decisions/0003-revision-bound-approvals.md`](decisions/0003-revision-bound-approvals.md) — accepted revision-bound approvals, immutable logical histories, and superseding relationships.
