@@ -42,6 +42,24 @@ jobs:
 
           runtime_path = Path("src/ludowright/cli/runtime.py")
           runtime_text = runtime_path.read_text(encoding="utf-8")
+          runtime_text = runtime_text.replace("from typing import TypeVar\n", "")
+          runtime_text = runtime_text.replace(
+              "CommandData = dict[str, object]\n"
+              "T = TypeVar(\"T\", bound=CommandData)\n"
+              "DataFactory = Callable[[], T]\n"
+              "HumanRenderer = Callable[[Console, T], None]\n",
+              "CommandData = dict[str, object]\n"
+              "DataFactory = Callable[[], CommandData]\n"
+              "HumanRenderer = Callable[[Console, CommandData], None]\n",
+              1,
+          )
+          runtime_text = runtime_text.replace(
+              "    action: DataFactory[T],\n"
+              "    render_human: HumanRenderer[T],\n",
+              "    action: DataFactory,\n"
+              "    render_human: HumanRenderer,\n",
+              1,
+          )
           runtime_text = runtime_text.replace(
               "    except CliFailure as failure:\n"
               "        emit_failure(command=command, failure=failure, json_output=json_output, context=context)\n"
