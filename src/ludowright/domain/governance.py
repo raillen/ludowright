@@ -29,19 +29,16 @@ class ReviewNote:
     value: str
 
     def __post_init__(self) -> None:
-        if not self.value:
+        if not isinstance(self.value, str) or not self.value:
             raise ValueError("a review note cannot be empty")
         if self.value != self.value.strip():
             raise ValueError("a review note cannot have surrounding whitespace")
         if unicodedata.normalize("NFC", self.value) != self.value:
             raise ValueError("a review note must use canonical Unicode NFC normalization")
         if len(self.value) > MAX_REVIEW_NOTE_LENGTH:
-            raise ValueError(
-                f"a review note cannot exceed {MAX_REVIEW_NOTE_LENGTH} characters"
-            )
+            raise ValueError(f"a review note cannot exceed {MAX_REVIEW_NOTE_LENGTH} characters")
         if any(
-            unicodedata.category(character).startswith("C")
-            and character not in {"\n", "\t"}
+            unicodedata.category(character).startswith("C") and character not in {"\n", "\t"}
             for character in self.value
         ):
             raise ValueError("a review note cannot contain unsupported control characters")
@@ -57,7 +54,7 @@ class SubjectRevision:
     value: str
 
     def __post_init__(self) -> None:
-        if not self.value:
+        if not isinstance(self.value, str) or not self.value:
             raise InvalidApprovalError("a subject revision cannot be empty")
         if len(self.value) > MAX_SUBJECT_REVISION_LENGTH:
             raise InvalidApprovalError(
@@ -81,8 +78,12 @@ class ApprovalSubject:
     label: DisplayName | None = None
 
     def __post_init__(self) -> None:
-        if type(self.id) is Identifier:
+        if not isinstance(self.id, Identifier) or type(self.id) is Identifier:
             raise InvalidApprovalError("an approval subject requires a typed identifier")
+        if not isinstance(self.revision, SubjectRevision):
+            raise InvalidApprovalError("an approval subject requires a subject revision")
+        if self.label is not None and not isinstance(self.label, DisplayName):
+            raise InvalidApprovalError("an approval subject label must be a display name")
 
 
 class DecisionStatus(StrEnum):
@@ -116,15 +117,17 @@ class DecisionRevision:
     superseded_by: DecisionId | None = None
 
     def __post_init__(self) -> None:
-        if self.sequence < 1:
-            raise InvalidDecisionError("a decision revision sequence must be positive")
+        if isinstance(self.sequence, bool) or not isinstance(self.sequence, int) or self.sequence < 1:
+            raise InvalidDecisionError("a decision revision sequence must be a positive integer")
+        if not isinstance(self.status, DecisionStatus):
+            raise InvalidDecisionError("a decision revision requires a valid status")
+        if self.note is not None and not isinstance(self.note, ReviewNote):
+            raise InvalidDecisionError("a decision revision note must be a review note")
         if self.status is DecisionStatus.SUPERSEDED:
-            if self.superseded_by is None:
+            if not isinstance(self.superseded_by, DecisionId):
                 raise InvalidDecisionError("a superseded decision requires a replacement ID")
         elif self.superseded_by is not None:
-            raise InvalidDecisionError(
-                "only a superseded decision revision may name a replacement"
-            )
+            raise InvalidDecisionError("only a superseded decision revision may name a replacement")
 
 
 @dataclass(frozen=True, slots=True)
@@ -136,8 +139,15 @@ class Decision:
     history: tuple[DecisionRevision, ...]
 
     def __post_init__(self) -> None:
-        if not self.history:
-            raise InvalidDecisionError("a decision history cannot be empty")
+        if not isinstance(self.id, DecisionId):
+            raise InvalidDecisionError("a decision requires a typed decision ID")
+        if not isinstance(self.title, DisplayName):
+            raise InvalidDecisionError("a decision title must be a display name")
+        if not isinstance(self.history, tuple) or not self.history:
+            raise InvalidDecisionError("a decision history must be a non-empty tuple")
+        if any(not isinstance(revision, DecisionRevision) for revision in self.history):
+            raise InvalidDecisionError("a decision history contains an invalid revision")
+
         first = self.history[0]
         if first.sequence != 1 or first.status is not DecisionStatus.PROPOSED:
             raise InvalidDecisionError("a decision history must begin with proposed sequence 1")
@@ -250,9 +260,7 @@ _APPROVAL_TRANSITIONS: dict[ApprovalStatus, frozenset[ApprovalStatus]] = {
             ApprovalStatus.WITHDRAWN,
         }
     ),
-    ApprovalStatus.APPROVED: frozenset(
-        {ApprovalStatus.REVOKED, ApprovalStatus.SUPERSEDED}
-    ),
+    ApprovalStatus.APPROVED: frozenset({ApprovalStatus.REVOKED, ApprovalStatus.SUPERSEDED}),
     ApprovalStatus.CHANGES_REQUESTED: frozenset(),
     ApprovalStatus.REJECTED: frozenset(),
     ApprovalStatus.WITHDRAWN: frozenset(),
@@ -271,15 +279,17 @@ class ApprovalRevision:
     superseded_by: ApprovalId | None = None
 
     def __post_init__(self) -> None:
-        if self.sequence < 1:
-            raise InvalidApprovalError("an approval revision sequence must be positive")
+        if isinstance(self.sequence, bool) or not isinstance(self.sequence, int) or self.sequence < 1:
+            raise InvalidApprovalError("an approval revision sequence must be a positive integer")
+        if not isinstance(self.status, ApprovalStatus):
+            raise InvalidApprovalError("an approval revision requires a valid status")
+        if self.note is not None and not isinstance(self.note, ReviewNote):
+            raise InvalidApprovalError("an approval revision note must be a review note")
         if self.status is ApprovalStatus.SUPERSEDED:
-            if self.superseded_by is None:
+            if not isinstance(self.superseded_by, ApprovalId):
                 raise InvalidApprovalError("a superseded approval requires a replacement ID")
         elif self.superseded_by is not None:
-            raise InvalidApprovalError(
-                "only a superseded approval revision may name a replacement"
-            )
+            raise InvalidApprovalError("only a superseded approval revision may name a replacement")
 
 
 @dataclass(frozen=True, slots=True)
@@ -291,8 +301,15 @@ class Approval:
     history: tuple[ApprovalRevision, ...]
 
     def __post_init__(self) -> None:
-        if not self.history:
-            raise InvalidApprovalError("an approval history cannot be empty")
+        if not isinstance(self.id, ApprovalId):
+            raise InvalidApprovalError("an approval requires a typed approval ID")
+        if not isinstance(self.subject, ApprovalSubject):
+            raise InvalidApprovalError("an approval requires an approval subject")
+        if not isinstance(self.history, tuple) or not self.history:
+            raise InvalidApprovalError("an approval history must be a non-empty tuple")
+        if any(not isinstance(revision, ApprovalRevision) for revision in self.history):
+            raise InvalidApprovalError("an approval history contains an invalid revision")
+
         first = self.history[0]
         if first.sequence != 1 or first.status is not ApprovalStatus.PENDING:
             raise InvalidApprovalError("an approval history must begin with pending sequence 1")
