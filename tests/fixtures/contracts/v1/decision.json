@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "kind": "decision",
+  "id": "decision-isometric-camera",
+  "title": "Use an isometric camera",
+  "history": [
+    {
+      "sequence": 1,
+      "status": "proposed",
+      "note": "Initial production direction."
+    }
+  ]
+}
