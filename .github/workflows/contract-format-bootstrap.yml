@@ -1,0 +1,45 @@
+name: Contract Format Bootstrap
+
+on:
+  push:
+    branches:
+      - agent/json-schema-publication
+
+permissions:
+  contents: write
+
+jobs:
+  format:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out branch
+        uses: actions/checkout@v7
+        with:
+          ref: agent/json-schema-publication
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+
+      - name: Set up Python
+        run: uv python install 3.12
+
+      - name: Install project
+        run: uv sync --all-extras
+
+      - name: Format contract sources
+        run: uv run ruff format src/ludowright/contracts tests/test_contract_schemas.py
+
+      - name: Commit formatting
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/ludowright/contracts tests/test_contract_schemas.py
+          if git diff --cached --quiet; then
+            echo "Formatting is already current."
+          else
+            git commit -m "Format contract publication sources"
+            git push origin HEAD:agent/json-schema-publication
+          fi
