@@ -1,0 +1,171 @@
+{
+  "$defs": {
+    "ApprovalRevisionContract": {
+      "additionalProperties": false,
+      "properties": {
+        "note": {
+          "anyOf": [
+            {
+              "maxLength": 4000,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Note"
+        },
+        "sequence": {
+          "minimum": 1,
+          "title": "Sequence",
+          "type": "integer"
+        },
+        "status": {
+          "$ref": "#/$defs/ApprovalStatus"
+        },
+        "superseded_by": {
+          "anyOf": [
+            {
+              "maxLength": 80,
+              "minLength": 1,
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Superseded By"
+        }
+      },
+      "required": [
+        "sequence",
+        "status"
+      ],
+      "title": "ApprovalRevisionContract",
+      "type": "object"
+    },
+    "ApprovalStatus": {
+      "description": "Logical states of an approval request for one immutable revision.",
+      "enum": [
+        "pending",
+        "approved",
+        "changes-requested",
+        "rejected",
+        "withdrawn",
+        "revoked",
+        "superseded"
+      ],
+      "title": "ApprovalStatus",
+      "type": "string"
+    },
+    "ApprovalSubjectContract": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "label": {
+          "anyOf": [
+            {
+              "maxLength": 120,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Label"
+        },
+        "revision": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+-]*$",
+          "title": "Revision",
+          "type": "string"
+        },
+        "subject_kind": {
+          "$ref": "#/$defs/ApprovalSubjectKind"
+        }
+      },
+      "required": [
+        "subject_kind",
+        "id",
+        "revision"
+      ],
+      "title": "ApprovalSubjectContract",
+      "type": "object"
+    },
+    "ApprovalSubjectKind": {
+      "enum": [
+        "project",
+        "asset",
+        "component",
+        "variant",
+        "asset-state",
+        "reference",
+        "job",
+        "receipt",
+        "review",
+        "capture-profile",
+        "capture-view",
+        "capture-sheet",
+        "decision",
+        "package"
+      ],
+      "title": "ApprovalSubjectKind",
+      "type": "string"
+    }
+  },
+  "$id": "https://schemas.ludowright.dev/v1/approval.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "history": {
+      "items": {
+        "$ref": "#/$defs/ApprovalRevisionContract"
+      },
+      "minItems": 1,
+      "title": "History",
+      "type": "array"
+    },
+    "id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Id",
+      "type": "string"
+    },
+    "kind": {
+      "const": "approval",
+      "default": "approval",
+      "title": "Kind",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "subject": {
+      "$ref": "#/$defs/ApprovalSubjectContract"
+    }
+  },
+  "required": [
+    "id",
+    "subject",
+    "history"
+  ],
+  "title": "LudoWright Approval",
+  "type": "object"
+}

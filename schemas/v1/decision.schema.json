@@ -1,0 +1,109 @@
+{
+  "$defs": {
+    "DecisionRevisionContract": {
+      "additionalProperties": false,
+      "properties": {
+        "note": {
+          "anyOf": [
+            {
+              "maxLength": 4000,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Note"
+        },
+        "sequence": {
+          "minimum": 1,
+          "title": "Sequence",
+          "type": "integer"
+        },
+        "status": {
+          "$ref": "#/$defs/DecisionStatus"
+        },
+        "superseded_by": {
+          "anyOf": [
+            {
+              "maxLength": 80,
+              "minLength": 1,
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Superseded By"
+        }
+      },
+      "required": [
+        "sequence",
+        "status"
+      ],
+      "title": "DecisionRevisionContract",
+      "type": "object"
+    },
+    "DecisionStatus": {
+      "description": "Logical states of a recorded project decision.",
+      "enum": [
+        "proposed",
+        "accepted",
+        "rejected",
+        "withdrawn",
+        "superseded"
+      ],
+      "title": "DecisionStatus",
+      "type": "string"
+    }
+  },
+  "$id": "https://schemas.ludowright.dev/v1/decision.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "history": {
+      "items": {
+        "$ref": "#/$defs/DecisionRevisionContract"
+      },
+      "minItems": 1,
+      "title": "History",
+      "type": "array"
+    },
+    "id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Id",
+      "type": "string"
+    },
+    "kind": {
+      "const": "decision",
+      "default": "decision",
+      "title": "Kind",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "title": {
+      "maxLength": 120,
+      "minLength": 1,
+      "title": "Title",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "title",
+    "history"
+  ],
+  "title": "LudoWright Decision",
+  "type": "object"
+}

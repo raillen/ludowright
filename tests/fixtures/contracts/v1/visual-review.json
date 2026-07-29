@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "kind": "visual-review",
+  "id": "review-maya-front-1",
+  "receipt_id": "receipt-maya-front-1",
+  "outcome": "accepted",
+  "reviewed_reference_ids": [
+    "ref-maya-front-output"
+  ],
+  "approval_id": "approval-maya-front-output"
+}

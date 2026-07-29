@@ -50,6 +50,7 @@ def test_quality_dry_run_json_contract() -> None:
     assert [check["name"] for check in payload["checks"]] == [
         "pre-commit",
         "tests",
+        "schema-publication",
         "documentation",
         "dependency-audit",
     ]

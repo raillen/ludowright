@@ -1,0 +1,181 @@
+{
+  "$defs": {
+    "ReferenceRole": {
+      "description": "Production purpose served by a visual reference.",
+      "enum": [
+        "identity",
+        "silhouette",
+        "proportion",
+        "construction",
+        "material",
+        "color",
+        "style",
+        "context",
+        "negative",
+        "output",
+        "other"
+      ],
+      "title": "ReferenceRole",
+      "type": "string"
+    },
+    "ReferenceTargetContract": {
+      "additionalProperties": false,
+      "properties": {
+        "asset_id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Asset Id",
+          "type": "string"
+        },
+        "component_id": {
+          "anyOf": [
+            {
+              "maxLength": 80,
+              "minLength": 1,
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Component Id"
+        },
+        "state_id": {
+          "anyOf": [
+            {
+              "maxLength": 80,
+              "minLength": 1,
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "State Id"
+        },
+        "variant_id": {
+          "anyOf": [
+            {
+              "maxLength": 80,
+              "minLength": 1,
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Variant Id"
+        }
+      },
+      "required": [
+        "asset_id"
+      ],
+      "title": "ReferenceTargetContract",
+      "type": "object"
+    }
+  },
+  "$id": "https://schemas.ludowright.dev/v1/visual-job.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "expected_output_count": {
+      "maximum": 64,
+      "minimum": 1,
+      "title": "Expected Output Count",
+      "type": "integer"
+    },
+    "id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Id",
+      "type": "string"
+    },
+    "input_reference_ids": {
+      "items": {
+        "maxLength": 80,
+        "minLength": 1,
+        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+        "type": "string"
+      },
+      "title": "Input Reference Ids",
+      "type": "array"
+    },
+    "kind": {
+      "const": "visual-job",
+      "default": "visual-job",
+      "title": "Kind",
+      "type": "string"
+    },
+    "name": {
+      "maxLength": 120,
+      "minLength": 1,
+      "title": "Name",
+      "type": "string"
+    },
+    "output_roles": {
+      "items": {
+        "$ref": "#/$defs/ReferenceRole"
+      },
+      "minItems": 1,
+      "title": "Output Roles",
+      "type": "array"
+    },
+    "profile_version": {
+      "maximum": 2147483647,
+      "minimum": 1,
+      "title": "Profile Version",
+      "type": "integer"
+    },
+    "request_revision": {
+      "maxLength": 128,
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+-]*$",
+      "title": "Request Revision",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "supersedes": {
+      "anyOf": [
+        {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Supersedes"
+    },
+    "target": {
+      "$ref": "#/$defs/ReferenceTargetContract"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "target",
+    "profile_version",
+    "request_revision",
+    "input_reference_ids",
+    "output_roles",
+    "expected_output_count"
+  ],
+  "title": "LudoWright Visual Job",
+  "type": "object"
+}

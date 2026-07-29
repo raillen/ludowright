@@ -1,0 +1,60 @@
+{
+  "json_schema_draft": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": 1,
+  "schemas": [
+    {
+      "file": "project.schema.json",
+      "name": "project",
+      "schema_id": "https://schemas.ludowright.dev/v1/project.schema.json",
+      "sha256": "49466fb7b4716bc428ff7e261adffc93f02c9b8c5ae9527e6783f445ada93f62"
+    },
+    {
+      "file": "decision.schema.json",
+      "name": "decision",
+      "schema_id": "https://schemas.ludowright.dev/v1/decision.schema.json",
+      "sha256": "7d740dcbf7004b086601ecf70c541e0c579d1639ae7be2bd1420e394934c5487"
+    },
+    {
+      "file": "approval.schema.json",
+      "name": "approval",
+      "schema_id": "https://schemas.ludowright.dev/v1/approval.schema.json",
+      "sha256": "a0f075e7a012ec16b8e128aeea2730d6d3f603538db2995dcb817b66ee851099"
+    },
+    {
+      "file": "asset.schema.json",
+      "name": "asset",
+      "schema_id": "https://schemas.ludowright.dev/v1/asset.schema.json",
+      "sha256": "164f49cd0db422046bf563826ce0cf4a77aaf086aeec231ae71ce7a8ec013ad6"
+    },
+    {
+      "file": "visual-reference.schema.json",
+      "name": "visual-reference",
+      "schema_id": "https://schemas.ludowright.dev/v1/visual-reference.schema.json",
+      "sha256": "9a554c29cbe88c624bab5e6f4ff36a6bdff51d418284754ab4ed7f6c5ae1e87a"
+    },
+    {
+      "file": "visual-job.schema.json",
+      "name": "visual-job",
+      "schema_id": "https://schemas.ludowright.dev/v1/visual-job.schema.json",
+      "sha256": "3ca6d29c5b426009b163a018f5bcca5d2b1e1496509a6435d89a3d9cf645e8df"
+    },
+    {
+      "file": "generation-receipt.schema.json",
+      "name": "generation-receipt",
+      "schema_id": "https://schemas.ludowright.dev/v1/generation-receipt.schema.json",
+      "sha256": "ec849671eb11f90301a3b917b70f4b02d9f78e0c22283f43205b385e5430afea"
+    },
+    {
+      "file": "visual-review.schema.json",
+      "name": "visual-review",
+      "schema_id": "https://schemas.ludowright.dev/v1/visual-review.schema.json",
+      "sha256": "5ae0906ece620669c923fd37476013fa4dc096039bf8c940804d9e662ae5e2ac"
+    },
+    {
+      "file": "capture-profile.schema.json",
+      "name": "capture-profile",
+      "schema_id": "https://schemas.ludowright.dev/v1/capture-profile.schema.json",
+      "sha256": "6ad7ef46bd2f5b5bc010d6c3f1556e06ca030e628076351d200479a50fc860fb"
+    }
+  ]
+}

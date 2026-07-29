@@ -1,0 +1,295 @@
+{
+  "$defs": {
+    "ReferenceOrigin": {
+      "description": "How a visual reference entered the project.",
+      "enum": [
+        "external",
+        "generated",
+        "captured",
+        "derived"
+      ],
+      "title": "ReferenceOrigin",
+      "type": "string"
+    },
+    "ReferenceProvenanceContract": {
+      "additionalProperties": false,
+      "properties": {
+        "content_revision": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+-]*$",
+          "title": "Content Revision",
+          "type": "string"
+        },
+        "creator": {
+          "anyOf": [
+            {
+              "maxLength": 120,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Creator"
+        },
+        "license_label": {
+          "anyOf": [
+            {
+              "maxLength": 120,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "License Label"
+        },
+        "origin": {
+          "$ref": "#/$defs/ReferenceOrigin"
+        },
+        "parent_reference_ids": {
+          "default": [],
+          "items": {
+            "maxLength": 80,
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "title": "Parent Reference Ids",
+          "type": "array"
+        },
+        "source_job_id": {
+          "anyOf": [
+            {
+              "maxLength": 80,
+              "minLength": 1,
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Job Id"
+        },
+        "source_receipt_id": {
+          "anyOf": [
+            {
+              "maxLength": 80,
+              "minLength": 1,
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Receipt Id"
+        },
+        "source_uri": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 9,
+              "pattern": "^https://",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Uri"
+        }
+      },
+      "required": [
+        "origin",
+        "content_revision"
+      ],
+      "title": "ReferenceProvenanceContract",
+      "type": "object"
+    },
+    "ReferenceRole": {
+      "description": "Production purpose served by a visual reference.",
+      "enum": [
+        "identity",
+        "silhouette",
+        "proportion",
+        "construction",
+        "material",
+        "color",
+        "style",
+        "context",
+        "negative",
+        "output",
+        "other"
+      ],
+      "title": "ReferenceRole",
+      "type": "string"
+    },
+    "ReferenceStatus": {
+      "description": "Catalog status projected from review and approval records.",
+      "enum": [
+        "candidate",
+        "approved",
+        "rejected",
+        "revoked",
+        "superseded",
+        "archived"
+      ],
+      "title": "ReferenceStatus",
+      "type": "string"
+    },
+    "ReferenceTargetContract": {
+      "additionalProperties": false,
+      "properties": {
+        "asset_id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Asset Id",
+          "type": "string"
+        },
+        "component_id": {
+          "anyOf": [
+            {
+              "maxLength": 80,
+              "minLength": 1,
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Component Id"
+        },
+        "state_id": {
+          "anyOf": [
+            {
+              "maxLength": 80,
+              "minLength": 1,
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "State Id"
+        },
+        "variant_id": {
+          "anyOf": [
+            {
+              "maxLength": 80,
+              "minLength": 1,
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Variant Id"
+        }
+      },
+      "required": [
+        "asset_id"
+      ],
+      "title": "ReferenceTargetContract",
+      "type": "object"
+    }
+  },
+  "$id": "https://schemas.ludowright.dev/v1/visual-reference.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "approval_id": {
+      "anyOf": [
+        {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Approval Id"
+    },
+    "id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Id",
+      "type": "string"
+    },
+    "kind": {
+      "const": "visual-reference",
+      "default": "visual-reference",
+      "title": "Kind",
+      "type": "string"
+    },
+    "name": {
+      "maxLength": 120,
+      "minLength": 1,
+      "title": "Name",
+      "type": "string"
+    },
+    "provenance": {
+      "$ref": "#/$defs/ReferenceProvenanceContract"
+    },
+    "role": {
+      "$ref": "#/$defs/ReferenceRole"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "status": {
+      "$ref": "#/$defs/ReferenceStatus",
+      "default": "candidate"
+    },
+    "superseded_by": {
+      "anyOf": [
+        {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Superseded By"
+    },
+    "target": {
+      "$ref": "#/$defs/ReferenceTargetContract"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "target",
+    "role",
+    "provenance"
+  ],
+  "title": "LudoWright Visual Reference",
+  "type": "object"
+}

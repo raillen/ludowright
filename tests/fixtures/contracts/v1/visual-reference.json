@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "kind": "visual-reference",
+  "id": "ref-maya-identity",
+  "name": "Maya Identity Reference",
+  "target": {
+    "asset_id": "chr-maya"
+  },
+  "role": "identity",
+  "provenance": {
+    "origin": "external",
+    "content_revision": "sha256:abc123",
+    "source_uri": "https://example.com/maya-reference.png",
+    "creator": "Example Artist",
+    "license_label": "Licensed Reference"
+  },
+  "status": "candidate"
+}

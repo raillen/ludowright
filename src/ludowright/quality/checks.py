@@ -45,6 +45,10 @@ class CheckResult:
 QUALITY_CHECKS: tuple[CheckSpec, ...] = (
     CheckSpec("pre-commit", ("uv", "run", "pre-commit", "run", "--all-files")),
     CheckSpec("tests", ("uv", "run", "pytest")),
+    CheckSpec(
+        "schema-publication",
+        ("uv", "run", "python", "-m", "ludowright.contracts", "check"),
+    ),
     CheckSpec("documentation", ("uv", "run", "mkdocs", "build", "--strict", "--clean")),
     CheckSpec("dependency-audit", ("uv", "run", "pip-audit")),
 )

@@ -1,0 +1,124 @@
+{
+  "$defs": {
+    "ReceiptStatus": {
+      "description": "Terminal result of one generation attempt.",
+      "enum": [
+        "succeeded",
+        "failed",
+        "cancelled"
+      ],
+      "title": "ReceiptStatus",
+      "type": "string"
+    }
+  },
+  "$id": "https://schemas.ludowright.dev/v1/generation-receipt.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "attempt": {
+      "maximum": 100,
+      "minimum": 1,
+      "title": "Attempt",
+      "type": "integer"
+    },
+    "failure_note": {
+      "anyOf": [
+        {
+          "maxLength": 4000,
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Failure Note"
+    },
+    "id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Id",
+      "type": "string"
+    },
+    "job_id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Job Id",
+      "type": "string"
+    },
+    "kind": {
+      "const": "generation-receipt",
+      "default": "generation-receipt",
+      "title": "Kind",
+      "type": "string"
+    },
+    "model": {
+      "maxLength": 120,
+      "minLength": 1,
+      "title": "Model",
+      "type": "string"
+    },
+    "output_reference_ids": {
+      "default": [],
+      "items": {
+        "maxLength": 80,
+        "minLength": 1,
+        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+        "type": "string"
+      },
+      "title": "Output Reference Ids",
+      "type": "array"
+    },
+    "provider": {
+      "maxLength": 120,
+      "minLength": 1,
+      "title": "Provider",
+      "type": "string"
+    },
+    "request_revision": {
+      "maxLength": 128,
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+-]*$",
+      "title": "Request Revision",
+      "type": "string"
+    },
+    "retry_of": {
+      "anyOf": [
+        {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Retry Of"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "status": {
+      "$ref": "#/$defs/ReceiptStatus"
+    }
+  },
+  "required": [
+    "id",
+    "job_id",
+    "attempt",
+    "status",
+    "provider",
+    "model",
+    "request_revision"
+  ],
+  "title": "LudoWright Generation Receipt",
+  "type": "object"
+}

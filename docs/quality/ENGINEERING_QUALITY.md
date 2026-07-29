@@ -2,7 +2,7 @@
 
 ## Purpose
 
-LudoWright treats tests, documentation, security checks, and package verification as one reproducible quality system.
+LudoWright treats tests, documentation, security checks, generated-contract integrity, and package verification as one reproducible quality system.
 
 The same commands must work for:
 
@@ -53,8 +53,9 @@ The command executes, in order:
 
 1. all pre-commit hooks;
 2. the pytest suite with coverage;
-3. the strict documentation build;
-4. the Python dependency audit.
+3. generated JSON Schema drift verification;
+4. the strict documentation build;
+5. the Python dependency audit.
 
 Inspect the planned commands without executing them:
 
@@ -67,6 +68,33 @@ Use stable machine-readable output:
 ```bash
 uv run ludowright quality check --dry-run --json
 ```
+
+## JSON Schema integrity
+
+Published contracts under `schemas/v1/` are generated from the registry in `src/ludowright/contracts/`.
+
+Regenerate them with:
+
+```bash
+uv run python -m ludowright.contracts publish
+```
+
+Check them without modifying files:
+
+```bash
+uv run python -m ludowright.contracts check
+```
+
+The check fails for:
+
+- a missing generated schema;
+- a generated schema whose checked-in content differs from the canonical model;
+- a stale JSON file that is no longer registered;
+- a missing or changed checksum manifest.
+
+Do not edit generated schemas manually. Fix the contract source and regenerate the complete publication.
+
+Canonical fixtures under `tests/fixtures/contracts/v1/` must remain valid for the supported v1 contracts. Incompatible changes require a new schema version and migration or compatibility guidance.
 
 ## Release gate
 
@@ -127,6 +155,8 @@ Never commit real credentials merely to test detection. Use clearly fake values 
 
 A detected value may be allowlisted only when it is demonstrably non-secret and the reason is reviewable.
 
+Generated schemas, fixtures, source URIs, and contract examples must not contain credentials or private operational URLs.
+
 ## Continuous integration
 
 ### CI workflow
@@ -160,6 +190,8 @@ Do not bypass a check by:
 - deleting or weakening a test without explaining the changed requirement;
 - lowering coverage merely to pass CI;
 - disabling a lint or type rule globally for one local problem;
+- editing a generated schema instead of its source contract;
+- removing an old compatibility fixture to hide an incompatible change;
 - suppressing a vulnerability without risk analysis;
 - marking a suspected credential as safe without verification;
 - removing provenance or approval checks from generated artifacts.

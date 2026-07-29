@@ -32,5 +32,6 @@ repos:
             \.git/.*|
             site/.*|
             htmlcov/.*|
+            schemas/v[0-9]+/manifest\.json|
             \.coverage
           )$

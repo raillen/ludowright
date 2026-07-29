@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "kind": "project",
+  "id": "locadora-2000",
+  "name": "Locadora 2000",
+  "dimensions": "3d",
+  "targets": [
+    {
+      "platform": "windows"
+    }
+  ],
+  "stage": "concept",
+  "lifecycle": "active"
+}

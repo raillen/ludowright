@@ -1,0 +1,198 @@
+{
+  "$defs": {
+    "EngineContract": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "version": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Version"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "EngineContract",
+      "type": "object"
+    },
+    "PlatformFamily": {
+      "description": "Broad target-platform families that remain stable across hardware generations.",
+      "enum": [
+        "windows",
+        "linux",
+        "macos",
+        "web",
+        "android",
+        "ios",
+        "playstation",
+        "xbox",
+        "nintendo",
+        "steam-deck",
+        "xr",
+        "other"
+      ],
+      "title": "PlatformFamily",
+      "type": "string"
+    },
+    "ProjectDimension": {
+      "description": "Primary spatial representation used by the game.",
+      "enum": [
+        "2d",
+        "2.5d",
+        "3d",
+        "mixed"
+      ],
+      "title": "ProjectDimension",
+      "type": "string"
+    },
+    "ProjectLifecycle": {
+      "description": "Operational lifecycle state independent of production stage.",
+      "enum": [
+        "active",
+        "on-hold",
+        "cancelled",
+        "completed",
+        "archived"
+      ],
+      "title": "ProjectLifecycle",
+      "type": "string"
+    },
+    "ProjectStage": {
+      "description": "Current production stage of a game project.",
+      "enum": [
+        "concept",
+        "pre-production",
+        "production",
+        "validation",
+        "released",
+        "post-release"
+      ],
+      "title": "ProjectStage",
+      "type": "string"
+    },
+    "ProjectTargetContract": {
+      "additionalProperties": false,
+      "properties": {
+        "label": {
+          "anyOf": [
+            {
+              "maxLength": 120,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Label"
+        },
+        "platform": {
+          "$ref": "#/$defs/PlatformFamily"
+        }
+      },
+      "required": [
+        "platform"
+      ],
+      "title": "ProjectTargetContract",
+      "type": "object"
+    }
+  },
+  "$id": "https://schemas.ludowright.dev/v1/project.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "codename": {
+      "anyOf": [
+        {
+          "maxLength": 120,
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Codename"
+    },
+    "dimensions": {
+      "$ref": "#/$defs/ProjectDimension"
+    },
+    "engine": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/EngineContract"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Id",
+      "type": "string"
+    },
+    "kind": {
+      "const": "project",
+      "default": "project",
+      "title": "Kind",
+      "type": "string"
+    },
+    "lifecycle": {
+      "$ref": "#/$defs/ProjectLifecycle",
+      "default": "active"
+    },
+    "name": {
+      "maxLength": 120,
+      "minLength": 1,
+      "title": "Name",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "stage": {
+      "$ref": "#/$defs/ProjectStage",
+      "default": "concept"
+    },
+    "targets": {
+      "items": {
+        "$ref": "#/$defs/ProjectTargetContract"
+      },
+      "minItems": 1,
+      "title": "Targets",
+      "type": "array"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "dimensions",
+    "targets"
+  ],
+  "title": "LudoWright Project",
+  "type": "object"
+}
