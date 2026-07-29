@@ -232,6 +232,14 @@ class GenerationSeries:
                 raise InvalidGenerationReceiptError(
                     "receipt request revision must match the job"
                 )
+            if (
+                receipt.status is ReceiptStatus.SUCCEEDED
+                and len(receipt.output_reference_ids)
+                != self.job.expected_output_count
+            ):
+                raise InvalidGenerationReceiptError(
+                    "successful receipt output count must match the job"
+                )
             if receipt.attempt != expected_attempt:
                 raise InvalidGenerationReceiptError(
                     "generation receipt attempts must be contiguous"
@@ -262,6 +270,30 @@ class GenerationSeries:
         if not isinstance(receipt, GenerationReceipt):
             raise InvalidGenerationReceiptError("only a receipt may be appended")
         return type(self)(job=self.job, receipts=(*self.receipts, receipt))
+
+    def validate_review(self, review: VisualReview) -> VisualReview:
+        """Validate that a review names exact outputs from a successful receipt."""
+        if not isinstance(review, VisualReview):
+            raise InvalidVisualReviewError("generation series requires a visual review")
+        receipt = next(
+            (item for item in self.receipts if item.id == review.receipt_id),
+            None,
+        )
+        if receipt is None:
+            raise InvalidVisualReviewError(
+                "visual review receipt does not belong to the generation series"
+            )
+        if receipt.status is not ReceiptStatus.SUCCEEDED:
+            raise InvalidVisualReviewError(
+                "only successful generation outputs may be reviewed"
+            )
+        if not set(review.reviewed_reference_ids).issubset(
+            receipt.output_reference_ids
+        ):
+            raise InvalidVisualReviewError(
+                "visual review references must come from the named receipt"
+            )
+        return review
 
 
 @dataclass(frozen=True, slots=True)
