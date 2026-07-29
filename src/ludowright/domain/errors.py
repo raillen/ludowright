@@ -27,6 +27,10 @@ class InvalidProjectTransitionError(InvalidProjectError):
     """Raised when a project stage or lifecycle transition is not allowed."""
 
 
+class InvalidReviewNoteError(DomainValidationError):
+    """Raised when a decision or approval note is not canonical or safe."""
+
+
 class InvalidDecisionError(DomainValidationError):
     """Raised when a decision or its immutable history is invalid."""
 
