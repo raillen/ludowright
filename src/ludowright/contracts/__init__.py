@@ -7,7 +7,7 @@ from ludowright.contracts.asset_taxonomy import (
     AssetSubtypeDefinitionContract,
     AssetTaxonomyContract,
 )
-from ludowright.contracts.assets import AssetContract
+from ludowright.contracts.assets import AssetContract, AssetRegistryContract
 from ludowright.contracts.atlas import (
     AtlasBrokenLinkContract,
     AtlasDocumentMetadataContract,
@@ -95,6 +95,7 @@ __all__ = [
     "AssetFamilyDefinitionContract",
     "AssetNamingPolicyContract",
     "AssetNamingRuleContract",
+    "AssetRegistryContract",
     "AssetSubtypeDefinitionContract",
     "AssetTaxonomyContract",
     "AtlasBrokenLinkContract",

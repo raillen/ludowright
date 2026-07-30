@@ -27,6 +27,12 @@
       "sha256": "164f49cd0db422046bf563826ce0cf4a77aaf086aeec231ae71ce7a8ec013ad6"
     },
     {
+      "file": "asset-registry.schema.json",
+      "name": "asset-registry",
+      "schema_id": "https://schemas.ludowright.dev/v1/asset-registry.schema.json",
+      "sha256": "a3f6cd9d10a04bfeac60aade4bb48b187f48ea63e119e191accc0a7bb12f52fd"
+    },
+    {
       "file": "asset-taxonomy.schema.json",
       "name": "asset-taxonomy",
       "schema_id": "https://schemas.ludowright.dev/v1/asset-taxonomy.schema.json",
@@ -120,7 +126,7 @@
       "file": "cli-response.schema.json",
       "name": "cli-response",
       "schema_id": "https://schemas.ludowright.dev/v1/cli-response.schema.json",
-      "sha256": "d0e785c309b48a84aa8752bbdfc3e261d0c2040fde345c870f670d3e237997cd"
+      "sha256": "0820099ed1f3c267c8c32757108642cac4349ec2ddb3124c5e48210379d764b2"
     },
     {
       "file": "interview-questionnaire.schema.json",
