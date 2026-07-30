@@ -1,0 +1,162 @@
+{
+  "families": [
+    {
+      "description": "Motion, pose, and animation-reference work.",
+      "family": "animation",
+      "label": "Animation",
+      "subtypes": [
+        {"description": "A reusable locomotion or movement set.", "id": "locomotion", "label": "Locomotion"},
+        {"description": "A reusable interaction or action set.", "id": "motion-set", "label": "Motion set"}
+      ]
+    },
+    {
+      "description": "Built structures, facades, interiors, and modules.",
+      "family": "architecture",
+      "label": "Architecture",
+      "subtypes": [
+        {"description": "A building or structural shell.", "id": "building", "label": "Building"},
+        {"description": "A reusable building module.", "id": "modular-building", "label": "Modular building"}
+      ]
+    },
+    {
+      "description": "Sound, music, ambience, and audio production items.",
+      "family": "audio",
+      "label": "Audio",
+      "subtypes": [
+        {"description": "A composed music item.", "id": "music", "label": "Music"},
+        {"description": "A discrete sound effect.", "id": "sound-effect", "label": "Sound effect"}
+      ]
+    },
+    {
+      "description": "Playable, non-player, or background humanoid characters.",
+      "family": "character",
+      "label": "Character",
+      "subtypes": [
+        {"description": "A human or humanoid body base.", "id": "humanoid", "label": "Humanoid"},
+        {"description": "A wearable garment or outfit expression.", "id": "wearable", "label": "Wearable"}
+      ]
+    },
+    {
+      "description": "Animals, monsters, and other living non-humanoid subjects.",
+      "family": "creature",
+      "label": "Creature",
+      "subtypes": [
+        {"description": "A fantasy or otherwise non-real creature.", "id": "fantasy-creature", "label": "Fantasy creature"},
+        {"description": "A quadruped animal or creature.", "id": "quadruped", "label": "Quadruped"}
+      ]
+    },
+    {
+      "description": "Large spaces, scenes, and environment-level items.",
+      "family": "environment",
+      "label": "Environment",
+      "subtypes": [
+        {"description": "An interior or room-scale environment.", "id": "interior", "label": "Interior"},
+        {"description": "A reusable modular environment segment.", "id": "modular-environment", "label": "Modular environment"}
+      ]
+    },
+    {
+      "description": "Surface and shader material definitions.",
+      "family": "material",
+      "label": "Material",
+      "subtypes": [
+        {"description": "A fabric or cloth surface.", "id": "fabric", "label": "Fabric"},
+        {"description": "A metal surface.", "id": "metal", "label": "Metal"},
+        {"description": "A wood surface.", "id": "wood", "label": "Wood"}
+      ]
+    },
+    {
+      "description": "Project-specific families outside the stable catalog.",
+      "family": "other",
+      "label": "Other",
+      "subtypes": [
+        {"description": "A project-defined subtype with explicit context.", "id": "custom", "label": "Custom"}
+      ]
+    },
+    {
+      "description": "Handheld, interactive, decorative, and gameplay props.",
+      "family": "prop",
+      "label": "Prop",
+      "subtypes": [
+        {"description": "A container, cabinet, or storage object.", "id": "container", "label": "Container"},
+        {"description": "A handheld tool or object.", "id": "handheld-tool", "label": "Handheld tool"}
+      ]
+    },
+    {
+      "description": "Ground, road, water, and other terrain items.",
+      "family": "terrain",
+      "label": "Terrain",
+      "subtypes": [
+        {"description": "A walkable or buildable ground surface.", "id": "ground", "label": "Ground"},
+        {"description": "A road, path, or traversal surface.", "id": "road", "label": "Road"}
+      ]
+    },
+    {
+      "description": "Texture maps and image-based surface inputs.",
+      "family": "texture",
+      "label": "Texture",
+      "subtypes": [
+        {"description": "A texture set tied to one asset surface.", "id": "asset-texture", "label": "Asset texture"},
+        {"description": "A reusable tileable texture set.", "id": "tileable-texture", "label": "Tileable texture"}
+      ]
+    },
+    {
+      "description": "Interface screens, controls, icons, and HUD elements.",
+      "family": "ui",
+      "label": "UI",
+      "subtypes": [
+        {"description": "A compact interface icon.", "id": "interface-icon", "label": "Interface icon"},
+        {"description": "A menu, panel, or interactive screen.", "id": "menu", "label": "Menu"}
+      ]
+    },
+    {
+      "description": "Trees, plants, foliage, and other vegetation.",
+      "family": "vegetation",
+      "label": "Vegetation",
+      "subtypes": [
+        {"description": "A large tree or tree-like plant.", "id": "large-tree", "label": "Large tree"},
+        {"description": "A small plant, shrub, or foliage cluster.", "id": "plant", "label": "Plant"}
+      ]
+    },
+    {
+      "description": "Vehicles and reusable mechanical or visual parts.",
+      "family": "vehicle",
+      "label": "Vehicle",
+      "subtypes": [
+        {"description": "A land, water, or air vehicle.", "id": "vehicle", "label": "Vehicle"},
+        {"description": "A wheel, engine, or other vehicle part.", "id": "vehicle-part", "label": "Vehicle part"}
+      ]
+    },
+    {
+      "description": "Visual effects, particles, shaders, and screen effects.",
+      "family": "vfx",
+      "label": "VFX",
+      "subtypes": [
+        {"description": "A particle or animated effect.", "id": "particle-effect", "label": "Particle effect"},
+        {"description": "A shader or screen-space effect.", "id": "shader-effect", "label": "Shader effect"}
+      ]
+    }
+  ],
+  "kind": "asset-taxonomy",
+  "naming_policy": {
+    "asset_id_format": "{prefix}-{slug}",
+    "rules": [
+      {"family": "animation", "prefix": "anim"},
+      {"family": "architecture", "prefix": "arch"},
+      {"family": "audio", "prefix": "aud"},
+      {"family": "character", "prefix": "chr"},
+      {"family": "creature", "prefix": "cre"},
+      {"family": "environment", "prefix": "env"},
+      {"family": "material", "prefix": "mat"},
+      {"family": "other", "prefix": "asset"},
+      {"family": "prop", "prefix": "prop"},
+      {"family": "terrain", "prefix": "ter"},
+      {"family": "texture", "prefix": "tex"},
+      {"family": "ui", "prefix": "ui"},
+      {"family": "vegetation", "prefix": "veg"},
+      {"family": "vehicle", "prefix": "veh"},
+      {"family": "vfx", "prefix": "vfx"}
+    ]
+  },
+  "schema_version": 1,
+  "version": 1
+}

@@ -1,5 +1,12 @@
 """Versioned serialization contracts and JSON Schema publication."""
 
+from ludowright.contracts.asset_taxonomy import (
+    AssetFamilyDefinitionContract,
+    AssetNamingPolicyContract,
+    AssetNamingRuleContract,
+    AssetSubtypeDefinitionContract,
+    AssetTaxonomyContract,
+)
 from ludowright.contracts.assets import AssetContract
 from ludowright.contracts.atlas import (
     AtlasBrokenLinkContract,
@@ -85,6 +92,11 @@ __all__ = [
     "AnswerRecordContract",
     "ApprovalContract",
     "AssetContract",
+    "AssetFamilyDefinitionContract",
+    "AssetNamingPolicyContract",
+    "AssetNamingRuleContract",
+    "AssetSubtypeDefinitionContract",
+    "AssetTaxonomyContract",
     "AtlasBrokenLinkContract",
     "AtlasDocumentMetadataContract",
     "AtlasLinkContract",

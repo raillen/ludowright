@@ -5,6 +5,11 @@
   "schema_version": 1,
   "topics": [
     {
+      "canonical_source": "contracts/ASSET_TAXONOMY.md",
+      "id": "asset-taxonomy",
+      "title": "Asset taxonomy contract"
+    },
+    {
       "canonical_source": "contracts/CLI.md",
       "id": "cli-contract",
       "title": "CLI contract"

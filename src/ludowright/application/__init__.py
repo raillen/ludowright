@@ -1,5 +1,11 @@
 """Application use cases for LudoWright workflows."""
 
+from ludowright.application.asset_taxonomy import (
+    AssetTaxonomy,
+    AssetTaxonomyError,
+    AssetTaxonomyValidationError,
+    load_asset_taxonomy,
+)
 from ludowright.application.atlas import (
     AtlasGeneration,
     AtlasGenerationError,
@@ -37,6 +43,9 @@ from ludowright.application.interviews import (
 )
 
 __all__ = [
+    "AssetTaxonomy",
+    "AssetTaxonomyError",
+    "AssetTaxonomyValidationError",
     "AtlasGeneration",
     "AtlasGenerationError",
     "AtlasGenerator",
@@ -59,6 +68,7 @@ __all__ = [
     "InterviewService",
     "InterviewView",
     "RenderedDocument",
+    "load_asset_taxonomy",
     "load_document_template_manifest",
     "render_atlas_markdown",
     "render_documentation_audit",

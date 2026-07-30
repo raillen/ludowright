@@ -43,7 +43,9 @@ interface-icon
 
 The `other` family requires a subtype. Other families may use a subtype when more precision is useful.
 
-A subtype is classification data, not a second asset ID.
+A subtype is classification data, not a second asset ID. The initial canonical
+subtype catalog and family naming prefixes live in
+[`ASSET_TAXONOMY.md`](ASSET_TAXONOMY.md).
 
 ## Priority
 
@@ -222,4 +224,5 @@ This contract does not yet define:
 - ODS rows;
 - persisted YAML or JSON shapes.
 
-Those capabilities will reference the asset aggregate rather than expanding it into an all-purpose production object.
+Those capabilities will reference the asset aggregate rather than expanding it into an all-purpose production object. Registry persistence and
+project-specific taxonomy extensions remain later asset-registry work.

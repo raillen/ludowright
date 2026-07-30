@@ -1,0 +1,181 @@
+{
+  "$defs": {
+    "AssetFamily": {
+      "description": "Stable top-level production families.",
+      "enum": [
+        "character",
+        "creature",
+        "environment",
+        "architecture",
+        "prop",
+        "vehicle",
+        "vegetation",
+        "terrain",
+        "material",
+        "texture",
+        "animation",
+        "ui",
+        "vfx",
+        "audio",
+        "other"
+      ],
+      "title": "AssetFamily",
+      "type": "string"
+    },
+    "AssetFamilyDefinitionContract": {
+      "additionalProperties": false,
+      "description": "One stable family and its initial subtype catalog.",
+      "properties": {
+        "description": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Description",
+          "type": "string"
+        },
+        "family": {
+          "$ref": "#/$defs/AssetFamily"
+        },
+        "label": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Label",
+          "type": "string"
+        },
+        "subtypes": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/AssetSubtypeDefinitionContract"
+          },
+          "title": "Subtypes",
+          "type": "array"
+        }
+      },
+      "required": [
+        "family",
+        "label",
+        "description"
+      ],
+      "title": "AssetFamilyDefinitionContract",
+      "type": "object"
+    },
+    "AssetNamingPolicyContract": {
+      "additionalProperties": false,
+      "description": "Data-defined naming policy for asset identifiers.",
+      "properties": {
+        "asset_id_format": {
+          "const": "{prefix}-{slug}",
+          "default": "{prefix}-{slug}",
+          "title": "Asset Id Format",
+          "type": "string"
+        },
+        "rules": {
+          "items": {
+            "$ref": "#/$defs/AssetNamingRuleContract"
+          },
+          "title": "Rules",
+          "type": "array"
+        }
+      },
+      "required": [
+        "rules"
+      ],
+      "title": "AssetNamingPolicyContract",
+      "type": "object"
+    },
+    "AssetNamingRuleContract": {
+      "additionalProperties": false,
+      "description": "Naming prefix for one stable asset family.",
+      "properties": {
+        "family": {
+          "$ref": "#/$defs/AssetFamily"
+        },
+        "prefix": {
+          "maxLength": 20,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Prefix",
+          "type": "string"
+        }
+      },
+      "required": [
+        "family",
+        "prefix"
+      ],
+      "title": "AssetNamingRuleContract",
+      "type": "object"
+    },
+    "AssetSubtypeDefinitionContract": {
+      "additionalProperties": false,
+      "description": "One data-defined subtype within an asset family.",
+      "properties": {
+        "description": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Description",
+          "type": "string"
+        },
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "label": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Label",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "label",
+        "description"
+      ],
+      "title": "AssetSubtypeDefinitionContract",
+      "type": "object"
+    }
+  },
+  "$id": "https://schemas.ludowright.dev/v1/asset-taxonomy.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Complete versioned taxonomy catalog shipped with LudoWright.",
+  "properties": {
+    "families": {
+      "items": {
+        "$ref": "#/$defs/AssetFamilyDefinitionContract"
+      },
+      "title": "Families",
+      "type": "array"
+    },
+    "kind": {
+      "const": "asset-taxonomy",
+      "default": "asset-taxonomy",
+      "title": "Kind",
+      "type": "string"
+    },
+    "naming_policy": {
+      "$ref": "#/$defs/AssetNamingPolicyContract"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "version": {
+      "maximum": 2147483647,
+      "minimum": 1,
+      "title": "Version",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "version",
+    "families",
+    "naming_policy"
+  ],
+  "title": "LudoWright Asset Taxonomy",
+  "type": "object"
+}

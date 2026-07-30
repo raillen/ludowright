@@ -29,6 +29,7 @@ This is the main navigation map for humans and agents. Each subject should have 
 - [`contracts/PROJECT_DOMAIN.md`](contracts/PROJECT_DOMAIN.md) — project identity, dimensions, targets, engine, production stage, lifecycle, and transition invariants.
 - [`contracts/DECISIONS_AND_APPROVALS.md`](contracts/DECISIONS_AND_APPROVALS.md) — decision states, revision-bound approval states, immutable logical histories, and superseding relationships.
 - [`contracts/ASSET_DOMAIN.md`](contracts/ASSET_DOMAIN.md) — asset families, subtypes, ownership, decomposition, hierarchy, priority, status, and completion rules.
+- [`contracts/ASSET_TAXONOMY.md`](contracts/ASSET_TAXONOMY.md) — versioned family/subtype data, naming prefixes, validation boundaries, and compatibility.
 - [`contracts/REFERENCES_AND_VISUAL_JOBS.md`](contracts/REFERENCES_AND_VISUAL_JOBS.md) — visual provenance, revision-bound references, immutable generation jobs, attempt receipts, retries, and reviews.
 - [`contracts/CAPTURE_PROFILES.md`](contracts/CAPTURE_PROFILES.md) — camera, background, lighting, validation, required views, isolated items, technical sheets, and exact versioned inheritance.
 - [`contracts/JSON_SCHEMAS.md`](contracts/JSON_SCHEMAS.md) — generated Draft 2020-12 schemas, registry, fixtures, checksums, drift checking, and compatibility policy.
@@ -66,6 +67,10 @@ bounded, read-only Markdown access. The `atlas` command is registered in
 The `docs audit` command shares the same CLI envelope and participates in the
 quality gate with `--check`.
 
+The initial asset taxonomy is loaded by
+`src/ludowright/application/asset_taxonomy.py` from versioned JSON data under
+`src/ludowright/taxonomy_data/`.
+
 ## Codex integration
 
 Planned documents:
@@ -86,7 +91,7 @@ Planned documents:
 Planned detailed documents:
 
 - visual bible schema;
-- asset-family taxonomy;
+- asset decomposition and registry taxonomy extensions;
 - segmented character references;
 - garments and props;
 - creatures, vehicles, architecture, foliage, UI, VFX, and modular kits;
@@ -166,6 +171,7 @@ Planned operational documents:
 - [`decisions/0018-deterministic-atlas-index-and-integrity.md`](decisions/0018-deterministic-atlas-index-and-integrity.md) — accepted canonical-source metadata, offline link checks, orphan detection, and read-only generation.
 - [`decisions/0019-incremental-document-refresh.md`](decisions/0019-incremental-document-refresh.md) — accepted source-hash planning, generated/manual boundaries, and rollback-coordinated persistence.
 - [`decisions/0020-deterministic-documentation-audit.md`](decisions/0020-deterministic-documentation-audit.md) — accepted declarative policy, explicit contradiction rules, stale-reference findings, and read-only audit behavior.
+- [`decisions/0021-data-driven-asset-taxonomy.md`](decisions/0021-data-driven-asset-taxonomy.md) — accepted versioned taxonomy data, family naming prefixes, and validation boundaries.
 - [`decisions/0013-versioned-acyclic-dependency-invalidation-graph.md`](decisions/0013-versioned-acyclic-dependency-invalidation-graph.md) — accepted typed revision-aware DAG dependencies, stale and review propagation, persisted impact paths, safe refresh, and canonical JSON persistence.
 - [`decisions/0012-explicit-backed-up-schema-migrations.md`](decisions/0012-explicit-backed-up-schema-migrations.md) — accepted explicit contiguous migration plans, dry runs, durable SQLite backups, strict receipts, transactional apply, and guarded rollback.
 - [`decisions/0011-rebuildable-sqlite-state-index.md`](decisions/0011-rebuildable-sqlite-state-index.md) — accepted SQLite as a rebuildable derived index with WAL, strict short transactions, source digests, event checkpoints, and explicit consistency states.

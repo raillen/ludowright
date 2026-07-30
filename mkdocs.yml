@@ -23,6 +23,7 @@ nav:
       - Project Domain: contracts/PROJECT_DOMAIN.md
       - Decisions and Approvals: contracts/DECISIONS_AND_APPROVALS.md
       - Asset Domain: contracts/ASSET_DOMAIN.md
+      - Asset Taxonomy: contracts/ASSET_TAXONOMY.md
       - References and Visual Jobs: contracts/REFERENCES_AND_VISUAL_JOBS.md
       - Capture Profiles: contracts/CAPTURE_PROFILES.md
       - JSON Schema Publication: contracts/JSON_SCHEMAS.md
@@ -69,6 +70,7 @@ nav:
       - ADR 0018 — Deterministic ATLAS: decisions/0018-deterministic-atlas-index-and-integrity.md
       - ADR 0019 — Incremental Document Refresh: decisions/0019-incremental-document-refresh.md
       - ADR 0020 — Deterministic Documentation Audit: decisions/0020-deterministic-documentation-audit.md
+      - ADR 0021 — Data-Driven Asset Taxonomy: decisions/0021-data-driven-asset-taxonomy.md
       - ADR Template: decisions/0000-template.md
   - Operations:
       - Documentation Site: operations/DOCUMENTATION_SITE.md
