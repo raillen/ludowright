@@ -1,0 +1,59 @@
+{
+  "$id": "https://schemas.ludowright.dev/v1/document-template.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Metadata needed to load one deterministic Jinja document template.",
+  "properties": {
+    "entrypoint": {
+      "maxLength": 1024,
+      "minLength": 1,
+      "pattern": "^[a-z0-9._-]+(?:/[a-z0-9._-]+)*$",
+      "title": "Entrypoint",
+      "type": "string"
+    },
+    "files": {
+      "items": {
+        "maxLength": 1024,
+        "minLength": 1,
+        "pattern": "^[a-z0-9._-]+(?:/[a-z0-9._-]+)*$",
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Files",
+      "type": "array"
+    },
+    "id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Id",
+      "type": "string"
+    },
+    "kind": {
+      "const": "document-template",
+      "default": "document-template",
+      "title": "Kind",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "version": {
+      "maximum": 2147483647,
+      "minimum": 1,
+      "title": "Version",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "id",
+    "version",
+    "entrypoint",
+    "files"
+  ],
+  "title": "LudoWright Document Template",
+  "type": "object"
+}

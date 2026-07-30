@@ -1,0 +1,9 @@
+{% extends "base.md.jinja" %}
+{% block document -%}
+{{ super() }}
+{% for section in sections %}
+## {{ section.title }}
+
+{{ section.body }}
+{% endfor %}
+{%- endblock document %}

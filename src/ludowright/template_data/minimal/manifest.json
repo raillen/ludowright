@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "kind": "document-template",
+  "id": "minimal",
+  "version": 1,
+  "entrypoint": "document.md.jinja",
+  "files": [
+    "base.md.jinja",
+    "document.md.jinja"
+  ]
+}

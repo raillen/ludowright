@@ -2,7 +2,7 @@
   "schema_version": 1,
   "kind": "interview-session",
   "id": "first-session",
-  "questionnaire_digest": "f3b096d63c39322171cdab39ecbcf8e7cb41cebaf38b56e2a0f031a160c6a2e1",
+  "questionnaire_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
   "questionnaire": {
     "schema_version": 1,
     "kind": "interview-questionnaire",

@@ -187,6 +187,10 @@ Status: implemented in the current slice. Sessions are canonical JSON snapshots 
 
 ### PR 25 — Document template engine
 
+Status: implemented in the current slice. The engine publishes a versioned
+minimal Jinja template, supports allow-listed inheritance and project-local
+overrides, and returns deterministic Markdown without persisting it.
+
 - Jinja2 environment;
 - template inheritance;
 - project overrides;
