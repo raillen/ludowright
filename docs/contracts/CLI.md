@@ -137,6 +137,7 @@ Initial stable error codes are:
 | `checks-failed` | One or more requested verification checks failed |
 | `invalid-input` | A parsed value violates a canonical domain contract |
 | `project-not-found` | A command requires a project but none can be discovered |
+| `resource-not-found` | A requested project resource, such as an asset, does not exist |
 | `conflict` | Optimistic concurrency or another explicit state conflict occurred |
 | `corrupt-state` | Persisted project state cannot be safely parsed or replayed |
 | `blocked` | A known prerequisite prevents the requested operation |
@@ -169,6 +170,7 @@ Parser-level usage errors are produced by Typer and Click before a command callb
 The shared runtime maps known failures without hiding unexpected programming defects:
 
 - project root discovery failure → `project-not-found`, exit 3;
+- missing asset resource → `resource-not-found`, exit 3;
 - structured-document conflict → `conflict`, exit 5;
 - corrupt event log, state store, or structured document → `corrupt-state`, exit 6;
 - domain validation error → `invalid-input`, exit 4;
@@ -285,3 +287,8 @@ inside the same envelope. Its data contains the schema version, dry-run flag,
 affected and refreshed document IDs, and deterministic per-document plans.
 Expected request and marker validation failures use `invalid-input` with exit
 code 4; rollback failures use `corrupt-state` with exit code 6.
+
+The `assets` command group returns an `asset-registry-report` projection. Its
+canonical registry is YAML, batch import accepts the published registry
+contract, export refuses existing targets, and mutations use the shared event
+log and derived state-store index.

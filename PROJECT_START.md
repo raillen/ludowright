@@ -46,7 +46,7 @@ Development proceeds in this order:
 
 ## Current phase
 
-The repository has completed the foundation and core domain/contract slices. Guided documentation now includes the published v1 questionnaire and session contracts, immutable question/session rules, a resumable `interview` CLI with event-log auditing, a deterministic versioned document template engine, the initial product and architecture document sets, deterministic ATLAS generation with source/link integrity checks, incremental document refresh with source hashes, stale planning, manual-section preservation, rollback, and a declarative documentation audit. The initial data-driven asset taxonomy now covers all stable asset families, subtypes, and naming prefixes; asset registry persistence and commands remain next in `docs/plans/IMPLEMENTATION_PLAN.md`.
+The repository has completed the foundation and core domain/contract slices. Guided documentation now includes the published v1 questionnaire and session contracts, immutable question/session rules, a resumable `interview` CLI with event-log auditing, a deterministic versioned document template engine, the initial product and architecture document sets, deterministic ATLAS generation with source/link integrity checks, incremental document refresh with source hashes, stale planning, manual-section preservation, rollback, and a declarative documentation audit. The initial data-driven asset taxonomy and the v1 YAML asset registry commands are now implemented; document discovery, decomposition, ODS export, and asset audits remain later slices in `docs/plans/IMPLEMENTATION_PLAN.md`.
 
 ## Navigation
 

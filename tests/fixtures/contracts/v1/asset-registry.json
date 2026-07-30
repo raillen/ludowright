@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "kind": "asset-registry",
+  "version": 1,
+  "assets": [
+    {
+      "schema_version": 1,
+      "kind": "asset",
+      "id": "prop-arcade-cabinet",
+      "name": "Arcade Cabinet",
+      "family": "prop",
+      "subtype": "container",
+      "priority": "high",
+      "status": "planned",
+      "components": [
+        {
+          "id": "cabinet-body",
+          "name": "Cabinet Body",
+          "status": "planned",
+          "required": true
+        }
+      ],
+      "states": [
+        {
+          "id": "powered-on",
+          "name": "Powered On",
+          "status": "planned",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

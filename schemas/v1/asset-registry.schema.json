@@ -1,0 +1,372 @@
+{
+  "$defs": {
+    "AssetComponentContract": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "owner": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AssetOwnerContract"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "parent_id": {
+          "anyOf": [
+            {
+              "maxLength": 80,
+              "minLength": 1,
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Parent Id"
+        },
+        "required": {
+          "default": true,
+          "title": "Required",
+          "type": "boolean"
+        },
+        "status": {
+          "$ref": "#/$defs/AssetStatus",
+          "default": "planned"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ],
+      "title": "AssetComponentContract",
+      "type": "object"
+    },
+    "AssetContract": {
+      "additionalProperties": false,
+      "properties": {
+        "components": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/AssetComponentContract"
+          },
+          "title": "Components",
+          "type": "array"
+        },
+        "family": {
+          "$ref": "#/$defs/AssetFamily"
+        },
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "const": "asset",
+          "default": "asset",
+          "title": "Kind",
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "owner": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AssetOwnerContract"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "priority": {
+          "$ref": "#/$defs/AssetPriority",
+          "default": "normal"
+        },
+        "schema_version": {
+          "const": 1,
+          "default": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "states": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/AssetStateContract"
+          },
+          "title": "States",
+          "type": "array"
+        },
+        "status": {
+          "$ref": "#/$defs/AssetStatus",
+          "default": "planned"
+        },
+        "subtype": {
+          "anyOf": [
+            {
+              "maxLength": 80,
+              "minLength": 1,
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Subtype"
+        },
+        "variants": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/AssetVariantContract"
+          },
+          "title": "Variants",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "family"
+      ],
+      "title": "AssetContract",
+      "type": "object"
+    },
+    "AssetFamily": {
+      "description": "Stable top-level production families.",
+      "enum": [
+        "character",
+        "creature",
+        "environment",
+        "architecture",
+        "prop",
+        "vehicle",
+        "vegetation",
+        "terrain",
+        "material",
+        "texture",
+        "animation",
+        "ui",
+        "vfx",
+        "audio",
+        "other"
+      ],
+      "title": "AssetFamily",
+      "type": "string"
+    },
+    "AssetOwnerContract": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/OwnerKind"
+        },
+        "label": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Label",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "label",
+        "kind"
+      ],
+      "title": "AssetOwnerContract",
+      "type": "object"
+    },
+    "AssetPriority": {
+      "description": "Relative production priority, independent of current status.",
+      "enum": [
+        "critical",
+        "high",
+        "normal",
+        "low",
+        "backlog"
+      ],
+      "title": "AssetPriority",
+      "type": "string"
+    },
+    "AssetStateContract": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "owner": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AssetOwnerContract"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "required": {
+          "default": true,
+          "title": "Required",
+          "type": "boolean"
+        },
+        "status": {
+          "$ref": "#/$defs/AssetStatus",
+          "default": "planned"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ],
+      "title": "AssetStateContract",
+      "type": "object"
+    },
+    "AssetStatus": {
+      "description": "Production progress shared by assets and decomposed items.",
+      "enum": [
+        "planned",
+        "specified",
+        "ready",
+        "in-production",
+        "in-review",
+        "completed",
+        "cancelled",
+        "archived"
+      ],
+      "title": "AssetStatus",
+      "type": "string"
+    },
+    "AssetVariantContract": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "owner": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AssetOwnerContract"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "required": {
+          "default": true,
+          "title": "Required",
+          "type": "boolean"
+        },
+        "status": {
+          "$ref": "#/$defs/AssetStatus",
+          "default": "planned"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ],
+      "title": "AssetVariantContract",
+      "type": "object"
+    },
+    "OwnerKind": {
+      "description": "Kind of owner responsible for a production item.",
+      "enum": [
+        "person",
+        "team",
+        "role",
+        "automation"
+      ],
+      "title": "OwnerKind",
+      "type": "string"
+    }
+  },
+  "$id": "https://schemas.ludowright.dev/v1/asset-registry.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Versioned collection persisted by the canonical asset registry.",
+  "properties": {
+    "assets": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/AssetContract"
+      },
+      "title": "Assets",
+      "type": "array"
+    },
+    "kind": {
+      "const": "asset-registry",
+      "default": "asset-registry",
+      "title": "Kind",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "version": {
+      "default": 1,
+      "maximum": 2147483647,
+      "minimum": 1,
+      "title": "Version",
+      "type": "integer"
+    }
+  },
+  "title": "LudoWright Asset Registry",
+  "type": "object"
+}

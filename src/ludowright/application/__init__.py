@@ -1,5 +1,13 @@
 """Application use cases for LudoWright workflows."""
 
+from ludowright.application.asset_registry import (
+    AssetRegistryConflictError,
+    AssetRegistryError,
+    AssetRegistryNotFoundError,
+    AssetRegistryResult,
+    AssetRegistryRollbackError,
+    AssetRegistryService,
+)
 from ludowright.application.asset_taxonomy import (
     AssetTaxonomy,
     AssetTaxonomyError,
@@ -43,6 +51,12 @@ from ludowright.application.interviews import (
 )
 
 __all__ = [
+    "AssetRegistryConflictError",
+    "AssetRegistryError",
+    "AssetRegistryNotFoundError",
+    "AssetRegistryResult",
+    "AssetRegistryRollbackError",
+    "AssetRegistryService",
     "AssetTaxonomy",
     "AssetTaxonomyError",
     "AssetTaxonomyValidationError",

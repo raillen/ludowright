@@ -6,6 +6,7 @@
         "checks-failed",
         "invalid-input",
         "project-not-found",
+        "resource-not-found",
         "conflict",
         "corrupt-state",
         "blocked",

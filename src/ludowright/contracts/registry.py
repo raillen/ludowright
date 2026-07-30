@@ -5,7 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from ludowright.contracts.asset_taxonomy import AssetTaxonomyContract
-from ludowright.contracts.assets import AssetContract
+from ludowright.contracts.assets import AssetContract, AssetRegistryContract
 from ludowright.contracts.atlas import AtlasMetadataContract, AtlasReportContract
 from ludowright.contracts.capture import CaptureProfileContract
 from ludowright.contracts.cli import CliResponseContract
@@ -59,6 +59,12 @@ CONTRACTS: tuple[ContractDefinition, ...] = (
     ContractDefinition("decision", "decision.schema.json", "LudoWright Decision", DecisionContract),
     ContractDefinition("approval", "approval.schema.json", "LudoWright Approval", ApprovalContract),
     ContractDefinition("asset", "asset.schema.json", "LudoWright Asset", AssetContract),
+    ContractDefinition(
+        "asset-registry",
+        "asset-registry.schema.json",
+        "LudoWright Asset Registry",
+        AssetRegistryContract,
+    ),
     ContractDefinition(
         "asset-taxonomy",
         "asset-taxonomy.schema.json",

@@ -29,6 +29,7 @@ class CliErrorCode(StrEnum):
     CHECKS_FAILED = "checks-failed"
     INVALID_INPUT = "invalid-input"
     PROJECT_NOT_FOUND = "project-not-found"
+    RESOURCE_NOT_FOUND = "resource-not-found"
     CONFLICT = "conflict"
     CORRUPT_STATE = "corrupt-state"
     BLOCKED = "blocked"

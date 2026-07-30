@@ -6,7 +6,7 @@ from typing import Literal, Self
 
 from pydantic import model_validator
 
-from ludowright.contracts.common import ContractModel, DisplayText, Slug
+from ludowright.contracts.common import ContractModel, DisplayText, PositiveRevision, Slug
 from ludowright.domain import (
     Asset,
     AssetClassification,
@@ -127,4 +127,20 @@ class AssetContract(ContractModel):
     @model_validator(mode="after")
     def validate_asset(self) -> Self:
         self.to_domain()
+        return self
+
+
+class AssetRegistryContract(ContractModel):
+    """Versioned collection persisted by the canonical asset registry."""
+
+    schema_version: Literal[1] = 1
+    kind: Literal["asset-registry"] = "asset-registry"
+    version: PositiveRevision = 1
+    assets: tuple[AssetContract, ...] = ()
+
+    @model_validator(mode="after")
+    def validate_registry(self) -> Self:
+        asset_ids = tuple(asset.id for asset in self.assets)
+        if len(asset_ids) != len(set(asset_ids)):
+            raise ValueError("asset registry IDs must be unique")
         return self

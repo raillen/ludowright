@@ -268,6 +268,13 @@ asset registry persistence and commands remain in PR32.
 
 ### PR 32 — Asset registry commands
 
+Status: implemented in the current slice. The v1 YAML registry is persisted at
+`assets/registry.yaml`; commands use the existing asset contract and taxonomy,
+append asset events, update the derived SQLite index, support dry-run and
+batch import/export, and roll back canonical bytes after partial failure.
+Dependencies, document discovery, decomposition, and ODS remain separate
+follow-up PRs.
+
 - create, update, list, inspect, archive, and validate assets;
 - batch import and export.
 

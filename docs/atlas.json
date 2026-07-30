@@ -25,6 +25,12 @@
       "title": "ATLAS CLI"
     },
     {
+      "canonical_source": "commands/ASSETS.md",
+      "path": "commands/ASSETS.md",
+      "section": "commands",
+      "title": "Asset Registry CLI"
+    },
+    {
       "canonical_source": "commands/INTERVIEW.md",
       "path": "commands/INTERVIEW.md",
       "section": "commands",
@@ -59,6 +65,12 @@
       "path": "contracts/ASSET_TAXONOMY.md",
       "section": "contracts",
       "title": "Asset Taxonomy Contract"
+    },
+    {
+      "canonical_source": "contracts/ASSET_REGISTRY.md",
+      "path": "contracts/ASSET_REGISTRY.md",
+      "section": "contracts",
+      "title": "Asset Registry Contract"
     },
     {
       "canonical_source": "contracts/CAPTURE_PROFILES.md",
@@ -293,6 +305,12 @@
       "path": "decisions/0021-data-driven-asset-taxonomy.md",
       "section": "decisions",
       "title": "ADR 0021 — Data-Driven Asset Taxonomy"
+    },
+    {
+      "canonical_source": "decisions/0022-versioned-asset-registry-persistence.md",
+      "path": "decisions/0022-versioned-asset-registry-persistence.md",
+      "section": "decisions",
+      "title": "ADR 0022 — Versioned Asset Registry Persistence"
     },
     {
       "canonical_source": "governance/RFC_TEMPLATE.md",
