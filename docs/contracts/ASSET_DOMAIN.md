@@ -13,7 +13,7 @@ It supports visual and non-visual work, including:
 - animation, UI, VFX, and audio;
 - project-specific families through an extensible subtype.
 
-Capture views, prompts, references, generation receipts, file paths, budgets, dependencies, and engine import settings belong to later contracts.
+Capture views, prompts, references, generation receipts, file paths, budgets, dependencies, and engine import settings belong to later contracts. The persisted collection shape is defined separately in [`ASSET_REGISTRY.md`](ASSET_REGISTRY.md).
 
 ## Classification
 
@@ -209,6 +209,14 @@ The asset domain adds:
 
 These follow the universal slug grammar but remain distinct runtime types. A component, variant, state, and owner may share the same slug text without comparing equal.
 
+## Persistence boundary
+
+The v1 project registry is the YAML document at `assets/registry.yaml`. It
+stores a monotonic collection revision and individual v1 asset contracts; it
+does not change the immutable aggregate rules in this document. The registry
+contract, command semantics, rollback behavior, and compatibility policy live
+in [`ASSET_REGISTRY.md`](ASSET_REGISTRY.md).
+
 ## Boundaries
 
 This contract does not yet define:
@@ -222,7 +230,10 @@ This contract does not yet define:
 - filesystem paths;
 - engine import settings;
 - ODS rows;
-- persisted YAML or JSON shapes.
+- asset discovery from documentation;
+- capture-profile recommendations;
+- workbook formatting.
 
-Those capabilities will reference the asset aggregate rather than expanding it into an all-purpose production object. Registry persistence and
-project-specific taxonomy extensions remain later asset-registry work.
+Those capabilities will reference the asset aggregate rather than expanding it
+into an all-purpose production object. Project-specific taxonomy extensions
+remain future asset-registry work.

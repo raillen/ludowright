@@ -29,6 +29,7 @@ It uses JSON Schema Draft 2020-12 and contains:
 | Decision | `decision.schema.json` |
 | Approval | `approval.schema.json` |
 | Asset | `asset.schema.json` |
+| Asset registry | `asset-registry.schema.json` |
 | Visual reference | `visual-reference.schema.json` |
 | Visual job | `visual-job.schema.json` |
 | Generation receipt | `generation-receipt.schema.json` |

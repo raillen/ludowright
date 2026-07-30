@@ -37,9 +37,9 @@ subtype catalog and family prefix. It does not replace `AssetId` or
 ## Compatibility and scope
 
 This slice adds a v1 catalog contract and packaged data; it does not change the
-persisted `asset` contract, add registry commands, or persist project-specific
-taxonomy overrides. Registry repositories and user-facing asset commands are
-the scope of the following asset-registry PRs.
+persisted `asset` contract, or persist project-specific taxonomy overrides.
+The v1 registry shape and user-facing commands are defined in
+[`ASSET_REGISTRY.md`](ASSET_REGISTRY.md).
 
 Loading is local-first, performs no network access, and computes a SHA-256
 source digest for provenance.

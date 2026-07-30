@@ -30,10 +30,12 @@ The repository currently establishes:
 - deterministic documentation audits for required topics, duplicate sources,
   explicit contradiction rules, and stale references.
 - a versioned data-driven asset taxonomy with subtype catalogs and naming policy.
+- a versioned YAML asset registry with safe CRUD, validation, batch import/export,
+  event auditing, and derived SQLite indexing.
 
-Project initialization, interview-context orchestration, asset planning,
-capture profiles, ImageGen execution, review workflows, technical sheets, and
-package generation remain planned work.
+Project initialization, interview-context orchestration, asset discovery and
+decomposition, capture profiles, ImageGen execution, review workflows,
+technical sheets, and package generation remain planned work.
 
 ## Start here
 

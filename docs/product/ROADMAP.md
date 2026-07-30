@@ -46,6 +46,8 @@ assembly from interview answers remains a later bounded capability.
 
 - canonical asset taxonomy and schema;
 - data-defined initial families, subtypes, and naming policy;
+- versioned YAML asset registry with create, update, list, inspect, archive, and validate commands;
+- deterministic batch import/export with dry-run and rollback behavior;
 - discovery from game documentation;
 - manual and guided asset creation;
 - components, variants, states, dependencies, priorities, and ownership;
