@@ -1,0 +1,178 @@
+{
+  "$defs": {
+    "DocumentationContradictionRuleContract": {
+      "additionalProperties": false,
+      "description": "Two phrases that must not both be present in their named documents.",
+      "properties": {
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "left": {
+          "$ref": "#/$defs/DocumentationPhraseContract"
+        },
+        "right": {
+          "$ref": "#/$defs/DocumentationPhraseContract"
+        },
+        "title": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "left",
+        "right"
+      ],
+      "title": "DocumentationContradictionRuleContract",
+      "type": "object"
+    },
+    "DocumentationDeprecatedReferenceContract": {
+      "additionalProperties": false,
+      "description": "A stale documentation path and its replacement canonical source.",
+      "properties": {
+        "path": {
+          "maxLength": 1024,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)*$",
+          "title": "Path",
+          "type": "string"
+        },
+        "replacement": {
+          "maxLength": 1024,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)*$",
+          "title": "Replacement",
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "replacement"
+      ],
+      "title": "DocumentationDeprecatedReferenceContract",
+      "type": "object"
+    },
+    "DocumentationPhraseContract": {
+      "additionalProperties": false,
+      "description": "One exact, case-insensitive phrase used by a contradiction rule.",
+      "properties": {
+        "path": {
+          "maxLength": 1024,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)*$",
+          "title": "Path",
+          "type": "string"
+        },
+        "phrase": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^\\S(?:.*\\S)?$",
+          "title": "Phrase",
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "phrase"
+      ],
+      "title": "DocumentationPhraseContract",
+      "type": "object"
+    },
+    "DocumentationTopicContract": {
+      "additionalProperties": false,
+      "description": "One required documentation topic and its canonical source.",
+      "properties": {
+        "canonical_source": {
+          "maxLength": 1024,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)*$",
+          "title": "Canonical Source",
+          "type": "string"
+        },
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "title": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "canonical_source"
+      ],
+      "title": "DocumentationTopicContract",
+      "type": "object"
+    }
+  },
+  "$id": "https://schemas.ludowright.dev/v1/documentation-audit-policy.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Versioned, repository-local policy for the documentation audit.",
+  "properties": {
+    "contradictions": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/DocumentationContradictionRuleContract"
+      },
+      "maxItems": 1000,
+      "title": "Contradictions",
+      "type": "array"
+    },
+    "deprecated_references": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/DocumentationDeprecatedReferenceContract"
+      },
+      "maxItems": 1000,
+      "title": "Deprecated References",
+      "type": "array"
+    },
+    "kind": {
+      "const": "documentation-audit-policy",
+      "default": "documentation-audit-policy",
+      "title": "Kind",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "topics": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/DocumentationTopicContract"
+      },
+      "maxItems": 1000,
+      "title": "Topics",
+      "type": "array"
+    },
+    "version": {
+      "maximum": 2147483647,
+      "minimum": 1,
+      "title": "Version",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "version"
+  ],
+  "title": "LudoWright Documentation Audit Policy",
+  "type": "object"
+}

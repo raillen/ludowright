@@ -41,9 +41,11 @@ This is the main navigation map for humans and agents. Each subject should have 
 - [`contracts/INTERVIEW_QUESTIONS.md`](contracts/INTERVIEW_QUESTIONS.md) — declarative questionnaire shapes, safe dependencies, answer provenance, and pending-question semantics.
 - [`contracts/DOCUMENT_TEMPLATES.md`](contracts/DOCUMENT_TEMPLATES.md) — versioned Jinja manifests, inheritance, project overrides, deterministic output, and sandbox boundaries.
 - [`contracts/DOCUMENT_REFRESH.md`](contracts/DOCUMENT_REFRESH.md) — source hashes, stale planning, manual-section preservation, atomic persistence, and rollback.
+- [`contracts/DOCUMENTATION_AUDIT.md`](contracts/DOCUMENTATION_AUDIT.md) — versioned audit policy, deterministic findings, and read-only validity semantics.
 - [`contracts/ATLAS.md`](contracts/ATLAS.md) — canonical documentation metadata, deterministic indexes, link findings, and orphan detection.
 - [`commands/INTERVIEW.md`](commands/INTERVIEW.md) — interview CLI syntax, resumable session files, skip/defer policy, and JSON interaction data.
 - [`commands/DOCUMENTS.md`](commands/DOCUMENTS.md) — incremental document refresh syntax, dry-run, output, and failure behavior.
+- [`commands/DOCS.md`](commands/DOCS.md) — deterministic documentation audit syntax, policy, findings, and check behavior.
 - [`commands/ATLAS.md`](commands/ATLAS.md) — ATLAS generation, integrity checking, and JSON output.
 - [`contracts/CLI.md`](contracts/CLI.md) — dual human/JSON surfaces, response envelope, error codes, exit codes, version output, diagnostics, and compatibility rules.
 
@@ -56,11 +58,13 @@ Planned canonical contracts:
 
 The guided-documentation model is implemented in `src/ludowright/domain/interviews.py`, orchestrated by `src/ludowright/application/interviews.py`, and adapted at the external boundary by `src/ludowright/contracts/interviews.py`. The published interview contracts are `interview-questionnaire` and `interview-session`; CLI presentation lives in `src/ludowright/cli/interview.py`.
 
-The document template engine is implemented in `src/ludowright/application/document_templates.py`, its manifest contract lives in `src/ludowright/contracts/document_templates.py`, and versioned `minimal`, `product`, and `architecture` template data lives in `src/ludowright/template_data/`. The architecture pack is cataloged in [`architecture/ARCHITECTURE_DOCUMENT_SET.md`](architecture/ARCHITECTURE_DOCUMENT_SET.md). ATLAS generation is implemented by `src/ludowright/application/atlas.py` using `docs/atlas.json`; incremental refresh is implemented by `src/ludowright/application/document_refresh.py` with state persistence in `src/ludowright/infrastructure/document_refresh.py`.
+The document template engine is implemented in `src/ludowright/application/document_templates.py`, its manifest contract lives in `src/ludowright/contracts/document_templates.py`, and versioned `minimal`, `product`, and `architecture` template data lives in `src/ludowright/template_data/`. The architecture pack is cataloged in [`architecture/ARCHITECTURE_DOCUMENT_SET.md`](architecture/ARCHITECTURE_DOCUMENT_SET.md). ATLAS generation is implemented by `src/ludowright/application/atlas.py` using `docs/atlas.json`; incremental refresh is implemented by `src/ludowright/application/document_refresh.py` with state persistence in `src/ludowright/infrastructure/document_refresh.py`; documentation auditing is implemented by `src/ludowright/application/documentation_audit.py` using the declarative `docs/audit-policy.json`.
 
 The ATLAS scanner uses `src/ludowright/infrastructure/documentation.py` for
 bounded, read-only Markdown access. The `atlas` command is registered in
 `src/ludowright/cli/app.py` and participates in the unified quality gate.
+The `docs audit` command shares the same CLI envelope and participates in the
+quality gate with `--check`.
 
 ## Codex integration
 
@@ -161,6 +165,7 @@ Planned operational documents:
 - [`decisions/0017-deterministic-document-template-engine.md`](decisions/0017-deterministic-document-template-engine.md) — accepted versioned data templates, allow-listed inheritance, sandboxed rendering, and deterministic output.
 - [`decisions/0018-deterministic-atlas-index-and-integrity.md`](decisions/0018-deterministic-atlas-index-and-integrity.md) — accepted canonical-source metadata, offline link checks, orphan detection, and read-only generation.
 - [`decisions/0019-incremental-document-refresh.md`](decisions/0019-incremental-document-refresh.md) — accepted source-hash planning, generated/manual boundaries, and rollback-coordinated persistence.
+- [`decisions/0020-deterministic-documentation-audit.md`](decisions/0020-deterministic-documentation-audit.md) — accepted declarative policy, explicit contradiction rules, stale-reference findings, and read-only audit behavior.
 - [`decisions/0013-versioned-acyclic-dependency-invalidation-graph.md`](decisions/0013-versioned-acyclic-dependency-invalidation-graph.md) — accepted typed revision-aware DAG dependencies, stale and review propagation, persisted impact paths, safe refresh, and canonical JSON persistence.
 - [`decisions/0012-explicit-backed-up-schema-migrations.md`](decisions/0012-explicit-backed-up-schema-migrations.md) — accepted explicit contiguous migration plans, dry runs, durable SQLite backups, strict receipts, transactional apply, and guarded rollback.
 - [`decisions/0011-rebuildable-sqlite-state-index.md`](decisions/0011-rebuildable-sqlite-state-index.md) — accepted SQLite as a rebuildable derived index with WAL, strict short transactions, source digests, event checkpoints, and explicit consistency states.

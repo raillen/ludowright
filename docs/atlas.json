@@ -37,6 +37,12 @@
       "title": "Documents CLI"
     },
     {
+      "canonical_source": "commands/DOCS.md",
+      "path": "commands/DOCS.md",
+      "section": "commands",
+      "title": "Documentation audit CLI"
+    },
+    {
       "canonical_source": "contracts/ATLAS.md",
       "path": "contracts/ATLAS.md",
       "section": "contracts",
@@ -83,6 +89,12 @@
       "path": "contracts/DOCUMENT_REFRESH.md",
       "section": "contracts",
       "title": "Incremental Document Refresh Contract"
+    },
+    {
+      "canonical_source": "contracts/DOCUMENTATION_AUDIT.md",
+      "path": "contracts/DOCUMENTATION_AUDIT.md",
+      "section": "contracts",
+      "title": "Documentation Audit Contract"
     },
     {
       "canonical_source": "contracts/EVENT_LOG.md",
@@ -263,6 +275,12 @@
       "path": "decisions/0019-incremental-document-refresh.md",
       "section": "decisions",
       "title": "ADR 0019 — Incremental Document Refresh with Manual Preservation"
+    },
+    {
+      "canonical_source": "decisions/0020-deterministic-documentation-audit.md",
+      "path": "decisions/0020-deterministic-documentation-audit.md",
+      "section": "decisions",
+      "title": "ADR 0020 — Deterministic Documentation Audit"
     },
     {
       "canonical_source": "governance/RFC_TEMPLATE.md",

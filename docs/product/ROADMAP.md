@@ -35,6 +35,8 @@ This roadmap describes product capability, not fixed dates. Minor-version bounda
 - modular GDD and ATLAS generation;
 - product, architecture, UI/UX, implementation, quality, security, production, ADR, and plan templates;
 - incremental document updates and staleness detection.
+- deterministic documentation audit for missing topics, duplicate canonical
+  sources, explicit contradictions, and stale references.
 
 The initial refresh slice uses explicit versioned requests and source hashes,
 preserves manual sections, and reports affected documents. Automatic context

@@ -24,6 +24,12 @@ from ludowright.application.document_templates import (
     RenderedDocument,
     load_document_template_manifest,
 )
+from ludowright.application.documentation_audit import (
+    DocumentationAudit,
+    DocumentationAuditError,
+    DocumentationAuditor,
+    render_documentation_audit,
+)
 from ludowright.application.interviews import (
     InterviewApplicationError,
     InterviewService,
@@ -46,10 +52,14 @@ __all__ = [
     "DocumentTemplateError",
     "DocumentTemplateNotFoundError",
     "DocumentTemplateRenderError",
+    "DocumentationAudit",
+    "DocumentationAuditError",
+    "DocumentationAuditor",
     "InterviewApplicationError",
     "InterviewService",
     "InterviewView",
     "RenderedDocument",
     "load_document_template_manifest",
     "render_atlas_markdown",
+    "render_documentation_audit",
 ]

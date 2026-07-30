@@ -241,6 +241,12 @@ rollback. The interview-to-context orchestration remains separate.
 
 ### PR 30 — Documentation audit
 
+Status: implemented in the current slice. A versioned repository-local policy
+drives deterministic checks for required canonical topics, duplicate sources,
+explicit contradiction phrase pairs, and stale references. The `docs audit`
+command composes ATLAS integrity with policy findings, supports Rich and JSON
+surfaces, and runs in the unified quality gate without modifying documentation.
+
 - missing canonical topics;
 - duplicate sources;
 - contradictions and stale references;

@@ -167,6 +167,7 @@ def test_quality_dry_run_json_contract() -> None:
         "tests",
         "schema-publication",
         "atlas",
+        "documentation-audit",
         "documentation",
         "dependency-audit",
     ]

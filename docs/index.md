@@ -14,7 +14,7 @@ idea → guided intake → modular documentation → asset registry
 
 ## Current status
 
-LudoWright is in the **pre-alpha foundation phase**.
+LudoWright is in the **pre-alpha documentation phase**.
 
 The repository currently establishes:
 
@@ -27,6 +27,8 @@ The repository currently establishes:
   link-integrity checks.
 - incremental document refresh with source hashes, stale planning, manual
   preservation, and rollback.
+- deterministic documentation audits for required topics, duplicate sources,
+  explicit contradiction rules, and stale references.
 
 Project initialization, interview-context orchestration, asset planning,
 capture profiles, ImageGen execution, review workflows, technical sheets, and

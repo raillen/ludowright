@@ -29,6 +29,15 @@ from ludowright.contracts.document_refresh import (
     DocumentSourceHashContract,
 )
 from ludowright.contracts.document_templates import DocumentTemplateManifestContract
+from ludowright.contracts.documentation_audit import (
+    DocumentationAuditPolicyContract,
+    DocumentationAuditReportContract,
+    DocumentationContradictionRuleContract,
+    DocumentationDeprecatedReferenceContract,
+    DocumentationFindingContract,
+    DocumentationPhraseContract,
+    DocumentationTopicContract,
+)
 from ludowright.contracts.governance import ApprovalContract, DecisionContract
 from ludowright.contracts.interviews import (
     AnswerProvenanceContract,
@@ -97,6 +106,13 @@ __all__ = [
     "DocumentRefreshStateContract",
     "DocumentSourceHashContract",
     "DocumentTemplateManifestContract",
+    "DocumentationAuditPolicyContract",
+    "DocumentationAuditReportContract",
+    "DocumentationContradictionRuleContract",
+    "DocumentationDeprecatedReferenceContract",
+    "DocumentationFindingContract",
+    "DocumentationPhraseContract",
+    "DocumentationTopicContract",
     "GenerationReceiptContract",
     "InterviewBlockedQuestionContract",
     "InterviewInteractionContract",

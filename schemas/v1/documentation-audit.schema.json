@@ -1,0 +1,196 @@
+{
+  "$defs": {
+    "AtlasBrokenLinkContract": {
+      "additionalProperties": false,
+      "description": "One link or canonical-source reference that cannot be resolved.",
+      "properties": {
+        "fragment": {
+          "anyOf": [
+            {
+              "maxLength": 256,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Fragment"
+        },
+        "reason": {
+          "enum": [
+            "missing-file",
+            "missing-anchor",
+            "unsafe-path",
+            "missing-canonical-source"
+          ],
+          "title": "Reason",
+          "type": "string"
+        },
+        "source": {
+          "maxLength": 1024,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)*$",
+          "title": "Source",
+          "type": "string"
+        },
+        "target": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "title": "Target",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source",
+        "target",
+        "reason"
+      ],
+      "title": "AtlasBrokenLinkContract",
+      "type": "object"
+    },
+    "DocumentationFindingContract": {
+      "additionalProperties": false,
+      "description": "One deterministic audit finding requiring review.",
+      "properties": {
+        "code": {
+          "enum": [
+            "missing-canonical-topic",
+            "duplicate-canonical-source",
+            "contradictory-claim",
+            "stale-reference"
+          ],
+          "title": "Code",
+          "type": "string"
+        },
+        "message": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Message",
+          "type": "string"
+        },
+        "related_paths": {
+          "default": [],
+          "items": {
+            "maxLength": 1024,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)*$",
+            "type": "string"
+          },
+          "maxItems": 100,
+          "title": "Related Paths",
+          "type": "array"
+        },
+        "replacement": {
+          "anyOf": [
+            {
+              "maxLength": 1024,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Replacement"
+        },
+        "subject": {
+          "maxLength": 1024,
+          "minLength": 1,
+          "title": "Subject",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "subject",
+        "message"
+      ],
+      "title": "DocumentationFindingContract",
+      "type": "object"
+    }
+  },
+  "$id": "https://schemas.ludowright.dev/v1/documentation-audit.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "ATLAS integrity plus policy findings for one documentation tree.",
+  "properties": {
+    "atlas_valid": {
+      "title": "Atlas Valid",
+      "type": "boolean"
+    },
+    "broken_links": {
+      "items": {
+        "$ref": "#/$defs/AtlasBrokenLinkContract"
+      },
+      "maxItems": 100000,
+      "title": "Broken Links",
+      "type": "array"
+    },
+    "findings": {
+      "items": {
+        "$ref": "#/$defs/DocumentationFindingContract"
+      },
+      "maxItems": 100000,
+      "title": "Findings",
+      "type": "array"
+    },
+    "kind": {
+      "const": "documentation-audit",
+      "default": "documentation-audit",
+      "title": "Kind",
+      "type": "string"
+    },
+    "metadata_digest": {
+      "maxLength": 64,
+      "minLength": 64,
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Metadata Digest",
+      "type": "string"
+    },
+    "orphan_documents": {
+      "items": {
+        "maxLength": 1024,
+        "minLength": 1,
+        "pattern": "^[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)*$",
+        "type": "string"
+      },
+      "maxItems": 10000,
+      "title": "Orphan Documents",
+      "type": "array"
+    },
+    "policy_digest": {
+      "maxLength": 64,
+      "minLength": 64,
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Policy Digest",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "version": {
+      "maximum": 2147483647,
+      "minimum": 1,
+      "title": "Version",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "version",
+    "metadata_digest",
+    "policy_digest",
+    "atlas_valid",
+    "broken_links",
+    "orphan_documents",
+    "findings"
+  ],
+  "title": "LudoWright Documentation Audit Report",
+  "type": "object"
+}
