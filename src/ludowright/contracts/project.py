@@ -10,6 +10,7 @@ from ludowright.contracts.common import (
     ContractModel,
     DisplayText,
     EngineVersionText,
+    PositiveRevision,
     Slug,
 )
 from ludowright.domain import (
@@ -55,6 +56,13 @@ class EngineContract(ContractModel):
         return self
 
 
+class TemplateSelectionContract(ContractModel):
+    """Versioned template provenance recorded in a project manifest."""
+
+    id: Slug
+    version: PositiveRevision
+
+
 class ProjectContract(ContractModel):
     schema_version: Literal[1] = 1
     kind: Literal["project"] = "project"
@@ -66,6 +74,7 @@ class ProjectContract(ContractModel):
     stage: ProjectStage = ProjectStage.CONCEPT
     lifecycle: ProjectLifecycle = ProjectLifecycle.ACTIVE
     engine: EngineContract | None = None
+    template: TemplateSelectionContract | None = None
 
     def to_domain(self) -> Project:
         return Project(

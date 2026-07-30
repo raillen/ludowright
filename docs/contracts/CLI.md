@@ -272,3 +272,13 @@ The CLI contract:
 - preserves command failure data for auditing.
 
 Future commands must use the shared runtime rather than inventing command-specific JSON envelopes or exit-code conventions.
+
+## Project initialization
+
+`ludowright init` uses the same envelope and error mapping:
+
+```bash
+ludowright --json init PATH --name "Nome do Jogo" --template minimal --dry-run
+```
+
+Its `data` reports the target directory, deterministic `ProjectId`, template ID/version, schema version, planned or created files and directories, dry-run state, warnings, and final state. The command is create-only; conflicts use the existing `conflict` error code and exit code `5`.

@@ -6,7 +6,7 @@
       "file": "project.schema.json",
       "name": "project",
       "schema_id": "https://schemas.ludowright.dev/v1/project.schema.json",
-      "sha256": "49466fb7b4716bc428ff7e261adffc93f02c9b8c5ae9527e6783f445ada93f62"
+      "sha256": "5a6e48f560512f64e4a690fcbddc52368981370be164b7e99baf18cbcb037d5c"
     },
     {
       "file": "decision.schema.json",

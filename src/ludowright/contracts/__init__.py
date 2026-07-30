@@ -20,7 +20,7 @@ from ludowright.contracts.migrations import (
     MigrationReceiptContract,
     MigrationRunStatus,
 )
-from ludowright.contracts.project import ProjectContract
+from ludowright.contracts.project import ProjectContract, TemplateSelectionContract
 from ludowright.contracts.publication import (
     DEFAULT_SCHEMA_ROOT,
     build_schema,
@@ -33,6 +33,11 @@ from ludowright.contracts.registry import (
     CONTRACTS,
     JSON_SCHEMA_DRAFT,
     SCHEMA_VERSION,
+)
+from ludowright.contracts.templates import (
+    TemplateDefinitionContract,
+    TemplateFileContract,
+    TemplateProjectDefaultsContract,
 )
 from ludowright.contracts.visual import (
     GenerationReceiptContract,
@@ -64,6 +69,10 @@ __all__ = [
     "MigrationReceiptContract",
     "MigrationRunStatus",
     "ProjectContract",
+    "TemplateDefinitionContract",
+    "TemplateFileContract",
+    "TemplateProjectDefaultsContract",
+    "TemplateSelectionContract",
     "VisualJobContract",
     "VisualReferenceContract",
     "VisualReviewContract",

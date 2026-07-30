@@ -44,6 +44,10 @@ Planned canonical contracts:
 - project manifest;
 - release manifest.
 
+## Commands
+
+- [`commands/INIT.md`](commands/INIT.md) — `ludowright init`, template `minimal`, dry-run, idempotência, segurança e rollback.
+
 ## Codex integration
 
 Planned documents:
@@ -74,6 +78,12 @@ Planned detailed documents:
 ## Implementation
 
 - [`plans/IMPLEMENTATION_PLAN.md`](plans/IMPLEMENTATION_PLAN.md) — ordered PR program for the first stable release.
+
+Current application implementation:
+
+- `src/ludowright/application/initialization.py` — caso de uso create-only para inicialização segura.
+- `src/ludowright/application/templates.py` — carregamento validado de templates como dados.
+- `src/ludowright/templates/minimal.json` — layout e defaults do template inicial.
 
 Future bounded changes should receive their own plan under `plans/`.
 

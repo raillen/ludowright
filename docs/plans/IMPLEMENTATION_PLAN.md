@@ -134,6 +134,8 @@ Exit: repository installs, imports, tests, and clearly explains the product.
 - stable errors and exit codes;
 - `--version` and diagnostics.
 
+Status: concluído e verificado no histórico da `main` (`5f5182b`).
+
 ### PR 19 — Project initialization
 
 - `ludowright init`;
@@ -141,6 +143,8 @@ Exit: repository installs, imports, tests, and clearly explains the product.
 - initial manifest and directories;
 - non-interactive mode;
 - dry run.
+
+Status: implementado nesta branch. O comando é create-only, usa o template de dados `minimal`, publica o marker por último, inicializa event log, graph e SQLite v2, e possui cobertura de conflito, rollback, concorrência, dry-run e superfícies Rich/JSON.
 
 ### PR 20 — Project status
 
