@@ -101,9 +101,12 @@ class DocumentTemplateEngine:
         self,
         template_id: str,
         context: Mapping[str, object],
+        *,
+        entrypoint: str | None = None,
     ) -> RenderedDocument:
         """Render one declared entrypoint without writing project files."""
         manifest = load_document_template_manifest(template_id)
+        selected_entrypoint = _select_entrypoint(manifest, entrypoint)
         package_root = _package_template_root(manifest.id)
         _validate_package_files(manifest, package_root)
         normalized_context = _normalize_context(context)
@@ -122,7 +125,7 @@ class DocumentTemplateEngine:
         environment = _build_environment(loaders)
 
         try:
-            template = environment.get_template(manifest.entrypoint)
+            template = environment.get_template(selected_entrypoint)
             rendered = template.render(normalized_context)
         except (
             SecurityError,
@@ -139,7 +142,7 @@ class DocumentTemplateEngine:
         return RenderedDocument(
             template_id=manifest.id,
             template_version=manifest.version,
-            entrypoint=manifest.entrypoint,
+            entrypoint=selected_entrypoint,
             content=content,
             digest=hashlib.sha256(content.encode("utf-8")).hexdigest(),
         )
@@ -250,6 +253,24 @@ def _build_environment(loaders: list[BaseLoader]) -> Environment:
         name: environment.filters[name] for name in _SAFE_FILTERS if name in environment.filters
     }
     return environment
+
+
+def _select_entrypoint(
+    manifest: DocumentTemplateManifestContract,
+    requested: str | None,
+) -> str:
+    selected = manifest.entrypoint if requested is None else requested
+    try:
+        _validate_template_name(selected)
+    except TemplateNotFound as error:
+        raise DocumentTemplateRenderError(
+            f"template entrypoint is not a safe declared path: {selected!r}"
+        ) from error
+    if selected not in manifest.files:
+        raise DocumentTemplateRenderError(
+            f"template entrypoint is not declared by {manifest.id!r}: {selected}"
+        )
+    return selected
 
 
 def _package_template_root(template_id: str) -> Traversable:

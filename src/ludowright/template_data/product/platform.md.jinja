@@ -1,0 +1,11 @@
+{% extends "base.md.jinja" %}
+{% block document -%}
+{{ super() }}
+
+{% for platform in platforms -%}
+## {{ platform.name }}
+
+{{ platform.notes }}
+
+{% endfor %}
+{%- endblock document %}

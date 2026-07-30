@@ -13,6 +13,7 @@ nav:
   - Documentation Atlas: ATLAS.md
   - Product:
       - Product Vision: product/PRODUCT_VISION.md
+      - Product Document Set: product/PRODUCT_DOCUMENT_SET.md
       - Roadmap: product/ROADMAP.md
   - Architecture:
       - System Overview: architecture/SYSTEM_OVERVIEW.md

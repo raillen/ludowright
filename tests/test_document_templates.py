@@ -20,6 +20,16 @@ from ludowright.contracts import DocumentTemplateManifestContract
 from ludowright.infrastructure import ProjectFilesystem, RepositoryPath
 
 SNAPSHOT = Path("tests/snapshots/templates/minimal-document.md")
+PRODUCT_ENTRYPOINTS = (
+    "audience.md.jinja",
+    "loops.md.jinja",
+    "pillars.md.jinja",
+    "platform.md.jinja",
+    "risk.md.jinja",
+    "scope.md.jinja",
+    "success.md.jinja",
+    "vision.md.jinja",
+)
 
 
 def _context() -> dict[str, object]:
@@ -32,6 +42,64 @@ def _context() -> dict[str, object]:
     }
 
 
+def _product_context() -> dict[str, object]:
+    return {
+        "title": "Echoes Product Brief",
+        "vision": "Make a small game idea concrete and auditable.",
+        "mission": "Turn decisions into a focused production plan.",
+        "primary_users": ["Independent game developers", "Small game teams"],
+        "secondary_users": ["Students", "Game-jam teams"],
+        "pillars": [
+            {
+                "name": "Structured planning",
+                "description": "Keep canonical facts in modular documents.",
+            },
+            {
+                "name": "Auditable delivery",
+                "description": "Make every output traceable to its inputs.",
+            },
+        ],
+        "loops": [
+            {
+                "name": "Design loop",
+                "steps": ["Ask", "Decide", "Validate"],
+            },
+            {
+                "name": "Production loop",
+                "steps": ["Plan", "Create", "Review"],
+            },
+        ],
+        "in_scope": ["Canonical game documentation", "Traceable production data"],
+        "out_of_scope": ["Game engine runtime", "Cloud-only collaboration"],
+        "risks": [
+            {
+                "name": "Scope drift",
+                "impact": "The project becomes too large to finish.",
+                "mitigation": "Record boundaries and review them at each milestone.",
+            },
+            {
+                "name": "Stale documents",
+                "impact": "Teams follow an outdated plan.",
+                "mitigation": "Track source digests and refresh affected outputs.",
+            },
+        ],
+        "platforms": [
+            {"name": "Desktop", "notes": "Primary local-first development target."},
+            {"name": "Web reference", "notes": "Optional published documentation view."},
+        ],
+        "measures": [
+            {
+                "name": "Resumable intake",
+                "description": "A creator can continue after leaving the repository.",
+            },
+            {
+                "name": "Reproducible output",
+                "description": "The same inputs produce the same document bytes.",
+            },
+        ],
+    }
+
+
 def test_minimal_manifest_is_versioned_and_loaded_from_package_data() -> None:
     manifest = load_document_template_manifest("minimal")
 
@@ -39,6 +107,23 @@ def test_minimal_manifest_is_versioned_and_loaded_from_package_data() -> None:
     assert manifest.version == 1
     assert manifest.entrypoint == "document.md.jinja"
     assert manifest.files == ("base.md.jinja", "document.md.jinja")
+
+
+def test_product_manifest_declares_the_complete_document_set() -> None:
+    manifest = load_document_template_manifest("product")
+
+    assert manifest.entrypoint == "vision.md.jinja"
+    assert tuple(path for path in manifest.files if path.endswith(".md.jinja")) == (
+        "audience.md.jinja",
+        "base.md.jinja",
+        "loops.md.jinja",
+        "pillars.md.jinja",
+        "platform.md.jinja",
+        "risk.md.jinja",
+        "scope.md.jinja",
+        "success.md.jinja",
+        "vision.md.jinja",
+    )
 
 
 def test_minimal_template_uses_inheritance_and_matches_snapshot() -> None:
@@ -56,6 +141,49 @@ def test_rendering_is_deterministic_and_digested() -> None:
     second = engine.render("minimal", dict(reversed(tuple(_context().items()))))
 
     assert first == second
+
+
+def test_declared_entrypoint_can_be_selected() -> None:
+    result = DocumentTemplateEngine().render(
+        "minimal",
+        {"title": "Base", "body": "Body", "sections": []},
+        entrypoint="base.md.jinja",
+    )
+
+    assert result.entrypoint == "base.md.jinja"
+    assert result.content == "# Base\n"
+
+
+@pytest.mark.parametrize("entrypoint", PRODUCT_ENTRYPOINTS)
+def test_product_document_set_matches_snapshots(entrypoint: str) -> None:
+    result = DocumentTemplateEngine().render(
+        "product",
+        _product_context(),
+        entrypoint=entrypoint,
+    )
+    snapshot = Path("tests/snapshots/templates/product") / entrypoint.removesuffix(".jinja")
+
+    assert result.entrypoint == entrypoint
+    assert result.content == snapshot.read_text(encoding="utf-8")
+
+
+def test_product_default_entrypoint_is_vision() -> None:
+    result = DocumentTemplateEngine().render("product", _product_context())
+
+    assert result.entrypoint == "vision.md.jinja"
+    assert result.content == (
+        Path("tests/snapshots/templates/product/vision.md").read_text(encoding="utf-8")
+    )
+
+
+@pytest.mark.parametrize("entrypoint", ["outside.md.jinja", "../base.md.jinja", ""])
+def test_undeclared_entrypoint_is_rejected(entrypoint: str) -> None:
+    with pytest.raises(DocumentTemplateRenderError):
+        DocumentTemplateEngine().render(
+            "minimal",
+            {"title": "Base", "body": "Body", "sections": []},
+            entrypoint=entrypoint,
+        )
 
 
 def test_project_override_replaces_only_declared_template_file(tmp_path: Path) -> None:

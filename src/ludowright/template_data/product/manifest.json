@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "kind": "document-template",
+  "id": "product",
+  "version": 1,
+  "entrypoint": "vision.md.jinja",
+  "files": [
+    "audience.md.jinja",
+    "base.md.jinja",
+    "loops.md.jinja",
+    "pillars.md.jinja",
+    "platform.md.jinja",
+    "risk.md.jinja",
+    "scope.md.jinja",
+    "success.md.jinja",
+    "vision.md.jinja"
+  ]
+}

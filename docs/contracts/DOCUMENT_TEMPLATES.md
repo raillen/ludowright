@@ -69,7 +69,7 @@ linha. O digest é SHA-256 dos bytes UTF-8 da saída.
 
 ## Herança e overrides
 
-O template `minimal` usa herança Jinja. Um projeto pode substituir arquivos
+Os templates `minimal` e `product` usam herança Jinja. Um projeto pode substituir arquivos
 declarados sem alterar o pacote, colocando-os em:
 
 ```text
@@ -84,6 +84,17 @@ O ambiente usa `SandboxedEnvironment`, `StrictUndefined`, globals vazios e um
 conjunto pequeno de filtros determinísticos. Templates não recebem acesso ao
 filesystem, ao relógio, a rede ou a objetos Python arbitrários.
 
+Quando um manifesto declara vários arquivos de documento, o chamador pode
+selecionar qualquer entrypoint declarado:
+
+```python
+DocumentTemplateEngine().render(
+    "product",
+    context,
+    entrypoint="audience.md.jinja",
+)
+```
+
 ## Compatibilidade
 
 O manifesto e o schema v1 são contratos publicados. A versão do template deve
@@ -94,9 +105,10 @@ as migrações.
 
 ## Limitações
 
-O engine fornece um template mínimo e uma API de renderização. Ele ainda não
-define o catálogo de documentos de produto, arquitetura, qualidade ou ATLAS;
-essa capacidade pertence aos PRs seguintes.
+O engine fornece templates mínimos e o pack inicial de documentos de produto.
+Ele ainda não define os documentos de arquitetura, qualidade, segurança,
+produção ou ATLAS, nem o caso de uso que persiste documentos no projeto; essas
+capacidades pertencem aos PRs seguintes.
 
 ## Validação
 
