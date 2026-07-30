@@ -31,6 +31,7 @@ nav:
       - Migrations: contracts/MIGRATIONS.md
       - Dependency Graph: contracts/DEPENDENCY_GRAPH.md
       - Interview Questions: contracts/INTERVIEW_QUESTIONS.md
+      - Document Templates: contracts/DOCUMENT_TEMPLATES.md
       - Command-Line Interface: contracts/CLI.md
   - Commands:
       - Interview CLI: commands/INTERVIEW.md
@@ -56,6 +57,7 @@ nav:
       - ADR 0014 — Stable Dual-Surface CLI: decisions/0014-stable-dual-surface-cli-contract.md
       - ADR 0015 — Guided Interview Question Model: decisions/0015-guided-interview-question-model.md
       - ADR 0016 — Resumable Interview CLI: decisions/0016-resumable-interview-cli.md
+      - ADR 0017 — Document Template Engine: decisions/0017-deterministic-document-template-engine.md
       - ADR Template: decisions/0000-template.md
   - Operations:
       - Documentation Site: operations/DOCUMENTATION_SITE.md

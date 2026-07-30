@@ -46,7 +46,7 @@ Development proceeds in this order:
 
 ## Current phase
 
-The repository has completed the foundation and core domain/contract slices. Guided documentation now includes the published v1 questionnaire and session contracts, immutable question/session rules, and a resumable `interview` CLI with event-log auditing. Document templates, rendering, and ATLAS generation remain subsequent bounded steps in `docs/plans/IMPLEMENTATION_PLAN.md`.
+The repository has completed the foundation and core domain/contract slices. Guided documentation now includes the published v1 questionnaire and session contracts, immutable question/session rules, a resumable `interview` CLI with event-log auditing, and a deterministic versioned document template engine. The product document set, rendering orchestration, and ATLAS generation remain subsequent bounded steps in `docs/plans/IMPLEMENTATION_PLAN.md`.
 
 ## Navigation
 

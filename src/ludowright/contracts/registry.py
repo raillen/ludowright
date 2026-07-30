@@ -9,6 +9,7 @@ from ludowright.contracts.capture import CaptureProfileContract
 from ludowright.contracts.cli import CliResponseContract
 from ludowright.contracts.common import ContractModel
 from ludowright.contracts.dependencies import DependencyGraphContract
+from ludowright.contracts.document_templates import DocumentTemplateManifestContract
 from ludowright.contracts.governance import ApprovalContract, DecisionContract
 from ludowright.contracts.interviews import (
     InterviewInteractionContract,
@@ -89,6 +90,12 @@ CONTRACTS: tuple[ContractDefinition, ...] = (
         "dependency-graph.schema.json",
         "LudoWright Dependency Graph",
         DependencyGraphContract,
+    ),
+    ContractDefinition(
+        "document-template",
+        "document-template.schema.json",
+        "LudoWright Document Template",
+        DocumentTemplateManifestContract,
     ),
     ContractDefinition(
         "cli-response",

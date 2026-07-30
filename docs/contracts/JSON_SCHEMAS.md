@@ -36,6 +36,7 @@ It uses JSON Schema Draft 2020-12 and contains:
 | Capture profile | `capture-profile.schema.json` |
 | Migration receipt | `migration-receipt.schema.json` |
 | Dependency graph | `dependency-graph.schema.json` |
+| Document template | `document-template.schema.json` |
 | CLI response | `cli-response.schema.json` |
 | Interview questionnaire | `interview-questionnaire.schema.json` |
 | Interview session | `interview-session.schema.json` |

@@ -28,6 +28,7 @@ This roadmap describes product capability, not fixed dates. Minor-version bounda
 - schema-driven interview engine foundation: published questionnaires, typed validation, safe dependencies, and answer provenance;
 - deterministic pending-question calculation with blocked and not-applicable states;
 - interview CLI with resumable canonical sessions, event auditing, and explicit skip/defer policy;
+- deterministic, versioned document template engine with inheritance and project overrides;
 - modular GDD and ATLAS generation;
 - product, architecture, UI/UX, implementation, quality, security, production, ADR, and plan templates;
 - incremental document updates and staleness detection.

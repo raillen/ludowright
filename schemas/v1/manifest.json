@@ -69,6 +69,12 @@
       "sha256": "1ab40fc7d08bab63bc7145ab96a98bc90932b923dd6af2b2dc655af6b5c90c83"
     },
     {
+      "file": "document-template.schema.json",
+      "name": "document-template",
+      "schema_id": "https://schemas.ludowright.dev/v1/document-template.schema.json",
+      "sha256": "1cb0d86b694f896ec5b94219b917756088ebe3ec976984afae0c1a87cd40e0d7"
+    },
+    {
       "file": "cli-response.schema.json",
       "name": "cli-response",
       "schema_id": "https://schemas.ludowright.dev/v1/cli-response.schema.json",

@@ -15,6 +15,7 @@ from ludowright.contracts.dependencies import (
     DependencyNodeContract,
     InvalidationCauseContract,
 )
+from ludowright.contracts.document_templates import DocumentTemplateManifestContract
 from ludowright.contracts.governance import ApprovalContract, DecisionContract
 from ludowright.contracts.interviews import (
     AnswerProvenanceContract,
@@ -73,6 +74,7 @@ __all__ = [
     "DependencyKeyContract",
     "DependencyNodeContract",
     "DispositionRecordContract",
+    "DocumentTemplateManifestContract",
     "GenerationReceiptContract",
     "InterviewBlockedQuestionContract",
     "InterviewInteractionContract",
