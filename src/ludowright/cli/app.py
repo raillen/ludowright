@@ -10,6 +10,7 @@ from rich.console import Console
 from ludowright import __version__
 from ludowright.cli.atlas import generate_atlas
 from ludowright.cli.diagnostics import collect_diagnostics, render_diagnostics
+from ludowright.cli.docs import docs_app
 from ludowright.cli.documents import documents_app
 from ludowright.cli.interview import interview_app
 from ludowright.cli.quality import quality_app
@@ -31,6 +32,7 @@ app = typer.Typer(
 app.add_typer(quality_app, name="quality")
 app.add_typer(interview_app, name="interview")
 app.add_typer(documents_app, name="documents")
+app.add_typer(docs_app, name="docs")
 app.command("atlas")(generate_atlas)
 
 

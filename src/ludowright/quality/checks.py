@@ -50,6 +50,10 @@ QUALITY_CHECKS: tuple[CheckSpec, ...] = (
         ("uv", "run", "python", "-m", "ludowright.contracts", "check"),
     ),
     CheckSpec("atlas", ("uv", "run", "ludowright", "atlas", "--check")),
+    CheckSpec(
+        "documentation-audit",
+        ("uv", "run", "ludowright", "docs", "audit", "--check"),
+    ),
     CheckSpec("documentation", ("uv", "run", "mkdocs", "build", "--strict", "--clean")),
     CheckSpec("dependency-audit", ("uv", "run", "pip-audit")),
 )

@@ -12,6 +12,7 @@ from rich.console import Console
 
 from ludowright import __version__
 from ludowright.application.document_refresh import DocumentRefreshError
+from ludowright.application.documentation_audit import DocumentationAuditError
 from ludowright.contracts.cli import (
     CliErrorCode,
     CliErrorContract,
@@ -232,5 +233,11 @@ def _known_failure(error: Exception) -> CliFailure | None:
             CliErrorCode.INVALID_INPUT,
             str(error),
             exit_code=CliExitCode.VALIDATION,
+        )
+    if isinstance(error, DocumentationAuditError):
+        return CliFailure(
+            CliErrorCode.CORRUPT_STATE,
+            str(error),
+            exit_code=CliExitCode.CORRUPT_STATE,
         )
     return None

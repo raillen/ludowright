@@ -87,6 +87,18 @@
       "sha256": "6904bc9633f69d4333c539e59108fcfc5efb1005cb7d97099c867a19a44f88af"
     },
     {
+      "file": "documentation-audit-policy.schema.json",
+      "name": "documentation-audit-policy",
+      "schema_id": "https://schemas.ludowright.dev/v1/documentation-audit-policy.schema.json",
+      "sha256": "071e8d8c9dbb9a67b0f3b526ce2f1fababf426c101e6d50c1e51efb58ff6e7b5"
+    },
+    {
+      "file": "documentation-audit.schema.json",
+      "name": "documentation-audit",
+      "schema_id": "https://schemas.ludowright.dev/v1/documentation-audit.schema.json",
+      "sha256": "39b9ec11fa471d30662229933283125318ab3b7dc3e398a09ce9384eeae17f1e"
+    },
+    {
       "file": "atlas-metadata.schema.json",
       "name": "atlas-metadata",
       "schema_id": "https://schemas.ludowright.dev/v1/atlas-metadata.schema.json",

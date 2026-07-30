@@ -1,0 +1,69 @@
+{
+  "contradictions": [],
+  "deprecated_references": [],
+  "kind": "documentation-audit-policy",
+  "schema_version": 1,
+  "topics": [
+    {
+      "canonical_source": "contracts/CLI.md",
+      "id": "cli-contract",
+      "title": "CLI contract"
+    },
+    {
+      "canonical_source": "contracts/DEPENDENCY_GRAPH.md",
+      "id": "dependency-graph",
+      "title": "Dependency graph contract"
+    },
+    {
+      "canonical_source": "contracts/DOCUMENT_REFRESH.md",
+      "id": "document-refresh",
+      "title": "Document refresh contract"
+    },
+    {
+      "canonical_source": "contracts/DOCUMENT_TEMPLATES.md",
+      "id": "document-templates",
+      "title": "Document template contract"
+    },
+    {
+      "canonical_source": "ATLAS.md",
+      "id": "documentation-atlas",
+      "title": "Documentation Atlas"
+    },
+    {
+      "canonical_source": "operations/DOCUMENTATION_SITE.md",
+      "id": "documentation-operations",
+      "title": "Documentation site operations"
+    },
+    {
+      "canonical_source": "quality/ENGINEERING_QUALITY.md",
+      "id": "engineering-quality",
+      "title": "Engineering quality baseline"
+    },
+    {
+      "canonical_source": "plans/IMPLEMENTATION_PLAN.md",
+      "id": "implementation-plan",
+      "title": "Implementation plan"
+    },
+    {
+      "canonical_source": "product/PRODUCT_VISION.md",
+      "id": "product-vision",
+      "title": "Product vision"
+    },
+    {
+      "canonical_source": "product/ROADMAP.md",
+      "id": "roadmap",
+      "title": "Product roadmap"
+    },
+    {
+      "canonical_source": "contracts/STRUCTURED_REPOSITORIES.md",
+      "id": "structured-repositories",
+      "title": "Structured repositories contract"
+    },
+    {
+      "canonical_source": "architecture/SYSTEM_OVERVIEW.md",
+      "id": "system-overview",
+      "title": "System overview"
+    }
+  ],
+  "version": 1
+}

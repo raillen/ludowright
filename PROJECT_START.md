@@ -46,7 +46,7 @@ Development proceeds in this order:
 
 ## Current phase
 
-The repository has completed the foundation and core domain/contract slices. Guided documentation now includes the published v1 questionnaire and session contracts, immutable question/session rules, a resumable `interview` CLI with event-log auditing, a deterministic versioned document template engine, the initial product and architecture document sets, deterministic ATLAS generation with source/link integrity checks, and incremental document refresh with source hashes, stale planning, manual-section preservation, and rollback. Context orchestration from interview answers and documentation audit remain subsequent bounded steps in `docs/plans/IMPLEMENTATION_PLAN.md`.
+The repository has completed the foundation and core domain/contract slices. Guided documentation now includes the published v1 questionnaire and session contracts, immutable question/session rules, a resumable `interview` CLI with event-log auditing, a deterministic versioned document template engine, the initial product and architecture document sets, deterministic ATLAS generation with source/link integrity checks, incremental document refresh with source hashes, stale planning, manual-section preservation, rollback, and a declarative documentation audit. Context orchestration from interview answers remains the next bounded step in `docs/plans/IMPLEMENTATION_PLAN.md`.
 
 ## Navigation
 

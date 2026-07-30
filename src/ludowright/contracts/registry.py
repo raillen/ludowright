@@ -15,6 +15,10 @@ from ludowright.contracts.document_refresh import (
     DocumentRefreshStateContract,
 )
 from ludowright.contracts.document_templates import DocumentTemplateManifestContract
+from ludowright.contracts.documentation_audit import (
+    DocumentationAuditPolicyContract,
+    DocumentationAuditReportContract,
+)
 from ludowright.contracts.governance import ApprovalContract, DecisionContract
 from ludowright.contracts.interviews import (
     InterviewInteractionContract,
@@ -113,6 +117,18 @@ CONTRACTS: tuple[ContractDefinition, ...] = (
         "document-refresh.schema.json",
         "LudoWright Document Refresh State",
         DocumentRefreshStateContract,
+    ),
+    ContractDefinition(
+        "documentation-audit-policy",
+        "documentation-audit-policy.schema.json",
+        "LudoWright Documentation Audit Policy",
+        DocumentationAuditPolicyContract,
+    ),
+    ContractDefinition(
+        "documentation-audit",
+        "documentation-audit.schema.json",
+        "LudoWright Documentation Audit Report",
+        DocumentationAuditReportContract,
     ),
     ContractDefinition(
         "atlas-metadata",
