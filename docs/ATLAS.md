@@ -44,6 +44,11 @@ Planned canonical contracts:
 - project manifest;
 - release manifest.
 
+## Commands
+
+- [`commands/GOVERNANCE.md`](commands/GOVERNANCE.md) — `decision` e `approval`,
+  históricos imutáveis, supersessão, auditoria e saída dual.
+
 ## Codex integration
 
 Planned documents:
@@ -74,6 +79,10 @@ Planned detailed documents:
 ## Implementation
 
 - [`plans/IMPLEMENTATION_PLAN.md`](plans/IMPLEMENTATION_PLAN.md) — ordered PR program for the first stable release.
+- `src/ludowright/application/governance.py` — casos de uso de decisões,
+  aprovações, grafo e trilha de auditoria.
+- `src/ludowright/infrastructure/governance.py` — repositórios JSON canônicos de
+  decisões e aprovações.
 
 Future bounded changes should receive their own plan under `plans/`.
 
@@ -137,6 +146,7 @@ Planned operational documents:
 
 ## Decisions
 
+- [`decisions/0016-canonical-governance-command-storage.md`](decisions/0016-canonical-governance-command-storage.md) — canonical governance paths and coordinated document, graph, and event-log writes.
 - [`decisions/0014-stable-dual-surface-cli-contract.md`](decisions/0014-stable-dual-surface-cli-contract.md) — accepted Rich human output, one canonical JSON envelope, stable semantic errors and process codes, version output, and read-only diagnostics.
 - [`decisions/0013-versioned-acyclic-dependency-invalidation-graph.md`](decisions/0013-versioned-acyclic-dependency-invalidation-graph.md) — accepted typed revision-aware DAG dependencies, stale and review propagation, persisted impact paths, safe refresh, and canonical JSON persistence.
 - [`decisions/0012-explicit-backed-up-schema-migrations.md`](decisions/0012-explicit-backed-up-schema-migrations.md) — accepted explicit contiguous migration plans, dry runs, durable SQLite backups, strict receipts, transactional apply, and guarded rollback.

@@ -27,6 +27,15 @@ from ludowright.infrastructure.filesystem import (
     RepositoryPath,
     UnsafeProjectPathError,
 )
+from ludowright.infrastructure.governance import (
+    APPROVALS_DIRECTORY,
+    DECISIONS_DIRECTORY,
+    ApprovalRepository,
+    ApprovalSnapshot,
+    DecisionRepository,
+    DecisionSnapshot,
+    GovernanceRecordNotFoundError,
+)
 from ludowright.infrastructure.migrations import (
     STATE_MIGRATIONS,
     TARGET_STATE_SCHEMA_VERSION,
@@ -69,6 +78,8 @@ from ludowright.infrastructure.structured import (
 )
 
 __all__ = [
+    "APPROVALS_DIRECTORY",
+    "DECISIONS_DIRECTORY",
     "DEFAULT_DEPENDENCY_GRAPH_PATH",
     "DEFAULT_EVENT_LOG_PATH",
     "DEFAULT_STATE_STORE_PATH",
@@ -77,7 +88,11 @@ __all__ = [
     "STATE_MIGRATIONS",
     "STATE_SCHEMA_VERSION",
     "TARGET_STATE_SCHEMA_VERSION",
+    "ApprovalRepository",
+    "ApprovalSnapshot",
     "CorruptEventLogError",
+    "DecisionRepository",
+    "DecisionSnapshot",
     "DependencyGraphRepository",
     "DependencyGraphSnapshot",
     "EventCheckpoint",
@@ -86,6 +101,7 @@ __all__ = [
     "EventLogError",
     "EventLogRecovery",
     "EventLogSnapshot",
+    "GovernanceRecordNotFoundError",
     "IncompleteEventLogTailError",
     "IndexedEntity",
     "JsonDocumentRepository",

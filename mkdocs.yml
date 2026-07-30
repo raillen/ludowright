@@ -33,6 +33,8 @@ nav:
       - Command-Line Interface: contracts/CLI.md
   - Implementation:
       - Plan to 1.0: plans/IMPLEMENTATION_PLAN.md
+  - Commands:
+      - Decisions and Approvals: commands/GOVERNANCE.md
   - Quality:
       - Engineering Baseline: quality/ENGINEERING_QUALITY.md
   - Governance:
@@ -51,6 +53,7 @@ nav:
       - ADR 0012 — Explicit Backed-Up Migrations: decisions/0012-explicit-backed-up-schema-migrations.md
       - ADR 0013 — Dependency Invalidation Graph: decisions/0013-versioned-acyclic-dependency-invalidation-graph.md
       - ADR 0014 — Stable Dual-Surface CLI: decisions/0014-stable-dual-surface-cli-contract.md
+      - ADR 0016 — Governance Command Storage: decisions/0016-canonical-governance-command-storage.md
       - ADR Template: decisions/0000-template.md
   - Operations:
       - Documentation Site: operations/DOCUMENTATION_SITE.md

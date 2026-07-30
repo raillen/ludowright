@@ -23,6 +23,11 @@ This roadmap describes product capability, not fixed dates. Minor-version bounda
 - migrations, backup, and dry-run behavior;
 - project status and structural audit.
 
+Estado de implementação: a fatia de decisões e aprovações está implementada
+com comandos de registro, listagem, inspeção, transição, supersessão e trilha de
+auditoria. Inicialização, status e auditoria estrutural continuam PRs separados
+para preservar mudanças pequenas e revisáveis.
+
 ### 0.3 Guided Documentation
 
 - schema-driven interview engine;

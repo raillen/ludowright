@@ -98,6 +98,12 @@ Human-editable structured files remain the canonical product data where practica
 
 Derived outputs must contain or reference their source version and generation metadata.
 
+The governance command slice keeps decision histories in `decisions/<id>.json`
+and revision-bound approval histories in `approvals/<id>.json`. Mutations are
+orchestrated in the application layer under a project lock, advance the matching
+dependency-graph node, and append an audit event. The SQLite store remains a
+rebuildable index and never replaces either governance history.
+
 ## Source-of-truth rules
 
 - A decision record is canonical for rationale and status.

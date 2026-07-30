@@ -26,6 +26,21 @@ src/ludowright/cli/quality.py
 src/ludowright/contracts/cli.py
 ```
 
+Governance commands reuse this contract:
+
+```bash
+ludowright decision record PATH --id camera-choice --title "Isometric camera"
+ludowright --json decision list PATH
+ludowright approval request PATH --id front-review \
+  --subject-kind reference --subject-id maya-front --revision sha256:abc123
+```
+
+The command-specific `data` contains canonical relative paths, typed IDs,
+current status, history length, and the event sequence for mutations. Decision
+and approval records are stored in `decisions/` and `approvals/`; their published
+contract schemas remain version 1. See [`commands/GOVERNANCE.md`](../commands/GOVERNANCE.md)
+for the complete command surface.
+
 ## Human and machine surfaces
 
 Human mode is the default:

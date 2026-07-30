@@ -89,6 +89,15 @@ class DecisionRevisionContract(ContractModel):
     note: ReviewText | None = None
     superseded_by: Slug | None = None
 
+    @classmethod
+    def from_domain(cls, value: DecisionRevision) -> Self:
+        return cls(
+            sequence=value.sequence,
+            status=value.status,
+            note=str(value.note) if value.note is not None else None,
+            superseded_by=(value.superseded_by.value if value.superseded_by is not None else None),
+        )
+
     def to_domain(self) -> DecisionRevision:
         return DecisionRevision(
             sequence=self.sequence,
@@ -106,6 +115,16 @@ class DecisionContract(ContractModel):
     id: Slug
     title: DisplayText
     history: Annotated[tuple[DecisionRevisionContract, ...], Field(min_length=1)]
+
+    @classmethod
+    def from_domain(cls, value: Decision) -> Self:
+        if not isinstance(value, Decision):
+            raise TypeError("decision serialization requires Decision")
+        return cls(
+            id=value.id.value,
+            title=value.title.value,
+            history=tuple(DecisionRevisionContract.from_domain(item) for item in value.history),
+        )
 
     def to_domain(self) -> Decision:
         return Decision(
@@ -128,6 +147,17 @@ class ApprovalSubjectContract(ContractModel):
 
     id_types: ClassVar[dict[ApprovalSubjectKind, type[Identifier]]] = _SUBJECT_ID_TYPES
 
+    @classmethod
+    def from_domain(cls, value: ApprovalSubject) -> Self:
+        if not isinstance(value, ApprovalSubject):
+            raise TypeError("approval subject serialization requires ApprovalSubject")
+        return cls(
+            subject_kind=ApprovalSubjectKind(value.id.kind),
+            id=value.id.value,
+            revision=value.revision.value,
+            label=value.label.value if value.label is not None else None,
+        )
+
     def to_domain(self) -> ApprovalSubject:
         identifier_type = self.id_types[self.subject_kind]
         return ApprovalSubject(
@@ -142,6 +172,15 @@ class ApprovalRevisionContract(ContractModel):
     status: ApprovalStatus
     note: ReviewText | None = None
     superseded_by: Slug | None = None
+
+    @classmethod
+    def from_domain(cls, value: ApprovalRevision) -> Self:
+        return cls(
+            sequence=value.sequence,
+            status=value.status,
+            note=str(value.note) if value.note is not None else None,
+            superseded_by=(value.superseded_by.value if value.superseded_by is not None else None),
+        )
 
     def to_domain(self) -> ApprovalRevision:
         return ApprovalRevision(
@@ -160,6 +199,16 @@ class ApprovalContract(ContractModel):
     id: Slug
     subject: ApprovalSubjectContract
     history: Annotated[tuple[ApprovalRevisionContract, ...], Field(min_length=1)]
+
+    @classmethod
+    def from_domain(cls, value: Approval) -> Self:
+        if not isinstance(value, Approval):
+            raise TypeError("approval serialization requires Approval")
+        return cls(
+            id=value.id.value,
+            subject=ApprovalSubjectContract.from_domain(value.subject),
+            history=tuple(ApprovalRevisionContract.from_domain(item) for item in value.history),
+        )
 
     def to_domain(self) -> Approval:
         return Approval(

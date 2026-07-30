@@ -11,6 +11,10 @@ import typer
 from rich.console import Console
 
 from ludowright import __version__
+from ludowright.application.governance import (
+    GovernanceOperationError,
+    GovernanceStateError,
+)
 from ludowright.contracts.cli import (
     CliErrorCode,
     CliErrorContract,
@@ -19,10 +23,12 @@ from ludowright.contracts.cli import (
 from ludowright.domain import DomainValidationError
 from ludowright.infrastructure import (
     CorruptEventLogError,
+    GovernanceRecordNotFoundError,
     ProjectRootNotFoundError,
     StateStoreCorruptionError,
     StructuredDocumentConflictError,
     StructuredDocumentParseError,
+    UnsafeProjectPathError,
 )
 
 
@@ -172,6 +178,30 @@ def canonical_json(response: CliResponseContract) -> str:
 
 
 def _known_failure(error: Exception) -> CliFailure | None:
+    if isinstance(error, GovernanceRecordNotFoundError):
+        return CliFailure(
+            CliErrorCode.INVALID_INPUT,
+            str(error),
+            exit_code=CliExitCode.VALIDATION,
+        )
+    if isinstance(error, UnsafeProjectPathError):
+        return CliFailure(
+            CliErrorCode.INVALID_INPUT,
+            str(error),
+            exit_code=CliExitCode.VALIDATION,
+        )
+    if isinstance(error, GovernanceStateError):
+        return CliFailure(
+            CliErrorCode.CORRUPT_STATE,
+            str(error),
+            exit_code=CliExitCode.CORRUPT_STATE,
+        )
+    if isinstance(error, GovernanceOperationError):
+        return CliFailure(
+            CliErrorCode.INTERNAL_ERROR,
+            str(error),
+            exit_code=CliExitCode.INTERNAL,
+        )
     if isinstance(error, ProjectRootNotFoundError):
         return CliFailure(
             CliErrorCode.PROJECT_NOT_FOUND,
