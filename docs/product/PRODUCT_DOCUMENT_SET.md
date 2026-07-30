@@ -62,8 +62,9 @@ continua pertencendo aos contratos e casos de uso que montam o contexto.
 ## Fonte de verdade e segurança
 
 Templates e manifesto são dados versionados. O texto Markdown, snapshots e
-futuros arquivos de projeto são projeções derivadas. O engine não persiste
-resultados nem altera o event log ou o state store.
+arquivos de projeto são projeções derivadas. O engine continua puro; o caso de
+uso do PR29 persiste resultados em `.ludowright/documents/` e audita refreshes
+no event log sem transformar o template em fonte de verdade.
 
 O manifesto limita a herança aos arquivos declarados. Overrides locais seguem
 a política do contrato de templates e podem substituir um arquivo declarado sem
@@ -71,10 +72,10 @@ alterar o pack empacotado.
 
 ## Limitações e próximos passos
 
-O PR26 entrega o catálogo inicial e seus contextos esperados. Ainda não existe
-um caso de uso que leia respostas de uma entrevista, monte esses contextos e
-grave documentos no projeto. Essa orquestração será tratada nas etapas de
-arquitetura/documentação e refresh incremental.
+O PR26 entrega o catálogo inicial e seus contextos esperados. O PR29 já permite
+gravar e atualizar uma projeção quando o chamador fornece contexto e hashes de
+fontes. Ainda não existe a orquestração que leia respostas de uma entrevista e
+monte esses contextos; ela será tratada em uma etapa posterior.
 
 ## Validação
 

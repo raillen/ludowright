@@ -5,6 +5,11 @@ from ludowright.infrastructure.dependency_graph import (
     DependencyGraphRepository,
     DependencyGraphSnapshot,
 )
+from ludowright.infrastructure.document_refresh import (
+    DEFAULT_DOCUMENT_DIRECTORY,
+    DocumentRefreshRepository,
+    DocumentRefreshSnapshot,
+)
 from ludowright.infrastructure.documentation import (
     DocumentationFilesystem,
     DocumentationFilesystemError,
@@ -76,6 +81,7 @@ from ludowright.infrastructure.structured import (
 
 __all__ = [
     "DEFAULT_DEPENDENCY_GRAPH_PATH",
+    "DEFAULT_DOCUMENT_DIRECTORY",
     "DEFAULT_EVENT_LOG_PATH",
     "DEFAULT_STATE_STORE_PATH",
     "LOCK_DIRECTORY",
@@ -86,6 +92,8 @@ __all__ = [
     "CorruptEventLogError",
     "DependencyGraphRepository",
     "DependencyGraphSnapshot",
+    "DocumentRefreshRepository",
+    "DocumentRefreshSnapshot",
     "DocumentationFilesystem",
     "DocumentationFilesystemError",
     "DocumentationRootError",

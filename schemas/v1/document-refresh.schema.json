@@ -1,0 +1,157 @@
+{
+  "$defs": {
+    "DocumentManualSectionContract": {
+      "additionalProperties": false,
+      "description": "Metadata for one manual section preserved across generated refreshes.",
+      "properties": {
+        "approved": {
+          "title": "Approved",
+          "type": "boolean"
+        },
+        "digest": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Digest",
+          "type": "string"
+        },
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "approved",
+        "digest"
+      ],
+      "title": "DocumentManualSectionContract",
+      "type": "object"
+    },
+    "DocumentSourceHashContract": {
+      "additionalProperties": false,
+      "description": "One deterministic source identity consumed by a document.",
+      "properties": {
+        "digest": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Digest",
+          "type": "string"
+        },
+        "source_id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Source Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_id",
+        "digest"
+      ],
+      "title": "DocumentSourceHashContract",
+      "type": "object"
+    }
+  },
+  "$id": "https://schemas.ludowright.dev/v1/document-refresh.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Canonical state observed after a document refresh.",
+  "properties": {
+    "document_id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Document Id",
+      "type": "string"
+    },
+    "entrypoint": {
+      "maxLength": 1024,
+      "minLength": 1,
+      "pattern": "^[a-z0-9._-]+(?:/[a-z0-9._-]+)*$",
+      "title": "Entrypoint",
+      "type": "string"
+    },
+    "generated_digest": {
+      "maxLength": 64,
+      "minLength": 64,
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Generated Digest",
+      "type": "string"
+    },
+    "kind": {
+      "const": "document-refresh",
+      "default": "document-refresh",
+      "title": "Kind",
+      "type": "string"
+    },
+    "manual_sections": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/DocumentManualSectionContract"
+      },
+      "maxItems": 1024,
+      "title": "Manual Sections",
+      "type": "array"
+    },
+    "output_digest": {
+      "maxLength": 64,
+      "minLength": 64,
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Output Digest",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "source_hashes": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/DocumentSourceHashContract"
+      },
+      "maxItems": 1024,
+      "title": "Source Hashes",
+      "type": "array"
+    },
+    "status": {
+      "default": "current",
+      "enum": [
+        "current",
+        "stale"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "template_id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Template Id",
+      "type": "string"
+    },
+    "template_version": {
+      "maximum": 2147483647,
+      "minimum": 1,
+      "title": "Template Version",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "document_id",
+    "template_id",
+    "template_version",
+    "entrypoint",
+    "generated_digest",
+    "output_digest"
+  ],
+  "title": "LudoWright Document Refresh State",
+  "type": "object"
+}

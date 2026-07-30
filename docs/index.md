@@ -25,8 +25,12 @@ The repository currently establishes:
 - tests and continuous integration.
 - deterministic document templates and an ATLAS index with canonical-source and
   link-integrity checks.
+- incremental document refresh with source hashes, stale planning, manual
+  preservation, and rollback.
 
-Project initialization, persisted schemas, asset planning, capture profiles, ImageGen execution, review workflows, technical sheets, and package generation remain planned work.
+Project initialization, interview-context orchestration, asset planning,
+capture profiles, ImageGen execution, review workflows, technical sheets, and
+package generation remain planned work.
 
 ## Start here
 

@@ -1,0 +1,98 @@
+{
+  "$defs": {
+    "DocumentSourceHashContract": {
+      "additionalProperties": false,
+      "description": "One deterministic source identity consumed by a document.",
+      "properties": {
+        "digest": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Digest",
+          "type": "string"
+        },
+        "source_id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Source Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_id",
+        "digest"
+      ],
+      "title": "DocumentSourceHashContract",
+      "type": "object"
+    }
+  },
+  "$id": "https://schemas.ludowright.dev/v1/document-refresh-request.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Canonical input used to render one document incrementally.",
+  "properties": {
+    "context": {
+      "additionalProperties": true,
+      "title": "Context",
+      "type": "object"
+    },
+    "document_id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Document Id",
+      "type": "string"
+    },
+    "entrypoint": {
+      "anyOf": [
+        {
+          "maxLength": 1024,
+          "minLength": 1,
+          "pattern": "^[a-z0-9._-]+(?:/[a-z0-9._-]+)*$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Entrypoint"
+    },
+    "kind": {
+      "const": "document-refresh-request",
+      "default": "document-refresh-request",
+      "title": "Kind",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "source_hashes": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/DocumentSourceHashContract"
+      },
+      "maxItems": 1024,
+      "title": "Source Hashes",
+      "type": "array"
+    },
+    "template_id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Template Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "document_id",
+    "template_id",
+    "context"
+  ],
+  "title": "LudoWright Document Refresh Request",
+  "type": "object"
+}

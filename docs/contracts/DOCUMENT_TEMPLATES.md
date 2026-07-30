@@ -106,10 +106,13 @@ as migrações.
 ## Limitações
 
 O engine fornece templates mínimos e os packs iniciais de documentos de produto
-e arquitetura. Os entrypoints de arquitetura estão catalogados em
+e arquitetura. O caso de uso de refresh do PR29 persiste as projeções em
+`.ludowright/documents/`, mas não monta contextos a partir de entrevistas. Os
+entrypoints de arquitetura estão catalogados em
 [`architecture/ARCHITECTURE_DOCUMENT_SET.md`](../architecture/ARCHITECTURE_DOCUMENT_SET.md).
-Ainda não há caso de uso que persista documentos no projeto, gere o ATLAS ou
-calcule staleness; essas capacidades pertencem aos PRs seguintes.
+O refresh e a detecção de staleness estão documentados em
+[`DOCUMENT_REFRESH.md`](DOCUMENT_REFRESH.md). A integração com fontes de
+entrevista e o audit documental continuam nos PRs seguintes.
 
 ## Validação
 

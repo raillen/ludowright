@@ -228,6 +228,12 @@ the shared Rich/JSON surfaces and remains read-only by default.
 
 ### PR 29 — Incremental document refresh
 
+Status: implemented in the current slice. Refresh requests and states are
+published as v1 contracts; the application plans affected documents from
+source hashes and template/output digests, preserves manual sections, and
+persists Markdown, state, and a refresh event with atomic writes, locks, and
+rollback. The interview-to-context orchestration remains separate.
+
 - source hashes;
 - stale marking;
 - affected-document planning;

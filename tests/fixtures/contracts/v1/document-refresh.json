@@ -1,0 +1,18 @@
+{
+  "document_id": "game-brief",
+  "entrypoint": "document.md.jinja",
+  "generated_digest": "1111111111111111111111111111111111111111111111111111111111111111",
+  "kind": "document-refresh",
+  "manual_sections": [],
+  "output_digest": "2222222222222222222222222222222222222222222222222222222222222222",
+  "schema_version": 1,
+  "source_hashes": [
+    {
+      "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+      "source_id": "interview"
+    }
+  ],
+  "status": "current",
+  "template_id": "minimal",
+  "template_version": 1
+}

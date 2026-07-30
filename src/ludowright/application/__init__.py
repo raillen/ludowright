@@ -6,6 +6,14 @@ from ludowright.application.atlas import (
     AtlasGenerator,
     render_atlas_markdown,
 )
+from ludowright.application.document_refresh import (
+    DocumentRefreshError,
+    DocumentRefreshPlan,
+    DocumentRefreshRequest,
+    DocumentRefreshResult,
+    DocumentRefreshRollbackError,
+    DocumentRefreshService,
+)
 from ludowright.application.document_templates import (
     DocumentTemplateContextError,
     DocumentTemplateDefinitionError,
@@ -26,6 +34,12 @@ __all__ = [
     "AtlasGeneration",
     "AtlasGenerationError",
     "AtlasGenerator",
+    "DocumentRefreshError",
+    "DocumentRefreshPlan",
+    "DocumentRefreshRequest",
+    "DocumentRefreshResult",
+    "DocumentRefreshRollbackError",
+    "DocumentRefreshService",
     "DocumentTemplateContextError",
     "DocumentTemplateDefinitionError",
     "DocumentTemplateEngine",
