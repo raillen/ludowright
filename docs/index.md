@@ -29,6 +29,7 @@ The repository currently establishes:
   preservation, and rollback.
 - deterministic documentation audits for required topics, duplicate sources,
   explicit contradiction rules, and stale references.
+- a versioned data-driven asset taxonomy with subtype catalogs and naming policy.
 
 Project initialization, interview-context orchestration, asset planning,
 capture profiles, ImageGen execution, review workflows, technical sheets, and

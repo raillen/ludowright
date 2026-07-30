@@ -45,6 +45,7 @@ assembly from interview answers remains a later bounded capability.
 ### 0.4 Asset Registry
 
 - canonical asset taxonomy and schema;
+- data-defined initial families, subtypes, and naming policy;
 - discovery from game documentation;
 - manual and guided asset creation;
 - components, variants, states, dependencies, priorities, and ownership;

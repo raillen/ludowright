@@ -27,6 +27,12 @@
       "sha256": "164f49cd0db422046bf563826ce0cf4a77aaf086aeec231ae71ce7a8ec013ad6"
     },
     {
+      "file": "asset-taxonomy.schema.json",
+      "name": "asset-taxonomy",
+      "schema_id": "https://schemas.ludowright.dev/v1/asset-taxonomy.schema.json",
+      "sha256": "ea44ccc1194ae876fa0b92a8a663589b761eaeae54216cbc2e40045166eda8a9"
+    },
+    {
       "file": "visual-reference.schema.json",
       "name": "visual-reference",
       "schema_id": "https://schemas.ludowright.dev/v1/visual-reference.schema.json",

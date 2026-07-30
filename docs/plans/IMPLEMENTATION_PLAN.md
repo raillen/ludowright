@@ -256,6 +256,12 @@ surfaces, and runs in the unified quality gate without modifying documentation.
 
 ### PR 31 — Asset taxonomy
 
+Status: implemented in the current slice. The `asset-taxonomy` v1 contract and
+packaged JSON catalog cover every current asset family, initial data-defined
+subtypes, and unique family naming prefixes. The application loader validates
+the catalog and composes subtype/prefix policy with the existing domain IDs;
+asset registry persistence and commands remain in PR32.
+
 - initial families and subtypes;
 - taxonomy extension data;
 - naming policy.

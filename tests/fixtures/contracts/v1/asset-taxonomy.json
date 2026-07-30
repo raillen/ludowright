@@ -1,0 +1,42 @@
+{
+  "families": [
+    {"description": "Animation.", "family": "animation", "label": "Animation", "subtypes": []},
+    {"description": "Architecture.", "family": "architecture", "label": "Architecture", "subtypes": []},
+    {"description": "Audio.", "family": "audio", "label": "Audio", "subtypes": []},
+    {"description": "Character.", "family": "character", "label": "Character", "subtypes": []},
+    {"description": "Creature.", "family": "creature", "label": "Creature", "subtypes": []},
+    {"description": "Environment.", "family": "environment", "label": "Environment", "subtypes": []},
+    {"description": "Material.", "family": "material", "label": "Material", "subtypes": []},
+    {"description": "Other.", "family": "other", "label": "Other", "subtypes": []},
+    {"description": "Prop.", "family": "prop", "label": "Prop", "subtypes": []},
+    {"description": "Terrain.", "family": "terrain", "label": "Terrain", "subtypes": []},
+    {"description": "Texture.", "family": "texture", "label": "Texture", "subtypes": []},
+    {"description": "UI.", "family": "ui", "label": "UI", "subtypes": []},
+    {"description": "Vegetation.", "family": "vegetation", "label": "Vegetation", "subtypes": []},
+    {"description": "Vehicle.", "family": "vehicle", "label": "Vehicle", "subtypes": []},
+    {"description": "VFX.", "family": "vfx", "label": "VFX", "subtypes": []}
+  ],
+  "kind": "asset-taxonomy",
+  "naming_policy": {
+    "asset_id_format": "{prefix}-{slug}",
+    "rules": [
+      {"family": "animation", "prefix": "anim"},
+      {"family": "architecture", "prefix": "arch"},
+      {"family": "audio", "prefix": "aud"},
+      {"family": "character", "prefix": "chr"},
+      {"family": "creature", "prefix": "cre"},
+      {"family": "environment", "prefix": "env"},
+      {"family": "material", "prefix": "mat"},
+      {"family": "other", "prefix": "asset"},
+      {"family": "prop", "prefix": "prop"},
+      {"family": "terrain", "prefix": "ter"},
+      {"family": "texture", "prefix": "tex"},
+      {"family": "ui", "prefix": "ui"},
+      {"family": "vegetation", "prefix": "veg"},
+      {"family": "vehicle", "prefix": "veh"},
+      {"family": "vfx", "prefix": "vfx"}
+    ]
+  },
+  "schema_version": 1,
+  "version": 1
+}

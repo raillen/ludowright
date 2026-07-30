@@ -55,6 +55,12 @@
       "title": "Asset Domain Contract"
     },
     {
+      "canonical_source": "contracts/ASSET_TAXONOMY.md",
+      "path": "contracts/ASSET_TAXONOMY.md",
+      "section": "contracts",
+      "title": "Asset Taxonomy Contract"
+    },
+    {
       "canonical_source": "contracts/CAPTURE_PROFILES.md",
       "path": "contracts/CAPTURE_PROFILES.md",
       "section": "contracts",
@@ -281,6 +287,12 @@
       "path": "decisions/0020-deterministic-documentation-audit.md",
       "section": "decisions",
       "title": "ADR 0020 — Deterministic Documentation Audit"
+    },
+    {
+      "canonical_source": "decisions/0021-data-driven-asset-taxonomy.md",
+      "path": "decisions/0021-data-driven-asset-taxonomy.md",
+      "section": "decisions",
+      "title": "ADR 0021 — Data-Driven Asset Taxonomy"
     },
     {
       "canonical_source": "governance/RFC_TEMPLATE.md",
