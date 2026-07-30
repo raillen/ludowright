@@ -35,9 +35,9 @@ esperados estão cobertos por snapshots em
 `tests/snapshots/templates/architecture/`.
 
 O pack não persiste documentos, não atualiza o ATLAS e não executa orquestração.
-Essas responsabilidades permanecem nos PRs de geração, refresh e auditoria.
-Assim, uma saída renderizada é derivada e só se torna um artefato do projeto
-quando um caso de uso de persistência explícito a gravar.
+O caso de uso de refresh do PR29 grava uma saída derivada somente quando recebe
+um pedido explícito, preservando seções manuais fora da região gerada. A
+montagem de contexto e a auditoria continuam separadas.
 
 ## Determinismo e compatibilidade
 

@@ -75,6 +75,18 @@
       "sha256": "1cb0d86b694f896ec5b94219b917756088ebe3ec976984afae0c1a87cd40e0d7"
     },
     {
+      "file": "document-refresh-request.schema.json",
+      "name": "document-refresh-request",
+      "schema_id": "https://schemas.ludowright.dev/v1/document-refresh-request.schema.json",
+      "sha256": "d4d22cd99ffd28f9a269721bc9a98f95f17537e49987fdb08b78fa960db84b07"
+    },
+    {
+      "file": "document-refresh.schema.json",
+      "name": "document-refresh",
+      "schema_id": "https://schemas.ludowright.dev/v1/document-refresh.schema.json",
+      "sha256": "6904bc9633f69d4333c539e59108fcfc5efb1005cb7d97099c867a19a44f88af"
+    },
+    {
       "file": "atlas-metadata.schema.json",
       "name": "atlas-metadata",
       "schema_id": "https://schemas.ludowright.dev/v1/atlas-metadata.schema.json",

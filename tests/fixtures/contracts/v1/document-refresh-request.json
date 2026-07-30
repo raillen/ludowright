@@ -1,0 +1,22 @@
+{
+  "context": {
+    "sections": [
+      {
+        "body": "A small game.",
+        "title": "Summary"
+      }
+    ],
+    "title": "Echoes"
+  },
+  "document_id": "game-brief",
+  "entrypoint": "document.md.jinja",
+  "kind": "document-refresh-request",
+  "schema_version": 1,
+  "source_hashes": [
+    {
+      "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+      "source_id": "interview"
+    }
+  ],
+  "template_id": "minimal"
+}

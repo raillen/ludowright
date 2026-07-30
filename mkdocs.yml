@@ -34,10 +34,12 @@ nav:
       - Dependency Graph: contracts/DEPENDENCY_GRAPH.md
       - Interview Questions: contracts/INTERVIEW_QUESTIONS.md
       - Document Templates: contracts/DOCUMENT_TEMPLATES.md
+      - Document Refresh: contracts/DOCUMENT_REFRESH.md
       - ATLAS Contract: contracts/ATLAS.md
       - Command-Line Interface: contracts/CLI.md
   - Commands:
       - Interview CLI: commands/INTERVIEW.md
+      - Documents CLI: commands/DOCUMENTS.md
       - ATLAS CLI: commands/ATLAS.md
   - Implementation:
       - Plan to 1.0: plans/IMPLEMENTATION_PLAN.md
@@ -63,6 +65,7 @@ nav:
       - ADR 0016 — Resumable Interview CLI: decisions/0016-resumable-interview-cli.md
       - ADR 0017 — Document Template Engine: decisions/0017-deterministic-document-template-engine.md
       - ADR 0018 — Deterministic ATLAS: decisions/0018-deterministic-atlas-index-and-integrity.md
+      - ADR 0019 — Incremental Document Refresh: decisions/0019-incremental-document-refresh.md
       - ADR Template: decisions/0000-template.md
   - Operations:
       - Documentation Site: operations/DOCUMENTATION_SITE.md

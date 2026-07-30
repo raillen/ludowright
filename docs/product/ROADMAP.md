@@ -36,6 +36,10 @@ This roadmap describes product capability, not fixed dates. Minor-version bounda
 - product, architecture, UI/UX, implementation, quality, security, production, ADR, and plan templates;
 - incremental document updates and staleness detection.
 
+The initial refresh slice uses explicit versioned requests and source hashes,
+preserves manual sections, and reports affected documents. Automatic context
+assembly from interview answers remains a later bounded capability.
+
 ### 0.4 Asset Registry
 
 - canonical asset taxonomy and schema;

@@ -31,6 +31,12 @@
       "title": "Interview CLI"
     },
     {
+      "canonical_source": "commands/DOCUMENTS.md",
+      "path": "commands/DOCUMENTS.md",
+      "section": "commands",
+      "title": "Documents CLI"
+    },
+    {
       "canonical_source": "contracts/ATLAS.md",
       "path": "contracts/ATLAS.md",
       "section": "contracts",
@@ -71,6 +77,12 @@
       "path": "contracts/DOCUMENT_TEMPLATES.md",
       "section": "contracts",
       "title": "Document Template Engine"
+    },
+    {
+      "canonical_source": "contracts/DOCUMENT_REFRESH.md",
+      "path": "contracts/DOCUMENT_REFRESH.md",
+      "section": "contracts",
+      "title": "Incremental Document Refresh Contract"
     },
     {
       "canonical_source": "contracts/EVENT_LOG.md",
@@ -245,6 +257,12 @@
       "path": "decisions/0018-deterministic-atlas-index-and-integrity.md",
       "section": "decisions",
       "title": "ADR 0018 — Deterministic ATLAS Index and Integrity Report"
+    },
+    {
+      "canonical_source": "decisions/0019-incremental-document-refresh.md",
+      "path": "decisions/0019-incremental-document-refresh.md",
+      "section": "decisions",
+      "title": "ADR 0019 — Incremental Document Refresh with Manual Preservation"
     },
     {
       "canonical_source": "governance/RFC_TEMPLATE.md",

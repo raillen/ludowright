@@ -52,4 +52,8 @@ The session write and event append use a per-session lock. If event persistence 
 
 ## Limitações
 
-This slice does not render documents or persist a SQLite cursor. The session JSON is the canonical resumable answer state; SQLite remains a rebuildable derived index. Template selection and document generation are subsequent roadmap steps.
+This slice does not assemble document contexts or persist a SQLite cursor. The
+session JSON is the canonical resumable answer state; SQLite remains a
+rebuildable derived index. A later orchestration can create a
+`document-refresh-request`, which is consumed by the incremental refresh
+workflow documented in [`DOCUMENTS.md`](DOCUMENTS.md).

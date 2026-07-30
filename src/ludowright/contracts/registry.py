@@ -10,6 +10,10 @@ from ludowright.contracts.capture import CaptureProfileContract
 from ludowright.contracts.cli import CliResponseContract
 from ludowright.contracts.common import ContractModel
 from ludowright.contracts.dependencies import DependencyGraphContract
+from ludowright.contracts.document_refresh import (
+    DocumentRefreshRequestContract,
+    DocumentRefreshStateContract,
+)
 from ludowright.contracts.document_templates import DocumentTemplateManifestContract
 from ludowright.contracts.governance import ApprovalContract, DecisionContract
 from ludowright.contracts.interviews import (
@@ -97,6 +101,18 @@ CONTRACTS: tuple[ContractDefinition, ...] = (
         "document-template.schema.json",
         "LudoWright Document Template",
         DocumentTemplateManifestContract,
+    ),
+    ContractDefinition(
+        "document-refresh-request",
+        "document-refresh-request.schema.json",
+        "LudoWright Document Refresh Request",
+        DocumentRefreshRequestContract,
+    ),
+    ContractDefinition(
+        "document-refresh",
+        "document-refresh.schema.json",
+        "LudoWright Document Refresh State",
+        DocumentRefreshStateContract,
     ),
     ContractDefinition(
         "atlas-metadata",

@@ -279,3 +279,9 @@ The `atlas` command returns the published `atlas-report` fields plus the
 deterministic Markdown projection and a `valid` boolean. With `--check`, an
 integrity finding uses the existing `checks-failed` error code and exit code 1;
 the complete report remains in `data`.
+
+The `documents refresh` command returns a `document-refresh-report` projection
+inside the same envelope. Its data contains the schema version, dry-run flag,
+affected and refreshed document IDs, and deterministic per-document plans.
+Expected request and marker validation failures use `invalid-input` with exit
+code 4; rollback failures use `corrupt-state` with exit code 6.
