@@ -182,6 +182,19 @@ Successful operations commit. Any exception rolls back. Connections are always c
 
 The store does not expose arbitrary SQL or a long-lived public connection. This prevents callers from bypassing validation, retaining transactions across user interaction, or coupling application logic to table layout.
 
+### Read-only inspection
+
+Structural audits use `StateStore(read_only=True)`. This mode:
+
+- does not create the database or its parent directory;
+- rejects a missing database and an active `-wal` sidecar;
+- opens an immutable SQLite URI without changing journal mode;
+- validates the supported schema, strict tables, and quick check;
+- refuses all mutating store methods.
+
+The audit must run against a quiescent state store. A live WAL is reported as
+an unavailable inspection snapshot and is not ignored.
+
 ## Workflow progress
 
 `WorkflowProgress` is immutable and contains:

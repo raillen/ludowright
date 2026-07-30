@@ -11,6 +11,7 @@ import typer
 from rich.console import Console
 
 from ludowright import __version__
+from ludowright.application.audit import StructuralAuditError
 from ludowright.contracts.cli import (
     CliErrorCode,
     CliErrorContract,
@@ -97,6 +98,7 @@ def run_command(
     local_json: bool,
     action: DataFactory,
     render_human: HumanRenderer,
+    render_failure_human: HumanRenderer | None = None,
 ) -> None:
     """Execute one command and render a stable success or expected failure."""
     json_output = json_requested(context, local_json)
@@ -108,6 +110,7 @@ def run_command(
             failure=expected_failure,
             json_output=json_output,
             context=context,
+            render_human=render_failure_human,
         )
     except Exception as error:
         mapped_failure = _known_failure(error)
@@ -118,6 +121,7 @@ def run_command(
             failure=mapped_failure,
             json_output=json_output,
             context=context,
+            render_human=render_failure_human,
         )
     else:
         if json_output:
@@ -137,6 +141,7 @@ def emit_failure(
     failure: CliFailure,
     json_output: bool,
     context: typer.Context,
+    render_human: HumanRenderer | None = None,
 ) -> None:
     """Render one expected error and terminate with its stable exit code."""
     if json_output:
@@ -154,6 +159,8 @@ def emit_failure(
     else:
         console = command_console(context, stderr=True)
         console.print(f"[bold red]Error:[/bold red] {failure.message}")
+        if render_human is not None and failure.data:
+            render_human(console, failure.data)
         if failure.details:
             for key, value in sorted(failure.details.items()):
                 console.print(f"  [dim]{key}:[/dim] {value}")
@@ -177,6 +184,12 @@ def _known_failure(error: Exception) -> CliFailure | None:
             CliErrorCode.PROJECT_NOT_FOUND,
             str(error),
             exit_code=CliExitCode.NOT_FOUND,
+        )
+    if isinstance(error, StructuralAuditError):
+        return CliFailure(
+            CliErrorCode.CORRUPT_STATE,
+            str(error),
+            exit_code=CliExitCode.CORRUPT_STATE,
         )
     if isinstance(error, StructuredDocumentConflictError):
         return CliFailure(

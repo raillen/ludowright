@@ -49,6 +49,7 @@ or locally after a command:
 ludowright status --json
 ludowright diagnostics --json
 ludowright quality check --json
+ludowright audit PATH --json
 ```
 
 Global settings are inherited by nested command groups.
@@ -272,3 +273,18 @@ The CLI contract:
 - preserves command failure data for auditing.
 
 Future commands must use the shared runtime rather than inventing command-specific JSON envelopes or exit-code conventions.
+
+## Structural audit
+
+The read-only verification command is:
+
+```text
+ludowright audit PATH
+ludowright --json audit PATH
+```
+
+It reuses the `cli-response` envelope. A clean audit succeeds with exit code
+`0`; findings retain the complete command data and use `checks-failed` with
+exit code `1`. A missing project root continues to use `project-not-found`
+with exit code `3`. See [`STRUCTURAL_AUDIT.md`](STRUCTURAL_AUDIT.md) for the
+finding and repair contract.

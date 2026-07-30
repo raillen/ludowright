@@ -36,6 +36,7 @@ This is the main navigation map for humans and agents. Each subject should have 
 - [`contracts/MIGRATIONS.md`](contracts/MIGRATIONS.md) — contiguous plans, dry runs, consistent backups, receipts, transactional apply, and guarded rollback.
 - [`contracts/DEPENDENCY_GRAPH.md`](contracts/DEPENDENCY_GRAPH.md) — typed nodes and edges, observed revisions, freshness states, invalidation paths, refresh rules, and canonical graph persistence.
 - [`contracts/CLI.md`](contracts/CLI.md) — dual human/JSON surfaces, response envelope, error codes, exit codes, version output, diagnostics, and compatibility rules.
+- [`contracts/STRUCTURAL_AUDIT.md`](contracts/STRUCTURAL_AUDIT.md) — read-only structural checks, finding codes, version observations, approved-file mutation detection, and repair guidance.
 
 Published machine-readable contracts are stored under `schemas/v1/`. The source models live under `src/ludowright/contracts/`.
 
@@ -43,6 +44,11 @@ Planned canonical contracts:
 
 - project manifest;
 - release manifest.
+
+## Commands
+
+- [`commands/AUDIT.md`](commands/AUDIT.md) — read-only structural audit,
+  verification failures, and repair guidance.
 
 ## Codex integration
 
@@ -74,6 +80,8 @@ Planned detailed documents:
 ## Implementation
 
 - [`plans/IMPLEMENTATION_PLAN.md`](plans/IMPLEMENTATION_PLAN.md) — ordered PR program for the first stable release.
+- `src/ludowright/application/audit.py` — structural inspection and deterministic findings.
+- `src/ludowright/contracts/audit.py` — typed command-result contracts for audit data.
 
 Future bounded changes should receive their own plan under `plans/`.
 
@@ -87,6 +95,7 @@ Future bounded changes should receive their own plan under `plans/`.
 - [`contracts/MIGRATIONS.md`](contracts/MIGRATIONS.md) — catalog, dry-run, backup, failure rollback, explicit restore, tampering, and concurrency tests.
 - [`contracts/DEPENDENCY_GRAPH.md`](contracts/DEPENDENCY_GRAPH.md) — cycle rejection, revision propagation, impact-path selection, refresh blocking, contract round-trip, and repository conflict tests.
 - [`contracts/CLI.md`](contracts/CLI.md) — envelope invariants, deterministic JSON, global options, diagnostics, quality failures, and exit-code tests.
+- [`contracts/STRUCTURAL_AUDIT.md`](contracts/STRUCTURAL_AUDIT.md) — audit findings, read-only guarantees, and compatibility tests.
 
 Planned detailed documents:
 
@@ -105,6 +114,7 @@ Planned detailed documents:
 - [`contracts/MIGRATIONS.md`](contracts/MIGRATIONS.md) — trusted migration code, durable backups, strict receipts, digest-guarded rollback, and fail-closed versions.
 - [`contracts/DEPENDENCY_GRAPH.md`](contracts/DEPENDENCY_GRAPH.md) — bounded graph documents, typed identities, cycle rejection, deterministic causes, and optimistic write conflicts.
 - [`contracts/CLI.md`](contracts/CLI.md) — bounded machine output, expected-error mapping, read-only diagnostics, no-color policy, and traceback boundaries.
+- [`contracts/STRUCTURAL_AUDIT.md`](contracts/STRUCTURAL_AUDIT.md) — fail-closed path, corruption, version, WAL, and approved-source checks.
 
 Planned detailed documents:
 
@@ -136,6 +146,8 @@ Planned operational documents:
 - extension governance.
 
 ## Decisions
+
+- [`decisions/0017-structural-audit-and-read-only-state-inspection.md`](decisions/0017-structural-audit-and-read-only-state-inspection.md) — accepted read-only audit orchestration, immutable SQLite inspection, and non-automatic repair guidance.
 
 - [`decisions/0014-stable-dual-surface-cli-contract.md`](decisions/0014-stable-dual-surface-cli-contract.md) — accepted Rich human output, one canonical JSON envelope, stable semantic errors and process codes, version output, and read-only diagnostics.
 - [`decisions/0013-versioned-acyclic-dependency-invalidation-graph.md`](decisions/0013-versioned-acyclic-dependency-invalidation-graph.md) — accepted typed revision-aware DAG dependencies, stale and review propagation, persisted impact paths, safe refresh, and canonical JSON persistence.
