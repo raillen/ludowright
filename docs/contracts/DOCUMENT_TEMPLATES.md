@@ -2,8 +2,8 @@
 
 ## Status
 
-Atual. O PR25 publica o primeiro template de documento e a API de renderização
-determinística. O conjunto de documentos de produto será adicionado no PR26.
+Atual. O PR27 publica os packs `minimal`, `product` e `architecture`, além da
+API de renderização determinística.
 
 ## Objetivo
 
@@ -69,7 +69,7 @@ linha. O digest é SHA-256 dos bytes UTF-8 da saída.
 
 ## Herança e overrides
 
-Os templates `minimal` e `product` usam herança Jinja. Um projeto pode substituir arquivos
+Os templates `minimal`, `product` e `architecture` usam herança Jinja. Um projeto pode substituir arquivos
 declarados sem alterar o pacote, colocando-os em:
 
 ```text
@@ -105,10 +105,11 @@ as migrações.
 
 ## Limitações
 
-O engine fornece templates mínimos e o pack inicial de documentos de produto.
-Ele ainda não define os documentos de arquitetura, qualidade, segurança,
-produção ou ATLAS, nem o caso de uso que persiste documentos no projeto; essas
-capacidades pertencem aos PRs seguintes.
+O engine fornece templates mínimos e os packs iniciais de documentos de produto
+e arquitetura. Os entrypoints de arquitetura estão catalogados em
+[`architecture/ARCHITECTURE_DOCUMENT_SET.md`](../architecture/ARCHITECTURE_DOCUMENT_SET.md).
+Ainda não há caso de uso que persista documentos no projeto, gere o ATLAS ou
+calcule staleness; essas capacidades pertencem aos PRs seguintes.
 
 ## Validação
 

@@ -1,0 +1,14 @@
+{% extends "base.md.jinja" %}
+{% block document -%}
+{{ super() }}
+
+## Gates
+
+{% for gate in gates -%}
+- {{ gate }}
+{% endfor %}
+
+## Failure policy
+
+{{ failure_policy }}
+{%- endblock document %}

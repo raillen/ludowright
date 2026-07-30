@@ -1,0 +1,18 @@
+{% extends "base.md.jinja" %}
+{% block document -%}
+{{ super() }}
+
+## Phases
+
+{% for phase in phases -%}
+### {{ phase.name }}
+
+{{ phase.outcome }}
+
+{% endfor %}
+## Validation
+
+{% for check in validation -%}
+- {{ check }}
+{% endfor %}
+{%- endblock document %}

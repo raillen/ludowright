@@ -1,0 +1,17 @@
+{% extends "base.md.jinja" %}
+{% block document -%}
+{{ super() }}
+
+## Routine commands
+
+{% for command in commands -%}
+```text
+{{ command }}
+```
+{% endfor %}
+## Recovery
+
+{% for step in recovery -%}
+- {{ step }}
+{% endfor %}
+{%- endblock document %}
