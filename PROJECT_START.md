@@ -46,7 +46,21 @@ Development proceeds in this order:
 
 ## Current phase
 
-The repository is in the **foundation phase**. No stable public API exists yet.
+The repository is in **Project Core**. The CLI foundation, project
+initialization, project status, governance commands, and read-only structural
+audit are implemented as separate lifecycle slices. Guided documentation and
+the later production workflow remain planned.
+
+Project audit quick start:
+
+```bash
+ludowright audit ./my-game
+ludowright --json audit ./my-game
+```
+
+The audit never repairs files or initializes SQLite. Findings use the existing
+CLI verification error contract and include deterministic repair guidance. See
+[`docs/commands/AUDIT.md`](docs/commands/AUDIT.md).
 
 ## Navigation
 

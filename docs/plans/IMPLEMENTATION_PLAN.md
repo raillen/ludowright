@@ -155,6 +155,10 @@ Exit: repository installs, imports, tests, and clearly explains the product.
 - record, list, supersede, and inspect decisions;
 - approval commands and audit trail.
 
+Status: implemented on the dedicated governance branch. The commands persist
+immutable decision and approval histories and coordinate canonical documents,
+graph revisions, event records, and derived SQLite checkpoints.
+
 ### PR 22 — Structural audit
 
 - missing paths;
@@ -162,6 +166,12 @@ Exit: repository installs, imports, tests, and clearly explains the product.
 - mismatched versions;
 - unexpected approved-file mutations;
 - repair guidance.
+
+Status: implemented on the dedicated structural-audit branch. The read-only
+`audit` command validates the manifest, event log, dependency graph, SQLite
+state, source digests, persisted versions, and approved-file mutations. It
+returns deterministic Rich/JSON findings and never repairs or initializes
+state.
 
 ## Phase E — Guided documentation
 

@@ -23,6 +23,9 @@ This roadmap describes product capability, not fixed dates. Minor-version bounda
 - migrations, backup, and dry-run behavior;
 - project status and structural audit.
 
+Project Core status: initialization, status, governance commands, and the
+read-only structural audit are implemented in separate reviewable slices.
+
 ### 0.3 Guided Documentation
 
 - schema-driven interview engine;

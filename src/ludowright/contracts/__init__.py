@@ -1,6 +1,14 @@
 """Versioned serialization contracts and JSON Schema publication."""
 
 from ludowright.contracts.assets import AssetContract
+from ludowright.contracts.audit import (
+    AuditComponentContract,
+    AuditFindingContract,
+    AuditProjectContract,
+    AuditVersionContract,
+    RepairGuidanceContract,
+    StructuralAuditContract,
+)
 from ludowright.contracts.capture import CaptureProfileContract
 from ludowright.contracts.cli import (
     CliErrorCode,
@@ -49,6 +57,10 @@ __all__ = [
     "SCHEMA_VERSION",
     "ApprovalContract",
     "AssetContract",
+    "AuditComponentContract",
+    "AuditFindingContract",
+    "AuditProjectContract",
+    "AuditVersionContract",
     "CaptureProfileContract",
     "CliErrorCode",
     "CliErrorContract",
@@ -64,6 +76,8 @@ __all__ = [
     "MigrationReceiptContract",
     "MigrationRunStatus",
     "ProjectContract",
+    "RepairGuidanceContract",
+    "StructuralAuditContract",
     "VisualJobContract",
     "VisualReferenceContract",
     "VisualReviewContract",

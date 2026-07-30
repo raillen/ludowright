@@ -50,6 +50,10 @@ Coordinates domain behavior through explicit use cases:
 - run audits;
 - build a release package.
 
+The structural audit is a read-only application use case. It validates the
+manifest, event log, dependency graph, and derived state store, compares exact
+source digests, and emits repair guidance without changing project files.
+
 Application code depends on ports, not concrete infrastructure.
 
 ### CLI
