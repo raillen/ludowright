@@ -1,0 +1,12 @@
+{% extends "base.md.jinja" %}
+{% block document -%}
+{{ super() }}
+
+{% for activity in loops -%}
+## {{ activity.name }}
+
+{% for step in activity.steps -%}
+{{ loop.index }}. {{ step }}
+{% endfor %}
+{% endfor %}
+{%- endblock document %}

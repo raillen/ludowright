@@ -1,0 +1,15 @@
+{% extends "base.md.jinja" %}
+{% block document -%}
+{{ super() }}
+
+## Primary users
+
+{% for user in primary_users -%}
+- {{ user }}
+{% endfor %}
+## Secondary users
+
+{% for user in secondary_users -%}
+- {{ user }}
+{% endfor %}
+{%- endblock document %}

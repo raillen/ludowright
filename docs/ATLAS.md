@@ -11,6 +11,7 @@ This is the main navigation map for humans and agents. Each subject should have 
 ## Product
 
 - [`product/PRODUCT_VISION.md`](product/PRODUCT_VISION.md) — mission, users, value, principles, boundaries, and success measures.
+- [`product/PRODUCT_DOCUMENT_SET.md`](product/PRODUCT_DOCUMENT_SET.md) — initial product-document catalog, entrypoints, contexts, and derived-output boundaries.
 - [`product/ROADMAP.md`](product/ROADMAP.md) — planned capabilities from the 0.x series through the long-term Studio direction.
 
 ## Architecture
@@ -70,7 +71,6 @@ Planned documents:
 
 Planned detailed documents:
 
-- product and document template catalog;
 - visual bible schema;
 - asset-family taxonomy;
 - segmented character references;

@@ -1,0 +1,11 @@
+{% extends "base.md.jinja" %}
+{% block document -%}
+{{ super() }}
+
+{% for measure in measures -%}
+## {{ measure.name }}
+
+{{ measure.description }}
+
+{% endfor %}
+{%- endblock document %}

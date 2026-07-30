@@ -1,0 +1,12 @@
+{% extends "base.md.jinja" %}
+{% block document -%}
+{{ super() }}
+
+{% for risk in risks -%}
+## {{ risk.name }}
+
+- Impact: {{ risk.impact }}
+- Mitigation: {{ risk.mitigation }}
+
+{% endfor %}
+{%- endblock document %}

@@ -199,6 +199,11 @@ overrides, and returns deterministic Markdown without persisting it.
 
 ### PR 26 — Product document set
 
+Status: implemented in the current slice. The `product` template pack publishes
+vision, audience, pillars, loops, scope, risk, platform, and success entrypoints
+with deterministic snapshots; document persistence and interview-context
+orchestration remain separate concerns.
+
 - vision, audience, pillars, loops, scope, risk, platform, and success templates.
 
 ### PR 27 — Architecture and implementation document set

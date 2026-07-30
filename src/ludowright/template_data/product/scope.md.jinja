@@ -1,0 +1,15 @@
+{% extends "base.md.jinja" %}
+{% block document -%}
+{{ super() }}
+
+## In scope
+
+{% for item in in_scope -%}
+- {{ item }}
+{% endfor %}
+## Out of scope
+
+{% for item in out_of_scope -%}
+- {{ item }}
+{% endfor %}
+{%- endblock document %}
