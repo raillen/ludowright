@@ -1,0 +1,22 @@
+{% extends "base.md.jinja" %}
+{% block document -%}
+{{ super() }}
+
+## Architectural goal
+
+{{ goal }}
+
+## Layers
+
+{% for layer in layers -%}
+### {{ layer.name }}
+
+{{ layer.description }}
+
+{% endfor %}
+## Boundaries
+
+{% for boundary in boundaries -%}
+- {{ boundary }}
+{% endfor %}
+{%- endblock document %}

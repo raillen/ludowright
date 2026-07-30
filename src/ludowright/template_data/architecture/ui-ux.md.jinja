@@ -1,0 +1,26 @@
+{% extends "base.md.jinja" %}
+{% block document -%}
+{{ super() }}
+
+## Principles
+
+{% for principle in principles -%}
+- {{ principle }}
+{% endfor %}
+
+## Flows
+
+{% for flow in flows -%}
+### {{ flow.name }}
+
+{% for step in flow.steps -%}
+{{ loop.index }}. {{ step }}
+{% endfor %}
+
+{% endfor %}
+## Accessibility
+
+{% for requirement in accessibility -%}
+- {{ requirement }}
+{% endfor %}
+{%- endblock document %}

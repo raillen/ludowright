@@ -1,0 +1,11 @@
+{% extends "base.md.jinja" %}
+{% block document -%}
+{{ super() }}
+
+{% for contract in contracts -%}
+## {{ contract.name }}
+
+{{ contract.purpose }}
+
+{% endfor %}
+{%- endblock document %}

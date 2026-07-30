@@ -30,6 +30,18 @@ PRODUCT_ENTRYPOINTS = (
     "success.md.jinja",
     "vision.md.jinja",
 )
+ARCHITECTURE_ENTRYPOINTS = (
+    "adrs.md.jinja",
+    "contracts.md.jinja",
+    "implementation.md.jinja",
+    "modules.md.jinja",
+    "operations.md.jinja",
+    "plans.md.jinja",
+    "quality.md.jinja",
+    "security.md.jinja",
+    "system-overview.md.jinja",
+    "ui-ux.md.jinja",
+)
 
 
 def _context() -> dict[str, object]:
@@ -100,6 +112,60 @@ def _product_context() -> dict[str, object]:
     }
 
 
+def _architecture_context() -> dict[str, object]:
+    return {
+        "title": "Echoes Architecture Brief",
+        "goal": "Keep product truth deterministic, local-first, and reviewable.",
+        "layers": [
+            {"name": "Domain", "description": "Owns invariants and state transitions."},
+            {"name": "Application", "description": "Coordinates explicit use cases."},
+        ],
+        "boundaries": [
+            "Domain does not import infrastructure.",
+            "Codex does not become the source of truth.",
+        ],
+        "contracts": [
+            {"name": "JSON Schemas", "purpose": "Publish machine-readable boundaries."},
+            {"name": "CLI Envelope", "purpose": "Keep automation output stable."},
+        ],
+        "modules": [
+            {"name": "Domain", "responsibility": "Validate business invariants."},
+            {"name": "Infrastructure", "responsibility": "Provide safe local adapters."},
+        ],
+        "principles": ["Show state before action", "Keep complexity progressive"],
+        "flows": [
+            {"name": "Intake", "steps": ["Inspect", "Ask", "Record"]},
+            {"name": "Review", "steps": ["Plan", "Validate", "Approve"]},
+        ],
+        "accessibility": ["Keyboard-friendly commands", "Readable error summaries"],
+        "phases": [
+            {"name": "Foundation", "outcome": "Safe storage and contracts exist."},
+            {"name": "Guided documentation", "outcome": "Structured documents can be resumed."},
+        ],
+        "validation": ["Run focused tests", "Run the full quality gate"],
+        "gates": ["Lint and format", "Strict type checking", "Contract publication"],
+        "failure_policy": "Quality failures block publication until the cause is understood.",
+        "controls": [
+            "Reject traversal and symlinks.",
+            "Write canonical files atomically.",
+        ],
+        "open_questions": ["Which release artifacts need signing?"],
+        "commands": ["uv run ludowright quality check", "uv run mkdocs build --strict --clean"],
+        "recovery": [
+            "Preserve the original failure cause.",
+            "Restore the last canonical snapshot.",
+        ],
+        "decisions": [
+            {"id": "ADR0014", "title": "Stable CLI surfaces", "status": "accepted"},
+            {"id": "ADR0017", "title": "Deterministic templates", "status": "accepted"},
+        ],
+        "plans": [
+            {"name": "Implementation plan", "scope": "Ordered bounded PRs to 1.0."},
+            {"name": "Roadmap", "scope": "Product capability and release direction."},
+        ],
+    }
+
+
 def test_minimal_manifest_is_versioned_and_loaded_from_package_data() -> None:
     manifest = load_document_template_manifest("minimal")
 
@@ -123,6 +189,25 @@ def test_product_manifest_declares_the_complete_document_set() -> None:
         "scope.md.jinja",
         "success.md.jinja",
         "vision.md.jinja",
+    )
+
+
+def test_architecture_manifest_declares_the_complete_document_set() -> None:
+    manifest = load_document_template_manifest("architecture")
+
+    assert manifest.entrypoint == "system-overview.md.jinja"
+    assert tuple(path for path in manifest.files if path.endswith(".md.jinja")) == (
+        "adrs.md.jinja",
+        "base.md.jinja",
+        "contracts.md.jinja",
+        "implementation.md.jinja",
+        "modules.md.jinja",
+        "operations.md.jinja",
+        "plans.md.jinja",
+        "quality.md.jinja",
+        "security.md.jinja",
+        "system-overview.md.jinja",
+        "ui-ux.md.jinja",
     )
 
 
@@ -174,6 +259,28 @@ def test_product_default_entrypoint_is_vision() -> None:
     assert result.content == (
         Path("tests/snapshots/templates/product/vision.md").read_text(encoding="utf-8")
     )
+
+
+@pytest.mark.parametrize("entrypoint", ARCHITECTURE_ENTRYPOINTS)
+def test_architecture_document_set_matches_snapshots(entrypoint: str) -> None:
+    result = DocumentTemplateEngine().render(
+        "architecture",
+        _architecture_context(),
+        entrypoint=entrypoint,
+    )
+    snapshot = Path("tests/snapshots/templates/architecture") / entrypoint.removesuffix(".jinja")
+
+    assert result.entrypoint == entrypoint
+    assert result.content == snapshot.read_text(encoding="utf-8")
+
+
+def test_architecture_default_entrypoint_is_system_overview() -> None:
+    result = DocumentTemplateEngine().render("architecture", _architecture_context())
+
+    assert result.entrypoint == "system-overview.md.jinja"
+    assert result.content == Path(
+        "tests/snapshots/templates/architecture/system-overview.md"
+    ).read_text(encoding="utf-8")
 
 
 @pytest.mark.parametrize("entrypoint", ["outside.md.jinja", "../base.md.jinja", ""])

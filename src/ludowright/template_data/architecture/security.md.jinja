@@ -1,0 +1,22 @@
+{% extends "base.md.jinja" %}
+{% block document -%}
+{{ super() }}
+
+## Trust boundaries
+
+{% for boundary in boundaries -%}
+- {{ boundary }}
+{% endfor %}
+
+## Controls
+
+{% for control in controls -%}
+- {{ control }}
+{% endfor %}
+
+## Open questions
+
+{% for question in open_questions -%}
+- {{ question }}
+{% endfor %}
+{%- endblock document %}

@@ -1,0 +1,11 @@
+{% extends "base.md.jinja" %}
+{% block document -%}
+{{ super() }}
+
+{% for decision in decisions -%}
+## {{ decision.id }} — {{ decision.title }}
+
+Status: {{ decision.status }}
+
+{% endfor %}
+{%- endblock document %}

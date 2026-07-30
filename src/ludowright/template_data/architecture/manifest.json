@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "kind": "document-template",
+  "id": "architecture",
+  "version": 1,
+  "entrypoint": "system-overview.md.jinja",
+  "files": [
+    "adrs.md.jinja",
+    "base.md.jinja",
+    "contracts.md.jinja",
+    "implementation.md.jinja",
+    "modules.md.jinja",
+    "operations.md.jinja",
+    "plans.md.jinja",
+    "quality.md.jinja",
+    "security.md.jinja",
+    "system-overview.md.jinja",
+    "ui-ux.md.jinja"
+  ]
+}

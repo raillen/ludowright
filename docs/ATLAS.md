@@ -17,6 +17,7 @@ This is the main navigation map for humans and agents. Each subject should have 
 ## Architecture
 
 - [`architecture/SYSTEM_OVERVIEW.md`](architecture/SYSTEM_OVERVIEW.md) — system boundaries, layers, modules, state, and integration model.
+- [`architecture/ARCHITECTURE_DOCUMENT_SET.md`](architecture/ARCHITECTURE_DOCUMENT_SET.md) — versioned architecture and implementation template entrypoints and their canonical sources.
 - [`contracts/DEPENDENCY_GRAPH.md`](contracts/DEPENDENCY_GRAPH.md) — canonical dependency direction, revision tracking, stale propagation, impact explanation, refresh, and cycle policy.
 - `architecture/COMPONENTS.md` — planned detailed component responsibilities.
 - `architecture/DATA_MODEL.md` — planned canonical entities and relationships.
@@ -50,7 +51,7 @@ Planned canonical contracts:
 
 The guided-documentation model is implemented in `src/ludowright/domain/interviews.py`, orchestrated by `src/ludowright/application/interviews.py`, and adapted at the external boundary by `src/ludowright/contracts/interviews.py`. The published interview contracts are `interview-questionnaire` and `interview-session`; CLI presentation lives in `src/ludowright/cli/interview.py`.
 
-The document template engine is implemented in `src/ludowright/application/document_templates.py`, its manifest contract lives in `src/ludowright/contracts/document_templates.py`, and versioned template data lives in `src/ludowright/template_data/`.
+The document template engine is implemented in `src/ludowright/application/document_templates.py`, its manifest contract lives in `src/ludowright/contracts/document_templates.py`, and versioned `minimal`, `product`, and `architecture` template data lives in `src/ludowright/template_data/`. The architecture pack is cataloged in [`architecture/ARCHITECTURE_DOCUMENT_SET.md`](architecture/ARCHITECTURE_DOCUMENT_SET.md); document persistence, ATLAS generation, and staleness remain planned.
 
 ## Codex integration
 

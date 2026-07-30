@@ -208,6 +208,11 @@ orchestration remain separate concerns.
 
 ### PR 27 — Architecture and implementation document set
 
+Status: implemented in the current slice. The `architecture` template pack
+publishes ten deterministic entrypoints with contract-backed manifests and
+snapshots. The canonical catalog maps each entrypoint to existing sources;
+persistence, ATLAS generation, and refresh remain separate concerns.
+
 - system overview, contracts, modules, UI/UX, implementation, quality, security, operations, ADRs, and plans.
 
 ### PR 28 — ATLAS generation
