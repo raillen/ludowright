@@ -56,42 +56,58 @@ def test_version_option_json_envelope() -> None:
     assert ": " not in raw
 
 
-def test_status_local_json_contract() -> None:
+def test_status_local_json_requires_project(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.chdir(tmp_path)
     payload, exit_code, _raw = json_response(["status", "--json"])
 
-    assert exit_code == int(CliExitCode.SUCCESS)
+    assert exit_code == int(CliExitCode.NOT_FOUND)
     assert payload["schema_version"] == 1
     assert payload["kind"] == "cli-response"
     assert payload["command"] == "status"
-    assert payload["ok"] is True
-    assert payload["data"] == {
-        "status": "foundation",
-        "version": __version__,
-    }
-    assert payload["error"] is None
+    assert payload["ok"] is False
+    error = payload["error"]
+    assert isinstance(error, dict)
+    assert error["code"] == "project-not-found"
 
 
-def test_status_inherits_global_json_option() -> None:
+def test_status_inherits_global_json_option(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.chdir(tmp_path)
     payload, exit_code, _raw = json_response(["--json", "status"])
 
-    assert exit_code == int(CliExitCode.SUCCESS)
+    assert exit_code == int(CliExitCode.NOT_FOUND)
     assert payload["command"] == "status"
-    assert payload["ok"] is True
+    assert payload["ok"] is False
+    error = payload["error"]
+    assert isinstance(error, dict)
+    assert error["code"] == "project-not-found"
 
 
-def test_status_human_output() -> None:
+def test_status_human_output_reports_missing_project(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.chdir(tmp_path)
     result = runner.invoke(app, ["status"])
 
-    assert result.exit_code == int(CliExitCode.SUCCESS)
-    assert "LudoWright is in the foundation phase." in result.stdout
-    assert f"Version: {__version__}" in result.stdout
+    assert result.exit_code == int(CliExitCode.NOT_FOUND)
+    assert "no '.ludowright/project.json' marker found" in result.stderr
 
 
-def test_no_color_disables_ansi_sequences() -> None:
+def test_no_color_disables_ansi_sequences(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.chdir(tmp_path)
     result = runner.invoke(app, ["--no-color", "status"])
 
-    assert result.exit_code == int(CliExitCode.SUCCESS)
-    assert "\x1b[" not in result.stdout
+    assert result.exit_code == int(CliExitCode.NOT_FOUND)
+    assert "\x1b[" not in result.stderr
 
 
 def test_diagnostics_json_outside_project(

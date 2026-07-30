@@ -52,6 +52,11 @@ Coordinates domain behavior through explicit use cases:
 
 Application code depends on ports, not concrete infrastructure.
 
+The current application status slice is implemented in
+`src/ludowright/application/status.py`. It composes read-only project discovery,
+canonical repositories, event replay, dependency freshness, and SQLite consistency
+into the dual human/JSON CLI surfaces.
+
 ### CLI
 
 Provides stable human-readable and JSON interfaces. Commands must be scriptable, have predictable exit codes, and support non-interactive operation. Destructive and migration commands require dry-run support.

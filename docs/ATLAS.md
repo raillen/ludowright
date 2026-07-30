@@ -44,6 +44,11 @@ Planned canonical contracts:
 - project manifest;
 - release manifest.
 
+## Commands
+
+- [`commands/STATUS.md`](commands/STATUS.md) — `ludowright status`, prontidão,
+  blockers, saídas stale, consistência e próximas ações.
+
 ## Codex integration
 
 Planned documents:
@@ -74,6 +79,11 @@ Planned detailed documents:
 ## Implementation
 
 - [`plans/IMPLEMENTATION_PLAN.md`](plans/IMPLEMENTATION_PLAN.md) — ordered PR program for the first stable release.
+
+Current application implementation:
+
+- `src/ludowright/application/status.py` — inspeção somente leitura de prontidão e consistência.
+- `src/ludowright/infrastructure/state_store.py` — índice SQLite com abertura read-only para inspeção.
 
 Future bounded changes should receive their own plan under `plans/`.
 
@@ -136,6 +146,8 @@ Planned operational documents:
 - extension governance.
 
 ## Decisions
+
+- [`decisions/0015-read-only-project-status.md`](decisions/0015-read-only-project-status.md) — immutable SQLite inspection for status and fail-closed behavior with active WAL.
 
 - [`decisions/0014-stable-dual-surface-cli-contract.md`](decisions/0014-stable-dual-surface-cli-contract.md) — accepted Rich human output, one canonical JSON envelope, stable semantic errors and process codes, version output, and read-only diagnostics.
 - [`decisions/0013-versioned-acyclic-dependency-invalidation-graph.md`](decisions/0013-versioned-acyclic-dependency-invalidation-graph.md) — accepted typed revision-aware DAG dependencies, stale and review propagation, persisted impact paths, safe refresh, and canonical JSON persistence.
