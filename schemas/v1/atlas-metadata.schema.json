@@ -1,0 +1,84 @@
+{
+  "$defs": {
+    "AtlasDocumentMetadataContract": {
+      "additionalProperties": false,
+      "description": "Canonical metadata for one Markdown document in the atlas.",
+      "properties": {
+        "canonical_source": {
+          "maxLength": 1024,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)*$",
+          "title": "Canonical Source",
+          "type": "string"
+        },
+        "path": {
+          "maxLength": 1024,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)*$",
+          "title": "Path",
+          "type": "string"
+        },
+        "section": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Section",
+          "type": "string"
+        },
+        "title": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "title",
+        "section",
+        "canonical_source"
+      ],
+      "title": "AtlasDocumentMetadataContract",
+      "type": "object"
+    }
+  },
+  "$id": "https://schemas.ludowright.dev/v1/atlas-metadata.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Versioned sidecar describing canonical documentation sources.",
+  "properties": {
+    "documents": {
+      "items": {
+        "$ref": "#/$defs/AtlasDocumentMetadataContract"
+      },
+      "maxItems": 10000,
+      "minItems": 1,
+      "title": "Documents",
+      "type": "array"
+    },
+    "kind": {
+      "const": "atlas-metadata",
+      "default": "atlas-metadata",
+      "title": "Kind",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "version": {
+      "maximum": 2147483647,
+      "minimum": 1,
+      "title": "Version",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "version",
+    "documents"
+  ],
+  "title": "LudoWright Atlas Metadata",
+  "type": "object"
+}

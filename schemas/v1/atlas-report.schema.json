@@ -1,0 +1,210 @@
+{
+  "$defs": {
+    "AtlasBrokenLinkContract": {
+      "additionalProperties": false,
+      "description": "One link or canonical-source reference that cannot be resolved.",
+      "properties": {
+        "fragment": {
+          "anyOf": [
+            {
+              "maxLength": 256,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Fragment"
+        },
+        "reason": {
+          "enum": [
+            "missing-file",
+            "missing-anchor",
+            "unsafe-path",
+            "missing-canonical-source"
+          ],
+          "title": "Reason",
+          "type": "string"
+        },
+        "source": {
+          "maxLength": 1024,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)*$",
+          "title": "Source",
+          "type": "string"
+        },
+        "target": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "title": "Target",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source",
+        "target",
+        "reason"
+      ],
+      "title": "AtlasBrokenLinkContract",
+      "type": "object"
+    },
+    "AtlasDocumentMetadataContract": {
+      "additionalProperties": false,
+      "description": "Canonical metadata for one Markdown document in the atlas.",
+      "properties": {
+        "canonical_source": {
+          "maxLength": 1024,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)*$",
+          "title": "Canonical Source",
+          "type": "string"
+        },
+        "path": {
+          "maxLength": 1024,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)*$",
+          "title": "Path",
+          "type": "string"
+        },
+        "section": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Section",
+          "type": "string"
+        },
+        "title": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "title",
+        "section",
+        "canonical_source"
+      ],
+      "title": "AtlasDocumentMetadataContract",
+      "type": "object"
+    },
+    "AtlasLinkContract": {
+      "additionalProperties": false,
+      "description": "One relative Markdown link discovered while building the atlas.",
+      "properties": {
+        "fragment": {
+          "anyOf": [
+            {
+              "maxLength": 256,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Fragment"
+        },
+        "source": {
+          "maxLength": 1024,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)*$",
+          "title": "Source",
+          "type": "string"
+        },
+        "target": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "title": "Target",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source",
+        "target"
+      ],
+      "title": "AtlasLinkContract",
+      "type": "object"
+    }
+  },
+  "$id": "https://schemas.ludowright.dev/v1/atlas-report.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Deterministic document index and integrity report.",
+  "properties": {
+    "broken_links": {
+      "items": {
+        "$ref": "#/$defs/AtlasBrokenLinkContract"
+      },
+      "maxItems": 100000,
+      "title": "Broken Links",
+      "type": "array"
+    },
+    "documents": {
+      "items": {
+        "$ref": "#/$defs/AtlasDocumentMetadataContract"
+      },
+      "maxItems": 10000,
+      "title": "Documents",
+      "type": "array"
+    },
+    "kind": {
+      "const": "atlas-report",
+      "default": "atlas-report",
+      "title": "Kind",
+      "type": "string"
+    },
+    "links": {
+      "items": {
+        "$ref": "#/$defs/AtlasLinkContract"
+      },
+      "maxItems": 100000,
+      "title": "Links",
+      "type": "array"
+    },
+    "metadata_digest": {
+      "maxLength": 64,
+      "minLength": 64,
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Metadata Digest",
+      "type": "string"
+    },
+    "orphan_documents": {
+      "items": {
+        "maxLength": 1024,
+        "minLength": 1,
+        "pattern": "^[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)*$",
+        "type": "string"
+      },
+      "maxItems": 10000,
+      "title": "Orphan Documents",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "version": {
+      "maximum": 2147483647,
+      "minimum": 1,
+      "title": "Version",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "version",
+    "metadata_digest",
+    "documents",
+    "links",
+    "broken_links",
+    "orphan_documents"
+  ],
+  "title": "LudoWright Atlas Report",
+  "type": "object"
+}

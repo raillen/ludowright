@@ -23,6 +23,7 @@ Open the local address printed by MkDocs. The preview rebuilds when documentatio
 ## Run the release-quality build
 
 ```bash
+uv run ludowright atlas --check
 uv run mkdocs build --strict --clean
 ```
 

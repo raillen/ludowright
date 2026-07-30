@@ -5,6 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from ludowright.contracts.assets import AssetContract
+from ludowright.contracts.atlas import AtlasMetadataContract, AtlasReportContract
 from ludowright.contracts.capture import CaptureProfileContract
 from ludowright.contracts.cli import CliResponseContract
 from ludowright.contracts.common import ContractModel
@@ -96,6 +97,18 @@ CONTRACTS: tuple[ContractDefinition, ...] = (
         "document-template.schema.json",
         "LudoWright Document Template",
         DocumentTemplateManifestContract,
+    ),
+    ContractDefinition(
+        "atlas-metadata",
+        "atlas-metadata.schema.json",
+        "LudoWright Atlas Metadata",
+        AtlasMetadataContract,
+    ),
+    ContractDefinition(
+        "atlas-report",
+        "atlas-report.schema.json",
+        "LudoWright Atlas Report",
+        AtlasReportContract,
     ),
     ContractDefinition(
         "cli-response",

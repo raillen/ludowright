@@ -34,9 +34,11 @@ nav:
       - Dependency Graph: contracts/DEPENDENCY_GRAPH.md
       - Interview Questions: contracts/INTERVIEW_QUESTIONS.md
       - Document Templates: contracts/DOCUMENT_TEMPLATES.md
+      - ATLAS Contract: contracts/ATLAS.md
       - Command-Line Interface: contracts/CLI.md
   - Commands:
       - Interview CLI: commands/INTERVIEW.md
+      - ATLAS CLI: commands/ATLAS.md
   - Implementation:
       - Plan to 1.0: plans/IMPLEMENTATION_PLAN.md
   - Quality:
@@ -60,6 +62,7 @@ nav:
       - ADR 0015 — Guided Interview Question Model: decisions/0015-guided-interview-question-model.md
       - ADR 0016 — Resumable Interview CLI: decisions/0016-resumable-interview-cli.md
       - ADR 0017 — Document Template Engine: decisions/0017-deterministic-document-template-engine.md
+      - ADR 0018 — Deterministic ATLAS: decisions/0018-deterministic-atlas-index-and-integrity.md
       - ADR Template: decisions/0000-template.md
   - Operations:
       - Documentation Site: operations/DOCUMENTATION_SITE.md

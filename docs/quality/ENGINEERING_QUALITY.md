@@ -54,8 +54,9 @@ The command executes, in order:
 1. all pre-commit hooks;
 2. the pytest suite with coverage;
 3. generated JSON Schema drift verification;
-4. the strict documentation build;
-5. the Python dependency audit.
+4. ATLAS canonical-source, link, and orphan validation;
+5. the strict documentation build;
+6. the Python dependency audit.
 
 Inspect the planned commands without executing them:
 

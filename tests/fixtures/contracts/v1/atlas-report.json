@@ -1,0 +1,17 @@
+{
+  "broken_links": [],
+  "documents": [
+    {
+      "canonical_source": "index.md",
+      "path": "index.md",
+      "section": "project",
+      "title": "Index"
+    }
+  ],
+  "kind": "atlas-report",
+  "links": [],
+  "metadata_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+  "orphan_documents": [],
+  "schema_version": 1,
+  "version": 1
+}

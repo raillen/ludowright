@@ -31,6 +31,7 @@ This roadmap describes product capability, not fixed dates. Minor-version bounda
 - deterministic, versioned document template engine with inheritance and project overrides;
 - initial modular product-document set for vision, audience, pillars, loops, scope, risk, platform, and success;
 - initial architecture and implementation document set for system overview, contracts, modules, UI/UX, implementation, quality, security, operations, ADRs, and plans;
+- deterministic ATLAS index with canonical-source metadata, broken-link detection, and orphan detection;
 - modular GDD and ATLAS generation;
 - product, architecture, UI/UX, implementation, quality, security, production, ADR, and plan templates;
 - incremental document updates and staleness detection.
