@@ -150,6 +150,11 @@ Exit: repository installs, imports, tests, and clearly explains the product.
 - recommended next actions;
 - human and JSON output.
 
+Status: implementado nesta branch. O comando descobre o marker mais próximo, valida
+manifesto, event log, dependency graph e SQLite em modo read-only, reporta estados
+`ready`, `needs-review` e `blocked`, lista blockers e causas stale, e sugere ações
+determinísticas sem reparar ou criar arquivos.
+
 ### PR 21 — Decision commands
 
 - record, list, supersede, and inspect decisions;

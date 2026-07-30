@@ -177,6 +177,7 @@ class StateStore:
         *,
         busy_timeout_ms: int = _DEFAULT_BUSY_TIMEOUT_MS,
         source_read_limit: int = _DEFAULT_SOURCE_LIMIT,
+        read_only: bool = False,
     ) -> None:
         if not isinstance(filesystem, ProjectFilesystem):
             raise TypeError("state store requires ProjectFilesystem")
@@ -191,8 +192,9 @@ class StateStore:
         self._path = path
         self._busy_timeout_ms = busy_timeout_ms
         self._source_read_limit = source_read_limit
+        self._read_only = read_only
         parent = path.parent
-        if parent is not None:
+        if parent is not None and not read_only:
             self._filesystem.ensure_directory(parent)
         self._database_path = self._filesystem.resolve(path)
         self._sidecars = tuple(
@@ -201,10 +203,22 @@ class StateStore:
             )
             for suffix in ("-journal", "-shm", "-wal")
         )
-        with self._filesystem.lock(_STATE_STORE_LOCK, timeout=busy_timeout_ms / 1000):
-            self._assert_safe_database_files()
+        self._assert_safe_database_files()
+        if read_only and not os.path.lexists(self._database_path):
+            raise FileNotFoundError(self._database_path)
+        if read_only and os.path.lexists(self._sidecars[-1]):
+            raise StateStoreError(
+                "read-only inspection cannot safely open a state store with an active WAL"
+            )
+        if read_only:
+            self._assert_read_only_wal_header()
+        if read_only:
             self._initialize_schema()
-            self._assert_safe_database_files()
+        else:
+            with self._filesystem.lock(_STATE_STORE_LOCK, timeout=busy_timeout_ms / 1000):
+                self._assert_safe_database_files()
+                self._initialize_schema()
+                self._assert_safe_database_files()
 
     @property
     def path(self) -> RepositoryPath:
@@ -213,6 +227,11 @@ class StateStore:
     @property
     def schema_version(self) -> int:
         return STATE_SCHEMA_VERSION
+
+    @property
+    def read_only(self) -> bool:
+        """Return whether this store refuses all mutating operations."""
+        return self._read_only
 
     def save_workflow(self, progress: WorkflowProgress) -> None:
         """Insert or replace one workflow progress record."""
@@ -499,6 +518,14 @@ class StateStore:
         try:
             with self._connect() as connection:
                 current_version = int(connection.execute("PRAGMA user_version").fetchone()[0])
+                if self._read_only:
+                    if current_version != STATE_SCHEMA_VERSION:
+                        raise UnsupportedStateSchemaError(
+                            f"state schema v{current_version} is not supported by "
+                            f"v{STATE_SCHEMA_VERSION}"
+                        )
+                    self._validate_schema(connection)
+                    return
                 if current_version not in {0, STATE_SCHEMA_VERSION}:
                     raise UnsupportedStateSchemaError(
                         f"state schema v{current_version} is not supported by "
@@ -543,6 +570,8 @@ class StateStore:
 
     @contextmanager
     def _transaction(self, *, write: bool) -> Iterator[sqlite3.Connection]:
+        if write and self._read_only:
+            raise StateStoreError("read-only state stores cannot be modified")
         if write:
             with (
                 self._filesystem.lock(
@@ -578,20 +607,33 @@ class StateStore:
     @contextmanager
     def _connect(self) -> Iterator[sqlite3.Connection]:
         self._assert_safe_database_files()
-        connection = sqlite3.connect(
-            self._database_path,
-            timeout=self._busy_timeout_ms / 1000,
-            isolation_level=None,
-        )
+        if self._read_only:
+            database = f"file:{self._database_path.as_posix()}?immutable=1&mode=ro"
+            connection = sqlite3.connect(
+                database,
+                timeout=self._busy_timeout_ms / 1000,
+                isolation_level=None,
+                uri=True,
+            )
+        else:
+            connection = sqlite3.connect(
+                self._database_path,
+                timeout=self._busy_timeout_ms / 1000,
+                isolation_level=None,
+            )
         connection.row_factory = sqlite3.Row
         try:
             connection.execute("PRAGMA foreign_keys = ON")
             connection.execute(f"PRAGMA busy_timeout = {self._busy_timeout_ms}")
-            connection.execute("PRAGMA synchronous = FULL")
+            if not self._read_only:
+                connection.execute("PRAGMA synchronous = FULL")
             connection.execute("PRAGMA temp_store = MEMORY")
             connection.execute("PRAGMA trusted_schema = OFF")
-            journal_mode = connection.execute("PRAGMA journal_mode = WAL").fetchone()[0]
-            if str(journal_mode).lower() != "wal":
+            journal_mode = connection.execute(
+                "PRAGMA journal_mode" if self._read_only else "PRAGMA journal_mode = WAL"
+            ).fetchone()[0]
+            accepted_modes = {"wal", "delete"} if self._read_only else {"wal"}
+            if str(journal_mode).lower() not in accepted_modes:
                 raise StateStoreError("SQLite state store requires WAL journal mode")
             yield connection
         finally:
@@ -606,6 +648,12 @@ class StateStore:
                 raise UnsafeProjectPathError(f"SQLite state path cannot be a symlink: {candidate}")
             if not stat.S_ISREG(candidate_stat.st_mode):
                 raise StateStoreError(f"SQLite state path must be a regular file: {candidate}")
+
+    def _assert_read_only_wal_header(self) -> None:
+        with self._database_path.open("rb") as stream:
+            header = stream.read(20)
+        if len(header) < 20 or header[18:20] != b"\x02\x02":
+            raise StateStoreError("read-only inspection requires a WAL state store")
 
 
 _SCHEMA_STATEMENTS = (

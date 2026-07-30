@@ -14,6 +14,7 @@ The state store provides:
 - short explicit transactions;
 - concurrent local writers through SQLite WAL;
 - a database that may be deleted and rebuilt without deleting canonical project data.
+- a read-only inspection mode for status and audit commands.
 
 The implementation lives in:
 
@@ -85,6 +86,22 @@ busy_timeout = configured value
 The default busy timeout is 5,000 milliseconds.
 
 WAL allows concurrent readers and serialized writers. `synchronous=FULL` favors durability over maximum write throughput for project metadata.
+
+## Read-only inspection
+
+`StateStore(read_only=True)` is reserved for commands that cannot mutate the project,
+such as `ludowright status`. The mode:
+
+- does not create the database or its parent directories;
+- requires the existing database at the current version with a WAL header;
+- rejects an active `-wal` sidecar because an immutable SQLite URI cannot safely
+  incorporate it;
+- opens with `immutable=1&mode=ro` and validates the schema and `quick_check`;
+- rejects all write methods.
+
+A concurrent writer must finish before inspection. A command that needs to handle an
+active WAL must implement an explicit wait or recovery policy; the current status
+command fails closed and preserves the original project state.
 
 ## Schema version
 

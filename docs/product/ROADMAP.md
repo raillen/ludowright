@@ -23,6 +23,10 @@ This roadmap describes product capability, not fixed dates. Minor-version bounda
 - migrations, backup, and dry-run behavior;
 - project status and structural audit.
 
+Estado atual: o slice `ludowright status` está implementado com inspeção somente
+leitura, blockers, saídas stale, prontidão e próximas ações. Inicialização e auditoria
+estrutural permanecem dependências e fatias próprias do ciclo de projeto.
+
 ### 0.3 Guided Documentation
 
 - schema-driven interview engine;

@@ -46,7 +46,19 @@ Development proceeds in this order:
 
 ## Current phase
 
-The repository is in the **foundation phase**. No stable public API exists yet.
+The repository is in **Project Core**. The CLI foundation and the read-only
+`ludowright status` slice are implemented; project initialization is the preceding
+create-only lifecycle slice. The status command validates the nearest project marker,
+event log, dependency graph, and SQLite state store without mutating files.
+
+Quick status check:
+
+```bash
+ludowright status ./my-game
+ludowright --json status ./my-game
+```
+
+The command is documented in [`docs/commands/STATUS.md`](docs/commands/STATUS.md).
 
 ## Navigation
 

@@ -16,6 +16,8 @@ nav:
       - Roadmap: product/ROADMAP.md
   - Architecture:
       - System Overview: architecture/SYSTEM_OVERVIEW.md
+  - Commands:
+      - Project status: commands/STATUS.md
   - Contracts:
       - Identifiers and Versions: contracts/IDENTIFIERS_AND_VERSIONS.md
       - Project Domain: contracts/PROJECT_DOMAIN.md
@@ -51,6 +53,7 @@ nav:
       - ADR 0012 — Explicit Backed-Up Migrations: decisions/0012-explicit-backed-up-schema-migrations.md
       - ADR 0013 — Dependency Invalidation Graph: decisions/0013-versioned-acyclic-dependency-invalidation-graph.md
       - ADR 0014 — Stable Dual-Surface CLI: decisions/0014-stable-dual-surface-cli-contract.md
+      - ADR 0015 — Read-Only Project Status: decisions/0015-read-only-project-status.md
       - ADR Template: decisions/0000-template.md
   - Operations:
       - Documentation Site: operations/DOCUMENTATION_SITE.md

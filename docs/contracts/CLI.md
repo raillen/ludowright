@@ -272,3 +272,28 @@ The CLI contract:
 - preserves command failure data for auditing.
 
 Future commands must use the shared runtime rather than inventing command-specific JSON envelopes or exit-code conventions.
+
+## Project status
+
+`ludowright status [PATH]` discovers the nearest project marker and performs a
+read-only readiness inspection:
+
+```bash
+ludowright status ./my-game
+ludowright --json status ./my-game
+```
+
+The command-specific `data` contains:
+
+- `project`: ID, name, production stage, and lifecycle;
+- `readiness`: `ready`, `needs-review`, or `blocked`, plus the production stage;
+- `components`: manifest, event log, dependency graph, and state-store observations;
+- `blockers`: stable semantic codes with canonical relative paths when applicable;
+- `stale_outputs`: graph nodes with freshness and persisted invalidation causes;
+- `recommended_actions`: deterministic action codes and explanations;
+- `consistency`: event-checkpoint and indexed-source comparison;
+- `project_directory`: the discovered absolute root for human diagnostics.
+
+The command never creates or repairs files. A missing project uses
+`project-not-found`/exit `3`; persisted state that cannot be validated uses
+`corrupt-state`/exit `6`.
