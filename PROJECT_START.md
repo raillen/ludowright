@@ -46,7 +46,15 @@ Development proceeds in this order:
 
 ## Current phase
 
-The repository is in the **foundation phase**. No stable public API exists yet.
+The repository has completed the repository, domain, persistence, migration, dependency-graph, and CLI foundation slices. The current phase is **Project Core**: `ludowright init` is implemented, and project status is the next bounded CLI slice. The CLI envelope, published schemas, and infrastructure contracts are already public and must be reused.
+
+Quick start:
+
+```bash
+ludowright init ./my-game --name "Meu Jogo" --non-interactive
+```
+
+The command is documented in [`docs/commands/INIT.md`](docs/commands/INIT.md).
 
 ## Navigation
 

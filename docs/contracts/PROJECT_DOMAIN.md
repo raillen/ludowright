@@ -120,6 +120,13 @@ Direct construction also enforces invariants, so persistence adapters cannot cre
 
 ## Serialization
 
-This PR defines the domain contract only. Pydantic models, JSON Schema, YAML serialization, migrations, and storage adapters will be added in their planned layers.
+The domain contract is adapted at the published Pydantic and JSON Schema boundaries. YAML serialization, migrations, and storage adapters remain separate infrastructure concerns.
 
 Serialized enums will use their lowercase string values. Typed IDs serialize to their canonical string values. Exact published schema shapes will become stable in the JSON Schema publication phase.
+
+The published `ProjectContract` also accepts optional template provenance:
+
+- `template.id` — canonical template ID;
+- `template.version` — positive template revision.
+
+Initialization writes this metadata when a template is selected. Existing v1 manifests without the optional field remain valid.

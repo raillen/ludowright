@@ -12,6 +12,8 @@ This roadmap describes product capability, not fixed dates. Minor-version bounda
 - MkDocs documentation skeleton;
 - stable logging and error model.
 
+Estado atual: concluído para a fundação publicada no CLI e nas camadas de persistência.
+
 ### 0.2 Project Core
 
 - `ludowright init`;
@@ -22,6 +24,8 @@ This roadmap describes product capability, not fixed dates. Minor-version bounda
 - schema and template versioning;
 - migrations, backup, and dry-run behavior;
 - project status and structural audit.
+
+Estado atual: `ludowright init` concluído; status, decisões, auditoria e os demais itens continuam planejados.
 
 ### 0.3 Guided Documentation
 
