@@ -177,6 +177,8 @@ Status: implemented in the current slice. The model is independent of the CLI an
 
 ### PR 24 — Interview CLI
 
+Status: implemented in the current slice. Sessions are canonical JSON snapshots with event-log auditing; SQLite cursor projection and document rendering remain separate concerns.
+
 - next question;
 - answer recording;
 - skip and defer policies;

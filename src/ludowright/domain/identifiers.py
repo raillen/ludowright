@@ -144,6 +144,12 @@ class QuestionnaireId(Identifier):
     kind = "questionnaire"
 
 
+class InterviewSessionId(Identifier):
+    """Identifier for one resumable guided-interview session."""
+
+    kind = "interview-session"
+
+
 class QuestionId(Identifier):
     """Identifier for one question within a questionnaire."""
 

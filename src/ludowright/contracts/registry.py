@@ -10,7 +10,11 @@ from ludowright.contracts.cli import CliResponseContract
 from ludowright.contracts.common import ContractModel
 from ludowright.contracts.dependencies import DependencyGraphContract
 from ludowright.contracts.governance import ApprovalContract, DecisionContract
-from ludowright.contracts.interviews import QuestionnaireContract
+from ludowright.contracts.interviews import (
+    InterviewInteractionContract,
+    InterviewSessionContract,
+    QuestionnaireContract,
+)
 from ludowright.contracts.migrations import MigrationReceiptContract
 from ludowright.contracts.project import ProjectContract
 from ludowright.contracts.visual import (
@@ -97,6 +101,18 @@ CONTRACTS: tuple[ContractDefinition, ...] = (
         "interview-questionnaire.schema.json",
         "LudoWright Interview Questionnaire",
         QuestionnaireContract,
+    ),
+    ContractDefinition(
+        "interview-session",
+        "interview-session.schema.json",
+        "LudoWright Interview Session",
+        InterviewSessionContract,
+    ),
+    ContractDefinition(
+        "interview-interaction",
+        "interview-interaction.schema.json",
+        "LudoWright Interview Interaction",
+        InterviewInteractionContract,
     ),
 )
 

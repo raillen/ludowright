@@ -272,3 +272,5 @@ The CLI contract:
 - preserves command failure data for auditing.
 
 Future commands must use the shared runtime rather than inventing command-specific JSON envelopes or exit-code conventions.
+
+The interview commands define their `data` payload with the published `interview-interaction` contract. Its schema is stored at `schemas/v1/interview-interaction.schema.json`; it remains nested inside the shared `cli-response` envelope.

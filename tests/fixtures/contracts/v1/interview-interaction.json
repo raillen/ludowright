@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "kind": "interview-interaction",
+  "session_id": "first-session",
+  "questionnaire_id": "game-concept",
+  "operation": "next",
+  "changed": false,
+  "question": {
+    "id": "game-mode",
+    "prompt": "What mode is planned?",
+    "type": "single-choice",
+    "required": true,
+    "options": [
+      {"id": "solo", "label": "Solo"},
+      {"id": "coop", "label": "Co-op"}
+    ]
+  },
+  "progress": {
+    "pending": ["game-mode"],
+    "required_pending": ["game-mode"],
+    "blocked": [
+      {
+        "question_id": "party-size",
+        "unresolved_dependencies": ["game-mode"],
+        "required": true
+      }
+    ],
+    "not_applicable": [],
+    "answered": [],
+    "skipped": [],
+    "deferred": [],
+    "required_skipped": [],
+    "required_deferred": [],
+    "complete": false,
+    "next_question": "game-mode"
+  }
+}

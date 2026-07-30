@@ -9,6 +9,7 @@ from rich.console import Console
 
 from ludowright import __version__
 from ludowright.cli.diagnostics import collect_diagnostics, render_diagnostics
+from ludowright.cli.interview import interview_app
 from ludowright.cli.quality import quality_app
 from ludowright.cli.runtime import (
     CliSettings,
@@ -26,6 +27,7 @@ app = typer.Typer(
     context_settings={"help_option_names": ["-h", "--help"]},
 )
 app.add_typer(quality_app, name="quality")
+app.add_typer(interview_app, name="interview")
 
 
 @app.callback()

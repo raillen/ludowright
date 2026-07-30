@@ -45,6 +45,13 @@ class AnswerSource(StrEnum):
     DEFAULT = "default"
 
 
+class QuestionDisposition(StrEnum):
+    """Explicit user decision to postpone or skip an applicable question."""
+
+    SKIPPED = "skipped"
+    DEFERRED = "deferred"
+
+
 def _validate_text(value: str, label: str, maximum: int) -> str:
     if not isinstance(value, str) or not value or value != value.strip():
         raise InvalidInterviewError(f"{label} must be non-empty and have no surrounding whitespace")
@@ -340,6 +347,15 @@ class AnswerRecord:
 
 
 @dataclass(frozen=True, slots=True)
+class DispositionRecord:
+    """One persisted skip or defer decision with its provenance."""
+
+    question_id: QuestionId
+    disposition: QuestionDisposition
+    provenance: AnswerProvenance
+
+
+@dataclass(frozen=True, slots=True)
 class BlockedQuestion:
     """A question whose dependencies are not answered yet."""
 
@@ -357,16 +373,29 @@ class PendingQuestions:
     blocked: tuple[BlockedQuestion, ...]
     not_applicable: tuple[QuestionId, ...]
     answered: tuple[QuestionId, ...]
+    skipped: tuple[QuestionId, ...] = ()
+    deferred: tuple[QuestionId, ...] = ()
+    required_skipped: tuple[QuestionId, ...] = ()
+    required_deferred: tuple[QuestionId, ...] = ()
 
     @property
     def is_complete(self) -> bool:
-        return not self.required_pending and not any(item.required for item in self.blocked)
+        return (
+            not self.required_pending
+            and not any(item.required for item in self.blocked)
+            and not self.required_skipped
+            and not self.required_deferred
+        )
 
     @property
     def next_question(self) -> QuestionId | None:
         if self.required_pending:
             return self.required_pending[0]
-        return self.pending[0] if self.pending else None
+        if self.pending:
+            return self.pending[0]
+        if self.required_deferred:
+            return self.required_deferred[0]
+        return self.deferred[0] if self.deferred else None
 
 
 @dataclass(frozen=True, slots=True)
@@ -375,13 +404,21 @@ class InterviewSession:
 
     questionnaire: Questionnaire
     answers: tuple[AnswerRecord, ...] = ()
+    dispositions: tuple[DispositionRecord, ...] = ()
 
     def __post_init__(self) -> None:
         answer_ids = [answer.question_id for answer in self.answers]
         if len(answer_ids) != len(set(answer_ids)):
             raise InvalidInterviewError("an interview cannot contain duplicate answers")
+        disposition_ids = [record.question_id for record in self.dispositions]
+        if len(disposition_ids) != len(set(disposition_ids)):
+            raise InvalidInterviewError("an interview cannot contain duplicate dispositions")
+        if set(answer_ids) & set(disposition_ids):
+            raise InvalidInterviewError("a question cannot have both an answer and a disposition")
         for answer in self.answers:
             self.questionnaire.question(answer.question_id).validate_answer(answer.value)
+        for record in self.dispositions:
+            self.questionnaire.question(record.question_id)
 
     def record_answer(
         self,
@@ -391,13 +428,82 @@ class InterviewSession:
     ) -> InterviewSession:
         question = self.questionnaire.question(question_id)
         normalized = question.validate_answer(value)
+        has_existing_answer = any(answer.question_id == question_id for answer in self.answers)
+        has_existing_disposition = any(
+            record.question_id == question_id for record in self.dispositions
+        )
+        if (
+            not has_existing_answer
+            and not has_existing_disposition
+            and question_id not in self.pending_questions().pending
+        ):
+            raise InvalidInterviewError(f"question {question_id} is not currently actionable")
         replacement = AnswerRecord(question_id, normalized, provenance)
         answers = tuple(
             replacement if answer.question_id == question_id else answer for answer in self.answers
         )
         if all(answer.question_id != question_id for answer in self.answers):
             answers += (replacement,)
-        return InterviewSession(self.questionnaire, answers)
+        dispositions = tuple(
+            record for record in self.dispositions if record.question_id != question_id
+        )
+        return InterviewSession(self.questionnaire, answers, dispositions)
+
+    def skip_question(
+        self,
+        question_id: QuestionId,
+        provenance: AnswerProvenance,
+    ) -> InterviewSession:
+        """Skip one optional question; required questions must be answered or deferred."""
+        question = self.questionnaire.question(question_id)
+        if question.required:
+            raise InvalidInterviewError("required questions cannot be skipped")
+        if any(answer.question_id == question_id for answer in self.answers):
+            raise InvalidInterviewError(f"question {question_id} already has an answer")
+        existing = next(
+            (record for record in self.dispositions if record.question_id == question_id),
+            None,
+        )
+        if existing is not None and existing.disposition is QuestionDisposition.SKIPPED:
+            return self
+        if question_id not in self.pending_questions().pending and not (
+            existing is not None and existing.disposition is QuestionDisposition.DEFERRED
+        ):
+            raise InvalidInterviewError(f"question {question_id} is not currently actionable")
+        record = DispositionRecord(question_id, QuestionDisposition.SKIPPED, provenance)
+        dispositions = tuple(
+            record if item.question_id == question_id else item for item in self.dispositions
+        )
+        if existing is None:
+            dispositions += (record,)
+        return InterviewSession(self.questionnaire, self.answers, dispositions)
+
+    def defer_question(
+        self,
+        question_id: QuestionId,
+        provenance: AnswerProvenance,
+    ) -> InterviewSession:
+        """Defer one actionable question without treating it as answered."""
+        self.questionnaire.question(question_id)
+        if any(answer.question_id == question_id for answer in self.answers):
+            raise InvalidInterviewError(f"question {question_id} already has an answer")
+        existing = next(
+            (record for record in self.dispositions if record.question_id == question_id),
+            None,
+        )
+        if existing is not None and existing.disposition is QuestionDisposition.DEFERRED:
+            return self
+        if question_id not in self.pending_questions().pending and not (
+            existing is not None and existing.disposition is QuestionDisposition.SKIPPED
+        ):
+            raise InvalidInterviewError(f"question {question_id} is not currently actionable")
+        record = DispositionRecord(question_id, QuestionDisposition.DEFERRED, provenance)
+        dispositions = tuple(
+            record if item.question_id == question_id else item for item in self.dispositions
+        )
+        if existing is None:
+            dispositions += (record,)
+        return InterviewSession(self.questionnaire, self.answers, dispositions)
 
     def pending_questions(self) -> PendingQuestions:
         answer_map = {answer.question_id: answer.value for answer in self.answers}
@@ -406,9 +512,25 @@ class InterviewSession:
         blocked: list[BlockedQuestion] = []
         not_applicable: list[QuestionId] = []
         answered: list[QuestionId] = []
+        disposition_map = {record.question_id: record.disposition for record in self.dispositions}
+        skipped: list[QuestionId] = []
+        deferred: list[QuestionId] = []
+        required_skipped: list[QuestionId] = []
+        required_deferred: list[QuestionId] = []
         for question in self.questionnaire.questions:
             if question.id in answer_map:
                 answered.append(question.id)
+                continue
+            disposition = disposition_map.get(question.id)
+            if disposition is QuestionDisposition.SKIPPED:
+                skipped.append(question.id)
+                if question.required:
+                    required_skipped.append(question.id)
+                continue
+            if disposition is QuestionDisposition.DEFERRED:
+                deferred.append(question.id)
+                if question.required:
+                    required_deferred.append(question.id)
                 continue
             unresolved = tuple(
                 dependency.question_id
@@ -433,4 +555,8 @@ class InterviewSession:
             blocked=tuple(blocked),
             not_applicable=tuple(not_applicable),
             answered=tuple(answered),
+            skipped=tuple(skipped),
+            deferred=tuple(deferred),
+            required_skipped=tuple(required_skipped),
+            required_deferred=tuple(required_deferred),
         )

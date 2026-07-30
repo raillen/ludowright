@@ -19,10 +19,14 @@ from ludowright.contracts.cli import (
 from ludowright.domain import DomainValidationError
 from ludowright.infrastructure import (
     CorruptEventLogError,
+    EventLogError,
+    ProjectFilesystemError,
+    ProjectLockTimeoutError,
     ProjectRootNotFoundError,
     StateStoreCorruptionError,
     StructuredDocumentConflictError,
     StructuredDocumentParseError,
+    UnsafeProjectPathError,
 )
 
 
@@ -178,6 +182,24 @@ def _known_failure(error: Exception) -> CliFailure | None:
             str(error),
             exit_code=CliExitCode.NOT_FOUND,
         )
+    if isinstance(error, UnsafeProjectPathError):
+        return CliFailure(
+            CliErrorCode.INVALID_INPUT,
+            str(error),
+            exit_code=CliExitCode.VALIDATION,
+        )
+    if isinstance(error, ProjectLockTimeoutError):
+        return CliFailure(
+            CliErrorCode.BLOCKED,
+            str(error),
+            exit_code=CliExitCode.BLOCKED,
+        )
+    if isinstance(error, ProjectFilesystemError):
+        return CliFailure(
+            CliErrorCode.CORRUPT_STATE,
+            str(error),
+            exit_code=CliExitCode.CORRUPT_STATE,
+        )
     if isinstance(error, StructuredDocumentConflictError):
         return CliFailure(
             CliErrorCode.CONFLICT,
@@ -188,6 +210,7 @@ def _known_failure(error: Exception) -> CliFailure | None:
         error,
         (
             CorruptEventLogError,
+            EventLogError,
             StateStoreCorruptionError,
             StructuredDocumentParseError,
         ),
