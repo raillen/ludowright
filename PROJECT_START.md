@@ -46,7 +46,21 @@ Development proceeds in this order:
 
 ## Current phase
 
-The repository is in the **foundation phase**. No stable public API exists yet.
+The repository is in **Project Core**. The CLI foundation and the decision and
+approval governance slice are implemented; project initialization, status, and
+structural audit remain separate lifecycle slices in the ordered PR plan.
+
+Governance quick start:
+
+```bash
+ludowright decision record ./my-game --id camera-choice --title "Câmera isométrica"
+ludowright decision list ./my-game
+ludowright approval request ./my-game --id front-review \
+  --subject-kind reference --subject-id maya-front --revision sha256:abc123
+```
+
+See [`docs/commands/GOVERNANCE.md`](docs/commands/GOVERNANCE.md) for the
+complete command and failure contract.
 
 ## Navigation
 

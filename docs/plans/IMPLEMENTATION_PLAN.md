@@ -155,6 +155,11 @@ Exit: repository installs, imports, tests, and clearly explains the product.
 - record, list, supersede, and inspect decisions;
 - approval commands and audit trail.
 
+Status: implementado nesta branch. Os comandos persistem históricos canônicos
+em `decisions/` e `approvals/`, atualizam o grafo, registram eventos hash-chained
+e expõem Rich/JSON por meio do envelope CLI publicado. Falhas intermediárias
+tentam rollback seguro; SQLite continua derivado e não duplica os históricos.
+
 ### PR 22 — Structural audit
 
 - missing paths;
