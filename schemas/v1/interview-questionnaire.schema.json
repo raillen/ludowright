@@ -1,0 +1,262 @@
+{
+  "$defs": {
+    "DependencyOperator": {
+      "description": "Safe, non-evaluated predicates used to reveal a question.",
+      "enum": [
+        "equals",
+        "not-equals",
+        "contains",
+        "not-contains"
+      ],
+      "title": "DependencyOperator",
+      "type": "string"
+    },
+    "QuestionContract": {
+      "additionalProperties": false,
+      "properties": {
+        "dependencies": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/QuestionDependencyContract"
+          },
+          "maxItems": 64,
+          "title": "Dependencies",
+          "type": "array"
+        },
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "options": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/QuestionOptionContract"
+          },
+          "maxItems": 128,
+          "title": "Options",
+          "type": "array"
+        },
+        "prompt": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Prompt",
+          "type": "string"
+        },
+        "required": {
+          "default": true,
+          "title": "Required",
+          "type": "boolean"
+        },
+        "type": {
+          "$ref": "#/$defs/QuestionType"
+        },
+        "validation": {
+          "$ref": "#/$defs/QuestionValidationContract",
+          "default": {
+            "max_length": null,
+            "max_value": null,
+            "min_length": null,
+            "min_value": null
+          }
+        }
+      },
+      "required": [
+        "id",
+        "prompt",
+        "type"
+      ],
+      "title": "QuestionContract",
+      "type": "object"
+    },
+    "QuestionDependencyContract": {
+      "additionalProperties": false,
+      "properties": {
+        "expected": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Expected"
+        },
+        "operator": {
+          "$ref": "#/$defs/DependencyOperator"
+        },
+        "question_id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Question Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "question_id",
+        "operator",
+        "expected"
+      ],
+      "title": "QuestionDependencyContract",
+      "type": "object"
+    },
+    "QuestionOptionContract": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "label": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Label",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "label"
+      ],
+      "title": "QuestionOptionContract",
+      "type": "object"
+    },
+    "QuestionType": {
+      "description": "Supported answer shapes for the first interview engine slice.",
+      "enum": [
+        "text",
+        "single-choice",
+        "multi-choice",
+        "boolean",
+        "integer",
+        "number"
+      ],
+      "title": "QuestionType",
+      "type": "string"
+    },
+    "QuestionValidationContract": {
+      "additionalProperties": false,
+      "properties": {
+        "max_length": {
+          "anyOf": [
+            {
+              "maximum": 4000,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max Length"
+        },
+        "max_value": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max Value"
+        },
+        "min_length": {
+          "anyOf": [
+            {
+              "maximum": 4000,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Min Length"
+        },
+        "min_value": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Min Value"
+        }
+      },
+      "title": "QuestionValidationContract",
+      "type": "object"
+    }
+  },
+  "$id": "https://schemas.ludowright.dev/v1/interview-questionnaire.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Id",
+      "type": "string"
+    },
+    "kind": {
+      "const": "interview-questionnaire",
+      "default": "interview-questionnaire",
+      "title": "Kind",
+      "type": "string"
+    },
+    "questions": {
+      "items": {
+        "$ref": "#/$defs/QuestionContract"
+      },
+      "maxItems": 1024,
+      "minItems": 1,
+      "title": "Questions",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "title": {
+      "maxLength": 120,
+      "minLength": 1,
+      "title": "Title",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "title",
+    "questions"
+  ],
+  "title": "LudoWright Interview Questionnaire",
+  "type": "object"
+}

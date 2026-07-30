@@ -93,3 +93,7 @@ class DependencyCycleError(InvalidDependencyGraphError):
 
 class DependencyRefreshError(InvalidDependencyGraphError):
     """Raised when a stale node cannot be safely refreshed from its inputs."""
+
+
+class InvalidInterviewError(DomainValidationError):
+    """Raised when an interview questionnaire or answer violates its invariants."""

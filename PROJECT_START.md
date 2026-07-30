@@ -46,7 +46,7 @@ Development proceeds in this order:
 
 ## Current phase
 
-The repository is in the **foundation phase**. No stable public API exists yet.
+The repository has completed the foundation and core domain/contract slices. The guided-documentation foundation now includes the published v1 interview-questionnaire contract and immutable question/session model. The interview CLI, document templates, and durable session workflow remain subsequent bounded steps in `docs/plans/IMPLEMENTATION_PLAN.md`.
 
 ## Navigation
 

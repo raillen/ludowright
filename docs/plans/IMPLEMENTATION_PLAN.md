@@ -167,6 +167,8 @@ Exit: repository installs, imports, tests, and clearly explains the product.
 
 ### PR 23 — Interview question model
 
+Status: implemented in the current slice. The model is independent of the CLI and persistence layers; PR24 will consume it.
+
 - question types;
 - dependencies;
 - validation;

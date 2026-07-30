@@ -136,3 +136,21 @@ class PackageId(Identifier):
     """Identifier for a reproducible project or production package."""
 
     kind = "package"
+
+
+class QuestionnaireId(Identifier):
+    """Identifier for a declarative guided-interview questionnaire."""
+
+    kind = "questionnaire"
+
+
+class QuestionId(Identifier):
+    """Identifier for one question within a questionnaire."""
+
+    kind = "question"
+
+
+class OptionId(Identifier):
+    """Identifier for one selectable option within a question."""
+
+    kind = "option"
