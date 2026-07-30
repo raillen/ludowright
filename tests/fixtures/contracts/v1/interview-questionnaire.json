@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "kind": "interview-questionnaire",
+  "id": "game-concept",
+  "title": "Game concept interview",
+  "questions": [
+    {
+      "id": "game-mode",
+      "prompt": "What mode is planned?",
+      "type": "single-choice",
+      "required": true,
+      "options": [
+        {
+          "id": "solo",
+          "label": "Solo"
+        },
+        {
+          "id": "coop",
+          "label": "Co-op"
+        }
+      ],
+      "dependencies": [],
+      "validation": {
+        "min_length": null,
+        "max_length": null,
+        "min_value": null,
+        "max_value": null
+      }
+    },
+    {
+      "id": "party-size",
+      "prompt": "How many players are in the party?",
+      "type": "integer",
+      "required": true,
+      "options": [],
+      "dependencies": [
+        {
+          "question_id": "game-mode",
+          "operator": "equals",
+          "expected": "coop"
+        }
+      ],
+      "validation": {
+        "min_length": null,
+        "max_length": null,
+        "min_value": 2,
+        "max_value": 8
+      }
+    }
+  ]
+}

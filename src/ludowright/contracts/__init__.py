@@ -16,6 +16,12 @@ from ludowright.contracts.dependencies import (
     InvalidationCauseContract,
 )
 from ludowright.contracts.governance import ApprovalContract, DecisionContract
+from ludowright.contracts.interviews import (
+    AnswerProvenanceContract,
+    AnswerRecordContract,
+    InterviewSessionContract,
+    QuestionnaireContract,
+)
 from ludowright.contracts.migrations import (
     MigrationReceiptContract,
     MigrationRunStatus,
@@ -47,6 +53,8 @@ __all__ = [
     "DEFAULT_SCHEMA_ROOT",
     "JSON_SCHEMA_DRAFT",
     "SCHEMA_VERSION",
+    "AnswerProvenanceContract",
+    "AnswerRecordContract",
     "ApprovalContract",
     "AssetContract",
     "CaptureProfileContract",
@@ -60,10 +68,12 @@ __all__ = [
     "DependencyKeyContract",
     "DependencyNodeContract",
     "GenerationReceiptContract",
+    "InterviewSessionContract",
     "InvalidationCauseContract",
     "MigrationReceiptContract",
     "MigrationRunStatus",
     "ProjectContract",
+    "QuestionnaireContract",
     "VisualJobContract",
     "VisualReferenceContract",
     "VisualReviewContract",
