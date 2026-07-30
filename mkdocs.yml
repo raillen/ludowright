@@ -32,6 +32,8 @@ nav:
       - Dependency Graph: contracts/DEPENDENCY_GRAPH.md
       - Interview Questions: contracts/INTERVIEW_QUESTIONS.md
       - Command-Line Interface: contracts/CLI.md
+  - Commands:
+      - Interview CLI: commands/INTERVIEW.md
   - Implementation:
       - Plan to 1.0: plans/IMPLEMENTATION_PLAN.md
   - Quality:
@@ -53,6 +55,7 @@ nav:
       - ADR 0013 — Dependency Invalidation Graph: decisions/0013-versioned-acyclic-dependency-invalidation-graph.md
       - ADR 0014 — Stable Dual-Surface CLI: decisions/0014-stable-dual-surface-cli-contract.md
       - ADR 0015 — Guided Interview Question Model: decisions/0015-guided-interview-question-model.md
+      - ADR 0016 — Resumable Interview CLI: decisions/0016-resumable-interview-cli.md
       - ADR Template: decisions/0000-template.md
   - Operations:
       - Documentation Site: operations/DOCUMENTATION_SITE.md

@@ -344,6 +344,20 @@ class ProjectFilesystem:
             raise TypeError("atomic text writes require a string payload")
         return self.write_bytes(path, text.encode(encoding), mode=mode)
 
+    def remove_file(self, path: RepositoryPath) -> bool:
+        """Remove one regular repository file and report whether it existed."""
+        target = self.resolve(path)
+        if not os.path.lexists(target):
+            return False
+        target_stat = os.lstat(target)
+        if stat.S_ISLNK(target_stat.st_mode):
+            raise UnsafeProjectPathError(f"project paths cannot remove symlinks: {path}")
+        if not stat.S_ISREG(target_stat.st_mode):
+            raise ProjectFilesystemError(f"project path is not a regular file: {path}")
+        target.unlink()
+        _fsync_directory(target.parent)
+        return True
+
     def lock(
         self,
         name: str,

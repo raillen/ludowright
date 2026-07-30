@@ -1,0 +1,458 @@
+{
+  "$defs": {
+    "AnswerProvenanceContract": {
+      "additionalProperties": false,
+      "properties": {
+        "actor": {
+          "anyOf": [
+            {
+              "maxLength": 120,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Actor"
+        },
+        "recorded_at": {
+          "format": "date-time",
+          "title": "Recorded At",
+          "type": "string"
+        },
+        "source": {
+          "$ref": "#/$defs/AnswerSource"
+        },
+        "source_ref": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Ref"
+        }
+      },
+      "required": [
+        "source",
+        "recorded_at"
+      ],
+      "title": "AnswerProvenanceContract",
+      "type": "object"
+    },
+    "AnswerRecordContract": {
+      "additionalProperties": false,
+      "properties": {
+        "provenance": {
+          "$ref": "#/$defs/AnswerProvenanceContract"
+        },
+        "question_id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Question Id",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          ],
+          "title": "Value"
+        }
+      },
+      "required": [
+        "question_id",
+        "value",
+        "provenance"
+      ],
+      "title": "AnswerRecordContract",
+      "type": "object"
+    },
+    "AnswerSource": {
+      "description": "Origin of an answer, retained for auditability and later replay.",
+      "enum": [
+        "human",
+        "codex",
+        "imported",
+        "default"
+      ],
+      "title": "AnswerSource",
+      "type": "string"
+    },
+    "DependencyOperator": {
+      "description": "Safe, non-evaluated predicates used to reveal a question.",
+      "enum": [
+        "equals",
+        "not-equals",
+        "contains",
+        "not-contains"
+      ],
+      "title": "DependencyOperator",
+      "type": "string"
+    },
+    "DispositionRecordContract": {
+      "additionalProperties": false,
+      "properties": {
+        "disposition": {
+          "$ref": "#/$defs/QuestionDisposition"
+        },
+        "provenance": {
+          "$ref": "#/$defs/AnswerProvenanceContract"
+        },
+        "question_id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Question Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "question_id",
+        "disposition",
+        "provenance"
+      ],
+      "title": "DispositionRecordContract",
+      "type": "object"
+    },
+    "QuestionContract": {
+      "additionalProperties": false,
+      "properties": {
+        "dependencies": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/QuestionDependencyContract"
+          },
+          "maxItems": 64,
+          "title": "Dependencies",
+          "type": "array"
+        },
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "options": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/QuestionOptionContract"
+          },
+          "maxItems": 128,
+          "title": "Options",
+          "type": "array"
+        },
+        "prompt": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Prompt",
+          "type": "string"
+        },
+        "required": {
+          "default": true,
+          "title": "Required",
+          "type": "boolean"
+        },
+        "type": {
+          "$ref": "#/$defs/QuestionType"
+        },
+        "validation": {
+          "$ref": "#/$defs/QuestionValidationContract",
+          "default": {
+            "max_length": null,
+            "max_value": null,
+            "min_length": null,
+            "min_value": null
+          }
+        }
+      },
+      "required": [
+        "id",
+        "prompt",
+        "type"
+      ],
+      "title": "QuestionContract",
+      "type": "object"
+    },
+    "QuestionDependencyContract": {
+      "additionalProperties": false,
+      "properties": {
+        "expected": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Expected"
+        },
+        "operator": {
+          "$ref": "#/$defs/DependencyOperator"
+        },
+        "question_id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Question Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "question_id",
+        "operator",
+        "expected"
+      ],
+      "title": "QuestionDependencyContract",
+      "type": "object"
+    },
+    "QuestionDisposition": {
+      "description": "Explicit user decision to postpone or skip an applicable question.",
+      "enum": [
+        "skipped",
+        "deferred"
+      ],
+      "title": "QuestionDisposition",
+      "type": "string"
+    },
+    "QuestionOptionContract": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "label": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Label",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "label"
+      ],
+      "title": "QuestionOptionContract",
+      "type": "object"
+    },
+    "QuestionType": {
+      "description": "Supported answer shapes for the first interview engine slice.",
+      "enum": [
+        "text",
+        "single-choice",
+        "multi-choice",
+        "boolean",
+        "integer",
+        "number"
+      ],
+      "title": "QuestionType",
+      "type": "string"
+    },
+    "QuestionValidationContract": {
+      "additionalProperties": false,
+      "properties": {
+        "max_length": {
+          "anyOf": [
+            {
+              "maximum": 4000,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max Length"
+        },
+        "max_value": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max Value"
+        },
+        "min_length": {
+          "anyOf": [
+            {
+              "maximum": 4000,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Min Length"
+        },
+        "min_value": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Min Value"
+        }
+      },
+      "title": "QuestionValidationContract",
+      "type": "object"
+    },
+    "QuestionnaireContract": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "const": "interview-questionnaire",
+          "default": "interview-questionnaire",
+          "title": "Kind",
+          "type": "string"
+        },
+        "questions": {
+          "items": {
+            "$ref": "#/$defs/QuestionContract"
+          },
+          "maxItems": 1024,
+          "minItems": 1,
+          "title": "Questions",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": 1,
+          "default": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "title": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "questions"
+      ],
+      "title": "QuestionnaireContract",
+      "type": "object"
+    }
+  },
+  "$id": "https://schemas.ludowright.dev/v1/interview-session.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "answers": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/AnswerRecordContract"
+      },
+      "maxItems": 1024,
+      "title": "Answers",
+      "type": "array"
+    },
+    "dispositions": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/DispositionRecordContract"
+      },
+      "maxItems": 1024,
+      "title": "Dispositions",
+      "type": "array"
+    },
+    "id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Id",
+      "type": "string"
+    },
+    "kind": {
+      "const": "interview-session",
+      "default": "interview-session",
+      "title": "Kind",
+      "type": "string"
+    },
+    "questionnaire": {
+      "$ref": "#/$defs/QuestionnaireContract"
+    },
+    "questionnaire_digest": {
+      "maxLength": 64,
+      "minLength": 64,
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Questionnaire Digest",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "id",
+    "questionnaire_digest",
+    "questionnaire"
+  ],
+  "title": "LudoWright Interview Session",
+  "type": "object"
+}

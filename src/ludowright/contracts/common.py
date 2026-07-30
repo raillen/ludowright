@@ -24,6 +24,10 @@ RevisionText = Annotated[
         pattern=r"^[A-Za-z0-9][A-Za-z0-9._:+-]*$",
     ),
 ]
+Sha256Text = Annotated[
+    str,
+    StringConstraints(min_length=64, max_length=64, pattern=r"^[0-9a-f]{64}$"),
+]
 EngineVersionText = Annotated[str, StringConstraints(min_length=1, max_length=64)]
 HttpsUriText = Annotated[
     str,

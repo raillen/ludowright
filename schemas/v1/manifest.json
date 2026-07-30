@@ -79,6 +79,18 @@
       "name": "interview-questionnaire",
       "schema_id": "https://schemas.ludowright.dev/v1/interview-questionnaire.schema.json",
       "sha256": "9a497733a7c685e697d5ee3512e76ce8bde67cecb025134a48e5706f06f7efe5"
+    },
+    {
+      "file": "interview-session.schema.json",
+      "name": "interview-session",
+      "schema_id": "https://schemas.ludowright.dev/v1/interview-session.schema.json",
+      "sha256": "a0015edecd2e95347fe4276dfac459ab776c011caa0d7ce509975a5066c51db4"
+    },
+    {
+      "file": "interview-interaction.schema.json",
+      "name": "interview-interaction",
+      "schema_id": "https://schemas.ludowright.dev/v1/interview-interaction.schema.json",
+      "sha256": "1f9d241a8be938df461fbea30001e8ddad5294365773e0c1fb6293f1cd75e38e"
     }
   ]
 }

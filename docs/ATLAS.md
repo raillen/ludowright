@@ -36,6 +36,7 @@ This is the main navigation map for humans and agents. Each subject should have 
 - [`contracts/MIGRATIONS.md`](contracts/MIGRATIONS.md) — contiguous plans, dry runs, consistent backups, receipts, transactional apply, and guarded rollback.
 - [`contracts/DEPENDENCY_GRAPH.md`](contracts/DEPENDENCY_GRAPH.md) — typed nodes and edges, observed revisions, freshness states, invalidation paths, refresh rules, and canonical graph persistence.
 - [`contracts/INTERVIEW_QUESTIONS.md`](contracts/INTERVIEW_QUESTIONS.md) — declarative questionnaire shapes, safe dependencies, answer provenance, and pending-question semantics.
+- [`commands/INTERVIEW.md`](commands/INTERVIEW.md) — interview CLI syntax, resumable session files, skip/defer policy, and JSON interaction data.
 - [`contracts/CLI.md`](contracts/CLI.md) — dual human/JSON surfaces, response envelope, error codes, exit codes, version output, diagnostics, and compatibility rules.
 
 Published machine-readable contracts are stored under `schemas/v1/`. The source models live under `src/ludowright/contracts/`.
@@ -45,7 +46,7 @@ Planned canonical contracts:
 - project manifest;
 - release manifest.
 
-The guided-documentation model is implemented in `src/ludowright/domain/interviews.py` and adapted at the external boundary by `src/ludowright/contracts/interviews.py`. The first published interview contract is `interview-questionnaire`; CLI interaction and durable answer sessions are intentionally deferred to PR24.
+The guided-documentation model is implemented in `src/ludowright/domain/interviews.py`, orchestrated by `src/ludowright/application/interviews.py`, and adapted at the external boundary by `src/ludowright/contracts/interviews.py`. The published interview contracts are `interview-questionnaire` and `interview-session`; CLI presentation lives in `src/ludowright/cli/interview.py`.
 
 ## Codex integration
 
@@ -142,6 +143,7 @@ Planned operational documents:
 
 - [`decisions/0014-stable-dual-surface-cli-contract.md`](decisions/0014-stable-dual-surface-cli-contract.md) — accepted Rich human output, one canonical JSON envelope, stable semantic errors and process codes, version output, and read-only diagnostics.
 - [`decisions/0015-guided-interview-question-model.md`](decisions/0015-guided-interview-question-model.md) — accepted immutable questionnaires, typed answers, safe acyclic dependencies, provenance, and deterministic progress projection.
+- [`decisions/0016-resumable-interview-cli.md`](decisions/0016-resumable-interview-cli.md) — accepted canonical session snapshots, questionnaire drift conflicts, event auditing, and rollback on partial persistence failure.
 - [`decisions/0013-versioned-acyclic-dependency-invalidation-graph.md`](decisions/0013-versioned-acyclic-dependency-invalidation-graph.md) — accepted typed revision-aware DAG dependencies, stale and review propagation, persisted impact paths, safe refresh, and canonical JSON persistence.
 - [`decisions/0012-explicit-backed-up-schema-migrations.md`](decisions/0012-explicit-backed-up-schema-migrations.md) — accepted explicit contiguous migration plans, dry runs, durable SQLite backups, strict receipts, transactional apply, and guarded rollback.
 - [`decisions/0011-rebuildable-sqlite-state-index.md`](decisions/0011-rebuildable-sqlite-state-index.md) — accepted SQLite as a rebuildable derived index with WAL, strict short transactions, source digests, event checkpoints, and explicit consistency states.

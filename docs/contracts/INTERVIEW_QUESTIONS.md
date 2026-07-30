@@ -28,7 +28,9 @@ This prevents an unresolved dependency from being mistaken for a completed inter
 
 `InterviewSession` is immutable. Recording or replacing an answer returns a new session and validates the value against the question. Every `AnswerRecord` carries `AnswerProvenance` with source (`human`, `codex`, `imported`, or `default`), a timezone-aware UTC timestamp, and optional actor and source reference.
 
-Answer sessions are not persisted by this PR. The session contracts are adapters for the interview CLI and state-store work in PR24; the questionnaire schema is the only newly published persisted contract in this slice.
+The interview CLI persists sessions as `interview-session` documents under `.ludowright/interviews/`. Each session stores an exact questionnaire snapshot and source digest, so resuming after questionnaire edits fails with a conflict instead of changing the interpretation of previous answers. The session schema is published alongside the questionnaire schema.
+
+Skip is optional-only. Defer is allowed for actionable questions but does not satisfy required work. Mutations append namespaced facts to the project event log and roll back the session file when event persistence fails.
 
 ## Compatibility
 
