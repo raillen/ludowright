@@ -5,6 +5,12 @@ from ludowright.infrastructure.dependency_graph import (
     DependencyGraphRepository,
     DependencyGraphSnapshot,
 )
+from ludowright.infrastructure.documentation import (
+    DocumentationFilesystem,
+    DocumentationFilesystemError,
+    DocumentationRootError,
+    UnsafeDocumentationPathError,
+)
 from ludowright.infrastructure.event_log import (
     DEFAULT_EVENT_LOG_PATH,
     CorruptEventLogError,
@@ -80,6 +86,9 @@ __all__ = [
     "CorruptEventLogError",
     "DependencyGraphRepository",
     "DependencyGraphSnapshot",
+    "DocumentationFilesystem",
+    "DocumentationFilesystemError",
+    "DocumentationRootError",
     "EventCheckpoint",
     "EventIndexState",
     "EventLog",
@@ -120,6 +129,7 @@ __all__ = [
     "StructuredDocumentParseError",
     "StructuredDocumentRepository",
     "StructuredDocumentSnapshot",
+    "UnsafeDocumentationPathError",
     "UnsafeProjectPathError",
     "UnsupportedStateSchemaError",
     "WorkflowProgress",

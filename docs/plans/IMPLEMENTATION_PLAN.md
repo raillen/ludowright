@@ -217,6 +217,11 @@ persistence, ATLAS generation, and refresh remain separate concerns.
 
 ### PR 28 — ATLAS generation
 
+Status: implemented in the current slice. The `atlas-metadata` and
+`atlas-report` contracts back a deterministic Markdown index, canonical-source
+metadata, relative-link validation, and orphan detection. The `atlas` CLI uses
+the shared Rich/JSON surfaces and remains read-only by default.
+
 - document index;
 - canonical-source metadata;
 - broken-link and orphan detection.

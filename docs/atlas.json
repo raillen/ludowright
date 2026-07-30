@@ -1,0 +1,301 @@
+{
+  "documents": [
+    {
+      "canonical_source": "ATLAS.md",
+      "path": "ATLAS.md",
+      "section": "project",
+      "title": "LudoWright Documentation Atlas"
+    },
+    {
+      "canonical_source": "architecture/ARCHITECTURE_DOCUMENT_SET.md",
+      "path": "architecture/ARCHITECTURE_DOCUMENT_SET.md",
+      "section": "architecture",
+      "title": "Architecture Document Set"
+    },
+    {
+      "canonical_source": "architecture/SYSTEM_OVERVIEW.md",
+      "path": "architecture/SYSTEM_OVERVIEW.md",
+      "section": "architecture",
+      "title": "System Overview"
+    },
+    {
+      "canonical_source": "commands/ATLAS.md",
+      "path": "commands/ATLAS.md",
+      "section": "commands",
+      "title": "ATLAS CLI"
+    },
+    {
+      "canonical_source": "commands/INTERVIEW.md",
+      "path": "commands/INTERVIEW.md",
+      "section": "commands",
+      "title": "Interview CLI"
+    },
+    {
+      "canonical_source": "contracts/ATLAS.md",
+      "path": "contracts/ATLAS.md",
+      "section": "contracts",
+      "title": "Documentation ATLAS Contract"
+    },
+    {
+      "canonical_source": "contracts/ASSET_DOMAIN.md",
+      "path": "contracts/ASSET_DOMAIN.md",
+      "section": "contracts",
+      "title": "Asset Domain Contract"
+    },
+    {
+      "canonical_source": "contracts/CAPTURE_PROFILES.md",
+      "path": "contracts/CAPTURE_PROFILES.md",
+      "section": "contracts",
+      "title": "Capture Profiles"
+    },
+    {
+      "canonical_source": "contracts/CLI.md",
+      "path": "contracts/CLI.md",
+      "section": "contracts",
+      "title": "Command-Line Interface Contract"
+    },
+    {
+      "canonical_source": "contracts/DECISIONS_AND_APPROVALS.md",
+      "path": "contracts/DECISIONS_AND_APPROVALS.md",
+      "section": "contracts",
+      "title": "Decisions and Approvals Contract"
+    },
+    {
+      "canonical_source": "contracts/DEPENDENCY_GRAPH.md",
+      "path": "contracts/DEPENDENCY_GRAPH.md",
+      "section": "contracts",
+      "title": "Dependency and Invalidation Graph"
+    },
+    {
+      "canonical_source": "contracts/DOCUMENT_TEMPLATES.md",
+      "path": "contracts/DOCUMENT_TEMPLATES.md",
+      "section": "contracts",
+      "title": "Document Template Engine"
+    },
+    {
+      "canonical_source": "contracts/EVENT_LOG.md",
+      "path": "contracts/EVENT_LOG.md",
+      "section": "contracts",
+      "title": "Append-Only Project Event Log"
+    },
+    {
+      "canonical_source": "contracts/IDENTIFIERS_AND_VERSIONS.md",
+      "path": "contracts/IDENTIFIERS_AND_VERSIONS.md",
+      "section": "contracts",
+      "title": "Identifiers, Names, and Revision Versions"
+    },
+    {
+      "canonical_source": "contracts/INTERVIEW_QUESTIONS.md",
+      "path": "contracts/INTERVIEW_QUESTIONS.md",
+      "section": "contracts",
+      "title": "Interview Questions"
+    },
+    {
+      "canonical_source": "contracts/JSON_SCHEMAS.md",
+      "path": "contracts/JSON_SCHEMAS.md",
+      "section": "contracts",
+      "title": "JSON Schema Publication"
+    },
+    {
+      "canonical_source": "contracts/MIGRATIONS.md",
+      "path": "contracts/MIGRATIONS.md",
+      "section": "contracts",
+      "title": "Explicit Migration Framework"
+    },
+    {
+      "canonical_source": "contracts/PROJECT_DOMAIN.md",
+      "path": "contracts/PROJECT_DOMAIN.md",
+      "section": "contracts",
+      "title": "Project Domain Contract"
+    },
+    {
+      "canonical_source": "contracts/PROJECT_FILESYSTEM.md",
+      "path": "contracts/PROJECT_FILESYSTEM.md",
+      "section": "contracts",
+      "title": "Project Filesystem Contract"
+    },
+    {
+      "canonical_source": "contracts/REFERENCES_AND_VISUAL_JOBS.md",
+      "path": "contracts/REFERENCES_AND_VISUAL_JOBS.md",
+      "section": "contracts",
+      "title": "References and Visual Jobs"
+    },
+    {
+      "canonical_source": "contracts/STATE_STORE.md",
+      "path": "contracts/STATE_STORE.md",
+      "section": "contracts",
+      "title": "Rebuildable SQLite State Store"
+    },
+    {
+      "canonical_source": "contracts/STRUCTURED_REPOSITORIES.md",
+      "path": "contracts/STRUCTURED_REPOSITORIES.md",
+      "section": "contracts",
+      "title": "Structured JSON and YAML Repositories"
+    },
+    {
+      "canonical_source": "decisions/0000-template.md",
+      "path": "decisions/0000-template.md",
+      "section": "decisions",
+      "title": "ADR 0000: Decision title"
+    },
+    {
+      "canonical_source": "decisions/0001-typed-identifiers-and-revision-versions.md",
+      "path": "decisions/0001-typed-identifiers-and-revision-versions.md",
+      "section": "decisions",
+      "title": "ADR 0001: Typed identifiers and monotonic contract revisions"
+    },
+    {
+      "canonical_source": "decisions/0002-immutable-project-aggregate.md",
+      "path": "decisions/0002-immutable-project-aggregate.md",
+      "section": "decisions",
+      "title": "ADR 0002: Immutable project aggregate with separate stage and lifecycle"
+    },
+    {
+      "canonical_source": "decisions/0003-revision-bound-approvals.md",
+      "path": "decisions/0003-revision-bound-approvals.md",
+      "section": "decisions",
+      "title": "ADR 0003: Revision-bound approvals and immutable logical histories"
+    },
+    {
+      "canonical_source": "decisions/0004-decomposed-asset-aggregate.md",
+      "path": "decisions/0004-decomposed-asset-aggregate.md",
+      "section": "decisions",
+      "title": "ADR 0004: Decomposed asset aggregate with shared production status"
+    },
+    {
+      "canonical_source": "decisions/0005-immutable-visual-jobs-and-receipts.md",
+      "path": "decisions/0005-immutable-visual-jobs-and-receipts.md",
+      "section": "decisions",
+      "title": "ADR 0005: Immutable Visual Jobs and Attempt Receipts"
+    },
+    {
+      "canonical_source": "decisions/0006-exact-versioned-capture-profile-inheritance.md",
+      "path": "decisions/0006-exact-versioned-capture-profile-inheritance.md",
+      "section": "decisions",
+      "title": "ADR 0006: Exact Versioned Capture-Profile Inheritance"
+    },
+    {
+      "canonical_source": "decisions/0007-generated-versioned-json-schemas.md",
+      "path": "decisions/0007-generated-versioned-json-schemas.md",
+      "section": "decisions",
+      "title": "ADR 0007: Generated and Versioned JSON Schemas"
+    },
+    {
+      "canonical_source": "decisions/0008-safe-project-filesystem-boundary.md",
+      "path": "decisions/0008-safe-project-filesystem-boundary.md",
+      "section": "decisions",
+      "title": "ADR 0008: Safe Project Filesystem Boundary"
+    },
+    {
+      "canonical_source": "decisions/0009-canonical-structured-document-repositories.md",
+      "path": "decisions/0009-canonical-structured-document-repositories.md",
+      "section": "decisions",
+      "title": "ADR 0009: Canonical Structured Document Repositories"
+    },
+    {
+      "canonical_source": "decisions/0010-hash-chained-append-only-event-log.md",
+      "path": "decisions/0010-hash-chained-append-only-event-log.md",
+      "section": "decisions",
+      "title": "ADR 0010: Hash-Chained Append-Only Event Log"
+    },
+    {
+      "canonical_source": "decisions/0011-rebuildable-sqlite-state-index.md",
+      "path": "decisions/0011-rebuildable-sqlite-state-index.md",
+      "section": "decisions",
+      "title": "ADR 0011: Rebuildable SQLite State Index"
+    },
+    {
+      "canonical_source": "decisions/0012-explicit-backed-up-schema-migrations.md",
+      "path": "decisions/0012-explicit-backed-up-schema-migrations.md",
+      "section": "decisions",
+      "title": "ADR 0012: Explicit Backed-Up Schema Migrations"
+    },
+    {
+      "canonical_source": "decisions/0013-versioned-acyclic-dependency-invalidation-graph.md",
+      "path": "decisions/0013-versioned-acyclic-dependency-invalidation-graph.md",
+      "section": "decisions",
+      "title": "ADR 0013 — Versioned Acyclic Dependency and Invalidation Graph"
+    },
+    {
+      "canonical_source": "decisions/0014-stable-dual-surface-cli-contract.md",
+      "path": "decisions/0014-stable-dual-surface-cli-contract.md",
+      "section": "decisions",
+      "title": "ADR 0014 — Stable Dual-Surface CLI Contract"
+    },
+    {
+      "canonical_source": "decisions/0015-guided-interview-question-model.md",
+      "path": "decisions/0015-guided-interview-question-model.md",
+      "section": "decisions",
+      "title": "ADR 0015 — Declarative Guided-Interview Question Model"
+    },
+    {
+      "canonical_source": "decisions/0016-resumable-interview-cli.md",
+      "path": "decisions/0016-resumable-interview-cli.md",
+      "section": "decisions",
+      "title": "ADR 0016 — Resumable Interview CLI Persistence"
+    },
+    {
+      "canonical_source": "decisions/0017-deterministic-document-template-engine.md",
+      "path": "decisions/0017-deterministic-document-template-engine.md",
+      "section": "decisions",
+      "title": "ADR 0017 — Deterministic Document Template Engine"
+    },
+    {
+      "canonical_source": "decisions/0018-deterministic-atlas-index-and-integrity.md",
+      "path": "decisions/0018-deterministic-atlas-index-and-integrity.md",
+      "section": "decisions",
+      "title": "ADR 0018 — Deterministic ATLAS Index and Integrity Report"
+    },
+    {
+      "canonical_source": "governance/RFC_TEMPLATE.md",
+      "path": "governance/RFC_TEMPLATE.md",
+      "section": "governance",
+      "title": "RFC: Proposal title"
+    },
+    {
+      "canonical_source": "index.md",
+      "path": "index.md",
+      "section": "project",
+      "title": "LudoWright"
+    },
+    {
+      "canonical_source": "operations/DOCUMENTATION_SITE.md",
+      "path": "operations/DOCUMENTATION_SITE.md",
+      "section": "operations",
+      "title": "Documentation Site Operations"
+    },
+    {
+      "canonical_source": "plans/IMPLEMENTATION_PLAN.md",
+      "path": "plans/IMPLEMENTATION_PLAN.md",
+      "section": "plans",
+      "title": "Implementation Plan to LudoWright 1.0"
+    },
+    {
+      "canonical_source": "product/PRODUCT_DOCUMENT_SET.md",
+      "path": "product/PRODUCT_DOCUMENT_SET.md",
+      "section": "product",
+      "title": "Product Document Set"
+    },
+    {
+      "canonical_source": "product/PRODUCT_VISION.md",
+      "path": "product/PRODUCT_VISION.md",
+      "section": "product",
+      "title": "Product Vision"
+    },
+    {
+      "canonical_source": "product/ROADMAP.md",
+      "path": "product/ROADMAP.md",
+      "section": "product",
+      "title": "Product Roadmap"
+    },
+    {
+      "canonical_source": "quality/ENGINEERING_QUALITY.md",
+      "path": "quality/ENGINEERING_QUALITY.md",
+      "section": "quality",
+      "title": "Engineering Quality Baseline"
+    }
+  ],
+  "kind": "atlas-metadata",
+  "schema_version": 1,
+  "version": 1
+}

@@ -1,0 +1,13 @@
+{
+  "documents": [
+    {
+      "canonical_source": "index.md",
+      "path": "index.md",
+      "section": "project",
+      "title": "Index"
+    }
+  ],
+  "kind": "atlas-metadata",
+  "schema_version": 1,
+  "version": 1
+}

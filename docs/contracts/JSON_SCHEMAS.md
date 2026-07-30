@@ -37,6 +37,8 @@ It uses JSON Schema Draft 2020-12 and contains:
 | Migration receipt | `migration-receipt.schema.json` |
 | Dependency graph | `dependency-graph.schema.json` |
 | Document template | `document-template.schema.json` |
+| ATLAS metadata | `atlas-metadata.schema.json` |
+| ATLAS report | `atlas-report.schema.json` |
 | CLI response | `cli-response.schema.json` |
 | Interview questionnaire | `interview-questionnaire.schema.json` |
 | Interview session | `interview-session.schema.json` |

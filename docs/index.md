@@ -23,6 +23,8 @@ The repository currently establishes:
 - documentation and contribution governance;
 - the initial package and CLI;
 - tests and continuous integration.
+- deterministic document templates and an ATLAS index with canonical-source and
+  link-integrity checks.
 
 Project initialization, persisted schemas, asset planning, capture profiles, ImageGen execution, review workflows, technical sheets, and package generation remain planned work.
 
