@@ -27,9 +27,11 @@ from ludowright.infrastructure import (
     DEFAULT_EVENT_LOG_PATH,
     GENERATED_REFERENCE_DIRECTORY,
     GENERATION_RECEIPT_DIRECTORY,
+    EventLog,
     JsonDocumentRepository,
     ProjectFilesystem,
     RepositoryPath,
+    StateStore,
     StructuredDocumentConflictError,
 )
 
@@ -147,6 +149,21 @@ def test_accepted_review_projects_approval_and_event(tmp_path: Path) -> None:
     assert (filesystem.root / ".ludowright/visual-reviews/review-maya-front-1.json").is_file()
     assert (filesystem.root / DEFAULT_DEPENDENCY_GRAPH_PATH.value).is_file()
     assert (filesystem.root / DEFAULT_EVENT_LOG_PATH.value).is_file()
+
+
+def test_review_keeps_an_existing_state_checkpoint_consistent(tmp_path: Path) -> None:
+    filesystem = _filesystem(tmp_path / "project")
+    StateStore(filesystem)
+    _seed_generation(filesystem)
+    _review(filesystem.root / "review.json")
+
+    VisualReviewService(filesystem).apply(RepositoryPath("review.json"))
+
+    assert (
+        StateStore(filesystem, read_only=True)
+        .check_consistency(EventLog(filesystem).replay())
+        .is_consistent
+    )
 
 
 def test_review_dry_run_does_not_change_project(tmp_path: Path) -> None:

@@ -165,6 +165,7 @@ def test_quality_dry_run_json_contract() -> None:
     assert [check["name"] for check in checks] == [
         "pre-commit",
         "tests",
+        "end-to-end",
         "clean-installation",
         "schema-publication",
         "atlas",
