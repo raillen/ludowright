@@ -13,6 +13,7 @@ This is the main navigation map for humans and agents. Each subject should have 
 
 - [`getting-started/INSTALLATION.md`](getting-started/INSTALLATION.md) — supported checkout installation for Linux, Windows, and macOS.
 - [`getting-started/FIRST_PROJECT.md`](getting-started/FIRST_PROJECT.md) — deterministic first-project flow with `init`, dry-run, and project-local skill installation.
+- [`getting-started/CHARACTER_WORKFLOW.md`](getting-started/CHARACTER_WORKFLOW.md) — character workflow, custom capture profile, humanoid package profile, planning, and approval boundaries.
 
 ## Product
 
