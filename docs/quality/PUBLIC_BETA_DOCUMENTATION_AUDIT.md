@@ -32,6 +32,7 @@ Os checks abaixo são locais, determinísticos e fazem parte do fluxo de revisã
 | Política documental | `uv run ludowright docs audit --check` | auditoria válida, sem findings |
 | Site | `uv run mkdocs build --strict --clean` | build estrito concluído |
 | Guias e contratos | `uv run pytest --no-cov tests/test_getting_started_docs.py tests/test_atlas.py tests/test_documentation_audit.py -q` | fluxo documental, ATLAS e auditoria aprovados |
+| Exemplos públicos | `uv run pytest --no-cov tests/test_example_cli_smoke.py -q` | quatro exemplos inicializam e registram assets pela CLI |
 | Gate do repositório | `uv run ludowright quality check` | todos os checks do PR aprovados |
 
 Os testes dos guias executam o fluxo principal em diretórios temporários e
@@ -49,12 +50,20 @@ Implementado e documentado:
 - revisão de segurança com modelo de ameaça e testes negativos;
 - documentação pública mínima e auditoria determinística de cobertura,
   links, órfãos, fontes canônicas e referências obsoletas.
+- compatibilidade inicial dos quatro exemplos públicos com `init` e registro
+  de assets pela CLI; o fluxo mínimo foi corrigido para não prometer uma sheet
+  antes de existir receipt e aprovação aplicados.
 
 Ainda pendente para a prontidão 1.0:
 
 - feedback de uso em projetos reais e correções de usabilidade/compatibilidade
   derivadas desse feedback;
 - release candidate e checklist de release estável.
+
+A varredura local dos exemplos não substitui validação com projetos externos.
+Ela cobre somente a compatibilidade dos comandos publicados de inicialização e
+registro; geração por provider, review e packaging continuam demonstrados pelo
+teste end-to-end com provider fixture.
 
 Não há mudança de API pública, schema persistido, migração ou formato de
 projeto nesta auditoria. A próxima etapa deve continuar em uma PR separada,

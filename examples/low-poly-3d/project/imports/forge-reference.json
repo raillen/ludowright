@@ -3,7 +3,7 @@
   "kind": "visual-reference",
   "id": "ref-forge-front",
   "name": "Forge building front reference",
-  "target": {"asset_id": "bldg-forge"},
+  "target": {"asset_id": "arch-forge"},
   "role": "identity",
   "provenance": {
     "origin": "captured",

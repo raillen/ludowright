@@ -21,8 +21,8 @@ ludowright assets create ./lantern-path \
   --input imports/lantern.json
 ```
 
-Decodifique a fixture visual determinística e valide o job e a aprovação
-antes de executar a geração ou aplicar uma revisão humana:
+Decodifique a fixture visual determinística para preparar o caminho de uma
+sheet:
 
 ```bash
 mkdir -p lantern-path/normalized
@@ -31,13 +31,28 @@ base64 --decode \
   > lantern-path/normalized/lantern-front.png
 ```
 
-O request de folha já contém o SHA-256 dessa fixture:
+O request de folha já contém o SHA-256 dessa fixture. Porém, a fixture não é
+uma referência aprovada: os arquivos `imports/lantern-job.json` e
+`imports/lantern-approval.json` são entradas contratuais, não operações
+aplicadas ao projeto. `sheets assemble` só pode ser executado depois que uma
+execução de ImageGen criar um receipt e uma revisão humana aplicar a aprovação
+da referência correspondente. Executá-lo imediatamente depois do `cp` falha
+corretamente com `invalid-input`, pois a referência ainda não existe no
+repositório canônico.
+
+O fluxo completo determinístico, incluindo geração por provider fixture,
+revisão, sheet, pacote, auditoria e release verification, é exercitado pelo
+teste end-to-end do repositório:
 
 ```bash
-ludowright sheets assemble requests/lantern-sheet.json sheets/lantern .
-ludowright package manifest . release/package-manifest.json --package-id minimal
-ludowright package build . release/package-manifest.json release
-ludowright release verify . release --package-id minimal --allow-warnings --check
+uv run pytest -m end_to_end --no-cov
+```
+
+Para validar somente o projeto copiado antes da geração, execute a auditoria
+estrutural:
+
+```bash
+ludowright assets audit ./lantern-path --check
 ```
 
 O exemplo não inclui `.ludowright/state.sqlite3`, ZIP, sheet ou receipts
