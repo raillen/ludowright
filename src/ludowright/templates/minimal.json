@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "kind": "template",
+  "id": "minimal",
+  "version": 1,
+  "directories": [
+    ".ludowright",
+    ".ludowright/locks",
+    "assets",
+    "decisions",
+    "docs",
+    "references",
+    "visual-jobs"
+  ],
+  "files": [
+    {"path": ".ludowright/project.json", "role": "manifest"},
+    {"path": ".ludowright/events.jsonl", "role": "event-log"},
+    {"path": ".ludowright/dependency-graph.json", "role": "dependency-graph"},
+    {"path": ".ludowright/state.sqlite3", "role": "state-store"}
+  ],
+  "project_defaults": {
+    "dimensions": "2d",
+    "targets": [
+      {"platform": "other", "label": "A definir"}
+    ]
+  }
+}

@@ -31,6 +31,12 @@
       "title": "Asset Registry, Discovery, Decomposition, and Workbook CLI"
     },
     {
+      "canonical_source": "commands/INIT.md",
+      "path": "commands/INIT.md",
+      "section": "commands",
+      "title": "Project Initialization CLI"
+    },
+    {
       "canonical_source": "commands/CODEX.md",
       "path": "commands/CODEX.md",
       "section": "commands",
@@ -671,6 +677,12 @@
       "path": "decisions/0045-deterministic-release-verification.md",
       "section": "decisions",
       "title": "ADR 0045: Deterministic Local Release Verification"
+    },
+    {
+      "canonical_source": "decisions/0046-deterministic-project-initialization.md",
+      "path": "decisions/0046-deterministic-project-initialization.md",
+      "section": "decisions",
+      "title": "ADR 0046: Deterministic Project Initialization"
     },
     {
       "canonical_source": "examples/MINIMAL.md",

@@ -10,5 +10,9 @@
     }
   ],
   "stage": "concept",
-  "lifecycle": "active"
+  "lifecycle": "active",
+  "template": {
+    "id": "minimal",
+    "version": 1
+  }
 }

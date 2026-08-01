@@ -1,0 +1,175 @@
+{
+  "$defs": {
+    "PlatformFamily": {
+      "description": "Broad target-platform families that remain stable across hardware generations.",
+      "enum": [
+        "windows",
+        "linux",
+        "macos",
+        "web",
+        "android",
+        "ios",
+        "playstation",
+        "xbox",
+        "nintendo",
+        "steam-deck",
+        "xr",
+        "other"
+      ],
+      "title": "PlatformFamily",
+      "type": "string"
+    },
+    "ProjectDimension": {
+      "description": "Primary spatial representation used by the game.",
+      "enum": [
+        "2d",
+        "2.5d",
+        "3d",
+        "mixed"
+      ],
+      "title": "ProjectDimension",
+      "type": "string"
+    },
+    "ProjectTargetContract": {
+      "additionalProperties": false,
+      "properties": {
+        "label": {
+          "anyOf": [
+            {
+              "maxLength": 120,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Label"
+        },
+        "platform": {
+          "$ref": "#/$defs/PlatformFamily"
+        }
+      },
+      "required": [
+        "platform"
+      ],
+      "title": "ProjectTargetContract",
+      "type": "object"
+    },
+    "TemplateFileContract": {
+      "additionalProperties": false,
+      "description": "One required file and its initialization role.",
+      "properties": {
+        "path": {
+          "maxLength": 1024,
+          "minLength": 1,
+          "pattern": "^[a-z0-9._-]+(?:/[a-z0-9._-]+)*$",
+          "title": "Path",
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "manifest",
+            "event-log",
+            "dependency-graph",
+            "state-store"
+          ],
+          "title": "Role",
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "role"
+      ],
+      "title": "TemplateFileContract",
+      "type": "object"
+    },
+    "TemplateProjectDefaultsContract": {
+      "additionalProperties": false,
+      "description": "Project values selected by a template without Python-specific logic.",
+      "properties": {
+        "dimensions": {
+          "$ref": "#/$defs/ProjectDimension"
+        },
+        "targets": {
+          "items": {
+            "$ref": "#/$defs/ProjectTargetContract"
+          },
+          "minItems": 1,
+          "title": "Targets",
+          "type": "array"
+        }
+      },
+      "required": [
+        "dimensions",
+        "targets"
+      ],
+      "title": "TemplateProjectDefaultsContract",
+      "type": "object"
+    }
+  },
+  "$id": "https://schemas.ludowright.dev/v1/template.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Versioned, data-only declaration of a project starter template.",
+  "properties": {
+    "directories": {
+      "items": {
+        "maxLength": 1024,
+        "minLength": 1,
+        "pattern": "^[a-z0-9._-]+(?:/[a-z0-9._-]+)*$",
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Directories",
+      "type": "array"
+    },
+    "files": {
+      "items": {
+        "$ref": "#/$defs/TemplateFileContract"
+      },
+      "minItems": 1,
+      "title": "Files",
+      "type": "array"
+    },
+    "id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Id",
+      "type": "string"
+    },
+    "kind": {
+      "const": "template",
+      "default": "template",
+      "title": "Kind",
+      "type": "string"
+    },
+    "project_defaults": {
+      "$ref": "#/$defs/TemplateProjectDefaultsContract"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "version": {
+      "maximum": 2147483647,
+      "minimum": 1,
+      "title": "Version",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "id",
+    "version",
+    "directories",
+    "files",
+    "project_defaults"
+  ],
+  "title": "LudoWright Project Template",
+  "type": "object"
+}

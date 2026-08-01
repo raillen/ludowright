@@ -6,7 +6,13 @@
       "file": "project.schema.json",
       "name": "project",
       "schema_id": "https://schemas.ludowright.dev/v1/project.schema.json",
-      "sha256": "49466fb7b4716bc428ff7e261adffc93f02c9b8c5ae9527e6783f445ada93f62"
+      "sha256": "f92613f8d8021cf7e0614fcdeecf78580ba45fe430455d99d7a0c23dfd28655d"
+    },
+    {
+      "file": "template.schema.json",
+      "name": "template",
+      "schema_id": "https://schemas.ludowright.dev/v1/template.schema.json",
+      "sha256": "c4ee36757a7244f9d24dae1091d9679f2bf2236d959d4923ca4370f2c0b3d75a"
     },
     {
       "file": "project-audit.schema.json",

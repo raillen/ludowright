@@ -120,6 +120,11 @@ Direct construction also enforces invariants, so persistence adapters cannot cre
 
 ## Serialization
 
+Project manifests may include an optional `template` selection with a stable
+template ID and positive template revision. This records how a new project was
+initialized without making the template part of the immutable project domain
+aggregate. Existing v1 manifests may omit the field.
+
 This PR defines the domain contract only. Pydantic models, JSON Schema, YAML serialization, migrations, and storage adapters will be added in their planned layers.
 
 Serialized enums will use their lowercase string values. Typed IDs serialize to their canonical string values. Exact published schema shapes will become stable in the JSON Schema publication phase.

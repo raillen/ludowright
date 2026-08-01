@@ -26,6 +26,7 @@ It uses JSON Schema Draft 2020-12 and contains:
 | Contract | Published file |
 |---|---|
 | Project | `project.schema.json` |
+| Project template | `template.schema.json` |
 | Release manifest | `release-manifest.schema.json` |
 | Release verification report | `release-verification.schema.json` |
 | Package manifest | `package-manifest.schema.json` |

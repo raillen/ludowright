@@ -63,6 +63,7 @@ This is the main navigation map for humans and agents. Each subject should have 
 - [`contracts/DOCUMENTATION_AUDIT.md`](contracts/DOCUMENTATION_AUDIT.md) — versioned audit policy, deterministic findings, and read-only validity semantics.
 - [`contracts/ATLAS.md`](contracts/ATLAS.md) — canonical documentation metadata, deterministic indexes, link findings, and orphan detection.
 - [`commands/INTERVIEW.md`](commands/INTERVIEW.md) — interview CLI syntax, resumable session files, skip/defer policy, and JSON interaction data.
+- [`commands/INIT.md`](commands/INIT.md) — create-only project initialization, templates, dry-run, rollback, and CLI output.
 - [`commands/DOCUMENTS.md`](commands/DOCUMENTS.md) — incremental document refresh syntax, dry-run, output, and failure behavior.
 - [`commands/DOCS.md`](commands/DOCS.md) — deterministic documentation audit syntax, policy, findings, and check behavior.
 - [`commands/ATLAS.md`](commands/ATLAS.md) — ATLAS generation, integrity checking, and JSON output.
@@ -82,7 +83,8 @@ This is the main navigation map for humans and agents. Each subject should have 
 
 Published machine-readable contracts are stored under `schemas/v1/`. The source models live under `src/ludowright/contracts/`.
 
-Published canonical contracts include the project manifest, package manifest,
+Published canonical contracts include the project manifest, project template,
+package manifest,
 package index, project-audit report, release manifest, and release verification
 report. Digital signing and remote publication remain outside PR56.
 
@@ -156,6 +158,16 @@ recommended actions. Release verification consumes that report as its first
 gate and applies the explicit `block` or `allow` warning policy without
 mutating project state.
 
+Project initialization is implemented by
+`src/ludowright/application/initialization.py` and presented by the top-level
+`init` command. It loads the data-defined template from
+`src/ludowright/templates/`, composes the existing filesystem, event-log,
+dependency-graph, structured-repository, and SQLite adapters, and writes the
+project marker only after validation. Initialization is create-only, supports
+Rich/JSON output and dry-run, rejects unsafe paths and symlinks, and performs
+conservative rollback after partial failure. The template and manifest
+provenance contracts are published at v1; the state store remains at schema v2.
+
 The initial asset taxonomy is loaded by
 `src/ludowright/application/asset_taxonomy.py` from versioned JSON data under
 `src/ludowright/taxonomy_data/`. Asset registry commands are orchestrated by
@@ -226,6 +238,7 @@ state or image files.
 - [`decisions/0043-deterministic-package-builder.md`](decisions/0043-deterministic-package-builder.md) — fixed ZIP metadata, package index, release directory, and create-only rollback.
 - [`decisions/0044-deterministic-project-audit.md`](decisions/0044-deterministic-project-audit.md) — read-only global readiness report, immutable SQLite inspection, deterministic evidence, and conflict policy.
 - [`decisions/0045-deterministic-release-verification.md`](decisions/0045-deterministic-release-verification.md) — deterministic local release gates, checksum manifest, warning policy, and no-signing boundary.
+- [`decisions/0046-deterministic-project-initialization.md`](decisions/0046-deterministic-project-initialization.md) — versioned data templates, create-only initialization, marker-last persistence, and conservative rollback.
 
 Planned documents:
 

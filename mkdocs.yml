@@ -74,6 +74,7 @@ nav:
       - Packages CLI: commands/PACKAGES.md
       - Project Audit CLI: commands/AUDIT.md
       - Release Verification CLI: commands/RELEASES.md
+      - Project Initialization CLI: commands/INIT.md
   - Implementation:
       - Plan to 1.0: plans/IMPLEMENTATION_PLAN.md
   - Examples:
@@ -131,6 +132,7 @@ nav:
       - ADR 0043 — Package Builder: decisions/0043-deterministic-package-builder.md
       - ADR 0044 — Project Audit: decisions/0044-deterministic-project-audit.md
       - ADR 0045 — Release Verification: decisions/0045-deterministic-release-verification.md
+      - ADR 0046 — Project Initialization: decisions/0046-deterministic-project-initialization.md
       - ADR Template: decisions/0000-template.md
   - Operations:
       - Documentation Site: operations/DOCUMENTATION_SITE.md

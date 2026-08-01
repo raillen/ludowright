@@ -14,7 +14,7 @@ idea → guided intake → modular documentation → asset registry
 
 ## Current status
 
-LudoWright is in the **pre-alpha documentation phase**.
+LudoWright is in the **pre-alpha beta-preparation phase**.
 
 The repository currently establishes:
 
@@ -22,6 +22,8 @@ The repository currently establishes:
 - the layered Python and Codex architecture;
 - documentation and contribution governance;
 - the initial package and CLI;
+- project initialization from the versioned `minimal` template, including the
+  manifest, event log, dependency graph, and current SQLite state store;
 - tests and continuous integration.
 - deterministic document templates and an ATLAS index with canonical-source and
   link-integrity checks.
@@ -61,12 +63,14 @@ The repository currently establishes:
 
 The Codex orchestration policy now enforces status-first inspection, durable
 decisions, validations, approval checkpoints, and safe resume planning. The
-ImageGen adapter now executes a selected ready job through an injected provider,
+ImageGen adapter executes a selected ready job through an injected provider,
 records a deterministic operation manifest, validates one PNG per view, and
-rolls back partial failures. Project-local profile persistence, generation
-receipts, review workflows, technical sheets, global audits, and package
-generation remain planned work. The pure deterministic visual-job planner is
-implemented, but it does not execute providers or persist project-local plans.
+rolls back partial failures. Generation receipts, review workflows, technical
+sheets, global audits, package manifests, reproducible package builds, local
+release verification, and deterministic example inputs are implemented; clean
+installation tutorials and beta readiness remain the next bounded work. The
+pure deterministic visual-job planner does not execute providers or persist
+project-local plans.
 
 ## Start here
 

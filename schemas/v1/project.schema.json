@@ -111,6 +111,31 @@
       ],
       "title": "ProjectTargetContract",
       "type": "object"
+    },
+    "TemplateSelectionContract": {
+      "additionalProperties": false,
+      "description": "Template provenance recorded in a generated project manifest.",
+      "properties": {
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "version": {
+          "maximum": 2147483647,
+          "minimum": 1,
+          "title": "Version",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "version"
+      ],
+      "title": "TemplateSelectionContract",
+      "type": "object"
     }
   },
   "$id": "https://schemas.ludowright.dev/v1/project.schema.json",
@@ -185,6 +210,17 @@
       "minItems": 1,
       "title": "Targets",
       "type": "array"
+    },
+    "template": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/TemplateSelectionContract"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
     }
   },
   "required": [
