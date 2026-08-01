@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "kind": "asset",
+  "id": "prop-lantern",
+  "name": "Lantern",
+  "family": "prop",
+  "subtype": "handheld-tool",
+  "priority": "high",
+  "status": "planned",
+  "components": [
+    {
+      "id": "lantern-body",
+      "name": "Lantern body",
+      "status": "planned",
+      "required": true
+    }
+  ],
+  "variants": [],
+  "states": [
+    {
+      "id": "lit",
+      "name": "Lit",
+      "status": "planned",
+      "required": true
+    }
+  ]
+}

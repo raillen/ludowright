@@ -120,7 +120,7 @@ assembly from interview answers remains a later bounded capability.
   implemented through PR54; global readiness audit implemented through PR55;
   release verification implemented through PR56; digital signing and remote
   publication remain outside this slice);
-- release-readiness checks.
+- release-readiness checks (implemented through PR56).
 
 ### 0.8 Guided Orchestration
 
@@ -134,7 +134,8 @@ assembly from interview answers remains a later bounded capability.
 
 - clean installation path;
 - complete public documentation;
-- minimal, 2D, low-poly 3D, and modular-environment example projects;
+- minimal example project (implemented through PR57), followed by 2D,
+  low-poly 3D, and modular-environment examples;
 - end-to-end tests and migration tests;
 - usability and compatibility fixes from real projects;
 - release candidate.

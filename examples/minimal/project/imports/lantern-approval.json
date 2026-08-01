@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "kind": "approval",
+  "id": "approval-lantern-front-v1",
+  "subject": {
+    "subject_kind": "reference",
+    "id": "ref-lantern-front",
+    "revision": "sha256:lantern-front-v1",
+    "label": "Lantern front reference"
+  },
+  "history": [
+    {
+      "sequence": 1,
+      "status": "pending",
+      "note": "Ready for human review."
+    }
+  ]
+}

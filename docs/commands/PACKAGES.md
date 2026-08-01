@@ -60,7 +60,7 @@ result and structured entries in the persisted manifest.
 
 This command produces the manifest only. ZIP creation and package indexes are
 provided by the separate `package build` command; global readiness audits and
-release verification remain later roadmap stages.
+release verification are separate commands implemented through PR55–PR56.
 
 ## Build a release package
 

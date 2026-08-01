@@ -671,6 +671,12 @@
       "path": "decisions/0045-deterministic-release-verification.md",
       "section": "decisions",
       "title": "ADR 0045: Deterministic Local Release Verification"
+    },
+    {
+      "canonical_source": "examples/MINIMAL.md",
+      "path": "examples/MINIMAL.md",
+      "section": "examples",
+      "title": "Minimal Example"
     }
   ],
   "kind": "atlas-metadata",
