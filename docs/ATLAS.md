@@ -46,6 +46,7 @@ This is the main navigation map for humans and agents. Each subject should have 
 - [`contracts/PROMPT_COMPILER.md`](contracts/PROMPT_COMPILER.md) — versioned prompt layers, approved-reference resolution, structured constraints, deterministic rendering, and prompt hashing.
 - [`contracts/CODEX_ORCHESTRATION.md`](contracts/CODEX_ORCHESTRATION.md) — declarative Codex policy, deterministic next-action plans, checkpoints, validation, and resumability.
 - [`contracts/CODEX_SKILL.md`](contracts/CODEX_SKILL.md) — versioned project-local `$ludowright` skill package, lifecycle semantics, checksums, and safe failure behavior.
+- [`contracts/IMAGEGEN_EXECUTION.md`](contracts/IMAGEGEN_EXECUTION.md) — provider boundary, deterministic operation manifests, one-view execution, PNG validation, conflicts, dry-run, and rollback.
 - [`contracts/JSON_SCHEMAS.md`](contracts/JSON_SCHEMAS.md) — generated Draft 2020-12 schemas, registry, fixtures, checksums, drift checking, and compatibility policy.
 - [`contracts/PROJECT_FILESYSTEM.md`](contracts/PROJECT_FILESYSTEM.md) — root discovery, canonical repository paths, symlink rejection, atomic writes, bounded reads, and exclusive locks.
 - [`contracts/STRUCTURED_REPOSITORIES.md`](contracts/STRUCTURED_REPOSITORIES.md) — strict JSON/YAML parsing, canonical serialization, document digests, snapshots, and conflict detection.
@@ -91,6 +92,12 @@ the same package-data directory. The CLI adapter lives in
 `src/ludowright/cli/codex.py` and uses the shared filesystem boundary, lock, and
 CLI envelope. The policy planner does not change canonical project state, the
 event log, SQLite, or provider outputs.
+
+ImageGen operation execution is implemented by
+`integrations/codex/imagegen.py`. It consumes a selected job and matching
+compiled prompt, reuses `ProjectFilesystem`, `JsonDocumentRepository`, and the
+project lock, and leaves receipts and generated-reference provenance to later
+slices.
 
 The initial asset taxonomy is loaded by
 `src/ludowright/application/asset_taxonomy.py` from versioned JSON data under
@@ -152,11 +159,11 @@ state or image files.
 - [`commands/CODEX.md`](commands/CODEX.md) — skill installation, verification, update, and removal;
 - [`decisions/0034-versioned-codex-skill-installer.md`](decisions/0034-versioned-codex-skill-installer.md) — adapter boundary and atomic-install decision.
 - [`decisions/0035-codex-orchestration-policy.md`](decisions/0035-codex-orchestration-policy.md) — declarative policy boundary and deterministic planning.
+- [`decisions/0036-imagegen-job-execution.md`](decisions/0036-imagegen-job-execution.md) — provider boundary, immutable operation record, and safe rollback.
 
 Planned documents:
 
 - agent roles and routing;
-- ImageGen job execution;
 - approval checkpoints;
 - recovery and retry behavior;
 - evals for agent compliance.

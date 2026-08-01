@@ -125,9 +125,9 @@ A `VisualJob` is an immutable request specification containing:
 A job can be executed multiple times without changing the job itself.
 
 The provider-neutral `compiled-prompt` output is produced before execution by
-the prompt compiler. It is not yet a field in the v1 `VisualJob` contract;
-future planning and execution slices will bind that immutable output to a job
-and its request fingerprint.
+the prompt compiler. It is not a field in the v1 `VisualJob` contract. The
+ImageGen adapter binds that immutable output to a job and its request
+fingerprint through the separate `imagegen-operation` integration contract.
 
 Changing prompts, references, profile revision, output count, target, or another request input creates a **new job**, normally with a new request fingerprint and an explicit superseding relationship.
 
@@ -149,6 +149,23 @@ write project files, event-log entries, SQLite state, prompts, receipts, or imag
 outputs. Profile selection, provider execution, and persistence remain separate
 application stages. See the canonical [Visual Job Plans contract](VISUAL_JOB_PLANS.md)
 and [ADR 0033](../decisions/0033-deterministic-visual-job-planner.md).
+
+## ImageGen operation execution
+
+The Codex integration consumes a job selected from a `ready` visual-job plan
+and its matching compiled prompt. It creates a deterministic
+`imagegen-operation` record, records the full prompt and sorted input IDs, and
+sends exactly one provider request per output role. Each request must return one
+valid, non-animated PNG for one technical view. Existing operation or output
+paths are conflicts; they are never overwritten.
+
+The operation manifest is written atomically before provider calls. A provider,
+validation, or write failure rolls back the manifest, outputs, and empty
+directories created by that attempt. This is an execution artifact, not yet a
+`GenerationReceipt`: checksums, provider metadata, timestamps, output
+references, and durable failure history remain the next slice. See the
+[ImageGen execution contract](IMAGEGEN_EXECUTION.md) and
+[ADR 0036](../decisions/0036-imagegen-job-execution.md).
 
 ## Retries versus superseding jobs
 

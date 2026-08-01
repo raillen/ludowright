@@ -163,6 +163,12 @@
       "title": "Codex Skill Contract"
     },
     {
+      "canonical_source": "contracts/IMAGEGEN_EXECUTION.md",
+      "path": "contracts/IMAGEGEN_EXECUTION.md",
+      "section": "contracts",
+      "title": "ImageGen Job Execution"
+    },
+    {
       "canonical_source": "contracts/DECISIONS_AND_APPROVALS.md",
       "path": "contracts/DECISIONS_AND_APPROVALS.md",
       "section": "contracts",
@@ -473,6 +479,12 @@
       "path": "decisions/0035-codex-orchestration-policy.md",
       "section": "decisions",
       "title": "ADR 0035: Declarative Codex Orchestration Policy"
+    },
+    {
+      "canonical_source": "decisions/0036-imagegen-job-execution.md",
+      "path": "decisions/0036-imagegen-job-execution.md",
+      "section": "decisions",
+      "title": "ADR 0036: Provider-Bound ImageGen Job Execution"
     },
     {
       "canonical_source": "governance/RFC_TEMPLATE.md",

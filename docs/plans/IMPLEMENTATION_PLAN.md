@@ -457,7 +457,7 @@ version checks, dry-run planning, Rich/JSON output, exclusive locking, atomic
 writes, and rollback. Modified or unrelated files are never overwritten or
 removed. The published `codex-skill-manifest` and `codex-skill-report` v1
 contracts, schemas, fixtures, tests, and ADR are included. Orchestration policy,
-provider execution, receipts, and approvals remain separate PRs.
+receipts, reviews, and approvals remain separate PRs.
 
 - project-local `$ludowright` skill;
 - installation, update, verification, and removal;
@@ -472,7 +472,9 @@ returns one deterministic next action; it does not execute providers or mutate
 canonical state. The published `codex-orchestration-policy` and
 `codex-orchestration-plan` v1 contracts, schemas, fixtures, tests, and ADR are
 included. Provider execution, receipts, reviews, and specialist agents remain
-separate slices.
+separate concerns after this policy stage; PR46 implements provider-bound
+ImageGen execution, while receipts, reviews, and specialist agents remain in
+later slices.
 
 - inspect status first;
 - ask only unresolved questions;
@@ -482,6 +484,14 @@ separate slices.
 - resume safely.
 
 ### PR 46 — ImageGen job execution
+
+Status: implemented in the current slice. The Codex integration consumes a
+validated job selected from a ready visual-job plan and its matching compiled
+prompt, creates a deterministic `imagegen-operation` contract, validates one
+PNG per view, writes through the safe filesystem boundary, and rolls back
+partial execution. Schema publication, fixture, focused security/concurrency
+tests, ADR, and documentation are included. Generation receipts, output
+references, checksums, and provider metadata remain PR47 responsibilities.
 
 - translate a ready visual job into an ImageGen operation;
 - enforce output path and one-view-per-image policy;

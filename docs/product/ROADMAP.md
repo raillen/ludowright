@@ -90,8 +90,10 @@ assembly from interview answers remains a later bounded capability.
 - declarative Codex orchestration policy with status-first inspection, unresolved
   question handling, decision recording, validation gates, human approval
   checkpoints, and durable resume planning (implemented through PR45);
+- provider-bound ImageGen execution with deterministic operation manifests,
+  one PNG per view, safe paths, atomic writes, dry-run, conflict detection, and
+  rollback (implemented through PR46);
 - Codex-specific agents and routing;
-- execution of structured visual jobs through ImageGen;
 - approved-reference selection;
 - prompt, input, output, and checksum receipts;
 - retries, superseding, and selective correction;

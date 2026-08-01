@@ -78,7 +78,9 @@ payload adulterado como se fosse a mesma compilação.
 - cada prompt compilado é limitado a 12.000 caracteres por canal;
 - uma compilação aceita no máximo 64 camadas e 64 referências;
 - o compilador não define perfis por família, batching, jobs executáveis ou
-  integração ImageGen; essas capacidades permanecem em PRs posteriores.
+  integração ImageGen. O PR46 consome esse resultado por meio do contrato
+  `imagegen-operation`; receipts e referências geradas permanecem em PRs
+  posteriores.
 
 ## Validação
 

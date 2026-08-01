@@ -111,8 +111,16 @@ planejador é read-only: ele retorna a próxima ação e não grava estado nem c
 providers. A ordem e os códigos estão no contrato
 [`CODEX_ORCHESTRATION.md`](CODEX_ORCHESTRATION.md).
 
+## Execução ImageGen
+
+A skill pode encaminhar um job selecionado de um plano `ready` e seu prompt
+compilado para o adaptador `ImageGenExecutor`. O adaptador usa o provider
+injetado pelo host, grava o contrato `imagegen-operation` e faz uma chamada por
+view, com validação PNG, lock, escrita atômica e rollback. Essa integração não
+cria receipts, referências ou aprovações e não substitui os comandos canônicos.
+
 ## Limites desta versão
 
-Execução de ImageGen, receipts, revisão visual e agentes especialistas pertencem
-aos PRs seguintes. A aprovação humana é um checkpoint exigido pela política,
-mas sua gravação continua sendo responsabilidade dos comandos canônicos.
+Receipts, revisão visual e agentes especialistas pertencem aos PRs seguintes.
+A aprovação humana é um checkpoint exigido pela política, mas sua gravação
+continua sendo responsabilidade dos comandos canônicos.

@@ -78,14 +78,17 @@ The workload estimate is provider-neutral:
 
 These units are planning signals, not provider prices or time guarantees.
 
-## Persistence and future execution
+## Persistence and execution
 
-This slice has no project files, event-log records, SQLite writes, locks, image
-outputs, provider calls, or CLI command. A later execution slice may consume a
-ready `visual-job-plan`, but it must preserve the immutable job IDs and request
-revisions. Any persisted plan must use the published contract and the existing
-atomic repository, event-log, and state-store boundaries.
+The planner itself has no project files, event-log records, SQLite writes,
+locks, image outputs, provider calls, or CLI command. The ImageGen execution
+adapter consumes a job selected from a `ready` plan and must preserve its
+immutable job ID and request revision. It binds the job to a matching compiled
+prompt and records that binding in the separate `imagegen-operation` contract.
+Any persisted plan must use the published contract and the existing atomic
+repository, event-log, and state-store boundaries.
 
-The plan does not select profiles from a project catalog, compile prompts, run
-ImageGen, create receipts, or approve references. Those responsibilities remain
-separate roadmap stages.
+The plan does not select profiles from a project catalog, compile prompts,
+execute ImageGen, create receipts, or approve references. Prompt compilation
+and ImageGen operation execution are separate stages; receipts and approvals
+remain later roadmap stages.
