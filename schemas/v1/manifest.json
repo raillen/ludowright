@@ -9,6 +9,12 @@
       "sha256": "49466fb7b4716bc428ff7e261adffc93f02c9b8c5ae9527e6783f445ada93f62"
     },
     {
+      "file": "package-manifest.schema.json",
+      "name": "package-manifest",
+      "schema_id": "https://schemas.ludowright.dev/v1/package-manifest.schema.json",
+      "sha256": "d286596c87382262738f7e25e609e2ff3e91dd7d9c3974826df93b4c8646a7d8"
+    },
+    {
       "file": "decision.schema.json",
       "name": "decision",
       "schema_id": "https://schemas.ludowright.dev/v1/decision.schema.json",
