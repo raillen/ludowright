@@ -643,6 +643,12 @@
       "title": "Public-beta Documentation Audit"
     },
     {
+      "canonical_source": "quality/RELEASE_CANDIDATE_CHECKLIST.md",
+      "path": "quality/RELEASE_CANDIDATE_CHECKLIST.md",
+      "section": "quality",
+      "title": "Release Candidate and Stable Release Checklist"
+    },
+    {
       "canonical_source": "security/THREAT_MODEL.md",
       "path": "security/THREAT_MODEL.md",
       "section": "security",

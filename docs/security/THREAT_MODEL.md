@@ -75,5 +75,5 @@ verification. A release must not bypass a failed security or quality check.
 This review does not add network access, a plugin execution engine, digital
 signatures, remote publication, or a sandbox for arbitrary local processes.
 Those capabilities require separate contracts, threat analysis, and release
-gates. The remaining PR62 work is documentation audit follow-up, beta feedback
-from real projects, and the release-candidate checklist.
+gates. The release-candidate checklist is now published; beta feedback from
+real projects and the human candidate sign-off remain required before 1.0.

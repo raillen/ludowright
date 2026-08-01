@@ -58,7 +58,9 @@ Ainda pendente para a prontidão 1.0:
 
 - feedback de uso em projetos reais e correções de usabilidade/compatibilidade
   derivadas desse feedback;
-- release candidate e checklist de release estável.
+- aprovação da release candidate e da release estável. O checklist operacional
+  já está publicado em
+  [`quality/RELEASE_CANDIDATE_CHECKLIST.md`](RELEASE_CANDIDATE_CHECKLIST.md).
 
 A varredura local dos exemplos não substitui validação com projetos externos.
 Ela cobre somente a compatibilidade dos comandos publicados de inicialização e
@@ -66,5 +68,6 @@ registro; geração por provider, review e packaging continuam demonstrados pelo
 teste end-to-end com provider fixture.
 
 Não há mudança de API pública, schema persistido, migração ou formato de
-projeto nesta auditoria. A próxima etapa deve continuar em uma PR separada,
-com evidência de projetos reais antes de declarar a release candidate.
+projeto nesta auditoria. A aprovação da release candidate continua bloqueada
+até existir evidência de projetos reais e revisão humana conforme o
+[`checklist de release`](RELEASE_CANDIDATE_CHECKLIST.md).
