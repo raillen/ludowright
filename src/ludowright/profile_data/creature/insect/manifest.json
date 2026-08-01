@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "kind": "creature-profile",
+  "capture_profile": {
+    "schema_version": 1,
+    "kind": "capture-profile",
+    "id": "creature-insect",
+    "version": 1,
+    "name": "Insect Creature",
+    "family": "creature",
+    "subtype": "insect",
+    "camera": {"projection": "orthographic", "framing_margin_percent": 12},
+    "background": {"mode": "neutral"},
+    "lighting": {"mode": "studio", "shadows": "soft"},
+    "validation": {"width": 2048, "height": 2048, "require_full_subject": true, "require_consistent_scale": true, "allow_occlusion": false},
+    "views": [
+      {"id": "front", "name": "Front", "azimuth_degrees": 0, "elevation_degrees": 0, "role": "identity"},
+      {"id": "side", "name": "Side", "azimuth_degrees": 90, "elevation_degrees": 0, "role": "construction"},
+      {"id": "rear", "name": "Rear", "azimuth_degrees": 180, "elevation_degrees": 0, "role": "construction"},
+      {"id": "top", "name": "Top", "azimuth_degrees": 0, "elevation_degrees": 90, "role": "silhouette"},
+      {"id": "underside", "name": "Underside", "azimuth_degrees": 0, "elevation_degrees": -90, "role": "construction"}
+    ],
+    "requirements": [
+      {"id": "body", "name": "Body", "requirement_kind": "component"},
+      {"id": "head", "name": "Head", "requirement_kind": "component"},
+      {"id": "legs", "name": "Legs", "requirement_kind": "component"},
+      {"id": "wings", "name": "Wings", "requirement_kind": "component", "required": false},
+      {"id": "antennae", "name": "Antennae", "requirement_kind": "component"},
+      {"id": "idle", "name": "Idle", "requirement_kind": "state"},
+      {"id": "flying", "name": "Flying", "requirement_kind": "state", "required": false},
+      {"id": "damaged", "name": "Damaged", "requirement_kind": "state", "required": false}
+    ],
+    "sheets": []
+  },
+  "anatomy": {"kind": "insect", "guidance": "Keep segmented body proportions, leg articulation, antennae, and wing attachment readable."},
+  "anatomy_views": [
+    {"view_id": "front", "role": "whole-body", "guidance": "Establish head width, thorax alignment, leg symmetry, and antennae spacing."},
+    {"view_id": "side", "role": "limb", "guidance": "Show segment transitions, leg joints, ground contact, and body depth."},
+    {"view_id": "rear", "role": "antennae", "guidance": "Show abdomen silhouette, antennae placement, and paired appendages."},
+    {"view_id": "top", "role": "wing", "guidance": "Show wing footprint, segment symmetry, and the complete silhouette."},
+    {"view_id": "underside", "role": "underside", "guidance": "Show leg origins, underside segmentation, and contact details."}
+  ],
+  "components": [
+    {"id": "body", "name": "Body", "kind": "body"},
+    {"id": "head", "name": "Head", "kind": "head"},
+    {"id": "legs", "name": "Legs", "kind": "limb"},
+    {"id": "wings", "name": "Wings", "kind": "wing", "required": false},
+    {"id": "antennae", "name": "Antennae", "kind": "antennae"}
+  ],
+  "states": [
+    {"id": "idle", "name": "Idle", "guidance": "Use a stable pose with all required appendages visible."},
+    {"id": "flying", "name": "Flying", "guidance": "Show the approved wing position and body axis in flight.", "required": false},
+    {"id": "damaged", "name": "Damaged", "guidance": "Show only the approved damage state without obscuring segmentation.", "required": false}
+  ],
+  "outputs": [
+    {"id": "assembled-turnaround", "name": "Assembled Turnaround", "layout": "turnaround", "view_ids": ["front", "side", "rear", "top", "underside"], "subject_modes": ["asset", "components", "states"], "separate_files": true, "assembled_sheet": true},
+    {"id": "anatomy-details", "name": "Anatomy Details", "layout": "grid", "view_ids": ["side", "top", "underside"], "subject_modes": ["components", "states"], "separate_files": true, "assembled_sheet": false}
+  ]
+}

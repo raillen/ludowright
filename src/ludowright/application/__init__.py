@@ -39,6 +39,12 @@ from ludowright.application.atlas import (
     AtlasGenerator,
     render_atlas_markdown,
 )
+from ludowright.application.creature_profiles import (
+    CreatureProfileDefinitionError,
+    CreatureProfileError,
+    CreatureProfileNotFoundError,
+    load_creature_profile,
+)
 from ludowright.application.document_refresh import (
     DocumentRefreshError,
     DocumentRefreshPlan,
@@ -110,6 +116,9 @@ __all__ = [
     "AtlasGeneration",
     "AtlasGenerationError",
     "AtlasGenerator",
+    "CreatureProfileDefinitionError",
+    "CreatureProfileError",
+    "CreatureProfileNotFoundError",
     "DocumentRefreshError",
     "DocumentRefreshPlan",
     "DocumentRefreshRequest",
@@ -137,6 +146,7 @@ __all__ = [
     "PromptTemplateNotFoundError",
     "RenderedDocument",
     "load_asset_taxonomy",
+    "load_creature_profile",
     "load_document_template_manifest",
     "load_humanoid_profile",
     "load_prompt_template",

@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "kind": "creature-profile",
+  "capture_profile": {
+    "schema_version": 1,
+    "kind": "capture-profile",
+    "id": "creature-bird",
+    "version": 1,
+    "name": "Bird Creature",
+    "family": "creature",
+    "subtype": "bird",
+    "camera": {"projection": "orthographic", "framing_margin_percent": 12},
+    "background": {"mode": "neutral"},
+    "lighting": {"mode": "studio", "shadows": "soft"},
+    "validation": {"width": 2048, "height": 2048, "require_full_subject": true, "require_consistent_scale": true, "allow_occlusion": false},
+    "views": [
+      {"id": "front", "name": "Front", "azimuth_degrees": 0, "elevation_degrees": 0, "role": "identity"},
+      {"id": "side", "name": "Side", "azimuth_degrees": 90, "elevation_degrees": 0, "role": "construction"},
+      {"id": "rear", "name": "Rear", "azimuth_degrees": 180, "elevation_degrees": 0, "role": "construction"},
+      {"id": "top", "name": "Top", "azimuth_degrees": 0, "elevation_degrees": 90, "role": "silhouette"},
+      {"id": "wing-spread", "name": "Wing Spread", "azimuth_degrees": 45, "elevation_degrees": 0, "role": "construction"}
+    ],
+    "requirements": [
+      {"id": "body", "name": "Body", "requirement_kind": "component"},
+      {"id": "head", "name": "Head", "requirement_kind": "component"},
+      {"id": "wings", "name": "Wings", "requirement_kind": "component"},
+      {"id": "tail", "name": "Tail", "requirement_kind": "component"},
+      {"id": "beak", "name": "Beak", "requirement_kind": "component", "required": false},
+      {"id": "perched", "name": "Perched", "requirement_kind": "state"},
+      {"id": "flight", "name": "Flight", "requirement_kind": "state"},
+      {"id": "injured", "name": "Injured", "requirement_kind": "state", "required": false}
+    ],
+    "sheets": []
+  },
+  "anatomy": {"kind": "bird", "guidance": "Keep wing span, feather mass, beak direction, leg placement, and flight silhouette readable."},
+  "anatomy_views": [
+    {"view_id": "front", "role": "whole-body", "guidance": "Establish chest width, head alignment, and paired wing balance."},
+    {"view_id": "side", "role": "head", "guidance": "Show beak, neck, breast, leg placement, and body depth."},
+    {"view_id": "rear", "role": "tail", "guidance": "Show tail fan, back silhouette, and wing attachment."},
+    {"view_id": "top", "role": "silhouette", "guidance": "Show body axis, wing footprint, and tail spread."},
+    {"view_id": "wing-spread", "role": "wing", "guidance": "Show wing joints, span, feather grouping, and attachment points."}
+  ],
+  "components": [
+    {"id": "body", "name": "Body", "kind": "body"},
+    {"id": "head", "name": "Head", "kind": "head"},
+    {"id": "wings", "name": "Wings", "kind": "wing"},
+    {"id": "tail", "name": "Tail", "kind": "tail"},
+    {"id": "beak", "name": "Beak", "kind": "other", "required": false}
+  ],
+  "states": [
+    {"id": "perched", "name": "Perched", "guidance": "Use a stable grounded pose with readable feet and balance."},
+    {"id": "flight", "name": "Flight", "guidance": "Show the approved wing position and body axis in motion."},
+    {"id": "injured", "name": "Injured", "guidance": "Show only the approved injury state without obscuring anatomy.", "required": false}
+  ],
+  "outputs": [
+    {"id": "assembled-turnaround", "name": "Assembled Turnaround", "layout": "turnaround", "view_ids": ["front", "side", "rear", "top", "wing-spread"], "subject_modes": ["asset", "components", "states"], "separate_files": true, "assembled_sheet": true},
+    {"id": "flight-anatomy", "name": "Flight Anatomy", "layout": "grid", "view_ids": ["side", "wing-spread"], "subject_modes": ["components", "states"], "separate_files": true, "assembled_sheet": false}
+  ]
+}

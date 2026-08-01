@@ -44,6 +44,13 @@ from ludowright.contracts.cli import (
     CliMetaContract,
     CliResponseContract,
 )
+from ludowright.contracts.creature_profiles import (
+    CreatureAnatomyContract,
+    CreatureAnatomyViewContract,
+    CreatureComponentContract,
+    CreatureProfileContract,
+    CreatureStateContract,
+)
 from ludowright.contracts.dependencies import (
     DependencyEdgeContract,
     DependencyGraphContract,
@@ -171,6 +178,11 @@ __all__ = [
     "CliResponseContract",
     "CompiledPromptContract",
     "CompiledPromptReferenceContract",
+    "CreatureAnatomyContract",
+    "CreatureAnatomyViewContract",
+    "CreatureComponentContract",
+    "CreatureProfileContract",
+    "CreatureStateContract",
     "DecisionContract",
     "DependencyEdgeContract",
     "DependencyGraphContract",

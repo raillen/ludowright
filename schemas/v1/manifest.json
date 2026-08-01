@@ -141,6 +141,12 @@
       "sha256": "ecad67fbf58644a2138ffc58aeefba4a0f8d79f52adf8c6e5a84e374b3fbddd1"
     },
     {
+      "file": "creature-profile.schema.json",
+      "name": "creature-profile",
+      "schema_id": "https://schemas.ludowright.dev/v1/creature-profile.schema.json",
+      "sha256": "cbfb89999026d06ff13b5b92137c50f019e6167a3579ecbadd48143694c43c35"
+    },
+    {
       "file": "migration-receipt.schema.json",
       "name": "migration-receipt",
       "schema_id": "https://schemas.ludowright.dev/v1/migration-receipt.schema.json",

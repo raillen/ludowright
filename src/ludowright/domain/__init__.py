@@ -33,6 +33,16 @@ from ludowright.domain.capture_profiles import (
     ShadowMode,
     SheetLayout,
 )
+from ludowright.domain.creature_profiles import (
+    CreatureAnatomy,
+    CreatureAnatomyView,
+    CreatureComponent,
+    CreatureComponentKind,
+    CreatureProfile,
+    CreatureProfileKind,
+    CreatureState,
+    CreatureViewRole,
+)
 from ludowright.domain.dependencies import (
     APPROVAL_REVOKED,
     MANUAL_INVALIDATION,
@@ -152,6 +162,10 @@ from ludowright.domain.interviews import (
     QuestionValidation,
 )
 from ludowright.domain.names import DisplayName, slugify, validate_slug
+from ludowright.domain.profile_guidance import (
+    MAX_PROFILE_GUIDANCE_LENGTH,
+    validate_profile_guidance,
+)
 from ludowright.domain.project import (
     EngineSpec,
     PlatformFamily,
@@ -213,6 +227,7 @@ from ludowright.domain.visual_jobs import (
 __all__ = [
     "APPROVAL_REVOKED",
     "MANUAL_INVALIDATION",
+    "MAX_PROFILE_GUIDANCE_LENGTH",
     "SOURCE_CHANGED",
     "SOURCE_REJECTED",
     "SOURCE_REMOVED",
@@ -255,6 +270,14 @@ __all__ = [
     "CompiledPrompt",
     "ComponentId",
     "CorrelationId",
+    "CreatureAnatomy",
+    "CreatureAnatomyView",
+    "CreatureComponent",
+    "CreatureComponentKind",
+    "CreatureProfile",
+    "CreatureProfileKind",
+    "CreatureState",
+    "CreatureViewRole",
     "Decision",
     "DecisionId",
     "DecisionRevision",
@@ -391,5 +414,6 @@ __all__ = [
     "resolve_prompt_references",
     "slugify",
     "thaw_json_object",
+    "validate_profile_guidance",
     "validate_slug",
 ]

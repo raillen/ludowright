@@ -24,6 +24,7 @@ from ludowright.contracts.atlas import AtlasMetadataContract, AtlasReportContrac
 from ludowright.contracts.capture import CaptureProfileContract
 from ludowright.contracts.cli import CliResponseContract
 from ludowright.contracts.common import ContractModel
+from ludowright.contracts.creature_profiles import CreatureProfileContract
 from ludowright.contracts.dependencies import DependencyGraphContract
 from ludowright.contracts.document_refresh import (
     DocumentRefreshRequestContract,
@@ -189,6 +190,12 @@ CONTRACTS: tuple[ContractDefinition, ...] = (
         "humanoid-profile.schema.json",
         "LudoWright Humanoid Profile",
         HumanoidProfileContract,
+    ),
+    ContractDefinition(
+        "creature-profile",
+        "creature-profile.schema.json",
+        "LudoWright Creature Profile",
+        CreatureProfileContract,
     ),
     ContractDefinition(
         "migration-receipt",
