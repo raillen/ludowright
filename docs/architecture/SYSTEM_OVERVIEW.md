@@ -182,7 +182,12 @@ The PR51 `images normalize` workflow is the first derived-image boundary: it
 applies bounded EXIF orientation, dimensions, padding, transparent/neutral
 backgrounds, thumbnails, and alignment guides, then records an
 `image-normalization` report. It does not approve or replace the source
-reference; technical-sheet assembly remains a later application workflow.
+reference. The PR52 `sheets assemble` workflow consumes explicit requests,
+approved references, and exact normalized PNG checksums. Its data-defined
+template selects deterministic layouts, and the application writes a PNG plus
+`technical-sheet` report through the shared lock and atomic filesystem boundary.
+It remains a derived workflow and does not mutate approval, event-log, graph, or
+SQLite state.
 
 ## Persistence and file safety
 

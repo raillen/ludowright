@@ -49,6 +49,7 @@ This is the main navigation map for humans and agents. Each subject should have 
 - [`contracts/CODEX_SKILL.md`](contracts/CODEX_SKILL.md) — versioned project-local `$ludowright` skill package, lifecycle semantics, checksums, and safe failure behavior.
 - [`contracts/IMAGEGEN_EXECUTION.md`](contracts/IMAGEGEN_EXECUTION.md) — provider boundary, deterministic operation manifests, one-view execution, PNG validation, conflicts, dry-run, and rollback.
 - [`contracts/IMAGE_NORMALIZATION.md`](contracts/IMAGE_NORMALIZATION.md) — bounded image inputs, EXIF orientation, dimensions, padding, backgrounds, thumbnails, guides, checksums, and rollback.
+- [`contracts/TECHNICAL_SHEETS.md`](contracts/TECHNICAL_SHEETS.md) — approved PNG inputs, data-defined templates, deterministic placement, output reports, dry-run, conflicts, and rollback.
 - [`contracts/JSON_SCHEMAS.md`](contracts/JSON_SCHEMAS.md) — generated Draft 2020-12 schemas, registry, fixtures, checksums, drift checking, and compatibility policy.
 - [`contracts/PROJECT_FILESYSTEM.md`](contracts/PROJECT_FILESYSTEM.md) — root discovery, canonical repository paths, symlink rejection, atomic writes, bounded reads, and exclusive locks.
 - [`contracts/STRUCTURED_REPOSITORIES.md`](contracts/STRUCTURED_REPOSITORIES.md) — strict JSON/YAML parsing, canonical serialization, document digests, snapshots, and conflict detection.
@@ -69,6 +70,7 @@ This is the main navigation map for humans and agents. Each subject should have 
 - [`commands/CODEX.md`](commands/CODEX.md) — install, update, verify, and remove the project-local Codex skill.
 - [`commands/REVIEWS.md`](commands/REVIEWS.md) — apply receipt-bound visual reviews with approval, correction, rejection, supersession, dry-run, and rollback semantics.
 - [`commands/IMAGES.md`](commands/IMAGES.md) — normalize local images into deterministic PNG outputs and reports.
+- [`commands/SHEETS.md`](commands/SHEETS.md) — assemble approved PNGs into deterministic technical sheets and reports.
 - [`contracts/CLI.md`](contracts/CLI.md) — dual human/JSON surfaces, response envelope, error codes, exit codes, version output, diagnostics, and compatibility rules.
 
 Published machine-readable contracts are stored under `schemas/v1/`. The source models live under `src/ludowright/contracts/`.
@@ -113,6 +115,15 @@ Image normalization is implemented by
 command lives in `src/ludowright/cli/images.py`. It creates only derived PNGs
 and an `image-normalization` report, using Pillow behind the infrastructure
 boundary and the shared filesystem lock/atomic-write rules.
+
+Technical-sheet assembly is implemented by
+`src/ludowright/infrastructure/technical_sheets.py` and orchestrated by
+`src/ludowright/application/technical_sheets.py`; the `sheets assemble` command
+lives in `src/ludowright/cli/sheets.py`. It consumes explicit requests,
+approved references, and normalized PNG checksums, loads the data-defined
+`minimal` template, and creates a deterministic sheet plus provenance report.
+It does not mutate canonical references, approvals, the event log, the
+dependency graph, or SQLite.
 
 The initial asset taxonomy is loaded by
 `src/ludowright/application/asset_taxonomy.py` from versioned JSON data under
@@ -179,6 +190,7 @@ state or image files.
 - [`decisions/0038-visual-review-workflow.md`](decisions/0038-visual-review-workflow.md) — receipt-bound human approval, reviewer separation, dependency invalidation, supersession, and rollback.
 - [`decisions/0039-codex-specialist-agents.md`](decisions/0039-codex-specialist-agents.md) — versioned specialist catalog, deterministic routing, and no agent approval authority.
 - [`decisions/0040-image-normalization.md`](decisions/0040-image-normalization.md) — Pillow boundary, deterministic derived outputs, metadata handling, and safe persistence.
+- [`decisions/0041-deterministic-technical-sheet-assembly.md`](decisions/0041-deterministic-technical-sheet-assembly.md) — data-defined layouts, approved inputs, deterministic rendering, and create-only persistence.
 
 Planned documents:
 
@@ -200,7 +212,6 @@ Planned detailed documents:
 
 - segmented character references;
 - garments and props;
-- deterministic technical-sheet assembly;
 - provenance and licensing operations.
 
 ## Implementation
