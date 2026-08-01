@@ -1,0 +1,140 @@
+{
+  "$defs": {
+    "SheetLayout": {
+      "enum": [
+        "grid",
+        "turnaround",
+        "exploded",
+        "contact-sheet"
+      ],
+      "title": "SheetLayout",
+      "type": "string"
+    },
+    "TechnicalSheetTemplateLayoutContract": {
+      "additionalProperties": false,
+      "description": "One data-defined layout rule selected by a sheet kind.",
+      "properties": {
+        "cell_height": {
+          "maximum": 4096,
+          "minimum": 64,
+          "title": "Cell Height",
+          "type": "integer"
+        },
+        "cell_width": {
+          "maximum": 4096,
+          "minimum": 64,
+          "title": "Cell Width",
+          "type": "integer"
+        },
+        "columns": {
+          "maximum": 16,
+          "minimum": 1,
+          "title": "Columns",
+          "type": "integer"
+        },
+        "gutter": {
+          "maximum": 512,
+          "minimum": 0,
+          "title": "Gutter",
+          "type": "integer"
+        },
+        "label_height": {
+          "maximum": 512,
+          "minimum": 0,
+          "title": "Label Height",
+          "type": "integer"
+        },
+        "layout": {
+          "$ref": "#/$defs/SheetLayout"
+        },
+        "margin": {
+          "maximum": 512,
+          "minimum": 0,
+          "title": "Margin",
+          "type": "integer"
+        },
+        "sheet_kind": {
+          "enum": [
+            "turnaround",
+            "component",
+            "prop",
+            "detail",
+            "scale"
+          ],
+          "title": "Sheet Kind",
+          "type": "string"
+        }
+      },
+      "required": [
+        "sheet_kind",
+        "layout",
+        "columns",
+        "cell_width",
+        "cell_height",
+        "margin",
+        "gutter",
+        "label_height"
+      ],
+      "title": "TechnicalSheetTemplateLayoutContract",
+      "type": "object"
+    }
+  },
+  "$id": "https://schemas.ludowright.dev/v1/technical-sheet-template.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Versioned data pack for the supported technical-sheet layouts.",
+  "properties": {
+    "background": {
+      "pattern": "^#[0-9A-F]{6}$",
+      "title": "Background",
+      "type": "string"
+    },
+    "kind": {
+      "const": "technical-sheet-template",
+      "default": "technical-sheet-template",
+      "title": "Kind",
+      "type": "string"
+    },
+    "layouts": {
+      "items": {
+        "$ref": "#/$defs/TechnicalSheetTemplateLayoutContract"
+      },
+      "title": "Layouts",
+      "type": "array"
+    },
+    "name": {
+      "maxLength": 120,
+      "minLength": 1,
+      "title": "Name",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "template_id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Template Id",
+      "type": "string"
+    },
+    "template_version": {
+      "maximum": 2147483647,
+      "minimum": 1,
+      "title": "Template Version",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "template_id",
+    "template_version",
+    "name",
+    "background",
+    "layouts"
+  ],
+  "title": "LudoWright Technical Sheet Template",
+  "type": "object"
+}

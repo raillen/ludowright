@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "kind": "technical-sheet-template",
+  "template_id": "minimal",
+  "template_version": 1,
+  "name": "Minimal technical sheets",
+  "background": "#F2F2F2",
+  "layouts": [
+    {
+      "sheet_kind": "turnaround",
+      "layout": "turnaround",
+      "columns": 4,
+      "cell_width": 256,
+      "cell_height": 256,
+      "margin": 32,
+      "gutter": 16,
+      "label_height": 24
+    },
+    {
+      "sheet_kind": "component",
+      "layout": "grid",
+      "columns": 3,
+      "cell_width": 256,
+      "cell_height": 256,
+      "margin": 32,
+      "gutter": 16,
+      "label_height": 24
+    },
+    {
+      "sheet_kind": "prop",
+      "layout": "grid",
+      "columns": 3,
+      "cell_width": 256,
+      "cell_height": 256,
+      "margin": 32,
+      "gutter": 16,
+      "label_height": 24
+    },
+    {
+      "sheet_kind": "detail",
+      "layout": "grid",
+      "columns": 2,
+      "cell_width": 384,
+      "cell_height": 384,
+      "margin": 32,
+      "gutter": 16,
+      "label_height": 24
+    },
+    {
+      "sheet_kind": "scale",
+      "layout": "grid",
+      "columns": 2,
+      "cell_width": 384,
+      "cell_height": 384,
+      "margin": 32,
+      "gutter": 16,
+      "label_height": 24
+    }
+  ]
+}

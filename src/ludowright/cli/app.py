@@ -23,6 +23,7 @@ from ludowright.cli.runtime import (
     canonical_json,
     run_command,
 )
+from ludowright.cli.sheets import sheets_app
 from ludowright.contracts.cli import CliResponseContract
 
 app = typer.Typer(
@@ -38,6 +39,7 @@ app.add_typer(codex_app, name="codex")
 app.add_typer(assets_app, name="assets")
 app.add_typer(interview_app, name="interview")
 app.add_typer(images_app, name="images")
+app.add_typer(sheets_app, name="sheets")
 app.add_typer(documents_app, name="documents")
 app.add_typer(docs_app, name="docs")
 app.command("atlas")(generate_atlas)

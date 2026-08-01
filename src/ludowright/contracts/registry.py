@@ -54,6 +54,11 @@ from ludowright.contracts.interviews import (
 from ludowright.contracts.migrations import MigrationReceiptContract
 from ludowright.contracts.project import ProjectContract
 from ludowright.contracts.prompt_compiler import CompiledPromptContract, PromptTemplateContract
+from ludowright.contracts.technical_sheets import (
+    TechnicalSheetReportContract,
+    TechnicalSheetRequestContract,
+    TechnicalSheetTemplateContract,
+)
 from ludowright.contracts.visual import (
     GenerationReceiptContract,
     VisualJobContract,
@@ -238,6 +243,24 @@ CONTRACTS: tuple[ContractDefinition, ...] = (
         "image-normalization.schema.json",
         "LudoWright Image Normalization Report",
         ImageNormalizationReportContract,
+    ),
+    ContractDefinition(
+        "technical-sheet-template",
+        "technical-sheet-template.schema.json",
+        "LudoWright Technical Sheet Template",
+        TechnicalSheetTemplateContract,
+    ),
+    ContractDefinition(
+        "technical-sheet-request",
+        "technical-sheet-request.schema.json",
+        "LudoWright Technical Sheet Request",
+        TechnicalSheetRequestContract,
+    ),
+    ContractDefinition(
+        "technical-sheet",
+        "technical-sheet.schema.json",
+        "LudoWright Technical Sheet Report",
+        TechnicalSheetReportContract,
     ),
     ContractDefinition(
         "migration-receipt",
