@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "kind": "asset",
-  "id": "bldg-forge",
+  "id": "arch-forge",
   "name": "Forge Building",
   "family": "architecture",
   "subtype": "building",

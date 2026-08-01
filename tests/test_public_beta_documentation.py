@@ -18,6 +18,8 @@ def test_public_beta_audit_is_registered_and_matches_current_documentation() -> 
         "ludowright atlas --check",
         "ludowright docs audit --check",
         "mkdocs build --strict --clean",
+        "tests/test_example_cli_smoke.py",
+        "compatibilidade inicial",
         "feedback de uso em projetos reais",
         "release candidate",
         "Não há mudança de API pública",

@@ -3,7 +3,7 @@
   "kind": "visual-job",
   "id": "job-forge-building-v1",
   "name": "Forge building construction views",
-  "target": {"asset_id": "bldg-forge"},
+  "target": {"asset_id": "arch-forge"},
   "profile_version": 1,
   "request_revision": "sha256:forge-building-request-v1",
   "input_reference_ids": ["ref-forge-front"],

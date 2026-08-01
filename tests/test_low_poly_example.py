@@ -56,6 +56,7 @@ def test_low_poly_inputs_and_profile_lineage_are_valid() -> None:
     building_capture = building.to_capture_profile()
 
     assert copper.family == "character"
+    assert forge.id == "arch-forge"
     assert tuple(component.id for component in copper.components) == (
         "base-body",
         "jacket",

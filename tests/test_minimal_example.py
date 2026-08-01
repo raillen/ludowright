@@ -20,6 +20,7 @@ from ludowright.contracts import (
 
 EXAMPLE_ROOT = Path("examples/minimal/project")
 EXPECTED_FIXTURE_SHA256 = "431ced6916a2a21a156e38701afe55bbd7f88969fbbfc56d7fe099d47f265460"
+EXAMPLE_README = Path("examples/minimal/README.md")
 
 
 def _contract(path: str, model: type[Any]) -> Any:
@@ -84,6 +85,15 @@ def test_minimal_example_file_inventory_is_deterministic() -> None:
         "imports/lantern.json",
         "requests/lantern-sheet.json",
     )
+
+
+def test_minimal_example_documents_the_reference_precondition() -> None:
+    readme = " ".join(EXAMPLE_README.read_text(encoding="utf-8").split())
+
+    assert "não é uma referência aprovada" in readme
+    assert "receipt" in readme
+    assert "`sheets assemble` só pode ser executado depois" in readme
+    assert "uv run pytest -m end_to_end --no-cov" in readme
 
 
 __all__ = []
