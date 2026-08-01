@@ -1,0 +1,14 @@
+{
+  "asset_id": "chr-maya",
+  "candidate_id": "candidate-0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+  "evidence": "<!-- ludowright:asset-candidate family=\"character\" subtype=\"humanoid\" --> Maya",
+  "family": "character",
+  "kind": "asset-discovery-candidate",
+  "name": "Maya",
+  "priority": "normal",
+  "schema_version": 1,
+  "source_line": 1,
+  "source_path": ".ludowright/documents/brief.md",
+  "state": "pending",
+  "subtype": "humanoid"
+}

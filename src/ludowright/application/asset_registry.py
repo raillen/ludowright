@@ -2,8 +2,9 @@
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from contextlib import AbstractContextManager
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 
 from ludowright.application.asset_taxonomy import (
     AssetTaxonomy,
@@ -128,30 +129,52 @@ class AssetRegistryService:
     ) -> AssetRegistryResult:
         """Add one asset, refusing duplicate IDs and silent replacement."""
         asset = self._load_asset(input_path)
-        self._validate_asset(asset)
+        return replace(self.create_many((asset,), dry_run=dry_run), asset=asset)
+
+    def create_many(
+        self,
+        assets: tuple[AssetContract, ...],
+        *,
+        dry_run: bool = False,
+        event_type: str = "asset.created",
+        event_payload: Mapping[str, FrozenJsonValue] | None = None,
+        operation: str = "create",
+    ) -> AssetRegistryResult:
+        """Add several validated assets as one registry operation."""
+        if not assets:
+            raise AssetRegistryError("asset creation requires at least one asset")
+        if any(not isinstance(asset, AssetContract) for asset in assets):
+            raise TypeError("asset creation requires AssetContract values")
+        for asset in assets:
+            self._validate_asset(asset)
+        asset_ids = tuple(asset.id for asset in assets)
+        if len(asset_ids) != len(set(asset_ids)):
+            raise AssetRegistryConflictError("asset creation contains duplicate IDs")
         with self._operation_lock(dry_run):
             snapshot, current = self._load_current()
-            if _asset_by_id(current, asset.id) is not None:
+            existing_ids = {asset.id for asset in current.assets}
+            duplicates = tuple(sorted(existing_ids.intersection(asset_ids)))
+            if duplicates:
                 raise AssetRegistryConflictError(
-                    f"asset already exists in the registry: {asset.id}"
+                    "assets already exist in the registry: " + ", ".join(duplicates)
                 )
-            updated = _with_assets(current, (asset,), add=True)
+            updated = _with_assets(current, assets, add=True)
             if dry_run:
                 return self._result(
-                    "create",
+                    operation,
                     "planned",
                     True,
                     updated,
-                    asset=asset,
-                    assets=(asset,),
+                    assets=assets,
                 )
             self._persist_registry(
                 snapshot,
                 updated,
-                event_type="asset.created",
-                asset_ids=(asset.id,),
+                event_type=event_type,
+                asset_ids=asset_ids,
+                event_payload=event_payload,
             )
-            return self._result("create", "created", False, updated, asset=asset, assets=(asset,))
+            return self._result(operation, "created", False, updated, assets=assets)
 
     def update(
         self,
@@ -431,6 +454,7 @@ class AssetRegistryService:
         *,
         event_type: str,
         asset_ids: tuple[str, ...],
+        event_payload: Mapping[str, FrozenJsonValue] | None = None,
     ) -> None:
         repository = self._registry_repository()
         event_log = EventLog(self._filesystem)
@@ -457,6 +481,7 @@ class AssetRegistryService:
                     operation=event_type.removeprefix("asset."),
                     registry_version=registry.version,
                     asset_ids=asset_ids,
+                    extra_payload=event_payload,
                 ),
                 timeout=5.0,
             )
@@ -605,6 +630,7 @@ def _event_draft(
     registry_version: int,
     asset_ids: tuple[str, ...],
     output_path: str | None = None,
+    extra_payload: Mapping[str, FrozenJsonValue] | None = None,
 ) -> EventDraft:
     payload: dict[str, FrozenJsonValue] = {
         "asset_ids": asset_ids,
@@ -613,6 +639,11 @@ def _event_draft(
     }
     if output_path is not None:
         payload["output_path"] = output_path
+    if extra_payload is not None:
+        for key, value in extra_payload.items():
+            if key in payload:
+                raise AssetRegistryError(f"asset event payload key is reserved: {key}")
+            payload[key] = value
     return EventDraft(
         event_type=EventType(event_type),
         correlation_id=_CORRELATION_ID,

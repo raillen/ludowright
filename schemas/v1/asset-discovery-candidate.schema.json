@@ -1,0 +1,139 @@
+{
+  "$defs": {
+    "AssetFamily": {
+      "description": "Stable top-level production families.",
+      "enum": [
+        "character",
+        "creature",
+        "environment",
+        "architecture",
+        "prop",
+        "vehicle",
+        "vegetation",
+        "terrain",
+        "material",
+        "texture",
+        "animation",
+        "ui",
+        "vfx",
+        "audio",
+        "other"
+      ],
+      "title": "AssetFamily",
+      "type": "string"
+    },
+    "AssetPriority": {
+      "description": "Relative production priority, independent of current status.",
+      "enum": [
+        "critical",
+        "high",
+        "normal",
+        "low",
+        "backlog"
+      ],
+      "title": "AssetPriority",
+      "type": "string"
+    }
+  },
+  "$id": "https://schemas.ludowright.dev/v1/asset-discovery-candidate.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "One explicit candidate extracted from a project Markdown document.",
+  "properties": {
+    "asset_id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Asset Id",
+      "type": "string"
+    },
+    "candidate_id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Candidate Id",
+      "type": "string"
+    },
+    "evidence": {
+      "maxLength": 4000,
+      "minLength": 1,
+      "title": "Evidence",
+      "type": "string"
+    },
+    "family": {
+      "$ref": "#/$defs/AssetFamily"
+    },
+    "kind": {
+      "const": "asset-discovery-candidate",
+      "default": "asset-discovery-candidate",
+      "title": "Kind",
+      "type": "string"
+    },
+    "name": {
+      "maxLength": 120,
+      "minLength": 1,
+      "title": "Name",
+      "type": "string"
+    },
+    "priority": {
+      "$ref": "#/$defs/AssetPriority",
+      "default": "normal"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "source_line": {
+      "maximum": 2147483647,
+      "minimum": 1,
+      "title": "Source Line",
+      "type": "integer"
+    },
+    "source_path": {
+      "maxLength": 1024,
+      "minLength": 1,
+      "pattern": "^[a-z0-9._-]+(?:/[a-z0-9._-]+)*$",
+      "title": "Source Path",
+      "type": "string"
+    },
+    "state": {
+      "default": "pending",
+      "enum": [
+        "pending",
+        "ambiguous",
+        "confirmed",
+        "rejected"
+      ],
+      "title": "State",
+      "type": "string"
+    },
+    "subtype": {
+      "anyOf": [
+        {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Subtype"
+    }
+  },
+  "required": [
+    "candidate_id",
+    "asset_id",
+    "name",
+    "family",
+    "source_path",
+    "source_line",
+    "evidence"
+  ],
+  "title": "LudoWright Asset Discovery Candidate",
+  "type": "object"
+}

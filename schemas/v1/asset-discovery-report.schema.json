@@ -1,0 +1,314 @@
+{
+  "$defs": {
+    "AssetDiscoveryCandidateContract": {
+      "additionalProperties": false,
+      "description": "One explicit candidate extracted from a project Markdown document.",
+      "properties": {
+        "asset_id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Asset Id",
+          "type": "string"
+        },
+        "candidate_id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Candidate Id",
+          "type": "string"
+        },
+        "evidence": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Evidence",
+          "type": "string"
+        },
+        "family": {
+          "$ref": "#/$defs/AssetFamily"
+        },
+        "kind": {
+          "const": "asset-discovery-candidate",
+          "default": "asset-discovery-candidate",
+          "title": "Kind",
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "priority": {
+          "$ref": "#/$defs/AssetPriority",
+          "default": "normal"
+        },
+        "schema_version": {
+          "const": 1,
+          "default": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "source_line": {
+          "maximum": 2147483647,
+          "minimum": 1,
+          "title": "Source Line",
+          "type": "integer"
+        },
+        "source_path": {
+          "maxLength": 1024,
+          "minLength": 1,
+          "pattern": "^[a-z0-9._-]+(?:/[a-z0-9._-]+)*$",
+          "title": "Source Path",
+          "type": "string"
+        },
+        "state": {
+          "default": "pending",
+          "enum": [
+            "pending",
+            "ambiguous",
+            "confirmed",
+            "rejected"
+          ],
+          "title": "State",
+          "type": "string"
+        },
+        "subtype": {
+          "anyOf": [
+            {
+              "maxLength": 80,
+              "minLength": 1,
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Subtype"
+        }
+      },
+      "required": [
+        "candidate_id",
+        "asset_id",
+        "name",
+        "family",
+        "source_path",
+        "source_line",
+        "evidence"
+      ],
+      "title": "AssetDiscoveryCandidateContract",
+      "type": "object"
+    },
+    "AssetDiscoveryIssueContract": {
+      "additionalProperties": false,
+      "description": "One deterministic extraction or confirmation issue.",
+      "properties": {
+        "candidate_ids": {
+          "default": [],
+          "items": {
+            "maxLength": 80,
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "maxItems": 256,
+          "title": "Candidate Ids",
+          "type": "array"
+        },
+        "code": {
+          "enum": [
+            "invalid-declaration",
+            "duplicate-candidate",
+            "duplicate-asset-id",
+            "existing-asset-id",
+            "candidate-not-found",
+            "confirmation-blocked"
+          ],
+          "title": "Code",
+          "type": "string"
+        },
+        "kind": {
+          "const": "asset-discovery-issue",
+          "default": "asset-discovery-issue",
+          "title": "Kind",
+          "type": "string"
+        },
+        "message": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Message",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": 1,
+          "default": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "source_paths": {
+          "default": [],
+          "items": {
+            "maxLength": 1024,
+            "minLength": 1,
+            "pattern": "^[a-z0-9._-]+(?:/[a-z0-9._-]+)*$",
+            "type": "string"
+          },
+          "maxItems": 256,
+          "title": "Source Paths",
+          "type": "array"
+        },
+        "subject": {
+          "maxLength": 1024,
+          "minLength": 1,
+          "title": "Subject",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "subject",
+        "message"
+      ],
+      "title": "AssetDiscoveryIssueContract",
+      "type": "object"
+    },
+    "AssetFamily": {
+      "description": "Stable top-level production families.",
+      "enum": [
+        "character",
+        "creature",
+        "environment",
+        "architecture",
+        "prop",
+        "vehicle",
+        "vegetation",
+        "terrain",
+        "material",
+        "texture",
+        "animation",
+        "ui",
+        "vfx",
+        "audio",
+        "other"
+      ],
+      "title": "AssetFamily",
+      "type": "string"
+    },
+    "AssetPriority": {
+      "description": "Relative production priority, independent of current status.",
+      "enum": [
+        "critical",
+        "high",
+        "normal",
+        "low",
+        "backlog"
+      ],
+      "title": "AssetPriority",
+      "type": "string"
+    }
+  },
+  "$id": "https://schemas.ludowright.dev/v1/asset-discovery-report.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Stable report returned by the discovery and confirmation workflow.",
+  "properties": {
+    "candidates": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/AssetDiscoveryCandidateContract"
+      },
+      "maxItems": 10000,
+      "title": "Candidates",
+      "type": "array"
+    },
+    "confirmed_asset_ids": {
+      "default": [],
+      "items": {
+        "maxLength": 80,
+        "minLength": 1,
+        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+        "type": "string"
+      },
+      "maxItems": 256,
+      "title": "Confirmed Asset Ids",
+      "type": "array"
+    },
+    "dry_run": {
+      "title": "Dry Run",
+      "type": "boolean"
+    },
+    "issues": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/AssetDiscoveryIssueContract"
+      },
+      "maxItems": 10000,
+      "title": "Issues",
+      "type": "array"
+    },
+    "kind": {
+      "const": "asset-discovery-report",
+      "default": "asset-discovery-report",
+      "title": "Kind",
+      "type": "string"
+    },
+    "registry_path": {
+      "maxLength": 1024,
+      "minLength": 1,
+      "pattern": "^[a-z0-9._-]+(?:/[a-z0-9._-]+)*$",
+      "title": "Registry Path",
+      "type": "string"
+    },
+    "registry_version": {
+      "maximum": 2147483647,
+      "minimum": 1,
+      "title": "Registry Version",
+      "type": "integer"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "source_paths": {
+      "default": [],
+      "items": {
+        "maxLength": 1024,
+        "minLength": 1,
+        "pattern": "^[a-z0-9._-]+(?:/[a-z0-9._-]+)*$",
+        "type": "string"
+      },
+      "maxItems": 10000,
+      "title": "Source Paths",
+      "type": "array"
+    },
+    "state": {
+      "enum": [
+        "empty",
+        "pending",
+        "ambiguous",
+        "invalid",
+        "planned",
+        "confirmed"
+      ],
+      "title": "State",
+      "type": "string"
+    },
+    "valid": {
+      "default": true,
+      "title": "Valid",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "state",
+    "dry_run",
+    "registry_path",
+    "registry_version"
+  ],
+  "title": "LudoWright Asset Discovery Report",
+  "type": "object"
+}

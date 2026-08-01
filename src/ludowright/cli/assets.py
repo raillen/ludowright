@@ -11,7 +11,13 @@ from pydantic import ValidationError
 from rich.console import Console
 from rich.table import Table
 
-from ludowright.application import AssetRegistryResult, AssetRegistryService
+from ludowright.application import (
+    AssetDiscoveryConfirmationError,
+    AssetDiscoveryError,
+    AssetDiscoveryService,
+    AssetRegistryResult,
+    AssetRegistryService,
+)
 from ludowright.cli.runtime import CliExitCode, CliFailure, run_command
 from ludowright.contracts import CliErrorCode
 from ludowright.infrastructure import ProjectFilesystem, RepositoryPath
@@ -21,6 +27,72 @@ assets_app = typer.Typer(
     help="Create and maintain the canonical asset registry.",
     no_args_is_help=True,
 )
+
+
+@assets_app.command("discover")
+def discover_assets(
+    context: typer.Context,
+    project: Annotated[Path, typer.Argument(help="Project directory or a path below it.")],
+    source: Annotated[
+        list[str] | None,
+        typer.Option(
+            "--source",
+            help="Project-relative Markdown source; repeat to limit the scan.",
+        ),
+    ] = None,
+    confirm: Annotated[
+        list[str] | None,
+        typer.Option(
+            "--confirm",
+            help="Candidate ID explicitly approved for registry creation; repeat as needed.",
+        ),
+    ] = None,
+    dry_run: Annotated[
+        bool,
+        typer.Option("--dry-run", help="Plan confirmations without changing project files."),
+    ] = False,
+    json_output: Annotated[
+        bool,
+        typer.Option("--json", help="Return a stable machine-readable response."),
+    ] = False,
+) -> None:
+    """Discover explicit asset candidates and confirm selected candidates."""
+
+    def action() -> dict[str, object]:
+        try:
+            service = AssetDiscoveryService(ProjectFilesystem.discover(project))
+            return service.discover(
+                source_paths=tuple(_path(value) for value in source or ()),
+                confirm_ids=tuple(confirm or ()),
+                dry_run=dry_run,
+            ).as_data()
+        except AssetDiscoveryConfirmationError as error:
+            raise CliFailure(
+                code=CliErrorCode.INVALID_INPUT,
+                message=str(error),
+                exit_code=CliExitCode.VALIDATION,
+                data=error.report.model_dump(mode="json"),
+            ) from error
+        except AssetDiscoveryError as error:
+            raise CliFailure(
+                code=CliErrorCode.INVALID_INPUT,
+                message=str(error),
+                exit_code=CliExitCode.VALIDATION,
+            ) from error
+        except (FileNotFoundError, ValidationError) as error:
+            raise CliFailure(
+                code=CliErrorCode.INVALID_INPUT,
+                message=str(error),
+                exit_code=CliExitCode.VALIDATION,
+            ) from error
+
+    run_command(
+        context=context,
+        command="assets discover",
+        local_json=json_output,
+        action=action,
+        render_human=_render_discovery_human,
+    )
 
 
 @assets_app.command("create")
@@ -275,3 +347,29 @@ def _render_human(console: Console, data: dict[str, object]) -> None:
                 str(value.get("priority", "")),
             )
     console.print(table)
+
+
+def _render_discovery_human(console: Console, data: dict[str, object]) -> None:
+    """Render candidates and confirmation issues without leaking JSON markup."""
+    console.print("[bold]Asset discovery[/bold]")
+    console.print(f"State: {data['state']} | Dry run: {data['dry_run']}")
+    console.print(f"Registry: {data['registry_path']} (v{data['registry_version']})")
+    candidates = data.get("candidates")
+    if isinstance(candidates, list):
+        table = Table("Candidate", "Asset ID", "Name", "Source", "State")
+        for value in candidates:
+            if isinstance(value, dict):
+                table.add_row(
+                    str(value.get("candidate_id", "")),
+                    str(value.get("asset_id", "")),
+                    str(value.get("name", "")),
+                    f"{value.get('source_path', '')}#L{value.get('source_line', '')}",
+                    str(value.get("state", "")),
+                )
+        console.print(table)
+    issues = data.get("issues")
+    if isinstance(issues, list) and issues:
+        console.print("Issues:")
+        for value in issues:
+            if isinstance(value, dict):
+                console.print(f"- {value.get('code', '')}: {value.get('message', '')}")

@@ -1,0 +1,11 @@
+{
+  "candidate_ids": [],
+  "code": "invalid-declaration",
+  "kind": "asset-discovery-issue",
+  "message": "asset candidate declaration is invalid",
+  "schema_version": 1,
+  "source_paths": [
+    ".ludowright/documents/brief.md"
+  ],
+  "subject": ".ludowright/documents/brief.md#L1"
+}
