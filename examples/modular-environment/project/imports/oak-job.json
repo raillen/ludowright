@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "kind": "visual-job",
+  "id": "job-oak-tree-v1",
+  "name": "Mossbridge Oak turnaround",
+  "target": {"asset_id": "veg-oak"},
+  "profile_version": 1,
+  "request_revision": "sha256:oak-tree-request-v1",
+  "input_reference_ids": ["ref-oak-front"],
+  "output_roles": ["identity", "construction", "construction", "silhouette"],
+  "expected_output_count": 4
+}

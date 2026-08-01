@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "kind": "visual-job",
+  "id": "job-commons-building-v1",
+  "name": "Commons Hall building turnaround",
+  "target": {"asset_id": "arch-commons"},
+  "profile_version": 1,
+  "request_revision": "sha256:commons-building-request-v1",
+  "input_reference_ids": ["ref-commons-front"],
+  "output_roles": ["identity", "construction", "construction", "silhouette"],
+  "expected_output_count": 4
+}

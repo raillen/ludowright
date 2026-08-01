@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "kind": "visual-reference",
+  "id": "ref-oak-front",
+  "name": "Mossbridge Oak front reference",
+  "target": {"asset_id": "veg-oak"},
+  "role": "identity",
+  "provenance": {"origin": "captured", "content_revision": "sha256:oak-front-v1", "creator": "LudoWright example fixture"},
+  "status": "candidate"
+}

@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "kind": "asset",
+  "id": "ter-old-road",
+  "name": "Old Road",
+  "family": "terrain",
+  "subtype": "road",
+  "priority": "high",
+  "status": "planned",
+  "components": [
+    {"id": "road-surface", "name": "Road Surface", "status": "planned", "required": true},
+    {"id": "socket", "name": "Socket", "status": "planned", "required": true}
+  ],
+  "variants": [],
+  "states": [
+    {"id": "straight", "name": "Straight", "status": "planned", "required": true},
+    {"id": "junction", "name": "Junction", "status": "planned", "required": true}
+  ]
+}

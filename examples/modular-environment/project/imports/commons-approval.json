@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "kind": "approval",
+  "id": "approval-commons-front-v1",
+  "subject": {"subject_kind": "reference", "id": "ref-commons-front", "revision": "sha256:commons-front-v1", "label": "Commons Hall front reference"},
+  "history": [{"sequence": 1, "status": "pending", "note": "Review building silhouette, openings, and construction state."}]
+}

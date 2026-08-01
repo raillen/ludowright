@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "kind": "visual-job",
+  "id": "job-old-road-v1",
+  "name": "Old Road connection views",
+  "target": {"asset_id": "ter-old-road"},
+  "profile_version": 1,
+  "request_revision": "sha256:old-road-request-v1",
+  "input_reference_ids": ["ref-old-road-front"],
+  "output_roles": ["identity", "silhouette", "construction"],
+  "expected_output_count": 3
+}

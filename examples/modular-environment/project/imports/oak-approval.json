@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "kind": "approval",
+  "id": "approval-oak-front-v1",
+  "subject": {"subject_kind": "reference", "id": "ref-oak-front", "revision": "sha256:oak-front-v1", "label": "Mossbridge Oak front reference"},
+  "history": [{"sequence": 1, "status": "pending", "note": "Review trunk, canopy mass, and gameplay-scale silhouette."}]
+}

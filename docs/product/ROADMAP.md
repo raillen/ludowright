@@ -136,7 +136,7 @@ assembly from interview answers remains a later bounded capability.
 - complete public documentation;
 - minimal example project (implemented through PR57), 2D sprite example
   (implemented through PR58), and low-poly 3D example (implemented through
-  PR59), followed by modular-environment examples;
+  PR59), and modular-environment example (implemented through PR60);
 - end-to-end tests and migration tests;
 - usability and compatibility fixes from real projects;
 - release candidate.

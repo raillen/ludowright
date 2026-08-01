@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "kind": "asset",
+  "id": "env-courtyard",
+  "name": "Courtyard Module Kit",
+  "family": "environment",
+  "subtype": "modular-environment",
+  "priority": "critical",
+  "status": "planned",
+  "components": [
+    {"id": "root", "name": "Root", "status": "planned", "required": true},
+    {"id": "floor-module", "name": "Floor Module", "status": "planned", "required": true},
+    {"id": "wall-module", "name": "Wall Module", "status": "planned", "required": true},
+    {"id": "connector", "name": "Connector", "status": "planned", "required": true}
+  ],
+  "variants": [],
+  "states": [
+    {"id": "assembled", "name": "Assembled", "status": "planned", "required": true},
+    {"id": "construction", "name": "Construction", "status": "planned", "required": true}
+  ]
+}

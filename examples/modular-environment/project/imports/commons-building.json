@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "kind": "asset",
+  "id": "arch-commons",
+  "name": "Commons Hall",
+  "family": "architecture",
+  "subtype": "building",
+  "priority": "critical",
+  "status": "planned",
+  "components": [
+    {"id": "root", "name": "Root", "status": "planned", "required": true},
+    {"id": "roof", "name": "Roof", "status": "planned", "required": true},
+    {"id": "openings", "name": "Openings", "status": "planned", "required": true}
+  ],
+  "variants": [],
+  "states": [
+    {"id": "closed", "name": "Closed", "status": "planned", "required": true},
+    {"id": "construction", "name": "Construction", "status": "planned", "required": true}
+  ]
+}
