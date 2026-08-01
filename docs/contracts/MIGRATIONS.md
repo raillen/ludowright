@@ -88,6 +88,32 @@ Plans contain ordered immutable steps and stable migration IDs.
 
 Planning never changes the database.
 
+## Compatibility matrix
+
+The current release targets state schema v2. The migration test matrix keeps
+the supported and rejected transitions explicit:
+
+| Observed schema | Requested target | Result |
+|---|---:|---|
+| v1 | v1 | no-op plan; legacy data remains untouched |
+| v1 | v2 | one explicit `state-v1-to-v2-migration-history` step |
+| v2 | v2 | no-op plan; `StateStore` opens normally |
+| v2 | v1 | rejected downgrade |
+| v1 | v3 | rejected missing contiguous path |
+| future/unknown | current v2 | rejected by the state store or migration planner |
+
+The matrix is backed by a real v1 SQLite fixture assembled with the historical
+table layout, a fresh v2 database, and the existing failure/rollback tests. It
+is executed with:
+
+```bash
+uv run pytest --no-cov tests/test_migrations.py
+```
+
+Adding a future schema requires a new forward migration, an updated matrix,
+and compatibility evidence. Existing migration IDs and their historical
+meaning remain immutable.
+
 ## Current state schema migration
 
 The initial production step is:
