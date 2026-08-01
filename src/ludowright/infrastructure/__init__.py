@@ -38,10 +38,21 @@ from ludowright.infrastructure.filesystem import (
     RepositoryPath,
     UnsafeProjectPathError,
 )
+from ludowright.infrastructure.generation_receipts import (
+    GENERATED_REFERENCE_DIRECTORY,
+    GENERATION_RECEIPT_DIRECTORY,
+    GENERATION_RECEIPT_MAX_BYTES,
+    GenerationReceiptAttempt,
+    GenerationReceiptConflictError,
+    GenerationReceiptError,
+    GenerationReceiptRepository,
+    ValidatedGenerationOutput,
+)
 from ludowright.infrastructure.image_artifacts import (
     MAX_PNG_BYTES,
     PNG_SIGNATURE,
     ImageArtifactError,
+    PngValidation,
     validate_png_payload,
 )
 from ludowright.infrastructure.migrations import (
@@ -100,6 +111,9 @@ __all__ = [
     "DEFAULT_DOCUMENT_DIRECTORY",
     "DEFAULT_EVENT_LOG_PATH",
     "DEFAULT_STATE_STORE_PATH",
+    "GENERATED_REFERENCE_DIRECTORY",
+    "GENERATION_RECEIPT_DIRECTORY",
+    "GENERATION_RECEIPT_MAX_BYTES",
     "LOCK_DIRECTORY",
     "MAX_PNG_BYTES",
     "ODS_LOCK_NAME",
@@ -123,6 +137,10 @@ __all__ = [
     "EventLogError",
     "EventLogRecovery",
     "EventLogSnapshot",
+    "GenerationReceiptAttempt",
+    "GenerationReceiptConflictError",
+    "GenerationReceiptError",
+    "GenerationReceiptRepository",
     "ImageArtifactError",
     "IncompleteEventLogTailError",
     "IndexedEntity",
@@ -143,6 +161,7 @@ __all__ = [
     "OdsWorkbookConflictError",
     "OdsWorkbookError",
     "OdsWorkbookWriter",
+    "PngValidation",
     "ProjectFilesystem",
     "ProjectFilesystemError",
     "ProjectLock",
@@ -167,6 +186,7 @@ __all__ = [
     "UnsafeDocumentationPathError",
     "UnsafeProjectPathError",
     "UnsupportedStateSchemaError",
+    "ValidatedGenerationOutput",
     "WorkflowProgress",
     "YamlDocumentRepository",
     "validate_png_payload",

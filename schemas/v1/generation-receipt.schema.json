@@ -1,5 +1,90 @@
 {
   "$defs": {
+    "GenerationOutputContract": {
+      "additionalProperties": false,
+      "description": "One generated reference and its exact immutable artifact identity.",
+      "properties": {
+        "path": {
+          "maxLength": 1024,
+          "minLength": 1,
+          "pattern": "^[a-z0-9._-]+(?:/[a-z0-9._-]+)*$",
+          "title": "Path",
+          "type": "string"
+        },
+        "reference_id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Reference Id",
+          "type": "string"
+        },
+        "role": {
+          "$ref": "#/$defs/ReferenceRole"
+        },
+        "sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "size_bytes": {
+          "maximum": 67108864,
+          "minimum": 1,
+          "title": "Size Bytes",
+          "type": "integer"
+        },
+        "validation": {
+          "$ref": "#/$defs/GenerationOutputValidationContract"
+        }
+      },
+      "required": [
+        "reference_id",
+        "role",
+        "path",
+        "sha256",
+        "size_bytes",
+        "validation"
+      ],
+      "title": "GenerationOutputContract",
+      "type": "object"
+    },
+    "GenerationOutputValidationContract": {
+      "additionalProperties": false,
+      "description": "Bounded validation facts for one persisted generated PNG.",
+      "properties": {
+        "animated": {
+          "const": false,
+          "default": false,
+          "title": "Animated",
+          "type": "boolean"
+        },
+        "format": {
+          "const": "png",
+          "default": "png",
+          "title": "Format",
+          "type": "string"
+        },
+        "height": {
+          "maximum": 4294967295,
+          "minimum": 1,
+          "title": "Height",
+          "type": "integer"
+        },
+        "width": {
+          "maximum": 4294967295,
+          "minimum": 1,
+          "title": "Width",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "width",
+        "height"
+      ],
+      "title": "GenerationOutputValidationContract",
+      "type": "object"
+    },
     "ReceiptStatus": {
       "description": "Terminal result of one generation attempt.",
       "enum": [
@@ -8,6 +93,24 @@
         "cancelled"
       ],
       "title": "ReceiptStatus",
+      "type": "string"
+    },
+    "ReferenceRole": {
+      "description": "Production purpose served by a visual reference.",
+      "enum": [
+        "identity",
+        "silhouette",
+        "proportion",
+        "construction",
+        "material",
+        "color",
+        "style",
+        "context",
+        "negative",
+        "output",
+        "other"
+      ],
+      "title": "ReferenceRole",
       "type": "string"
     }
   },
@@ -20,6 +123,21 @@
       "minimum": 1,
       "title": "Attempt",
       "type": "integer"
+    },
+    "completed_at": {
+      "anyOf": [
+        {
+          "maxLength": 27,
+          "minLength": 27,
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\\.[0-9]{6}Z$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Completed At"
     },
     "failure_note": {
       "anyOf": [
@@ -61,6 +179,21 @@
       "title": "Model",
       "type": "string"
     },
+    "operation_id": {
+      "anyOf": [
+        {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Operation Id"
+    },
     "output_reference_ids": {
       "default": [],
       "items": {
@@ -71,6 +204,30 @@
       },
       "title": "Output Reference Ids",
       "type": "array"
+    },
+    "outputs": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/GenerationOutputContract"
+      },
+      "maxItems": 64,
+      "title": "Outputs",
+      "type": "array"
+    },
+    "prompt_hash": {
+      "anyOf": [
+        {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Prompt Hash"
     },
     "provider": {
       "maxLength": 120,
@@ -106,8 +263,37 @@
       "title": "Schema Version",
       "type": "integer"
     },
+    "started_at": {
+      "anyOf": [
+        {
+          "maxLength": 27,
+          "minLength": 27,
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\\.[0-9]{6}Z$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Started At"
+    },
     "status": {
       "$ref": "#/$defs/ReceiptStatus"
+    },
+    "tool": {
+      "anyOf": [
+        {
+          "maxLength": 120,
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Tool"
     }
   },
   "required": [

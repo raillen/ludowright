@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
+import hashlib
 import struct
 import zlib
+from dataclasses import dataclass
 
 PNG_SIGNATURE = b"\x89PNG\r\n\x1a\n"
 MAX_PNG_BYTES = 64 * 1024 * 1024
@@ -13,7 +15,21 @@ class ImageArtifactError(RuntimeError):
     """Raised when an image payload is not a safe supported artifact."""
 
 
-def validate_png_payload(payload: bytes, *, max_bytes: int = MAX_PNG_BYTES) -> None:
+@dataclass(frozen=True, slots=True)
+class PngValidation:
+    """Validated facts needed to persist one generated PNG receipt."""
+
+    sha256: str
+    size_bytes: int
+    width: int
+    height: int
+
+
+def validate_png_payload(
+    payload: bytes,
+    *,
+    max_bytes: int = MAX_PNG_BYTES,
+) -> PngValidation:
     """Validate one bounded, non-animated PNG payload without decoding pixels."""
     if not isinstance(payload, bytes):
         raise ImageArtifactError("ImageGen providers must return immutable bytes")
@@ -28,6 +44,8 @@ def validate_png_payload(payload: bytes, *, max_bytes: int = MAX_PNG_BYTES) -> N
     saw_header = False
     saw_data = False
     saw_end = False
+    width = 0
+    height = 0
     while offset < len(payload):
         if len(payload) - offset < 12:
             raise ImageArtifactError("PNG payload ends inside a chunk")
@@ -72,6 +90,18 @@ def validate_png_payload(payload: bytes, *, max_bytes: int = MAX_PNG_BYTES) -> N
 
     if not saw_header or not saw_data or not saw_end:
         raise ImageArtifactError("PNG payload is incomplete")
+    return PngValidation(
+        sha256=hashlib.sha256(payload).hexdigest(),
+        size_bytes=len(payload),
+        width=width,
+        height=height,
+    )
 
 
-__all__ = ["MAX_PNG_BYTES", "PNG_SIGNATURE", "ImageArtifactError", "validate_png_payload"]
+__all__ = [
+    "MAX_PNG_BYTES",
+    "PNG_SIGNATURE",
+    "ImageArtifactError",
+    "PngValidation",
+    "validate_png_payload",
+]

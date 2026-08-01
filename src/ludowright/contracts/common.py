@@ -37,6 +37,14 @@ Sha256Text = Annotated[
     str,
     StringConstraints(min_length=64, max_length=64, pattern=r"^[0-9a-f]{64}$"),
 ]
+UtcTimestampText = Annotated[
+    str,
+    StringConstraints(
+        min_length=27,
+        max_length=27,
+        pattern=r"^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{6}Z$",
+    ),
+]
 EngineVersionText = Annotated[str, StringConstraints(min_length=1, max_length=64)]
 HttpsUriText = Annotated[
     str,

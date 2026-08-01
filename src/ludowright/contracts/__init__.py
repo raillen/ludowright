@@ -136,6 +136,8 @@ from ludowright.contracts.registry import (
     SCHEMA_VERSION,
 )
 from ludowright.contracts.visual import (
+    GenerationOutputContract,
+    GenerationOutputValidationContract,
     GenerationReceiptContract,
     VisualJobContract,
     VisualReferenceContract,
@@ -249,6 +251,8 @@ __all__ = [
     "DocumentationFindingContract",
     "DocumentationPhraseContract",
     "DocumentationTopicContract",
+    "GenerationOutputContract",
+    "GenerationOutputValidationContract",
     "GenerationReceiptContract",
     "HardSurfaceComponentContract",
     "HardSurfaceConnectionContract",

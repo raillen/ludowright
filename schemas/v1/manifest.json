@@ -108,7 +108,7 @@
       "file": "generation-receipt.schema.json",
       "name": "generation-receipt",
       "schema_id": "https://schemas.ludowright.dev/v1/generation-receipt.schema.json",
-      "sha256": "ec849671eb11f90301a3b917b70f4b02d9f78e0c22283f43205b385e5430afea"
+      "sha256": "4f3eefc74a842ddfe6915400fd7d8e2755a7e162fea1b8177b15e36beb9b56e9"
     },
     {
       "file": "visual-review.schema.json",
