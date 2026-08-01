@@ -1,0 +1,116 @@
+{
+  "$defs": {
+    "CodexSkillFileContract": {
+      "additionalProperties": false,
+      "description": "One case-sensitive file shipped by a Codex skill.",
+      "properties": {
+        "path": {
+          "maxLength": 255,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Path",
+          "type": "string"
+        },
+        "sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "title": "CodexSkillFileContract",
+      "type": "object"
+    }
+  },
+  "$id": "https://schemas.ludowright.dev/v1/codex-skill-manifest.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Versioned metadata for one installable project-local Codex skill.",
+  "properties": {
+    "description": {
+      "maxLength": 120,
+      "minLength": 1,
+      "title": "Description",
+      "type": "string"
+    },
+    "entrypoint": {
+      "maxLength": 255,
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+      "title": "Entrypoint",
+      "type": "string"
+    },
+    "files": {
+      "items": {
+        "$ref": "#/$defs/CodexSkillFileContract"
+      },
+      "maxItems": 32,
+      "minItems": 1,
+      "title": "Files",
+      "type": "array"
+    },
+    "id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Id",
+      "type": "string"
+    },
+    "install_path": {
+      "maxLength": 1024,
+      "minLength": 1,
+      "pattern": "^[a-z0-9._-]+(?:/[a-z0-9._-]+)*$",
+      "title": "Install Path",
+      "type": "string"
+    },
+    "invocation": {
+      "maxLength": 81,
+      "minLength": 2,
+      "pattern": "^\\$[a-z][a-z0-9-]{0,79}$",
+      "title": "Invocation",
+      "type": "string"
+    },
+    "kind": {
+      "const": "codex-skill-manifest",
+      "default": "codex-skill-manifest",
+      "title": "Kind",
+      "type": "string"
+    },
+    "minimum_ludowright_version": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^\\d+(?:\\.\\d+){1,3}(?:[.-](?:dev|a|b|rc)\\d+)?$",
+      "title": "Minimum Ludowright Version",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "version": {
+      "maximum": 2147483647,
+      "minimum": 1,
+      "title": "Version",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "id",
+    "invocation",
+    "version",
+    "description",
+    "install_path",
+    "entrypoint",
+    "minimum_ludowright_version",
+    "files"
+  ],
+  "title": "LudoWright Codex Skill Manifest",
+  "type": "object"
+}

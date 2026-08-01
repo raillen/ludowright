@@ -17,7 +17,7 @@ repos:
 
       - id: mypy
         name: Mypy strict type checking
-        entry: uv run mypy src
+        entry: uv run mypy src integrations
         language: system
         pass_filenames: false
         types_or: [python, pyi]

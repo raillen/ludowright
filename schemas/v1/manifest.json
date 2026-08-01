@@ -225,6 +225,18 @@
       "sha256": "0820099ed1f3c267c8c32757108642cac4349ec2ddb3124c5e48210379d764b2"
     },
     {
+      "file": "codex-skill-manifest.schema.json",
+      "name": "codex-skill-manifest",
+      "schema_id": "https://schemas.ludowright.dev/v1/codex-skill-manifest.schema.json",
+      "sha256": "242898984af2ceb657a388ca86bcb32354c54a5e24b689f6da76561fd8a18a05"
+    },
+    {
+      "file": "codex-skill-report.schema.json",
+      "name": "codex-skill-report",
+      "schema_id": "https://schemas.ludowright.dev/v1/codex-skill-report.schema.json",
+      "sha256": "968d5623e47ae4800afda842bb5d1d5cf4a397946ee3d817d0000b0e1e2d56cd"
+    },
+    {
       "file": "interview-questionnaire.schema.json",
       "name": "interview-questionnaire",
       "schema_id": "https://schemas.ludowright.dev/v1/interview-questionnaire.schema.json",

@@ -229,6 +229,32 @@ def test_atomic_write_preserves_existing_file_mode(tmp_path: Path) -> None:
     assert stat.S_IMODE(os.lstat(target).st_mode) == 0o600
 
 
+def test_case_sensitive_child_file_boundary_supports_external_integrations(
+    tmp_path: Path,
+) -> None:
+    filesystem = make_filesystem(tmp_path)
+    directory = RepositoryPath(".agents/skills/example")
+
+    target = filesystem.write_child_bytes(directory, "SKILL.md", b"skill\n")
+
+    assert target.name == "SKILL.md"
+    assert filesystem.list_child_files(directory) == ("SKILL.md",)
+    assert filesystem.read_child_bytes(directory, "SKILL.md") == b"skill\n"
+    assert filesystem.remove_child_file(directory, "SKILL.md") is True
+    assert filesystem.remove_empty_directory(directory) is True
+
+
+@pytest.mark.parametrize("filename", ["../escape", "/absolute", "skill\\file", "con.txt"])
+def test_case_sensitive_child_file_boundary_rejects_unsafe_names(
+    tmp_path: Path,
+    filename: str,
+) -> None:
+    filesystem = make_filesystem(tmp_path)
+
+    with pytest.raises(UnsafeProjectPathError):
+        filesystem.write_child_bytes(RepositoryPath("integrations"), filename, b"unsafe")
+
+
 def test_atomic_write_failure_preserves_previous_file_and_cleans_temp(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,

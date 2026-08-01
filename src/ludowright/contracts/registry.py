@@ -23,6 +23,7 @@ from ludowright.contracts.assets import AssetContract, AssetRegistryContract
 from ludowright.contracts.atlas import AtlasMetadataContract, AtlasReportContract
 from ludowright.contracts.capture import CaptureProfileContract
 from ludowright.contracts.cli import CliResponseContract
+from ludowright.contracts.codex import CodexSkillManifestContract, CodexSkillReportContract
 from ludowright.contracts.common import ContractModel
 from ludowright.contracts.creature_profiles import CreatureProfileContract
 from ludowright.contracts.dependencies import DependencyGraphContract
@@ -277,6 +278,18 @@ CONTRACTS: tuple[ContractDefinition, ...] = (
         "cli-response.schema.json",
         "LudoWright CLI Response",
         CliResponseContract,
+    ),
+    ContractDefinition(
+        "codex-skill-manifest",
+        "codex-skill-manifest.schema.json",
+        "LudoWright Codex Skill Manifest",
+        CodexSkillManifestContract,
+    ),
+    ContractDefinition(
+        "codex-skill-report",
+        "codex-skill-report.schema.json",
+        "LudoWright Codex Skill Report",
+        CodexSkillReportContract,
     ),
     ContractDefinition(
         "interview-questionnaire",

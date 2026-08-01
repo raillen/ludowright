@@ -10,6 +10,7 @@ from rich.console import Console
 from ludowright import __version__
 from ludowright.cli.assets import assets_app
 from ludowright.cli.atlas import generate_atlas
+from ludowright.cli.codex import codex_app
 from ludowright.cli.diagnostics import collect_diagnostics, render_diagnostics
 from ludowright.cli.docs import docs_app
 from ludowright.cli.documents import documents_app
@@ -31,6 +32,7 @@ app = typer.Typer(
     context_settings={"help_option_names": ["-h", "--help"]},
 )
 app.add_typer(quality_app, name="quality")
+app.add_typer(codex_app, name="codex")
 app.add_typer(assets_app, name="assets")
 app.add_typer(interview_app, name="interview")
 app.add_typer(documents_app, name="documents")
