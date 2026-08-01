@@ -51,6 +51,9 @@ The repository currently establishes:
 - initial data-defined creature/animal profiles for quadrupeds, birds, fish,
   insects, and fantasy creatures with anatomy-specific views, components,
   states, and outputs.
+- initial data-defined environment/hard-surface profiles for props, vehicles,
+  buildings, modular kits, and interiors with construction components,
+  connection matrices, states, views, and outputs.
 
 Project-local profile persistence, visual-job planning, ImageGen execution,
 review workflows, technical sheets, global audits, and package generation

@@ -29,7 +29,7 @@ idea → guided intake → modular documentation → asset registry
 
 ## Current status
 
-LudoWright is in the **pre-alpha visual-foundation phase**. Product vision, long-term roadmap, layered architecture, documentation navigation, the initial Python package, project initialization, CLI workflows, tests, CI, asset planning, the v1 visual bible schema, a provider-neutral deterministic prompt compiler, the initial data-defined humanoid/wearable profile, and the initial creature/animal profiles are established. Project-local profile persistence, visual-job planning, and ImageGen workflows remain planned.
+LudoWright is in the **pre-alpha visual-foundation phase**. Product vision, long-term roadmap, layered architecture, documentation navigation, the initial Python package, project initialization, CLI workflows, tests, CI, asset planning, the v1 visual bible schema, a provider-neutral deterministic prompt compiler, and the initial data-defined humanoid/wearable, creature/animal, and environment/hard-surface profiles are established. Project-local profile persistence, visual-job planning, and ImageGen workflows remain planned.
 
 See the ordered implementation program in [`docs/plans/IMPLEMENTATION_PLAN.md`](docs/plans/IMPLEMENTATION_PLAN.md).
 
