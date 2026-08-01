@@ -188,6 +188,48 @@ def test_migration_catalog_rejects_gaps_and_downgrades() -> None:
         catalog.plan(2, 1)
 
 
+@pytest.mark.parametrize(
+    ("source_version", "target_version", "expected_ids", "error_match"),
+    [
+        pytest.param(1, 1, (), None, id="v1-to-v1-no-op"),
+        pytest.param(
+            1,
+            2,
+            ("state-v1-to-v2-migration-history",),
+            None,
+            id="v1-to-v2-supported",
+        ),
+        pytest.param(2, 2, (), None, id="v2-to-v2-no-op"),
+        pytest.param(2, 1, None, "downgrade", id="v2-to-v1-rejected"),
+        pytest.param(1, 3, None, "no migration", id="v1-to-v3-gap-rejected"),
+    ],
+)
+def test_migration_plan_compatibility_matrix(
+    tmp_path: Path,
+    source_version: int,
+    target_version: int,
+    expected_ids: tuple[str, ...] | None,
+    error_match: str | None,
+) -> None:
+    if source_version == 1:
+        create_v1_database(tmp_path)
+    elif source_version == 2:
+        StateStore(ProjectFilesystem(tmp_path))
+    else:
+        raise AssertionError(f"unsupported test fixture version: {source_version}")
+
+    manager = StateMigrationManager(ProjectFilesystem(tmp_path))
+    if error_match is not None:
+        with pytest.raises(MigrationPlanError, match=error_match):
+            manager.plan(target_version=target_version)
+        return
+
+    plan = manager.plan(target_version=target_version)
+    assert plan.source_version == source_version
+    assert plan.target_version == target_version
+    assert plan.migration_ids == expected_ids
+
+
 def test_state_store_v1_requires_explicit_migration(tmp_path: Path) -> None:
     create_v1_database(tmp_path)
 

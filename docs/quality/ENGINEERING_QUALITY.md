@@ -74,6 +74,16 @@ repository fixtures and local adapters. Run only this bounded check with:
 uv run pytest -m end_to_end --no-cov
 ```
 
+Migration compatibility is validated separately against the historical v1
+SQLite layout and the current v2 state store. The matrix covers supported
+upgrades, no-op plans, downgrades, and missing contiguous paths while the
+nearby tests cover backup, rollback, tampering, concurrency, and failure
+recovery:
+
+```bash
+uv run pytest --no-cov tests/test_migrations.py
+```
+
 The clean-room check builds both publishable formats into a temporary
 directory, creates a new virtual environment for each format, installs the
 artifact with its runtime dependencies, and executes `ludowright --version`
