@@ -15,6 +15,12 @@
       "sha256": "d286596c87382262738f7e25e609e2ff3e91dd7d9c3974826df93b4c8646a7d8"
     },
     {
+      "file": "package-index.schema.json",
+      "name": "package-index",
+      "schema_id": "https://schemas.ludowright.dev/v1/package-index.schema.json",
+      "sha256": "ec3582305de44a6e1df45e6035b43b584ebddab7857f920c9e7f34c5cbc90dd4"
+    },
+    {
       "file": "decision.schema.json",
       "name": "decision",
       "schema_id": "https://schemas.ludowright.dev/v1/decision.schema.json",

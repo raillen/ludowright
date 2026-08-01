@@ -619,10 +619,19 @@ existing structured repositories, a project lock, atomic create-only output,
 exact-repeat idempotency, Rich/JSON output, and a strictly read-only dry run.
 The published SQLite state remains excluded as rebuildable derived state and
 is reported at schema version 2. The published contract, schema, fixture,
-tests, ADR, command documentation, and ATLAS entries are included. ZIP
-building, global readiness audits, and release verification remain PR54–PR56.
+tests, ADR, command documentation, and ATLAS entries are included. Global
+readiness audits and release verification remain PR55–PR56.
 
 ### PR 54 — Package builder
+
+Status: implemented in the current slice. The non-interactive `package build`
+command consumes a validated v1 package manifest, verifies every source size
+and SHA-256, creates a fixed-metadata ZIP with the manifest and package index,
+and writes a create-only release directory. ZIP entries are bounded, sorted,
+symlink-free, and validated before persistence. The v1 `package-index` schema,
+fixture, tests, ADR, command documentation, and ATLAS updates are included.
+Global readiness audits, release verification, signatures, and examples remain
+separate later slices.
 
 - safe ZIP generation;
 - package index;

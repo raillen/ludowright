@@ -11,6 +11,11 @@ from rich.console import Console
 from rich.table import Table
 
 from ludowright.application import (
+    PackageBuilderConflictError,
+    PackageBuilderError,
+    PackageBuilderInputError,
+    PackageBuilderRollbackError,
+    PackageBuilderService,
     PackageManifestConflictError,
     PackageManifestError,
     PackageManifestInputError,
@@ -25,6 +30,65 @@ package_app = typer.Typer(
     help="Inspect and prepare reproducible project packages.",
     no_args_is_help=True,
 )
+
+
+@package_app.command("build")
+def build_package(
+    context: typer.Context,
+    project: Annotated[Path, typer.Argument(help="Project directory or a path below it.")],
+    manifest_path: Annotated[
+        str,
+        typer.Argument(help="Project-relative package-manifest JSON path."),
+    ],
+    release_directory: Annotated[
+        str,
+        typer.Argument(help="Project-relative directory for the ZIP release."),
+    ],
+    dry_run: Annotated[
+        bool,
+        typer.Option("--dry-run", help="Plan the release without writing files."),
+    ] = False,
+    json_output: Annotated[
+        bool,
+        typer.Option("--json", help="Return a stable machine-readable response."),
+    ] = False,
+) -> None:
+    """Build a reproducible ZIP and package index from a manifest."""
+
+    def action() -> dict[str, object]:
+        try:
+            service = PackageBuilderService(ProjectFilesystem.discover(project))
+            return service.build(
+                RepositoryPath.parse(manifest_path),
+                RepositoryPath.parse(release_directory),
+                dry_run=dry_run,
+            ).as_data()
+        except PackageBuilderConflictError as error:
+            raise CliFailure(
+                code=CliErrorCode.CONFLICT,
+                message=str(error),
+                exit_code=CliExitCode.CONFLICT,
+            ) from error
+        except PackageBuilderRollbackError as error:
+            raise CliFailure(
+                code=CliErrorCode.CORRUPT_STATE,
+                message=str(error),
+                exit_code=CliExitCode.CORRUPT_STATE,
+            ) from error
+        except (PackageBuilderInputError, PackageBuilderError, ValidationError) as error:
+            raise CliFailure(
+                code=CliErrorCode.INVALID_INPUT,
+                message=str(error),
+                exit_code=CliExitCode.VALIDATION,
+            ) from error
+
+    run_command(
+        context=context,
+        command="package build",
+        local_json=json_output,
+        action=action,
+        render_human=_render_human,
+    )
 
 
 @package_app.command("manifest")
@@ -82,14 +146,27 @@ def create_package_manifest(
 
 def _render_human(console: Console, data: dict[str, object]) -> None:
     """Render concise manifest facts while retaining structured detail in JSON."""
-    console.print("[bold]Package manifest[/bold]")
+    title = "Package build" if data["kind"] == "package-build-report" else "Package manifest"
+    console.print(f"[bold]{title}[/bold]")
     console.print(f"State: {data['state']} | Dry run: {data['dry_run']}")
     console.print(f"Project: {data['project_id']} | Package: {data['package_id']}")
-    console.print(f"Output: {data['output_path']}")
+    if "output_path" in data:
+        console.print(f"Output: {data['output_path']}")
+    else:
+        console.print(f"Archive: {data['archive_path']}")
+        console.print(f"Index: {data['index_path']}")
+        console.print(f"Archive SHA-256: {data['archive_sha256']}")
+        console.print(f"Archive bytes: {data['archive_size_bytes']}")
     table = Table("Category", "Count")
-    table.add_row("Included files", str(data["included_file_count"]))
-    table.add_row("Excluded paths", str(data["excluded_path_count"]))
-    table.add_row("Missing items", str(data["missing_item_count"]))
+    if "included_file_count" in data:
+        table.add_row("Included files", str(data["included_file_count"]))
+        table.add_row("Excluded paths", str(data["excluded_path_count"]))
+        table.add_row("Missing items", str(data["missing_item_count"]))
+    else:
+        index = data["index"]
+        if isinstance(index, dict):
+            table.add_row("Archive members", str(index["archive_member_count"]))
+            table.add_row("Payload bytes", str(index["payload_size_bytes"]))
     console.print(table)
     warnings = data.get("warnings")
     if isinstance(warnings, list) and warnings:

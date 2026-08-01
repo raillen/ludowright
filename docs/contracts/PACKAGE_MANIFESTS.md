@@ -3,7 +3,7 @@
 ## Purpose
 
 The `package-manifest` contract is the deterministic inventory boundary between
-the repository-native project and the package builder planned for PR54. It
+the repository-native project and the package builder implemented in PR54. It
 describes what a package would contain without creating a ZIP archive.
 
 The published v1 schema is:
@@ -80,6 +80,6 @@ this contract without changing its meaning. Incompatible field or path-policy
 changes require a new schema version, generated schema, compatibility fixture,
 migration guidance, and ADR.
 
-The manifest does not sign content. PR54 may use its checksums to construct a
+The manifest does not sign content. PR54 uses its checksums to construct a
 reproducible archive; release signing and blocking readiness checks remain
 later roadmap stages.

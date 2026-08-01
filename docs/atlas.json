@@ -610,7 +610,7 @@
       "canonical_source": "commands/PACKAGES.md",
       "path": "commands/PACKAGES.md",
       "section": "commands",
-      "title": "Package Manifest CLI"
+      "title": "Packages CLI"
     },
     {
       "canonical_source": "contracts/PACKAGE_MANIFESTS.md",
@@ -619,10 +619,22 @@
       "title": "Package Manifest Contract"
     },
     {
+      "canonical_source": "contracts/PACKAGE_BUILDS.md",
+      "path": "contracts/PACKAGE_BUILDS.md",
+      "section": "contracts",
+      "title": "Package Build Contract"
+    },
+    {
       "canonical_source": "decisions/0042-deterministic-package-manifest.md",
       "path": "decisions/0042-deterministic-package-manifest.md",
       "section": "decisions",
       "title": "ADR 0042: Deterministic Package Manifest Boundary"
+    },
+    {
+      "canonical_source": "decisions/0043-deterministic-package-builder.md",
+      "path": "decisions/0043-deterministic-package-builder.md",
+      "section": "decisions",
+      "title": "ADR 0043: Deterministic Package Builder"
     }
   ],
   "kind": "atlas-metadata",

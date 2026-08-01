@@ -23,6 +23,12 @@ from ludowright.application.image_normalization import (
     ImageNormalizationConflictError,
     ImageNormalizationRollbackError,
 )
+from ludowright.application.package_builder import (
+    PackageBuilderConflictError,
+    PackageBuilderError,
+    PackageBuilderInputError,
+    PackageBuilderRollbackError,
+)
 from ludowright.application.package_manifest import (
     PackageManifestConflictError,
     PackageManifestError,
@@ -312,6 +318,24 @@ def _known_failure(error: Exception) -> CliFailure | None:
             exit_code=CliExitCode.VALIDATION,
         )
     if isinstance(error, PackageManifestError):
+        return CliFailure(
+            CliErrorCode.INVALID_INPUT,
+            str(error),
+            exit_code=CliExitCode.VALIDATION,
+        )
+    if isinstance(error, PackageBuilderConflictError):
+        return CliFailure(
+            CliErrorCode.CONFLICT,
+            str(error),
+            exit_code=CliExitCode.CONFLICT,
+        )
+    if isinstance(error, PackageBuilderRollbackError):
+        return CliFailure(
+            CliErrorCode.CORRUPT_STATE,
+            str(error),
+            exit_code=CliExitCode.CORRUPT_STATE,
+        )
+    if isinstance(error, (PackageBuilderInputError, PackageBuilderError)):
         return CliFailure(
             CliErrorCode.INVALID_INPUT,
             str(error),

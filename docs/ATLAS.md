@@ -71,9 +71,10 @@ This is the main navigation map for humans and agents. Each subject should have 
 - [`commands/REVIEWS.md`](commands/REVIEWS.md) — apply receipt-bound visual reviews with approval, correction, rejection, supersession, dry-run, and rollback semantics.
 - [`commands/IMAGES.md`](commands/IMAGES.md) — normalize local images into deterministic PNG outputs and reports.
 - [`commands/SHEETS.md`](commands/SHEETS.md) — assemble approved PNGs into deterministic technical sheets and reports.
-- [`commands/PACKAGES.md`](commands/PACKAGES.md) — create deterministic package manifests with checksums, provenance, dry-run, and create-only behavior.
+- [`commands/PACKAGES.md`](commands/PACKAGES.md) — create manifests and build reproducible ZIP releases with checksums, dry-run, and create-only behavior.
 - [`contracts/CLI.md`](contracts/CLI.md) — dual human/JSON surfaces, response envelope, error codes, exit codes, version output, diagnostics, and compatibility rules.
 - [`contracts/PACKAGE_MANIFESTS.md`](contracts/PACKAGE_MANIFESTS.md) — package inventory shape, path policy, source versions, provenance, exclusions, and compatibility.
+- [`contracts/PACKAGE_BUILDS.md`](contracts/PACKAGE_BUILDS.md) — reproducible ZIP members, package index, release directory, safety limits, and rollback.
 
 Published machine-readable contracts are stored under `schemas/v1/`. The source models live under `src/ludowright/contracts/`.
 
@@ -132,8 +133,12 @@ Package manifest generation is implemented by
 `src/ludowright/infrastructure/package_manifest.py`; the `package manifest`
 command is presented by `src/ludowright/cli/packages.py`. The v1 contract,
 schema, fixture, provenance summary, explicit exclusions, deterministic
-checksums, and create-only/dry-run semantics are published. ZIP packaging,
-global audit, and release verification remain PR54–PR56.
+checksums, and create-only/dry-run semantics are published. ZIP package
+building is implemented by `src/ludowright/application/package_builder.py`
+over `PackageArchiveBuilder` in `src/ludowright/infrastructure/package_manifest.py`;
+it consumes the manifest, validates source checksums, writes fixed ZIP metadata,
+and publishes a v1 `package-index` alongside the release archive. Global audit
+and release verification remain later stages.
 
 The initial asset taxonomy is loaded by
 `src/ludowright/application/asset_taxonomy.py` from versioned JSON data under
@@ -201,6 +206,8 @@ state or image files.
 - [`decisions/0039-codex-specialist-agents.md`](decisions/0039-codex-specialist-agents.md) — versioned specialist catalog, deterministic routing, and no agent approval authority.
 - [`decisions/0040-image-normalization.md`](decisions/0040-image-normalization.md) — Pillow boundary, deterministic derived outputs, metadata handling, and safe persistence.
 - [`decisions/0041-deterministic-technical-sheet-assembly.md`](decisions/0041-deterministic-technical-sheet-assembly.md) — data-defined layouts, approved inputs, deterministic rendering, and create-only persistence.
+- [`decisions/0042-deterministic-package-manifest.md`](decisions/0042-deterministic-package-manifest.md) — deterministic inventory boundary, exclusions, and manifest-only staging.
+- [`decisions/0043-deterministic-package-builder.md`](decisions/0043-deterministic-package-builder.md) — fixed ZIP metadata, package index, release directory, and create-only rollback.
 
 Planned documents:
 
