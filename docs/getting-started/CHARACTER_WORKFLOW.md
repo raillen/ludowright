@@ -182,5 +182,6 @@ planos e diagnósticos, mas não pode aprovar o próprio output.
 Este guia não adiciona persistência de perfis, execução de provider, geração
 de imagens ou uma nova migração. Essas fronteiras já possuem contratos
 separados e devem continuar sendo compostas pela aplicação. A remoção segura
-da skill está documentada em [Remoção segura](UNINSTALLING.md); clean-room e
-readiness final permanecem na PR62.
+da skill está documentada em [Remoção segura](UNINSTALLING.md); a auditoria
+documental e a instalação clean-room estão cobertas no slice de readiness da
+PR62. Feedback de projetos reais e release candidate continuam pendentes.

@@ -92,6 +92,7 @@ nav:
   - Quality:
       - Engineering, E2E, and Clean-Install Baseline: quality/ENGINEERING_QUALITY.md
       - Codex Agent Evals: quality/CODEX_AGENT_EVALS.md
+      - Public-beta Documentation Audit: quality/PUBLIC_BETA_DOCUMENTATION_AUDIT.md
   - Security:
       - Threat model: security/THREAT_MODEL.md
   - Governance:

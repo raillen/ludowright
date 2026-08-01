@@ -183,8 +183,10 @@ troubleshooting, update, and uninstall path is documented in
 repository checkout with `uv`, keeps the Python and platform requirements
 explicit, exercises the non-interactive `init` and project-local Codex skill
 commands, and records conservative recovery for published CLI error codes.
-Clean-room package installation remains reserved for the later public-beta
-readiness slice.
+The quality gate also validates clean-room wheel and source-distribution
+installation outside the checkout. The remaining public-beta readiness work
+is recorded in [`quality/PUBLIC_BETA_DOCUMENTATION_AUDIT.md`](quality/PUBLIC_BETA_DOCUMENTATION_AUDIT.md)
+and the implementation plan.
 
 The initial asset taxonomy is loaded by
 `src/ludowright/application/asset_taxonomy.py` from versioned JSON data under
@@ -302,6 +304,7 @@ Future bounded changes should receive their own plan under `plans/`.
 
 - [`quality/ENGINEERING_QUALITY.md`](quality/ENGINEERING_QUALITY.md) — pre-commit, unified quality commands, local-first end-to-end validation, migration compatibility matrix, clean-room package installation, coverage, property tests, schema drift, dependency audits, secret scanning, CI, and failure policy.
 - [`quality/CODEX_AGENT_EVALS.md`](quality/CODEX_AGENT_EVALS.md) — offline specialist-agent conformance scenarios and safety invariants.
+- [`quality/PUBLIC_BETA_DOCUMENTATION_AUDIT.md`](quality/PUBLIC_BETA_DOCUMENTATION_AUDIT.md) — current documentation coverage, executable evidence, and remaining beta-readiness work.
 - [`contracts/JSON_SCHEMAS.md`](contracts/JSON_SCHEMAS.md) — schema-generation, checksum, fixture, and compatibility validation rules.
 - [`contracts/STRUCTURED_REPOSITORIES.md`](contracts/STRUCTURED_REPOSITORIES.md) — parser limits, deterministic round trips, duplicate-key rejection, and optimistic concurrency tests.
 - [`contracts/EVENT_LOG.md`](contracts/EVENT_LOG.md) — replay integrity, chained hashes, sequence, concurrency, corruption, and incomplete-tail recovery tests.

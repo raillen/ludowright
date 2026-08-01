@@ -637,6 +637,12 @@
       "title": "Codex Agent Evaluation Suite"
     },
     {
+      "canonical_source": "quality/PUBLIC_BETA_DOCUMENTATION_AUDIT.md",
+      "path": "quality/PUBLIC_BETA_DOCUMENTATION_AUDIT.md",
+      "section": "quality",
+      "title": "Public-beta Documentation Audit"
+    },
+    {
       "canonical_source": "security/THREAT_MODEL.md",
       "path": "security/THREAT_MODEL.md",
       "section": "security",
