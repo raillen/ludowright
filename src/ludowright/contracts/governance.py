@@ -33,10 +33,13 @@ from ludowright.domain import (
     DisplayName,
     Identifier,
     JobId,
+    OwnerId,
     PackageId,
     ProjectId,
     ReceiptId,
     ReferenceId,
+    ReviewActor,
+    ReviewerKind,
     ReviewId,
     ReviewNote,
     SubjectRevision,
@@ -81,6 +84,20 @@ _SUBJECT_ID_TYPES: dict[ApprovalSubjectKind, type[Identifier]] = {
 
 def _review_note(value: str | None) -> ReviewNote | None:
     return ReviewNote(value) if value is not None else None
+
+
+class ReviewActorContract(ContractModel):
+    """Persisted review participant identity used by the policy boundary."""
+
+    id: Slug
+    kind: ReviewerKind
+
+    def to_domain(self) -> ReviewActor:
+        return ReviewActor(id=OwnerId(self.id), kind=self.kind)
+
+    @classmethod
+    def from_domain(cls, value: ReviewActor) -> Self:
+        return cls(id=value.id.value, kind=value.kind)
 
 
 class DecisionRevisionContract(ContractModel):
@@ -136,6 +153,15 @@ class ApprovalSubjectContract(ContractModel):
             label=DisplayName(self.label) if self.label is not None else None,
         )
 
+    @classmethod
+    def from_domain(cls, value: ApprovalSubject) -> Self:
+        return cls(
+            subject_kind=ApprovalSubjectKind(value.id.kind),
+            id=value.id.value,
+            revision=value.revision.value,
+            label=value.label.value if value.label is not None else None,
+        )
+
 
 class ApprovalRevisionContract(ContractModel):
     sequence: Annotated[int, Field(ge=1)]
@@ -153,6 +179,15 @@ class ApprovalRevisionContract(ContractModel):
             ),
         )
 
+    @classmethod
+    def from_domain(cls, value: ApprovalRevision) -> Self:
+        return cls(
+            sequence=value.sequence,
+            status=value.status,
+            note=value.note.value if value.note is not None else None,
+            superseded_by=(value.superseded_by.value if value.superseded_by is not None else None),
+        )
+
 
 class ApprovalContract(ContractModel):
     schema_version: Literal[1] = 1
@@ -166,6 +201,14 @@ class ApprovalContract(ContractModel):
             id=ApprovalId(self.id),
             subject=self.subject.to_domain(),
             history=tuple(revision.to_domain() for revision in self.history),
+        )
+
+    @classmethod
+    def from_domain(cls, value: Approval) -> Self:
+        return cls(
+            id=value.id.value,
+            subject=ApprovalSubjectContract.from_domain(value.subject),
+            history=tuple(ApprovalRevisionContract.from_domain(item) for item in value.history),
         )
 
     @model_validator(mode="after")

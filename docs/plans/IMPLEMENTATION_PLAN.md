@@ -518,6 +518,17 @@ tests, ADR, and documentation are included.
 
 ### PR 48 — Review workflow
 
+Status: implemented in the current slice. The `ludowright review` workflow
+validates successful receipt-bound outputs, requires distinct reviewer and
+producer identities, enforces human approval, projects revision-bound approval
+and reference status, handles correction, rejection, and supersession, and
+updates the canonical dependency graph and hash-chained event log. The
+workflow uses the existing safe filesystem, structured repositories, locks,
+optimistic graph persistence, deterministic IDs/paths, dry-run, idempotency,
+and rollback. Actor fields are additive in the v1 review contract, and no
+SQLite migration is required. Focused security, concurrency, rollback, CLI,
+contract, and lifecycle tests plus ADR and command documentation are included.
+
 - approve, approve with notes, correct, reject, supersede;
 - reviewer separation;
 - dependency invalidation.

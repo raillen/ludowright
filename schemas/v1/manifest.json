@@ -114,7 +114,7 @@
       "file": "visual-review.schema.json",
       "name": "visual-review",
       "schema_id": "https://schemas.ludowright.dev/v1/visual-review.schema.json",
-      "sha256": "5ae0906ece620669c923fd37476013fa4dc096039bf8c940804d9e662ae5e2ac"
+      "sha256": "3a741e71ed09e8f05292a2d953de41423f3bb08c263d7aa79021708805ffa9f9"
     },
     {
       "file": "capture-profile.schema.json",

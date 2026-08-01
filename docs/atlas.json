@@ -37,6 +37,12 @@
       "title": "Codex Skill CLI"
     },
     {
+      "canonical_source": "commands/REVIEWS.md",
+      "path": "commands/REVIEWS.md",
+      "section": "commands",
+      "title": "Review CLI"
+    },
+    {
       "canonical_source": "commands/INTERVIEW.md",
       "path": "commands/INTERVIEW.md",
       "section": "commands",
@@ -491,6 +497,12 @@
       "path": "decisions/0037-generation-receipts.md",
       "section": "decisions",
       "title": "ADR 0037: Durable ImageGen Generation Receipts"
+    },
+    {
+      "canonical_source": "decisions/0038-visual-review-workflow.md",
+      "path": "decisions/0038-visual-review-workflow.md",
+      "section": "decisions",
+      "title": "ADR 0038: Canonical Visual Review Workflow"
     },
     {
       "canonical_source": "governance/RFC_TEMPLATE.md",

@@ -7,5 +7,13 @@
   "reviewed_reference_ids": [
     "ref-maya-front-output"
   ],
-  "approval_id": "approval-maya-front-output"
+  "approval_id": "approval-maya-front-output",
+  "reviewer": {
+    "id": "human-reviewer",
+    "kind": "human"
+  },
+  "producer": {
+    "id": "imagegen-agent",
+    "kind": "agent"
+  }
 }

@@ -100,6 +100,14 @@ from ludowright.application.visual_profiles import (
     VisualProfileNotFoundError,
     load_visual_profile,
 )
+from ludowright.application.visual_review import (
+    VisualReviewConflictError,
+    VisualReviewError,
+    VisualReviewResult,
+    VisualReviewRollbackError,
+    VisualReviewService,
+    VisualReviewValidationError,
+)
 
 __all__ = [
     "AssetAuditError",
@@ -165,6 +173,12 @@ __all__ = [
     "VisualProfileDefinitionError",
     "VisualProfileError",
     "VisualProfileNotFoundError",
+    "VisualReviewConflictError",
+    "VisualReviewError",
+    "VisualReviewResult",
+    "VisualReviewRollbackError",
+    "VisualReviewService",
+    "VisualReviewValidationError",
     "load_asset_taxonomy",
     "load_creature_profile",
     "load_document_template_manifest",

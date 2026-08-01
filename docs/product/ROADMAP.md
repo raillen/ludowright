@@ -98,8 +98,10 @@ assembly from interview answers remains a later bounded capability.
 - prompt, input, output, and checksum receipts (receipts, candidate generated
   references, metadata, timestamps, and PNG validation implemented through
   PR47);
-- retries, superseding, and selective correction;
-- human approval checkpoints.
+- retries, superseding, and selective correction (receipt retries through PR47;
+  review correction and supersession through PR48);
+- human approval checkpoints with reviewer separation and dependency
+  invalidation (implemented through PR48).
 
 ### 0.7 Sheets and Packages
 

@@ -118,8 +118,23 @@ The future event log will record operational metadata such as:
 - timestamp;
 - command;
 - correlation ID;
+
 - source tool;
 - before and after fingerprints.
+
+## Review actors and approval boundary
+
+Visual reviews persist a stable reviewer and producer identity. Their `kind`
+is `human` or `agent`. New review operations require both identities and reject
+equal IDs. An accepted visual review must be performed by a human, which keeps
+agent-generated output outside the approval boundary until an explicit human
+checkpoint occurs. These fields are additive in the published v1 visual-review
+contract so existing records remain readable.
+
+The review workflow projects an accepted outcome onto the exact reference
+revision named by the approval subject. It never reuses approval state for a
+different content revision. A replacement creates a new review and approval;
+the old accepted records retain an append-only `superseded` history entry.
 
 The event log does not replace the domain history. Domain history determines whether the current state is valid even when loaded outside the original event store.
 
