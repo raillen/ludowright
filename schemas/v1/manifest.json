@@ -237,6 +237,18 @@
       "sha256": "968d5623e47ae4800afda842bb5d1d5cf4a397946ee3d817d0000b0e1e2d56cd"
     },
     {
+      "file": "codex-orchestration-policy.schema.json",
+      "name": "codex-orchestration-policy",
+      "schema_id": "https://schemas.ludowright.dev/v1/codex-orchestration-policy.schema.json",
+      "sha256": "30187f5f0f99c80f7b859f0d53c734463454e7eea914c04b38836deebb7de20f"
+    },
+    {
+      "file": "codex-orchestration-plan.schema.json",
+      "name": "codex-orchestration-plan",
+      "schema_id": "https://schemas.ludowright.dev/v1/codex-orchestration-plan.schema.json",
+      "sha256": "4995f8d46665c600224a714edcc478c78f806cce930ba871809cf65c2bc301a1"
+    },
+    {
       "file": "interview-questionnaire.schema.json",
       "name": "interview-questionnaire",
       "schema_id": "https://schemas.ludowright.dev/v1/interview-questionnaire.schema.json",

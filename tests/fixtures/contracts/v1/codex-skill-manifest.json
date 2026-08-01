@@ -4,7 +4,11 @@
   "files": [
     {
       "path": "SKILL.md",
-      "sha256": "3f76775fcb3c0598195a45f63a77188cb202619223cba8a127e406459cd27a1a"
+      "sha256": "048dadd8c7e5d40d1d0c567ec28779def423da58e264cf7445715fe56f732db1"
+    },
+    {
+      "path": "orchestration.json",
+      "sha256": "74e65d23443b7eeb6ee4c40f287de9adbd0ae4fb694975807874a0e39a8d11cb"
     }
   ],
   "id": "ludowright",
@@ -13,5 +17,5 @@
   "kind": "codex-skill-manifest",
   "minimum_ludowright_version": "0.1.0.dev0",
   "schema_version": 1,
-  "version": 1
+  "version": 2
 }

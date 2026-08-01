@@ -1,0 +1,124 @@
+{
+  "ask_only_unresolved": true,
+  "checkpoints": [
+    {
+      "evidence": [
+        "approval-record",
+        "status-report"
+      ],
+      "id": "approval",
+      "requires_human": true,
+      "trigger": "antes de alterar um artefato que exige aprovação"
+    },
+    {
+      "evidence": [
+        "decision-record"
+      ],
+      "id": "decision-record",
+      "requires_human": false,
+      "trigger": "antes de consolidar uma escolha canônica"
+    },
+    {
+      "evidence": [
+        "question-answer"
+      ],
+      "id": "question-resolution",
+      "requires_human": true,
+      "trigger": "antes de executar com uma entrada ainda indefinida"
+    },
+    {
+      "evidence": [
+        "status-report",
+        "workflow-cursor"
+      ],
+      "id": "resume",
+      "requires_human": false,
+      "trigger": "antes de retomar uma operação interrompida"
+    },
+    {
+      "evidence": [
+        "status-report"
+      ],
+      "id": "status-inspection",
+      "requires_human": false,
+      "trigger": "no início de cada operação"
+    },
+    {
+      "evidence": [
+        "validation-report"
+      ],
+      "id": "validation",
+      "requires_human": false,
+      "trigger": "antes de concluir uma fase ou produzir uma saída"
+    }
+  ],
+  "id": "default",
+  "kind": "codex-orchestration-policy",
+  "phases": [
+    {
+      "checkpoint_id": "status-inspection",
+      "id": "inspect",
+      "name": "Inspecionar",
+      "order": 1,
+      "purpose": "Leia o status canônico, os bloqueios e as ações recomendadas do projeto."
+    },
+    {
+      "checkpoint_id": "question-resolution",
+      "id": "clarify",
+      "name": "Esclarecer",
+      "order": 2,
+      "purpose": "Resolva somente as perguntas que continuam sem resposta e preserve sua proveniência."
+    },
+    {
+      "checkpoint_id": "decision-record",
+      "id": "decide",
+      "name": "Registrar decisões",
+      "order": 3,
+      "purpose": "Registre escolhas canônicas usando o comando e o contrato publicados."
+    },
+    {
+      "checkpoint_id": "validation",
+      "id": "validate",
+      "name": "Validar",
+      "order": 4,
+      "purpose": "Execute as validações obrigatórias e preserve seus resultados no repositório."
+    },
+    {
+      "checkpoint_id": "approval",
+      "id": "approve",
+      "name": "Aguardar aprovação",
+      "order": 5,
+      "purpose": "Pare no checkpoint e solicite aprovação humana explícita para o artefato exato."
+    },
+    {
+      "checkpoint_id": "resume",
+      "id": "resume",
+      "name": "Retomar",
+      "order": 6,
+      "purpose": "Retome somente a partir do cursor durável depois de revalidar suas entradas."
+    }
+  ],
+  "record_decisions": true,
+  "require_approval_checkpoints": true,
+  "resume_from_durable_state": true,
+  "schema_version": 1,
+  "skill_id": "ludowright",
+  "validations": [
+    {
+      "blocking": true,
+      "command": "ludowright --json atlas --check",
+      "id": "atlas"
+    },
+    {
+      "blocking": true,
+      "command": "ludowright --json quality check",
+      "id": "quality"
+    },
+    {
+      "blocking": true,
+      "command": "ludowright --json status",
+      "id": "status"
+    }
+  ],
+  "version": 1
+}

@@ -1,0 +1,229 @@
+{
+  "$defs": {
+    "CodexOrchestrationCheckpointContract": {
+      "additionalProperties": false,
+      "description": "One evidence checkpoint that protects a durable workflow boundary.",
+      "properties": {
+        "evidence": {
+          "items": {
+            "maxLength": 80,
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "maxItems": 16,
+          "minItems": 1,
+          "title": "Evidence",
+          "type": "array"
+        },
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "requires_human": {
+          "title": "Requires Human",
+          "type": "boolean"
+        },
+        "trigger": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Trigger",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "trigger",
+        "requires_human",
+        "evidence"
+      ],
+      "title": "CodexOrchestrationCheckpointContract",
+      "type": "object"
+    },
+    "CodexOrchestrationPhaseContract": {
+      "additionalProperties": false,
+      "description": "One ordered phase in the declarative Codex orchestration policy.",
+      "properties": {
+        "checkpoint_id": {
+          "anyOf": [
+            {
+              "maxLength": 80,
+              "minLength": 1,
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Checkpoint Id"
+        },
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "order": {
+          "maximum": 2147483647,
+          "minimum": 1,
+          "title": "Order",
+          "type": "integer"
+        },
+        "purpose": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Purpose",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "order",
+        "name",
+        "purpose"
+      ],
+      "title": "CodexOrchestrationPhaseContract",
+      "type": "object"
+    },
+    "CodexOrchestrationValidationContract": {
+      "additionalProperties": false,
+      "description": "One validation command the policy may require before continuing.",
+      "properties": {
+        "blocking": {
+          "default": true,
+          "title": "Blocking",
+          "type": "boolean"
+        },
+        "command": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Command",
+          "type": "string"
+        },
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "command"
+      ],
+      "title": "CodexOrchestrationValidationContract",
+      "type": "object"
+    }
+  },
+  "$id": "https://schemas.ludowright.dev/v1/codex-orchestration-policy.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Versioned declarative rules for one Codex orchestration adapter.",
+  "properties": {
+    "ask_only_unresolved": {
+      "const": true,
+      "default": true,
+      "title": "Ask Only Unresolved",
+      "type": "boolean"
+    },
+    "checkpoints": {
+      "items": {
+        "$ref": "#/$defs/CodexOrchestrationCheckpointContract"
+      },
+      "maxItems": 16,
+      "minItems": 1,
+      "title": "Checkpoints",
+      "type": "array"
+    },
+    "id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Id",
+      "type": "string"
+    },
+    "kind": {
+      "const": "codex-orchestration-policy",
+      "default": "codex-orchestration-policy",
+      "title": "Kind",
+      "type": "string"
+    },
+    "phases": {
+      "items": {
+        "$ref": "#/$defs/CodexOrchestrationPhaseContract"
+      },
+      "minItems": 1,
+      "title": "Phases",
+      "type": "array"
+    },
+    "record_decisions": {
+      "const": true,
+      "default": true,
+      "title": "Record Decisions",
+      "type": "boolean"
+    },
+    "require_approval_checkpoints": {
+      "const": true,
+      "default": true,
+      "title": "Require Approval Checkpoints",
+      "type": "boolean"
+    },
+    "resume_from_durable_state": {
+      "const": true,
+      "default": true,
+      "title": "Resume From Durable State",
+      "type": "boolean"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "skill_id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Skill Id",
+      "type": "string"
+    },
+    "validations": {
+      "items": {
+        "$ref": "#/$defs/CodexOrchestrationValidationContract"
+      },
+      "maxItems": 32,
+      "minItems": 1,
+      "title": "Validations",
+      "type": "array"
+    },
+    "version": {
+      "maximum": 2147483647,
+      "minimum": 1,
+      "title": "Version",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "id",
+    "version",
+    "skill_id",
+    "phases",
+    "validations",
+    "checkpoints"
+  ],
+  "title": "LudoWright Codex Orchestration Policy",
+  "type": "object"
+}
