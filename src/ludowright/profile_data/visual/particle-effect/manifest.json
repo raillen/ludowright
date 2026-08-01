@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "kind": "visual-profile",
+  "capture_profile": {
+    "schema_version": 1,
+    "kind": "capture-profile",
+    "id": "visual-particle-effect",
+    "version": 1,
+    "name": "Particle Effect Visual Profile",
+    "family": "vfx",
+    "subtype": "particle-effect",
+    "camera": {"projection": "orthographic", "framing_margin_percent": 15},
+    "background": {"mode": "neutral"},
+    "lighting": {"mode": "dramatic", "shadows": "soft"},
+    "validation": {"width": 2048, "height": 2048, "require_full_subject": true, "require_consistent_scale": true, "allow_occlusion": false},
+    "views": [
+      {"id": "front", "name": "Front", "azimuth_degrees": 0, "elevation_degrees": 0, "role": "identity"},
+      {"id": "side", "name": "Side", "azimuth_degrees": 90, "elevation_degrees": 0, "role": "construction"},
+      {"id": "top", "name": "Top", "azimuth_degrees": 0, "elevation_degrees": 90, "role": "silhouette"},
+      {"id": "emitter", "name": "Emitter", "azimuth_degrees": 45, "elevation_degrees": 15, "role": "construction"},
+      {"id": "impact", "name": "Impact", "azimuth_degrees": 225, "elevation_degrees": 10, "role": "construction"}
+    ],
+    "requirements": [
+      {"id": "subject", "name": "Subject", "requirement_kind": "component"},
+      {"id": "emitter", "name": "Emitter", "requirement_kind": "component"},
+      {"id": "particle", "name": "Particle", "requirement_kind": "component"},
+      {"id": "impact", "name": "Impact", "requirement_kind": "component", "required": false},
+      {"id": "small", "name": "Small", "requirement_kind": "variant", "required": false},
+      {"id": "large", "name": "Large", "requirement_kind": "variant", "required": false},
+      {"id": "spawn", "name": "Spawn", "requirement_kind": "state"},
+      {"id": "loop", "name": "Loop", "requirement_kind": "state"},
+      {"id": "end", "name": "End", "requirement_kind": "state", "required": false}
+    ],
+    "sheets": []
+  },
+  "profile_kind": "particle-effect",
+  "guidance": "Describe the effect as a readable visual event with emitter, motion, timing phases, impact, and safe negative space.",
+  "views": [
+    {"view_id": "front", "role": "whole-subject", "guidance": "Show the complete effect envelope and its readable center of action."},
+    {"view_id": "side", "role": "side", "guidance": "Show depth, spread, and motion direction."},
+    {"view_id": "top", "role": "top", "guidance": "Show footprint, radial spread, and area of influence."},
+    {"view_id": "emitter", "role": "emitter", "guidance": "Show the source, emission direction, and attachment cue."},
+    {"view_id": "impact", "role": "impact", "guidance": "Show the contact or impact read without implying exact simulation."}
+  ],
+  "components": [
+    {"id": "subject", "name": "Subject", "kind": "subject"},
+    {"id": "emitter", "name": "Emitter", "kind": "emitter"},
+    {"id": "particle", "name": "Particle", "kind": "particle"},
+    {"id": "impact", "name": "Impact", "kind": "impact", "required": false}
+  ],
+  "variants": [
+    {"id": "small", "name": "Small", "guidance": "Show the compact effect scale and restrained envelope.", "required": false},
+    {"id": "large", "name": "Large", "guidance": "Show the expanded effect scale without losing the source read.", "required": false}
+  ],
+  "states": [
+    {"id": "spawn", "name": "Spawn", "guidance": "Show the effect entering its lifecycle."},
+    {"id": "loop", "name": "Loop", "guidance": "Show the stable readable lifecycle state."},
+    {"id": "end", "name": "End", "guidance": "Show the approved dissipation or terminal state.", "required": false}
+  ],
+  "outputs": [
+    {"id": "effect-storyboard", "name": "Effect Storyboard", "layout": "grid", "view_ids": ["front", "side", "top", "emitter", "impact"], "subject_modes": ["asset", "components", "variants", "states"], "separate_files": true, "assembled_sheet": true}
+  ]
+}

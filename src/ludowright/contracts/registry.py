@@ -53,6 +53,7 @@ from ludowright.contracts.visual import (
     VisualReviewContract,
 )
 from ludowright.contracts.visual_bible import VisualBibleContract
+from ludowright.contracts.visual_profiles import VisualProfileContract
 
 SCHEMA_VERSION = 1
 JSON_SCHEMA_DRAFT = "https://json-schema.org/draft/2020-12/schema"
@@ -203,6 +204,12 @@ CONTRACTS: tuple[ContractDefinition, ...] = (
         "creature-profile.schema.json",
         "LudoWright Creature Profile",
         CreatureProfileContract,
+    ),
+    ContractDefinition(
+        "visual-profile",
+        "visual-profile.schema.json",
+        "LudoWright Visual Profile",
+        VisualProfileContract,
     ),
     ContractDefinition(
         "migration-receipt",

@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "kind": "visual-profile",
+  "capture_profile": {
+    "schema_version": 1,
+    "kind": "capture-profile",
+    "id": "visual-shader-effect",
+    "version": 1,
+    "name": "Shader Effect Visual Profile",
+    "family": "vfx",
+    "subtype": "shader-effect",
+    "camera": {"projection": "orthographic", "framing_margin_percent": 12},
+    "background": {"mode": "neutral"},
+    "lighting": {"mode": "unlit", "shadows": "none"},
+    "validation": {"width": 2048, "height": 2048, "require_full_subject": true, "require_consistent_scale": true, "allow_occlusion": false},
+    "views": [
+      {"id": "front", "name": "Front", "azimuth_degrees": 0, "elevation_degrees": 0, "role": "identity"},
+      {"id": "side", "name": "Side", "azimuth_degrees": 90, "elevation_degrees": 0, "role": "construction"},
+      {"id": "mask", "name": "Mask", "azimuth_degrees": 0, "elevation_degrees": 90, "role": "construction"},
+      {"id": "detail", "name": "Detail", "azimuth_degrees": 30, "elevation_degrees": 20, "role": "construction"}
+    ],
+    "requirements": [
+      {"id": "subject", "name": "Subject", "requirement_kind": "component"},
+      {"id": "surface", "name": "Surface", "requirement_kind": "component"},
+      {"id": "mask", "name": "Mask", "requirement_kind": "component", "required": false},
+      {"id": "subtle", "name": "Subtle", "requirement_kind": "variant", "required": false},
+      {"id": "intense", "name": "Intense", "requirement_kind": "variant", "required": false},
+      {"id": "enabled", "name": "Enabled", "requirement_kind": "state"},
+      {"id": "disabled", "name": "Disabled", "requirement_kind": "state", "required": false}
+    ],
+    "sheets": []
+  },
+  "profile_kind": "shader-effect",
+  "guidance": "Keep the affected surface, mask boundary, emission or distortion read, and intensity variants explicit without hiding the source material.",
+  "views": [
+    {"view_id": "front", "role": "whole-subject", "guidance": "Show the complete affected surface and primary effect read."},
+    {"view_id": "side", "role": "side", "guidance": "Show depth, parallax, or view-dependent behavior."},
+    {"view_id": "mask", "role": "variant", "guidance": "Show the mask or coverage boundary used by the effect."},
+    {"view_id": "detail", "role": "detail", "guidance": "Show material response, edge behavior, and intensity detail."}
+  ],
+  "components": [
+    {"id": "subject", "name": "Subject", "kind": "subject"},
+    {"id": "surface", "name": "Surface", "kind": "surface"},
+    {"id": "mask", "name": "Mask", "kind": "mask", "required": false}
+  ],
+  "variants": [
+    {"id": "subtle", "name": "Subtle", "guidance": "Show a restrained intensity suitable for normal gameplay.", "required": false},
+    {"id": "intense", "name": "Intense", "guidance": "Show the maximum approved intensity without losing surface identity.", "required": false}
+  ],
+  "states": [
+    {"id": "enabled", "name": "Enabled", "guidance": "Show the active effect state."},
+    {"id": "disabled", "name": "Disabled", "guidance": "Show the unchanged or fallback surface state.", "required": false}
+  ],
+  "outputs": [
+    {"id": "shader-angles", "name": "Shader Angles", "layout": "grid", "view_ids": ["front", "side", "mask", "detail"], "subject_modes": ["asset", "components", "variants", "states"], "separate_files": true, "assembled_sheet": true}
+  ]
+}

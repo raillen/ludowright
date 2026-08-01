@@ -234,6 +234,16 @@ from ludowright.domain.visual_jobs import (
     VisualReview,
     VisualReviewOutcome,
 )
+from ludowright.domain.visual_profiles import (
+    VisualComponent,
+    VisualComponentKind,
+    VisualProfile,
+    VisualProfileKind,
+    VisualState,
+    VisualVariant,
+    VisualView,
+    VisualViewRole,
+)
 
 __all__ = [
     "APPROVAL_REVOKED",
@@ -424,11 +434,19 @@ __all__ = [
     "VisualBibleId",
     "VisualBibleVersion",
     "VisualBudget",
+    "VisualComponent",
+    "VisualComponentKind",
     "VisualJob",
+    "VisualProfile",
+    "VisualProfileKind",
     "VisualReference",
     "VisualReview",
     "VisualReviewOutcome",
+    "VisualState",
     "VisualText",
+    "VisualVariant",
+    "VisualView",
+    "VisualViewRole",
     "compile_prompt",
     "freeze_json_object",
     "resolve_prompt_references",

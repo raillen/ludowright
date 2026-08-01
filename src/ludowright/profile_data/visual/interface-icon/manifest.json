@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "kind": "visual-profile",
+  "capture_profile": {
+    "schema_version": 1,
+    "kind": "capture-profile",
+    "id": "visual-interface-icon",
+    "version": 1,
+    "name": "Interface Icon Visual Profile",
+    "family": "ui",
+    "subtype": "interface-icon",
+    "camera": {"projection": "orthographic", "framing_margin_percent": 10},
+    "background": {"mode": "transparent"},
+    "lighting": {"mode": "flat", "shadows": "none"},
+    "validation": {"width": 1024, "height": 1024, "require_full_subject": true, "require_consistent_scale": true, "allow_occlusion": false},
+    "views": [
+      {"id": "front", "name": "Front", "azimuth_degrees": 0, "elevation_degrees": 0, "role": "identity"},
+      {"id": "side", "name": "Side", "azimuth_degrees": 90, "elevation_degrees": 0, "role": "construction"},
+      {"id": "silhouette", "name": "Silhouette", "azimuth_degrees": 45, "elevation_degrees": 0, "role": "silhouette"},
+      {"id": "detail", "name": "Detail", "azimuth_degrees": 0, "elevation_degrees": 20, "role": "construction"}
+    ],
+    "requirements": [
+      {"id": "subject", "name": "Subject", "requirement_kind": "component"},
+      {"id": "icon", "name": "Icon", "requirement_kind": "component"},
+      {"id": "shadow", "name": "Shadow", "requirement_kind": "component", "required": false},
+      {"id": "light", "name": "Light", "requirement_kind": "variant", "required": false},
+      {"id": "dark", "name": "Dark", "requirement_kind": "variant", "required": false},
+      {"id": "default", "name": "Default", "requirement_kind": "state"},
+      {"id": "hover", "name": "Hover", "requirement_kind": "state", "required": false},
+      {"id": "pressed", "name": "Pressed", "requirement_kind": "state", "required": false},
+      {"id": "disabled", "name": "Disabled", "requirement_kind": "state", "required": false}
+    ],
+    "sheets": []
+  },
+  "profile_kind": "interface-icon",
+  "guidance": "Keep the icon legible at target sizes, preserve transparent-background intent, and show interaction states as deliberate design variants.",
+  "views": [
+    {"view_id": "front", "role": "whole-subject", "guidance": "Show the complete icon at canonical scale and alignment."},
+    {"view_id": "side", "role": "side", "guidance": "Show depth or extrusion only when it affects the icon silhouette."},
+    {"view_id": "silhouette", "role": "silhouette", "guidance": "Verify recognition without internal color detail."},
+    {"view_id": "detail", "role": "detail", "guidance": "Show edge treatment, pixel alignment, and small-scale details."}
+  ],
+  "components": [
+    {"id": "subject", "name": "Subject", "kind": "subject"},
+    {"id": "icon", "name": "Icon", "kind": "icon"},
+    {"id": "shadow", "name": "Shadow", "kind": "other", "required": false}
+  ],
+  "variants": [
+    {"id": "light", "name": "Light", "guidance": "Use the approved light-theme contrast and palette.", "required": false},
+    {"id": "dark", "name": "Dark", "guidance": "Use the approved dark-theme contrast and palette.", "required": false}
+  ],
+  "states": [
+    {"id": "default", "name": "Default", "guidance": "Show the resting interaction state."},
+    {"id": "hover", "name": "Hover", "guidance": "Show the pointer or focus affordance without changing identity.", "required": false},
+    {"id": "pressed", "name": "Pressed", "guidance": "Show the active press feedback.", "required": false},
+    {"id": "disabled", "name": "Disabled", "guidance": "Show the approved disabled contrast treatment.", "required": false}
+  ],
+  "outputs": [
+    {"id": "icon-states", "name": "Icon States", "layout": "grid", "view_ids": ["front", "silhouette", "detail"], "subject_modes": ["asset", "components", "variants", "states"], "separate_files": true, "assembled_sheet": true}
+  ]
+}

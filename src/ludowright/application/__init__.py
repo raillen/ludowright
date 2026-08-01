@@ -93,6 +93,12 @@ from ludowright.application.prompt_compiler import (
     PromptTemplateNotFoundError,
     load_prompt_template,
 )
+from ludowright.application.visual_profiles import (
+    VisualProfileDefinitionError,
+    VisualProfileError,
+    VisualProfileNotFoundError,
+    load_visual_profile,
+)
 
 __all__ = [
     "AssetAuditError",
@@ -154,12 +160,16 @@ __all__ = [
     "PromptTemplateError",
     "PromptTemplateNotFoundError",
     "RenderedDocument",
+    "VisualProfileDefinitionError",
+    "VisualProfileError",
+    "VisualProfileNotFoundError",
     "load_asset_taxonomy",
     "load_creature_profile",
     "load_document_template_manifest",
     "load_hard_surface_profile",
     "load_humanoid_profile",
     "load_prompt_template",
+    "load_visual_profile",
     "render_atlas_markdown",
     "render_documentation_audit",
 ]
