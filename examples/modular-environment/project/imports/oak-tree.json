@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "kind": "asset",
+  "id": "veg-oak",
+  "name": "Mossbridge Oak",
+  "family": "vegetation",
+  "subtype": "large-tree",
+  "priority": "high",
+  "status": "planned",
+  "components": [
+    {"id": "trunk", "name": "Trunk", "status": "planned", "required": true},
+    {"id": "canopy", "name": "Canopy", "status": "planned", "required": true}
+  ],
+  "variants": [],
+  "states": [
+    {"id": "leaf-on", "name": "Leaf On", "status": "planned", "required": true}
+  ]
+}

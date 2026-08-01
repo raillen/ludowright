@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "kind": "visual-reference",
+  "id": "ref-old-road-front",
+  "name": "Old Road front reference",
+  "target": {"asset_id": "ter-old-road"},
+  "role": "identity",
+  "provenance": {"origin": "captured", "content_revision": "sha256:old-road-front-v1", "creator": "LudoWright example fixture"},
+  "status": "candidate"
+}

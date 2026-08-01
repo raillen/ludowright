@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "kind": "approval",
+  "id": "approval-field-plant-front-v1",
+  "subject": {"subject_kind": "reference", "id": "ref-field-plant-front", "revision": "sha256:field-plant-front-v1", "label": "Field Plant front reference"},
+  "history": [{"sequence": 1, "status": "pending", "note": "Review stem, leaf grouping, and ground contact."}]
+}

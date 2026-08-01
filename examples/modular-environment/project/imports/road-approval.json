@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "kind": "approval",
+  "id": "approval-old-road-front-v1",
+  "subject": {"subject_kind": "reference", "id": "ref-old-road-front", "revision": "sha256:old-road-front-v1", "label": "Old Road front reference"},
+  "history": [{"sequence": 1, "status": "pending", "note": "Review road width, junction geometry, and connection sockets."}]
+}

@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "kind": "approval",
+  "id": "approval-courtyard-front-v1",
+  "subject": {"subject_kind": "reference", "id": "ref-courtyard-front", "revision": "sha256:courtyard-front-v1", "label": "Courtyard module front reference"},
+  "history": [{"sequence": 1, "status": "pending", "note": "Review module dimensions, snap edges, sockets, and assembly."}]
+}

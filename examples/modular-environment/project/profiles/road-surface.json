@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "kind": "capture-profile",
+  "id": "road-surface",
+  "version": 1,
+  "name": "Road Surface Profile",
+  "family": "terrain",
+  "subtype": "road",
+  "camera": {"projection": "orthographic", "framing_margin_percent": 12},
+  "background": {"mode": "neutral"},
+  "lighting": {"mode": "studio", "shadows": "soft"},
+  "validation": {"width": 2048, "height": 2048, "require_full_subject": true, "require_consistent_scale": true, "allow_occlusion": false},
+  "views": [
+    {"id": "front", "name": "Front", "azimuth_degrees": 0, "elevation_degrees": 0, "role": "identity"},
+    {"id": "top", "name": "Top", "azimuth_degrees": 0, "elevation_degrees": 90, "role": "silhouette"},
+    {"id": "connections", "name": "Connections", "azimuth_degrees": 0, "elevation_degrees": 20, "role": "construction"}
+  ],
+  "requirements": [
+    {"id": "subject", "name": "Subject", "requirement_kind": "component"},
+    {"id": "road-surface", "name": "Road Surface", "requirement_kind": "component"},
+    {"id": "socket", "name": "Socket", "requirement_kind": "component"},
+    {"id": "straight", "name": "Straight", "requirement_kind": "state"},
+    {"id": "junction", "name": "Junction", "requirement_kind": "state"}
+  ],
+  "sheets": [
+    {"id": "road-turnaround", "name": "Road Turnaround", "layout": "turnaround", "view_ids": ["front", "top", "connections"], "subject_modes": ["asset", "components", "states"], "separate_files": true, "assembled_sheet": true, "required": true},
+    {"id": "road-connections", "name": "Road Connections", "layout": "grid", "view_ids": ["connections", "top"], "subject_modes": ["components", "states"], "separate_files": true, "assembled_sheet": false, "required": true}
+  ]
+}

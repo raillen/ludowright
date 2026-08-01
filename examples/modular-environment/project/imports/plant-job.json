@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "kind": "visual-job",
+  "id": "job-field-plant-v1",
+  "name": "Field Plant turnaround",
+  "target": {"asset_id": "veg-field-plant"},
+  "profile_version": 1,
+  "request_revision": "sha256:field-plant-request-v1",
+  "input_reference_ids": ["ref-field-plant-front"],
+  "output_roles": ["identity", "construction", "silhouette"],
+  "expected_output_count": 3
+}

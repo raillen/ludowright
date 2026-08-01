@@ -689,6 +689,12 @@
       "path": "examples/LOW_POLY_3D.md",
       "section": "examples",
       "title": "Low-poly 3D Example"
+    },
+    {
+      "canonical_source": "examples/MODULAR_ENVIRONMENT.md",
+      "path": "examples/MODULAR_ENVIRONMENT.md",
+      "section": "examples",
+      "title": "Modular Environment Example"
     }
   ],
   "kind": "atlas-metadata",

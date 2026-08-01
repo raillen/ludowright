@@ -721,7 +721,19 @@ execution, schema, migration, or derived state is introduced.
 
 ### PR 60 — Modular environment example
 
-Buildings, foliage, roads, sockets, modules, and connection rules.
+Status: implemented in the current slice. The deterministic Mossbridge Commons
+example combines a building, modular kit, road, tree, and plant using the
+existing hard-surface and visual-specialty profiles plus one small data-defined
+road capture profile. Its tests validate socket and directed connection
+guidance, cross-contract references/jobs/approvals/sheet requests, a 50-job
+segmented plan, candidate-reference blockers, fixture checksums, and exact
+file inventory. No package profile, schema, migration, graph mutation, or
+derived state is introduced.
+
+- building, foliage, road, socket, and reusable module scenario;
+- modular-kit connection matrix and construction-state coverage;
+- road capture-profile data tied to the existing terrain taxonomy;
+- cross-contract, planning, approval-gate, fixture, and determinism tests.
 
 ### PR 61 — Installation and tutorial set
 

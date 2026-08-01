@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "kind": "visual-reference",
+  "id": "ref-field-plant-front",
+  "name": "Field Plant front reference",
+  "target": {"asset_id": "veg-field-plant"},
+  "role": "identity",
+  "provenance": {"origin": "captured", "content_revision": "sha256:field-plant-front-v1", "creator": "LudoWright example fixture"},
+  "status": "candidate"
+}

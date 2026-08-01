@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "kind": "asset",
+  "id": "veg-field-plant",
+  "name": "Field Plant",
+  "family": "vegetation",
+  "subtype": "plant",
+  "priority": "normal",
+  "status": "planned",
+  "components": [
+    {"id": "stem", "name": "Stem", "status": "planned", "required": true},
+    {"id": "leaves", "name": "Leaves", "status": "planned", "required": true}
+  ],
+  "variants": [],
+  "states": [
+    {"id": "healthy", "name": "Healthy", "status": "planned", "required": true}
+  ]
+}

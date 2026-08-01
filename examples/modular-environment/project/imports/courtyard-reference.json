@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "kind": "visual-reference",
+  "id": "ref-courtyard-front",
+  "name": "Courtyard module front reference",
+  "target": {"asset_id": "env-courtyard"},
+  "role": "construction",
+  "provenance": {"origin": "captured", "content_revision": "sha256:courtyard-front-v1", "creator": "LudoWright example fixture"},
+  "status": "candidate"
+}

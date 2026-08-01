@@ -263,6 +263,9 @@ Future bounded changes should receive their own plan under `plans/`.
   custom capture profile, approval gate, and deterministic fixture.
 - [`examples/LOW_POLY_3D.md`](examples/LOW_POLY_3D.md) — Copper & Forge
   humanoid/building workflow with segmented components and approval gates.
+- [`examples/MODULAR_ENVIRONMENT.md`](examples/MODULAR_ENVIRONMENT.md) —
+  Mossbridge Commons modular building, road, foliage, socket, and connection
+  workflow.
 
 ## Quality
 

@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "kind": "technical-sheet-request",
+  "id": "courtyard-kit-sheet",
+  "name": "Courtyard module kit sheet",
+  "template_id": "minimal",
+  "template_version": 1,
+  "sheet_kind": "turnaround",
+  "inputs": [{"id": "front", "label": "Courtyard module front", "reference_id": "ref-courtyard-front", "image_path": "normalized/courtyard-front.png", "sha256": "2dfce186478b8e10407a0cd1897840a5e86bf4c40f89695466fdb168821b2cae"}]
+}
