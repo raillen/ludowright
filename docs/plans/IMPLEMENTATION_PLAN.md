@@ -689,19 +689,7 @@ committed as hidden state.
 
 ### PR 58 — 2D example
 
-Status: implemented in the current slice. The deterministic Starfall Courier
-example provides a contract-valid 2D character asset, an explicit transparent
-sprite capture profile, jobs for the asset/component/state workflow, a
-candidate visual reference with a pending approval, and a technical-sheet
-request tied to a textual PNG fixture. The planner test confirms that the
-profile derives jobs but remains blocked until the exact reference revision is
-approved. No project-local profile catalog, provider execution, schema,
-migration, or derived state is introduced.
-
-- sprite-oriented 2D scenario and canonical source document;
-- custom `capture-profile` v1 data with fixed pixel dimensions;
-- visual reference, job, approval, sheet request, and deterministic fixture;
-- cross-contract validation and approval-gate planning test.
+A sprite-oriented game showing profile customization and non-3D asset workflows.
 
 ### PR 59 — Low-poly 3D example
 

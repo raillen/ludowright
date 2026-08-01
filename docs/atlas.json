@@ -677,12 +677,6 @@
       "path": "examples/MINIMAL.md",
       "section": "examples",
       "title": "Minimal Example"
-    },
-    {
-      "canonical_source": "examples/2D.md",
-      "path": "examples/2D.md",
-      "section": "examples",
-      "title": "2D Example"
     }
   ],
   "kind": "atlas-metadata",

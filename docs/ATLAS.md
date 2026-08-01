@@ -259,8 +259,6 @@ Future bounded changes should receive their own plan under `plans/`.
 
 - [`examples/MINIMAL.md`](examples/MINIMAL.md) — deterministic Lantern Path
   example inputs, fixture checksum, workflow boundaries, and local execution.
-- [`examples/2D.md`](examples/2D.md) — Starfall Courier sprite workflow,
-  custom capture profile, approval gate, and deterministic fixture.
 
 ## Quality
 

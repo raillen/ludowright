@@ -78,7 +78,6 @@ nav:
       - Plan to 1.0: plans/IMPLEMENTATION_PLAN.md
   - Examples:
       - Minimal Example: examples/MINIMAL.md
-      - 2D Sprite Example: examples/2D.md
   - Quality:
       - Engineering Baseline: quality/ENGINEERING_QUALITY.md
       - Codex Agent Evals: quality/CODEX_AGENT_EVALS.md
