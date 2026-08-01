@@ -68,6 +68,13 @@ from ludowright.application.interviews import (
     InterviewService,
     InterviewView,
 )
+from ludowright.application.prompt_compiler import (
+    PromptCompiler,
+    PromptTemplateDefinitionError,
+    PromptTemplateError,
+    PromptTemplateNotFoundError,
+    load_prompt_template,
+)
 
 __all__ = [
     "AssetAuditError",
@@ -115,9 +122,14 @@ __all__ = [
     "InterviewApplicationError",
     "InterviewService",
     "InterviewView",
+    "PromptCompiler",
+    "PromptTemplateDefinitionError",
+    "PromptTemplateError",
+    "PromptTemplateNotFoundError",
     "RenderedDocument",
     "load_asset_taxonomy",
     "load_document_template_manifest",
+    "load_prompt_template",
     "render_atlas_markdown",
     "render_documentation_audit",
 ]

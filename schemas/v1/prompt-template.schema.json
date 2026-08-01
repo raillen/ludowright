@@ -1,0 +1,88 @@
+{
+  "$defs": {
+    "PromptChannel": {
+      "description": "Output channel receiving one prompt-template layer.",
+      "enum": [
+        "positive",
+        "negative"
+      ],
+      "title": "PromptChannel",
+      "type": "string"
+    },
+    "PromptLayerContract": {
+      "additionalProperties": false,
+      "description": "One safe, ordered prompt-template layer.",
+      "properties": {
+        "channel": {
+          "$ref": "#/$defs/PromptChannel"
+        },
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "text": {
+          "maxLength": 512,
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "channel",
+        "text"
+      ],
+      "title": "PromptLayerContract",
+      "type": "object"
+    }
+  },
+  "$id": "https://schemas.ludowright.dev/v1/prompt-template.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Versioned package-data manifest for a provider-neutral prompt template.",
+  "properties": {
+    "id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Id",
+      "type": "string"
+    },
+    "kind": {
+      "const": "prompt-template",
+      "default": "prompt-template",
+      "title": "Kind",
+      "type": "string"
+    },
+    "layers": {
+      "items": {
+        "$ref": "#/$defs/PromptLayerContract"
+      },
+      "minItems": 1,
+      "title": "Layers",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "version": {
+      "maximum": 2147483647,
+      "minimum": 1,
+      "title": "Version",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "id",
+    "version",
+    "layers"
+  ],
+  "title": "LudoWright Prompt Template",
+  "type": "object"
+}

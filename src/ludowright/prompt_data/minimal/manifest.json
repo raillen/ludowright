@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "kind": "prompt-template",
+  "id": "minimal",
+  "version": 1,
+  "layers": [
+    {
+      "id": "target",
+      "channel": "positive",
+      "text": "Focused game asset target: {target}."
+    },
+    {
+      "id": "shape",
+      "channel": "positive",
+      "text": "Shape language: {shape_primary}; supporting descriptors: {shape_secondary}."
+    },
+    {
+      "id": "proportions",
+      "channel": "positive",
+      "text": "Proportions: {proportions}."
+    },
+    {
+      "id": "palette-materials",
+      "channel": "positive",
+      "text": "Palette: {palette}. Materials: {materials}."
+    },
+    {
+      "id": "capture-direction",
+      "channel": "positive",
+      "text": "Lighting: {lighting}. Camera: {camera}. Detail level: {detail_level} ({detail_guidance})."
+    },
+    {
+      "id": "constraints",
+      "channel": "positive",
+      "text": "Positive constraints: {constraints}. Approved references: {references}."
+    },
+    {
+      "id": "avoid",
+      "channel": "negative",
+      "text": "Avoid: {shape_avoid}. Negative constraints: {negative_constraints}."
+    }
+  ]
+}

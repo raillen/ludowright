@@ -123,6 +123,18 @@
       "sha256": "ade335c29d495910dce05e453d18c55b8990fb6a2b6dd3c2382de4dc4b589e0e"
     },
     {
+      "file": "prompt-template.schema.json",
+      "name": "prompt-template",
+      "schema_id": "https://schemas.ludowright.dev/v1/prompt-template.schema.json",
+      "sha256": "dc15add9fabb07e9d212367c644a6a3c0e009f4cd628592c1b9a82a5e3d317c6"
+    },
+    {
+      "file": "compiled-prompt.schema.json",
+      "name": "compiled-prompt",
+      "schema_id": "https://schemas.ludowright.dev/v1/compiled-prompt.schema.json",
+      "sha256": "4c8ff3c55ac586d16d784b7f0a94e2dc4dd10bce6e796834c84cfdc5518c0354"
+    },
+    {
       "file": "migration-receipt.schema.json",
       "name": "migration-receipt",
       "schema_id": "https://schemas.ludowright.dev/v1/migration-receipt.schema.json",

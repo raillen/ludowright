@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "kind": "compiled-prompt",
+  "template_id": "minimal",
+  "template_version": 1,
+  "visual_bible_id": "default-visual-bible",
+  "visual_bible_version": 1,
+  "target": {
+    "asset_id": "hero",
+    "component_id": null,
+    "variant_id": null,
+    "state_id": null
+  },
+  "layer_ids": [
+    "target",
+    "shape",
+    "proportions",
+    "palette-materials",
+    "capture-direction",
+    "constraints",
+    "avoid"
+  ],
+  "positive_prompt": "Focused game asset target: asset:hero. Shape language: clean rounded silhouettes; supporting descriptors: soft bevels. Proportions: Humanoid silhouette: Keep the torso readable and the head-to-body relationship consistent across views. Palette: Ink (primary) #1F2937; Paper (background) #F9FAFB; Accent (accent) #F59E0B. Materials: Painted matte (matte): Prefer broad, quiet value transitions and avoid photorealistic surface noise. Lighting: studio lighting with soft shadows. Camera: orthographic projection, 10% framing margin. Detail level: medium (Preserve primary components, material separation, and defining details.). Positive constraints: Use a centered subject with clear silhouette separation; Keep the approved palette relationships stable across views. Approved references: none.",
+  "negative_prompt": "Avoid: unreadable micro-detail. Negative constraints: Do not add uncontrolled text, logos, or watermarks; Do not present generated views as geometrically exact blueprints.",
+  "positive_constraints": [
+    "Use a centered subject with clear silhouette separation.",
+    "Keep the approved palette relationships stable across views."
+  ],
+  "negative_constraints": [
+    "Do not add uncontrolled text, logos, or watermarks.",
+    "Do not present generated views as geometrically exact blueprints."
+  ],
+  "references": [],
+  "prompt_hash": "2f20cdf56c599ef2e5d018d56bd33ff4600f50ef7cd0a87f6ed1c17c8b232647"
+}

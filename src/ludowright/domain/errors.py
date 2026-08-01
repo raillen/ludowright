@@ -83,6 +83,10 @@ class InvalidVisualBibleError(DomainValidationError):
     """Raised when a visual bible violates a canonical visual rule."""
 
 
+class InvalidPromptCompilationError(DomainValidationError):
+    """Raised when a prompt template, reference, or compiled result is invalid."""
+
+
 class InvalidEventError(DomainValidationError):
     """Raised when an event type, payload, or immutable record is invalid."""
 

@@ -1,0 +1,234 @@
+{
+  "$defs": {
+    "CompiledPromptReferenceContract": {
+      "additionalProperties": false,
+      "description": "One approved reference revision captured by a compiled prompt.",
+      "properties": {
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "revision": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+-]*$",
+          "title": "Revision",
+          "type": "string"
+        },
+        "role": {
+          "$ref": "#/$defs/ReferenceRole"
+        }
+      },
+      "required": [
+        "id",
+        "role",
+        "revision"
+      ],
+      "title": "CompiledPromptReferenceContract",
+      "type": "object"
+    },
+    "ReferenceRole": {
+      "description": "Production purpose served by a visual reference.",
+      "enum": [
+        "identity",
+        "silhouette",
+        "proportion",
+        "construction",
+        "material",
+        "color",
+        "style",
+        "context",
+        "negative",
+        "output",
+        "other"
+      ],
+      "title": "ReferenceRole",
+      "type": "string"
+    },
+    "ReferenceTargetContract": {
+      "additionalProperties": false,
+      "properties": {
+        "asset_id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Asset Id",
+          "type": "string"
+        },
+        "component_id": {
+          "anyOf": [
+            {
+              "maxLength": 80,
+              "minLength": 1,
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Component Id"
+        },
+        "state_id": {
+          "anyOf": [
+            {
+              "maxLength": 80,
+              "minLength": 1,
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "State Id"
+        },
+        "variant_id": {
+          "anyOf": [
+            {
+              "maxLength": 80,
+              "minLength": 1,
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Variant Id"
+        }
+      },
+      "required": [
+        "asset_id"
+      ],
+      "title": "ReferenceTargetContract",
+      "type": "object"
+    }
+  },
+  "$id": "https://schemas.ludowright.dev/v1/compiled-prompt.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Immutable v1 prompt output with an integrity hash over its content.",
+  "properties": {
+    "kind": {
+      "const": "compiled-prompt",
+      "default": "compiled-prompt",
+      "title": "Kind",
+      "type": "string"
+    },
+    "layer_ids": {
+      "items": {
+        "maxLength": 80,
+        "minLength": 1,
+        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Layer Ids",
+      "type": "array"
+    },
+    "negative_constraints": {
+      "items": {
+        "maxLength": 12000,
+        "minLength": 1,
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Negative Constraints",
+      "type": "array"
+    },
+    "negative_prompt": {
+      "maxLength": 12000,
+      "minLength": 1,
+      "title": "Negative Prompt",
+      "type": "string"
+    },
+    "positive_constraints": {
+      "items": {
+        "maxLength": 12000,
+        "minLength": 1,
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Positive Constraints",
+      "type": "array"
+    },
+    "positive_prompt": {
+      "maxLength": 12000,
+      "minLength": 1,
+      "title": "Positive Prompt",
+      "type": "string"
+    },
+    "prompt_hash": {
+      "maxLength": 64,
+      "minLength": 64,
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Prompt Hash",
+      "type": "string"
+    },
+    "references": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/CompiledPromptReferenceContract"
+      },
+      "title": "References",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "target": {
+      "$ref": "#/$defs/ReferenceTargetContract"
+    },
+    "template_id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Template Id",
+      "type": "string"
+    },
+    "template_version": {
+      "maximum": 2147483647,
+      "minimum": 1,
+      "title": "Template Version",
+      "type": "integer"
+    },
+    "visual_bible_id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Visual Bible Id",
+      "type": "string"
+    },
+    "visual_bible_version": {
+      "maximum": 2147483647,
+      "minimum": 1,
+      "title": "Visual Bible Version",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "template_id",
+    "template_version",
+    "visual_bible_id",
+    "visual_bible_version",
+    "target",
+    "layer_ids",
+    "positive_prompt",
+    "negative_prompt",
+    "positive_constraints",
+    "negative_constraints",
+    "prompt_hash"
+  ],
+  "title": "LudoWright Compiled Prompt",
+  "type": "object"
+}
