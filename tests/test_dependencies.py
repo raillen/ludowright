@@ -141,6 +141,7 @@ def test_graph_orders_nodes_and_edges_deterministically() -> None:
 
     assert tuple(item.key.token for item in graph.nodes) == ("asset:maya", "document:gdd")
     assert graph.edges == (edge,)
+    assert graph.topological_order() == (document.key, asset.key)
 
 
 def test_graph_rejects_duplicate_nodes_and_missing_endpoints() -> None:

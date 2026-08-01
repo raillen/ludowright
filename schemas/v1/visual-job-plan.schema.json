@@ -1,0 +1,519 @@
+{
+  "$defs": {
+    "DependencyRelation": {
+      "description": "Meaning of a dependency from one source to one dependent target.",
+      "enum": [
+        "requires",
+        "derives-from",
+        "references",
+        "generated-from",
+        "assembled-from",
+        "approved-by",
+        "packages",
+        "supersedes",
+        "other"
+      ],
+      "title": "DependencyRelation",
+      "type": "string"
+    },
+    "ReferenceRole": {
+      "description": "Production purpose served by a visual reference.",
+      "enum": [
+        "identity",
+        "silhouette",
+        "proportion",
+        "construction",
+        "material",
+        "color",
+        "style",
+        "context",
+        "negative",
+        "output",
+        "other"
+      ],
+      "title": "ReferenceRole",
+      "type": "string"
+    },
+    "ReferenceTargetContract": {
+      "additionalProperties": false,
+      "properties": {
+        "asset_id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Asset Id",
+          "type": "string"
+        },
+        "component_id": {
+          "anyOf": [
+            {
+              "maxLength": 80,
+              "minLength": 1,
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Component Id"
+        },
+        "state_id": {
+          "anyOf": [
+            {
+              "maxLength": 80,
+              "minLength": 1,
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "State Id"
+        },
+        "variant_id": {
+          "anyOf": [
+            {
+              "maxLength": 80,
+              "minLength": 1,
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Variant Id"
+        }
+      },
+      "required": [
+        "asset_id"
+      ],
+      "title": "ReferenceTargetContract",
+      "type": "object"
+    },
+    "VisualJobBatchContract": {
+      "additionalProperties": false,
+      "description": "A group of jobs sharing an exact capture-profile revision.",
+      "properties": {
+        "estimated_cost_units": {
+          "maximum": 2147483647,
+          "minimum": 0,
+          "title": "Estimated Cost Units",
+          "type": "integer"
+        },
+        "estimated_workload_units": {
+          "maximum": 2147483647,
+          "minimum": 0,
+          "title": "Estimated Workload Units",
+          "type": "integer"
+        },
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "job_ids": {
+          "items": {
+            "maxLength": 80,
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Job Ids",
+          "type": "array"
+        },
+        "output_count": {
+          "maximum": 2147483647,
+          "minimum": 0,
+          "title": "Output Count",
+          "type": "integer"
+        },
+        "profile_id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Profile Id",
+          "type": "string"
+        },
+        "profile_version": {
+          "maximum": 2147483647,
+          "minimum": 1,
+          "title": "Profile Version",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "profile_id",
+        "profile_version",
+        "job_ids",
+        "output_count",
+        "estimated_cost_units",
+        "estimated_workload_units"
+      ],
+      "title": "VisualJobBatchContract",
+      "type": "object"
+    },
+    "VisualJobContract": {
+      "additionalProperties": false,
+      "properties": {
+        "expected_output_count": {
+          "maximum": 64,
+          "minimum": 1,
+          "title": "Expected Output Count",
+          "type": "integer"
+        },
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "input_reference_ids": {
+          "items": {
+            "maxLength": 80,
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "title": "Input Reference Ids",
+          "type": "array"
+        },
+        "kind": {
+          "const": "visual-job",
+          "default": "visual-job",
+          "title": "Kind",
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "output_roles": {
+          "items": {
+            "$ref": "#/$defs/ReferenceRole"
+          },
+          "minItems": 1,
+          "title": "Output Roles",
+          "type": "array"
+        },
+        "profile_version": {
+          "maximum": 2147483647,
+          "minimum": 1,
+          "title": "Profile Version",
+          "type": "integer"
+        },
+        "request_revision": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+-]*$",
+          "title": "Request Revision",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": 1,
+          "default": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "supersedes": {
+          "anyOf": [
+            {
+              "maxLength": 80,
+              "minLength": 1,
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Supersedes"
+        },
+        "target": {
+          "$ref": "#/$defs/ReferenceTargetContract"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "target",
+        "profile_version",
+        "request_revision",
+        "input_reference_ids",
+        "output_roles",
+        "expected_output_count"
+      ],
+      "title": "VisualJobContract",
+      "type": "object"
+    },
+    "VisualJobDependencyContract": {
+      "additionalProperties": false,
+      "description": "One deterministic ordering edge between two visual jobs.",
+      "properties": {
+        "relation": {
+          "$ref": "#/$defs/DependencyRelation",
+          "default": "requires"
+        },
+        "source_job_id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Source Job Id",
+          "type": "string"
+        },
+        "target_job_id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Target Job Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_job_id",
+        "target_job_id"
+      ],
+      "title": "VisualJobDependencyContract",
+      "type": "object"
+    },
+    "VisualPlanBlockerCode": {
+      "description": "Stable reasons that prevent a plan from becoming ready.",
+      "enum": [
+        "inactive-asset",
+        "missing-required-item",
+        "inactive-item",
+        "missing-required-output",
+        "output-limit-exceeded",
+        "missing-reference",
+        "reference-not-approved",
+        "reference-target-mismatch",
+        "stale-dependency",
+        "missing-dependency-job",
+        "budget-jobs-exceeded",
+        "budget-outputs-exceeded",
+        "budget-references-exceeded"
+      ],
+      "title": "VisualPlanBlockerCode",
+      "type": "string"
+    },
+    "VisualPlanBlockerContract": {
+      "additionalProperties": false,
+      "description": "One stable reason a visual-job plan cannot execute.",
+      "properties": {
+        "code": {
+          "$ref": "#/$defs/VisualPlanBlockerCode"
+        },
+        "message": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Message",
+          "type": "string"
+        },
+        "subject": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Subject",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "subject",
+        "message"
+      ],
+      "title": "VisualPlanBlockerContract",
+      "type": "object"
+    },
+    "VisualPlanState": {
+      "description": "Whether a visual plan can proceed to job execution.",
+      "enum": [
+        "ready",
+        "blocked"
+      ],
+      "title": "VisualPlanState",
+      "type": "string"
+    },
+    "VisualWorkloadEstimateContract": {
+      "additionalProperties": false,
+      "description": "Provider-neutral workload totals for a visual-job plan.",
+      "properties": {
+        "batch_count": {
+          "maximum": 2147483647,
+          "minimum": 0,
+          "title": "Batch Count",
+          "type": "integer"
+        },
+        "estimated_cost_units": {
+          "maximum": 2147483647,
+          "minimum": 0,
+          "title": "Estimated Cost Units",
+          "type": "integer"
+        },
+        "estimated_workload_units": {
+          "maximum": 2147483647,
+          "minimum": 0,
+          "title": "Estimated Workload Units",
+          "type": "integer"
+        },
+        "job_count": {
+          "maximum": 2147483647,
+          "minimum": 0,
+          "title": "Job Count",
+          "type": "integer"
+        },
+        "output_count": {
+          "maximum": 2147483647,
+          "minimum": 0,
+          "title": "Output Count",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "job_count",
+        "output_count",
+        "batch_count",
+        "estimated_cost_units",
+        "estimated_workload_units"
+      ],
+      "title": "VisualWorkloadEstimateContract",
+      "type": "object"
+    }
+  },
+  "$id": "https://schemas.ludowright.dev/v1/visual-job-plan.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Published v1 representation of a deterministic visual-job plan.",
+  "properties": {
+    "batches": {
+      "items": {
+        "$ref": "#/$defs/VisualJobBatchContract"
+      },
+      "title": "Batches",
+      "type": "array"
+    },
+    "blockers": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/VisualPlanBlockerContract"
+      },
+      "title": "Blockers",
+      "type": "array"
+    },
+    "dependencies": {
+      "items": {
+        "$ref": "#/$defs/VisualJobDependencyContract"
+      },
+      "title": "Dependencies",
+      "type": "array"
+    },
+    "dependency_graph_revision": {
+      "maximum": 2147483647,
+      "minimum": 1,
+      "title": "Dependency Graph Revision",
+      "type": "integer"
+    },
+    "id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Id",
+      "type": "string"
+    },
+    "jobs": {
+      "items": {
+        "$ref": "#/$defs/VisualJobContract"
+      },
+      "title": "Jobs",
+      "type": "array"
+    },
+    "kind": {
+      "const": "visual-job-plan",
+      "default": "visual-job-plan",
+      "title": "Kind",
+      "type": "string"
+    },
+    "name": {
+      "maxLength": 120,
+      "minLength": 1,
+      "title": "Name",
+      "type": "string"
+    },
+    "ordered_job_ids": {
+      "items": {
+        "maxLength": 80,
+        "minLength": 1,
+        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+        "type": "string"
+      },
+      "title": "Ordered Job Ids",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "state": {
+      "$ref": "#/$defs/VisualPlanState"
+    },
+    "visual_bible_id": {
+      "anyOf": [
+        {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Visual Bible Id"
+    },
+    "visual_bible_version": {
+      "anyOf": [
+        {
+          "maximum": 2147483647,
+          "minimum": 1,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Visual Bible Version"
+    },
+    "workload": {
+      "$ref": "#/$defs/VisualWorkloadEstimateContract"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "state",
+    "dependency_graph_revision",
+    "jobs",
+    "ordered_job_ids",
+    "dependencies",
+    "batches",
+    "workload"
+  ],
+  "title": "LudoWright Visual Job Plan",
+  "type": "object"
+}
