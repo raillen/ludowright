@@ -69,11 +69,11 @@ rolls back partial failures. Generation receipts, review workflows, technical
 sheets, global audits, package manifests, reproducible package builds, local
 release verification, and deterministic example inputs are implemented. The
 supported checkout installation path, first-project tutorial,
-character/custom-profile workflow, and troubleshooting guide cover Linux,
-Windows, macOS, `ludowright init`, dry-run, profile contracts, deterministic
-planning, project-local skill setup, conservative failure recovery, and safe
-checkout/skill updates; uninstall and beta readiness remain the next bounded
-work.
+character/custom-profile workflow, troubleshooting, update, and uninstall
+guides cover Linux, Windows, macOS, `ludowright init`, dry-run, profile
+contracts, deterministic planning, project-local skill setup, conservative
+failure recovery, and safe skill removal; clean-room installation and beta
+readiness remain the next bounded work.
 The pure deterministic visual-job planner does not execute providers or persist
 project-local plans.
 
@@ -84,6 +84,7 @@ project-local plans.
 - [Character workflow](getting-started/CHARACTER_WORKFLOW.md) — custom profiles, humanoid profiles, planning, and approval boundaries.
 - [Troubleshooting](getting-started/TROUBLESHOOTING.md) — conservative recovery for installation, init, Codex skill, and quality-gate failures.
 - [Updating](getting-started/UPDATING.md) — safe checkout, environment, and project-local skill updates.
+- [Uninstalling](getting-started/UNINSTALLING.md) — safe removal and reinstallation of the project-local Codex skill.
 - [Documentation Atlas](ATLAS.md) — canonical navigation map.
 - [Product Vision](product/PRODUCT_VISION.md) — mission, users, principles, and boundaries.
 - [Roadmap](product/ROADMAP.md) — planned releases and long-term direction.

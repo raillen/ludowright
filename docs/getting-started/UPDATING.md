@@ -138,4 +138,5 @@ sempre `.agents/skills/ludowright/` dentro do projeto descoberto.
 Para detalhes normativos, consulte [Codex Skill](../contracts/CODEX_SKILL.md),
 [Codex Skill CLI](../commands/CODEX.md), [CLI](../contracts/CLI.md),
 [Project Filesystem](../contracts/PROJECT_FILESYSTEM.md) e o
-[quality baseline](../quality/ENGINEERING_QUALITY.md).
+[quality baseline](../quality/ENGINEERING_QUALITY.md). Para remover a skill
+sem apagar o projeto, consulte [Remoção segura](UNINSTALLING.md).

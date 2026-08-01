@@ -166,3 +166,5 @@ Para os contratos completos, consulte [CLI](../contracts/CLI.md),
 Initialization](../commands/INIT.md), [Codex Skill](../commands/CODEX.md) e o
 [quality baseline](../quality/ENGINEERING_QUALITY.md). Para atualizar o
 checkout ou uma skill intacta, consulte [Atualização segura](UPDATING.md).
+Para remover ou reinstalar a skill sem apagar o projeto, consulte [Remoção
+segura](UNINSTALLING.md).

@@ -23,6 +23,7 @@ FIRST_PROJECT_GUIDE = REPOSITORY_ROOT / "docs/getting-started/FIRST_PROJECT.md"
 CHARACTER_WORKFLOW_GUIDE = REPOSITORY_ROOT / "docs/getting-started/CHARACTER_WORKFLOW.md"
 TROUBLESHOOTING_GUIDE = REPOSITORY_ROOT / "docs/getting-started/TROUBLESHOOTING.md"
 UPDATING_GUIDE = REPOSITORY_ROOT / "docs/getting-started/UPDATING.md"
+UNINSTALLING_GUIDE = REPOSITORY_ROOT / "docs/getting-started/UNINSTALLING.md"
 
 
 def test_installation_guide_covers_supported_platforms_and_verification() -> None:
@@ -268,6 +269,90 @@ def test_update_guide_matches_current_skill_update_contract(tmp_path: Path) -> N
     assert updated.exit_code == int(CliExitCode.SUCCESS)
     assert updated_payload["data"]["state"] == "already-up-to-date"
     assert updated_payload["data"]["dry_run"] is False
+
+
+def test_uninstall_guide_matches_current_skill_remove_contract(tmp_path: Path) -> None:
+    guide = UNINSTALLING_GUIDE.read_text(encoding="utf-8")
+
+    for expected in (
+        "codex skill remove",
+        "--dry-run",
+        "cli-response",
+        "not-installed",
+        "modified",
+        "conflict",
+        "corrupt-state",
+        "codex-skill",
+        "ludowright uninstall",
+        "event log",
+        "dependency graph",
+        "SQLite",
+        "PowerShell",
+    ):
+        assert expected in guide
+
+    runner = CliRunner()
+    project = tmp_path / "project"
+    initialized = runner.invoke(
+        app,
+        [
+            "init",
+            str(project),
+            "--name",
+            "Uninstall Game",
+            "--non-interactive",
+        ],
+    )
+    assert initialized.exit_code == int(CliExitCode.SUCCESS)
+
+    installed = runner.invoke(app, ["codex", "skill", "install", str(project)])
+    assert installed.exit_code == int(CliExitCode.SUCCESS)
+
+    planned = runner.invoke(
+        app,
+        [
+            "--json",
+            "codex",
+            "skill",
+            "remove",
+            str(project),
+            "--dry-run",
+        ],
+    )
+    planned_payload = json.loads(planned.stdout)
+    assert planned.exit_code == int(CliExitCode.SUCCESS)
+    assert planned_payload["data"]["state"] == "planned"
+    assert planned_payload["data"]["dry_run"] is True
+    assert (project / ".agents/skills/ludowright/SKILL.md").is_file()
+
+    removed = runner.invoke(
+        app,
+        ["--json", "codex", "skill", "remove", str(project)],
+    )
+    removed_payload = json.loads(removed.stdout)
+    assert removed.exit_code == int(CliExitCode.SUCCESS)
+    assert removed_payload["data"]["state"] == "removed"
+    assert not (project / ".agents/skills/ludowright").exists()
+    assert (project / ".ludowright/events.jsonl").is_file()
+    assert (project / ".ludowright/dependency-graph.json").is_file()
+    assert (project / ".ludowright/state.sqlite3").is_file()
+
+    verification = runner.invoke(
+        app,
+        ["--json", "codex", "skill", "verify", str(project)],
+    )
+    verification_payload = json.loads(verification.stdout)
+    assert verification.exit_code == int(CliExitCode.CHECKS_FAILED)
+    assert verification_payload["error"]["code"] == "checks-failed"
+    assert verification_payload["data"]["state"] == "not-installed"
+
+    repeated = runner.invoke(
+        app,
+        ["--json", "codex", "skill", "remove", str(project)],
+    )
+    repeated_payload = json.loads(repeated.stdout)
+    assert repeated.exit_code == int(CliExitCode.SUCCESS)
+    assert repeated_payload["data"]["state"] == "not-installed"
 
 
 __all__ = []

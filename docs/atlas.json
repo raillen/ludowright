@@ -589,6 +589,12 @@
       "title": "Updating"
     },
     {
+      "canonical_source": "getting-started/UNINSTALLING.md",
+      "path": "getting-started/UNINSTALLING.md",
+      "section": "getting-started",
+      "title": "Uninstalling"
+    },
+    {
       "canonical_source": "operations/DOCUMENTATION_SITE.md",
       "path": "operations/DOCUMENTATION_SITE.md",
       "section": "operations",

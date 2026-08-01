@@ -17,6 +17,7 @@ nav:
       - Character workflow and custom profile: getting-started/CHARACTER_WORKFLOW.md
       - Troubleshooting: getting-started/TROUBLESHOOTING.md
       - Updating: getting-started/UPDATING.md
+      - Uninstalling: getting-started/UNINSTALLING.md
   - Product:
       - Product Vision: product/PRODUCT_VISION.md
       - Product Document Set: product/PRODUCT_DOCUMENT_SET.md
