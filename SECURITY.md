@@ -2,6 +2,11 @@
 
 Security and privacy are product requirements for LudoWright, especially because it manages local project files, generated artifacts, external references, archives, plugins, and AI-assisted workflows.
 
+The current architecture review is recorded in
+[`docs/security/THREAT_MODEL.md`](docs/security/THREAT_MODEL.md). It is the
+canonical inventory of local-first assets, trust boundaries, implemented
+controls, validation evidence, and residual release risks.
+
 ## Supported versions
 
 LudoWright is currently pre-alpha. Until the first stable release, security fixes are applied to the latest development line only.

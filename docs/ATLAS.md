@@ -319,6 +319,7 @@ Planned detailed documents:
 ## Security
 
 - [Security Policy](https://github.com/raillen/ludowright/blob/main/SECURITY.md) — vulnerability reporting and current security requirements.
+- [`security/THREAT_MODEL.md`](security/THREAT_MODEL.md) — current local-first assets, trust boundaries, threat controls, evidence, and residual risks.
 - [`contracts/PROJECT_FILESYSTEM.md`](contracts/PROJECT_FILESYSTEM.md) — local path containment, symbolic-link policy, atomic replacement, and lock ownership.
 - [`contracts/STRUCTURED_REPOSITORIES.md`](contracts/STRUCTURED_REPOSITORIES.md) — bounded UTF-8 parsing, safe YAML restrictions, duplicate-key rejection, and exact-byte conflict detection.
 - [`contracts/EVENT_LOG.md`](contracts/EVENT_LOG.md) — canonical event lines, integrity-chain meaning, parser limits, atomic append, and explicit recovery boundaries.
@@ -329,7 +330,6 @@ Planned detailed documents:
 
 Planned detailed documents:
 
-- threat model;
 - archive extraction and packaging safety;
 - template and plugin trust;
 - secret handling;

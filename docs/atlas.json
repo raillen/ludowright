@@ -637,6 +637,12 @@
       "title": "Codex Agent Evaluation Suite"
     },
     {
+      "canonical_source": "security/THREAT_MODEL.md",
+      "path": "security/THREAT_MODEL.md",
+      "section": "security",
+      "title": "Security Threat Model"
+    },
+    {
       "canonical_source": "commands/IMAGES.md",
       "path": "commands/IMAGES.md",
       "section": "commands",
