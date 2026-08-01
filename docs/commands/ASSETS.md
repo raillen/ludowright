@@ -1,4 +1,4 @@
-# Asset Registry, Discovery, Decomposition, and Workbook CLI
+# Asset Registry, Discovery, Decomposition, Workbook, and Audit CLI
 
 ## Canonical commands
 
@@ -22,6 +22,8 @@ ludowright assets decompose PROJECT chr-maya
 ludowright assets decompose PROJECT chr-maya --input imports/maya-decomposition.json
 ludowright assets export-ods PROJECT exports/assets.ods
 ludowright assets export-ods PROJECT exports/assets.ods --dry-run
+ludowright assets audit PROJECT
+ludowright assets audit PROJECT --check
 ```
 
 The create and update inputs are individual `asset` contracts. Import inputs
@@ -135,3 +137,28 @@ The decomposition contract and report are defined in
 [`ASSET_DECOMPOSITION.md`](../contracts/ASSET_DECOMPOSITION.md).
 The workbook report and versioned template are defined in
 [`ASSET_WORKBOOK.md`](../contracts/ASSET_WORKBOOK.md).
+
+## Asset audit
+
+`assets audit` reads the canonical registry and dependency graph and reports
+orphan graph nodes, incomplete production specifications, invalid asset
+dependencies, missing executable capture profiles, and missing ownership
+metadata. It is read-only and does not create SQLite state, events, locks, or
+derived files.
+
+```bash
+ludowright assets audit PROJECT
+ludowright assets audit PROJECT --dry-run
+ludowright --json assets audit PROJECT --check
+```
+
+The report is valid when no error-severity findings exist. Missing
+specifications, capture profiles, and ownership are warnings in this slice;
+orphan graph nodes and invalid dependencies are blocking. `--check` returns
+`checks-failed` with the full report in JSON `data` when blocking findings are
+present. Repeated audits are deterministic. A concurrent change to the
+registry or graph returns `conflict`, while malformed canonical documents
+return `corrupt-state`.
+
+See [`ASSET_AUDIT.md`](../contracts/ASSET_AUDIT.md) for the complete v1
+finding contract and compatibility policy.

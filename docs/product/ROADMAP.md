@@ -56,7 +56,9 @@ assembly from interview answers remains a later bounded capability.
 - YAML registry and derived ODS export (implemented through PR35, including
   overview, decomposition, reference-availability, status, priority, and
   dependency views);
-- orphan and completeness audits.
+- deterministic orphan and completeness audits (implemented through PR36;
+  visual references, jobs, approvals, sheets, and package readiness remain
+  later audit scopes).
 
 ### 0.5 Visual Foundation
 

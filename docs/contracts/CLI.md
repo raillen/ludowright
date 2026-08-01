@@ -297,3 +297,9 @@ log and derived state-store index.
 explicit declarations under `.ludowright/documents/`, remains read-only until
 selected candidate IDs are passed through repeated `--confirm`, and uses
 `invalid-input` for ambiguous, duplicate, missing, or malformed confirmations.
+
+The `assets audit` command returns an `asset-audit` projection. It is
+read-only, reports deterministic warnings and blocking findings from the
+registry and dependency graph, and uses `checks-failed` with `--check` when
+blocking findings exist. The complete report remains in failed JSON response
+data.

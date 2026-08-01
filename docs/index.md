@@ -39,9 +39,12 @@ The repository currently establishes:
   recommendations.
 - deterministic derived ODS asset workbooks with six versioned views, dry-run,
   source/output hashes, and create-only atomic writes.
+- deterministic read-only asset audits for orphan graph nodes, incomplete
+  specifications, invalid dependencies, missing capture profiles, and
+  incomplete production ownership metadata.
 
 Executable capture profiles, ImageGen execution, review workflows, technical
-sheets, audits, and package generation remain planned work.
+sheets, global audits, and package generation remain planned work.
 
 ## Start here
 

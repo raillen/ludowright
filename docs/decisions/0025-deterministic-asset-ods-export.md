@@ -33,8 +33,11 @@ boundaries:
 The workbook can be regenerated deterministically from canonical project state
 and audited by its source digest. The current project state-store schema and
 event log remain unchanged. ODS export does not yet provide reference
-metadata, capture profiles, audits, or write-back editing; those belong to
-later bounded roadmap steps.
+metadata, capture profiles, asset audits, or write-back editing; those remain
+separate bounded roadmap steps.
+
+Asset completeness auditing is a separate read-only projection and never
+becomes a workbook sheet or workbook source of truth.
 
 The runtime adds ODFPy, currently constrained to the published 1.4.x line.
 Future template additions require a versioned contract and compatibility

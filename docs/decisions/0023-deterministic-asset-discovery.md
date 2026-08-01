@@ -70,7 +70,8 @@ Costs and limitations:
 - documents must include the explicit declaration syntax;
 - changing a declaration's line or content changes its candidate ID;
 - natural-language asset mentions remain undiscovered until annotated;
-- decomposition, cross-asset dependencies, ODS and audits remain later stages.
+- decomposition, cross-asset dependencies, ODS, and completeness auditing are
+  separate workflows with their own contracts.
 
 ## Compatibility
 

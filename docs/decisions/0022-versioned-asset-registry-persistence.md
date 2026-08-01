@@ -42,8 +42,8 @@ rejected by the existing filesystem boundary.
 - collection revisions and event sequences are distinct and auditable;
 - a failed multi-resource write can be restored without hiding the original
   failure;
-- cross-asset dependencies, discovery, decomposition, ODS, and audits remain
-  separate follow-up slices;
+- cross-asset dependencies, discovery, decomposition, ODS, and asset audits
+  remain separate application slices;
 - large registries will eventually need measured indexing or segmentation,
   but the bounded structured-repository limit applies now.
 
