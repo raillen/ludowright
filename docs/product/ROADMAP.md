@@ -85,7 +85,8 @@ assembly from interview answers remains a later bounded capability.
 
 ### 0.6 Codex and ImageGen Workflow
 
-- installable `$ludowright` skill;
+- versioned project-local `$ludowright` skill with install, update, verification,
+  removal, checksums, dry-run, and rollback (implemented through PR44);
 - Codex-specific agents and routing;
 - execution of structured visual jobs through ImageGen;
 - approved-reference selection;

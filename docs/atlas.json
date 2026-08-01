@@ -31,6 +31,12 @@
       "title": "Asset Registry, Discovery, Decomposition, and Workbook CLI"
     },
     {
+      "canonical_source": "commands/CODEX.md",
+      "path": "commands/CODEX.md",
+      "section": "commands",
+      "title": "Codex Skill CLI"
+    },
+    {
       "canonical_source": "commands/INTERVIEW.md",
       "path": "commands/INTERVIEW.md",
       "section": "commands",
@@ -143,6 +149,12 @@
       "path": "contracts/CLI.md",
       "section": "contracts",
       "title": "Command-Line Interface Contract"
+    },
+    {
+      "canonical_source": "contracts/CODEX_SKILL.md",
+      "path": "contracts/CODEX_SKILL.md",
+      "section": "contracts",
+      "title": "Codex Skill Contract"
     },
     {
       "canonical_source": "contracts/DECISIONS_AND_APPROVALS.md",
@@ -443,6 +455,12 @@
       "path": "decisions/0033-deterministic-visual-job-planner.md",
       "section": "decisions",
       "title": "ADR 0033: Deterministic Visual-Job Planner"
+    },
+    {
+      "canonical_source": "decisions/0034-versioned-codex-skill-installer.md",
+      "path": "decisions/0034-versioned-codex-skill-installer.md",
+      "section": "decisions",
+      "title": "ADR 0034: Versioned Project-Local Codex Skill Installer"
     },
     {
       "canonical_source": "governance/RFC_TEMPLATE.md",

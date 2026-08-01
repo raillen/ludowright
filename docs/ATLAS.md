@@ -44,6 +44,7 @@ This is the main navigation map for humans and agents. Each subject should have 
 - [`contracts/VISUAL_PROFILES.md`](contracts/VISUAL_PROFILES.md) — data-defined tree, plant, UI, VFX, locomotion, and motion-set profiles with typed components, variants, states, views, and outputs.
 - [`contracts/VISUAL_BIBLE.md`](contracts/VISUAL_BIBLE.md) — project-level visual direction, palette, materials, detail levels, budgets, and prompt constraints.
 - [`contracts/PROMPT_COMPILER.md`](contracts/PROMPT_COMPILER.md) — versioned prompt layers, approved-reference resolution, structured constraints, deterministic rendering, and prompt hashing.
+- [`contracts/CODEX_SKILL.md`](contracts/CODEX_SKILL.md) — versioned project-local `$ludowright` skill package, lifecycle semantics, checksums, and safe failure behavior.
 - [`contracts/JSON_SCHEMAS.md`](contracts/JSON_SCHEMAS.md) — generated Draft 2020-12 schemas, registry, fixtures, checksums, drift checking, and compatibility policy.
 - [`contracts/PROJECT_FILESYSTEM.md`](contracts/PROJECT_FILESYSTEM.md) — root discovery, canonical repository paths, symlink rejection, atomic writes, bounded reads, and exclusive locks.
 - [`contracts/STRUCTURED_REPOSITORIES.md`](contracts/STRUCTURED_REPOSITORIES.md) — strict JSON/YAML parsing, canonical serialization, document digests, snapshots, and conflict detection.
@@ -61,6 +62,7 @@ This is the main navigation map for humans and agents. Each subject should have 
 - [`commands/DOCS.md`](commands/DOCS.md) — deterministic documentation audit syntax, policy, findings, and check behavior.
 - [`commands/ATLAS.md`](commands/ATLAS.md) — ATLAS generation, integrity checking, and JSON output.
 - [`commands/ASSETS.md`](commands/ASSETS.md) — asset registry CRUD, discovery, decomposition, ODS export, audit, validation, batch import/export, dry-run, and failure behavior.
+- [`commands/CODEX.md`](commands/CODEX.md) — install, update, verify, and remove the project-local Codex skill.
 - [`contracts/CLI.md`](contracts/CLI.md) — dual human/JSON surfaces, response envelope, error codes, exit codes, version output, diagnostics, and compatibility rules.
 
 Published machine-readable contracts are stored under `schemas/v1/`. The source models live under `src/ludowright/contracts/`.
@@ -79,6 +81,13 @@ bounded, read-only Markdown access. The `atlas` command is registered in
 `src/ludowright/cli/app.py` and participates in the unified quality gate.
 The `docs audit` command shares the same CLI envelope and participates in the
 quality gate with `--check`.
+
+The Codex skill installer is implemented in
+`integrations/codex/skill_installer.py`; its versioned manifest and entrypoint
+are data under `integrations/codex/skills/ludowright/`. The CLI adapter lives in
+`src/ludowright/cli/codex.py` and uses the shared filesystem boundary, lock, and
+CLI envelope. It does not change canonical project state, the event log, or
+SQLite.
 
 The initial asset taxonomy is loaded by
 `src/ludowright/application/asset_taxonomy.py` from versioned JSON data under
@@ -136,9 +145,12 @@ state or image files.
 
 ## Codex integration
 
+- [`contracts/CODEX_SKILL.md`](contracts/CODEX_SKILL.md) — versioned skill package and lifecycle contract;
+- [`commands/CODEX.md`](commands/CODEX.md) — skill installation, verification, update, and removal;
+- [`decisions/0034-versioned-codex-skill-installer.md`](decisions/0034-versioned-codex-skill-installer.md) — adapter boundary and atomic-install decision.
+
 Planned documents:
 
-- skill installation and invocation;
 - agent roles and routing;
 - ImageGen job execution;
 - approval checkpoints;

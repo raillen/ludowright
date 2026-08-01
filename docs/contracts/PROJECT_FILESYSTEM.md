@@ -120,6 +120,15 @@ non-directory ancestors fail closed. The method returns an empty tuple when
 the requested directory does not exist and enforces a caller-provided file
 count limit.
 
+External integrations may need a conventional case-sensitive filename, such as
+Codex's `SKILL.md`. The restricted `write_child_bytes()`, `read_child_bytes()`,
+`list_child_files()`, `remove_child_file()`, `directory_exists()`, and
+`remove_empty_directory()` methods accept one validated filename beneath an
+ordinary `RepositoryPath`. They preserve root containment, reject symlinks,
+bound filenames, and reuse the same atomic-write implementation. They do not
+permit slashes, traversal, arbitrary absolute paths, or uppercase segments in
+`RepositoryPath` itself.
+
 ## Atomic writes
 
 `write_bytes()` and `write_text()` use a sibling temporary file in the destination directory.

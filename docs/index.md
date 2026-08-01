@@ -56,8 +56,10 @@ The repository currently establishes:
   connection matrices, states, views, and outputs.
 - initial data-defined visual-specialty profiles for trees, plants, UI,
   particle and shader effects, locomotion, and motion sets.
+- a versioned project-local `$ludowright` Codex skill with safe install,
+  update, verification, removal, checksums, and rollback.
 
-Project-local profile persistence, ImageGen execution, review workflows,
+Codex orchestration policy, project-local profile persistence, ImageGen execution, review workflows,
 technical sheets, global audits, and package generation remain planned work. The
 pure deterministic visual-job planner is implemented, but it does not yet
 execute providers or persist project-local plans.
