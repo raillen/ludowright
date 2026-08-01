@@ -103,6 +103,12 @@
       "title": "Capture Profiles"
     },
     {
+      "canonical_source": "contracts/VISUAL_BIBLE.md",
+      "path": "contracts/VISUAL_BIBLE.md",
+      "section": "contracts",
+      "title": "Visual Bible Contract"
+    },
+    {
       "canonical_source": "contracts/CLI.md",
       "path": "contracts/CLI.md",
       "section": "contracts",
@@ -359,6 +365,12 @@
       "path": "decisions/0026-deterministic-asset-audit.md",
       "section": "decisions",
       "title": "ADR 0026 — Deterministic Asset Audit"
+    },
+    {
+      "canonical_source": "decisions/0027-versioned-visual-bible-contract.md",
+      "path": "decisions/0027-versioned-visual-bible-contract.md",
+      "section": "decisions",
+      "title": "ADR 0027: Versioned Visual Bible Contract"
     },
     {
       "canonical_source": "governance/RFC_TEMPLATE.md",

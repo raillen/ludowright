@@ -29,7 +29,7 @@ idea → guided intake → modular documentation → asset registry
 
 ## Current status
 
-LudoWright is in the **pre-alpha foundation phase**. Product vision, long-term roadmap, layered architecture, documentation navigation, the initial Python package, CLI smoke commands, tests, and CI are established. Project initialization, schemas, asset planning, capture profiles, and ImageGen workflows are not implemented yet.
+LudoWright is in the **pre-alpha visual-foundation phase**. Product vision, long-term roadmap, layered architecture, documentation navigation, the initial Python package, project initialization, CLI workflows, tests, CI, asset planning, and the v1 visual bible schema are established. Executable capture profiles and ImageGen workflows remain planned.
 
 See the ordered implementation program in [`docs/plans/IMPLEMENTATION_PLAN.md`](docs/plans/IMPLEMENTATION_PLAN.md).
 

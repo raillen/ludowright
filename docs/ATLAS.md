@@ -37,6 +37,7 @@ This is the main navigation map for humans and agents. Each subject should have 
 - [`contracts/ASSET_AUDIT.md`](contracts/ASSET_AUDIT.md) — deterministic read-only asset findings, severity policy, source consistency, and compatibility.
 - [`contracts/REFERENCES_AND_VISUAL_JOBS.md`](contracts/REFERENCES_AND_VISUAL_JOBS.md) — visual provenance, revision-bound references, immutable generation jobs, attempt receipts, retries, and reviews.
 - [`contracts/CAPTURE_PROFILES.md`](contracts/CAPTURE_PROFILES.md) — camera, background, lighting, validation, required views, isolated items, technical sheets, and exact versioned inheritance.
+- [`contracts/VISUAL_BIBLE.md`](contracts/VISUAL_BIBLE.md) — project-level visual direction, palette, materials, detail levels, budgets, and prompt constraints.
 - [`contracts/JSON_SCHEMAS.md`](contracts/JSON_SCHEMAS.md) — generated Draft 2020-12 schemas, registry, fixtures, checksums, drift checking, and compatibility policy.
 - [`contracts/PROJECT_FILESYSTEM.md`](contracts/PROJECT_FILESYSTEM.md) — root discovery, canonical repository paths, symlink rejection, atomic writes, bounded reads, and exclusive locks.
 - [`contracts/STRUCTURED_REPOSITORIES.md`](contracts/STRUCTURED_REPOSITORIES.md) — strict JSON/YAML parsing, canonical serialization, document digests, snapshots, and conflict detection.
@@ -95,6 +96,10 @@ Asset audit is orchestrated by `src/ludowright/application/asset_audit.py`; it
 reads the same canonical registry and graph without creating project state and
 returns the published `asset-audit` report through
 `src/ludowright/cli/assets.py`.
+The visual bible contract is implemented by
+`src/ludowright/domain/visual_bibles.py` and
+`src/ludowright/contracts/visual_bible.py`; it publishes the strict v1
+`visual-bible` schema without introducing persistence or provider execution.
 
 ## Codex integration
 
@@ -111,11 +116,11 @@ Planned documents:
 
 - [`contracts/REFERENCES_AND_VISUAL_JOBS.md`](contracts/REFERENCES_AND_VISUAL_JOBS.md) — provenance, immutable generation jobs, receipts, retries, and reviews.
 - [`contracts/CAPTURE_PROFILES.md`](contracts/CAPTURE_PROFILES.md) — reusable camera, view, isolation, validation, and technical-sheet requirements.
+- [`contracts/VISUAL_BIBLE.md`](contracts/VISUAL_BIBLE.md) — shared visual direction and constraints consumed by later visual-foundation slices.
 - [`contracts/DEPENDENCY_GRAPH.md`](contracts/DEPENDENCY_GRAPH.md) — revision-aware invalidation from approved references and asset components to jobs, outputs, sheets, and packages.
 
 Planned detailed documents:
 
-- visual bible schema;
 - segmented character references;
 - garments and props;
 - creatures, vehicles, architecture, foliage, UI, VFX, and modular kits;
@@ -200,6 +205,7 @@ Planned operational documents:
 - [`decisions/0023-deterministic-asset-discovery.md`](decisions/0023-deterministic-asset-discovery.md) — accepted explicit Markdown candidate declarations, deterministic IDs, confirmation, and fail-closed ambiguity handling.
 - [`decisions/0024-asset-decomposition-workflow.md`](decisions/0024-asset-decomposition-workflow.md) — accepted aggregate-preserving decomposition, canonical graph prerequisites, derived recommendations, and cross-resource rollback.
 - [`decisions/0026-deterministic-asset-audit.md`](decisions/0026-deterministic-asset-audit.md) — accepted read-only asset findings, severity policy, source consistency, and profile-gap handling.
+- [`decisions/0027-versioned-visual-bible-contract.md`](decisions/0027-versioned-visual-bible-contract.md) — accepted strict project-level visual direction schema and provider-neutral boundaries.
 - [`decisions/0013-versioned-acyclic-dependency-invalidation-graph.md`](decisions/0013-versioned-acyclic-dependency-invalidation-graph.md) — accepted typed revision-aware DAG dependencies, stale and review propagation, persisted impact paths, safe refresh, and canonical JSON persistence.
 - [`decisions/0012-explicit-backed-up-schema-migrations.md`](decisions/0012-explicit-backed-up-schema-migrations.md) — accepted explicit contiguous migration plans, dry runs, durable SQLite backups, strict receipts, transactional apply, and guarded rollback.
 - [`decisions/0011-rebuildable-sqlite-state-index.md`](decisions/0011-rebuildable-sqlite-state-index.md) — accepted SQLite as a rebuildable derived index with WAL, strict short transactions, source digests, event checkpoints, and explicit consistency states.

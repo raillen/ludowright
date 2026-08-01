@@ -344,6 +344,12 @@ the current 1.4.x line and no SQLite migration is introduced.
 
 ### PR 37 — Visual bible schema
 
+Status: implemented in the current slice. The `visual-bible` v1 contract
+publishes immutable project-level shape, proportion, palette, material,
+lighting, camera, detail-level, budget, and positive/negative constraint data.
+It reuses camera and lighting semantics from capture profiles and does not yet
+persist project files, compile prompts, or execute visual jobs.
+
 - shape language, proportions, palette, materials, lighting, camera, level of detail, budget, and negative constraints.
 
 ### PR 38 — Prompt compiler
