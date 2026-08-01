@@ -2,7 +2,8 @@
 
 ## Objetivo
 
-O PR44 instala uma única skill local e versionada para o Codex:
+O PR44 instala uma única skill local e versionada para o Codex. O PR45 adiciona
+a política de orquestração declarativa ao mesmo pacote:
 
 ```text
 $ludowright
@@ -19,16 +20,20 @@ A fonte da skill fica em:
 ```text
 integrations/codex/skills/ludowright/manifest.json
 integrations/codex/skills/ludowright/SKILL.md
+integrations/codex/skills/ludowright/orchestration.json
 ```
 
 O manifesto publicado é o contrato `codex-skill-manifest` v1. Ele declara:
 
 - ID `ludowright` e invocação `$ludowright`;
-- revisão inteira da skill;
+- revisão inteira da skill (atualmente `2`);
 - versão mínima do LudoWright;
 - caminho canônico de instalação;
 - entrypoint `SKILL.md`;
 - checksums SHA-256 dos arquivos de payload.
+
+`orchestration.json` declara a política `codex-orchestration-policy` v1. Ela é
+validada pelo adaptador antes de produzir um `codex-orchestration-plan`.
 
 O manifesto instalado acompanha o entrypoint. Ele não é incluído na própria
 lista de payloads para evitar um checksum circular.
@@ -97,8 +102,17 @@ Não há mudança no event log, no SQLite, no grafo de dependências ou em
 migrações. A instalação da skill é uma integração local independente do estado
 canônico do projeto.
 
+## Política de orquestração
+
+A política exige inspeção de status antes de qualquer ação, perguntas somente
+para questões pendentes, registro de decisões, validações bloqueantes,
+checkpoints de aprovação humana e retomada a partir de cursor durável. O
+planejador é read-only: ele retorna a próxima ação e não grava estado nem chama
+providers. A ordem e os códigos estão no contrato
+[`CODEX_ORCHESTRATION.md`](CODEX_ORCHESTRATION.md).
+
 ## Limites desta versão
 
-Política de orquestração, execução de ImageGen, receipts, aprovações e agentes
-especialistas pertencem aos PRs seguintes. A skill instalada não deve ser
-interpretada como implementação dessas capacidades.
+Execução de ImageGen, receipts, revisão visual e agentes especialistas pertencem
+aos PRs seguintes. A aprovação humana é um checkpoint exigido pela política,
+mas sua gravação continua sendo responsabilidade dos comandos canônicos.

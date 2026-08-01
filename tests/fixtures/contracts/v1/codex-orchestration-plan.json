@@ -1,0 +1,22 @@
+{
+  "action": {
+    "action": "await-approval",
+    "reason": "A aprovação humana explícita é necessária neste checkpoint.",
+    "requires_human": true,
+    "subject_id": "approval-reference"
+  },
+  "failed_validations": [],
+  "kind": "codex-orchestration-plan",
+  "pending_approvals": [
+    "approval-reference"
+  ],
+  "pending_validations": [],
+  "policy_id": "default",
+  "policy_version": 1,
+  "resume_workflow_id": null,
+  "schema_version": 1,
+  "state": "approval-required",
+  "status_blockers": [],
+  "status_state": "ready",
+  "unresolved_questions": []
+}

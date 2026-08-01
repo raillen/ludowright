@@ -44,6 +44,7 @@ This is the main navigation map for humans and agents. Each subject should have 
 - [`contracts/VISUAL_PROFILES.md`](contracts/VISUAL_PROFILES.md) — data-defined tree, plant, UI, VFX, locomotion, and motion-set profiles with typed components, variants, states, views, and outputs.
 - [`contracts/VISUAL_BIBLE.md`](contracts/VISUAL_BIBLE.md) — project-level visual direction, palette, materials, detail levels, budgets, and prompt constraints.
 - [`contracts/PROMPT_COMPILER.md`](contracts/PROMPT_COMPILER.md) — versioned prompt layers, approved-reference resolution, structured constraints, deterministic rendering, and prompt hashing.
+- [`contracts/CODEX_ORCHESTRATION.md`](contracts/CODEX_ORCHESTRATION.md) — declarative Codex policy, deterministic next-action plans, checkpoints, validation, and resumability.
 - [`contracts/CODEX_SKILL.md`](contracts/CODEX_SKILL.md) — versioned project-local `$ludowright` skill package, lifecycle semantics, checksums, and safe failure behavior.
 - [`contracts/JSON_SCHEMAS.md`](contracts/JSON_SCHEMAS.md) — generated Draft 2020-12 schemas, registry, fixtures, checksums, drift checking, and compatibility policy.
 - [`contracts/PROJECT_FILESYSTEM.md`](contracts/PROJECT_FILESYSTEM.md) — root discovery, canonical repository paths, symlink rejection, atomic writes, bounded reads, and exclusive locks.
@@ -84,10 +85,12 @@ quality gate with `--check`.
 
 The Codex skill installer is implemented in
 `integrations/codex/skill_installer.py`; its versioned manifest and entrypoint
-are data under `integrations/codex/skills/ludowright/`. The CLI adapter lives in
+are data under `integrations/codex/skills/ludowright/`. The orchestration policy
+and pure next-action planner live in `integrations/codex/orchestration.py` and
+the same package-data directory. The CLI adapter lives in
 `src/ludowright/cli/codex.py` and uses the shared filesystem boundary, lock, and
-CLI envelope. It does not change canonical project state, the event log, or
-SQLite.
+CLI envelope. The policy planner does not change canonical project state, the
+event log, SQLite, or provider outputs.
 
 The initial asset taxonomy is loaded by
 `src/ludowright/application/asset_taxonomy.py` from versioned JSON data under
@@ -148,6 +151,7 @@ state or image files.
 - [`contracts/CODEX_SKILL.md`](contracts/CODEX_SKILL.md) — versioned skill package and lifecycle contract;
 - [`commands/CODEX.md`](commands/CODEX.md) — skill installation, verification, update, and removal;
 - [`decisions/0034-versioned-codex-skill-installer.md`](decisions/0034-versioned-codex-skill-installer.md) — adapter boundary and atomic-install decision.
+- [`decisions/0035-codex-orchestration-policy.md`](decisions/0035-codex-orchestration-policy.md) — declarative policy boundary and deterministic planning.
 
 Planned documents:
 

@@ -70,3 +70,24 @@ O resultado usa o envelope `cli-response` e inclui um `codex-skill-report` com
 
 As mensagens humanas podem evoluir; os códigos e exit codes permanecem os
 contratos para automação.
+
+## Política de orquestração
+
+A skill instalada na revisão 2 inclui a política declarativa em
+`.agents/skills/ludowright/orchestration.json`. Ela não é um novo comando nem um
+segundo armazenamento de estado. O adaptador Codex a usa para planejar uma única
+próxima ação:
+
+```text
+status → bloqueios/revisão → perguntas pendentes → decisões
+→ validações → aprovação humana → retomada → próxima fase
+```
+
+O planejador exige `status` antes de qualquer outro passo, seleciona somente
+questões ainda não resolvidas, preserva IDs de decisões e aprovações, bloqueia
+falhas de validação e só retoma um workflow com cursor durável e fase conhecida.
+Ele não executa ImageGen, não aprova artefatos e não grava eventos por conta
+própria.
+
+Consulte o [contrato da política](../contracts/CODEX_ORCHESTRATION.md) para a
+ordem completa, os contratos publicados e os limites desta etapa.

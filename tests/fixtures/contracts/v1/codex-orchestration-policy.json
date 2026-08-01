@@ -1,0 +1,37 @@
+{
+  "checkpoints": [
+    {
+      "evidence": [
+        "status-report"
+      ],
+      "id": "status-inspection",
+      "requires_human": false,
+      "trigger": "no início da operação"
+    }
+  ],
+  "id": "fixture",
+  "kind": "codex-orchestration-policy",
+  "phases": [
+    {
+      "checkpoint_id": "status-inspection",
+      "id": "inspect",
+      "name": "Inspecionar",
+      "order": 1,
+      "purpose": "Leia o status canônico do projeto."
+    }
+  ],
+  "record_decisions": true,
+  "require_approval_checkpoints": true,
+  "resume_from_durable_state": true,
+  "schema_version": 1,
+  "skill_id": "ludowright",
+  "validations": [
+    {
+      "blocking": true,
+      "command": "ludowright --json status",
+      "id": "status"
+    }
+  ],
+  "version": 1,
+  "ask_only_unresolved": true
+}

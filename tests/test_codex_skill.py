@@ -62,9 +62,10 @@ def test_packaged_skill_definition_is_versioned_and_checksumed() -> None:
     definition = load_codex_skill_definition()
 
     assert definition.manifest.id == "ludowright"
-    assert definition.manifest.version == 1
+    assert definition.manifest.version == 2
     assert definition.manifest.entrypoint == "SKILL.md"
     assert definition.files[0].path == "SKILL.md"
+    assert definition.files[1].path == "orchestration.json"
     assert (
         hashlib.sha256(definition.files[0].payload).hexdigest()
         == definition.manifest.files[0].sha256
@@ -82,6 +83,7 @@ def test_install_and_verify_create_canonical_skill_files(tmp_path: Path) -> None
     assert verified.report.state == "verified"
     assert verified.report.valid is True
     assert (filesystem.root / ".agents/skills/ludowright/SKILL.md").is_file()
+    assert (filesystem.root / ".agents/skills/ludowright/orchestration.json").is_file()
     assert (filesystem.root / ".agents/skills/ludowright/manifest.json").is_file()
     assert service.install().report.state == "already-installed"
 
@@ -143,6 +145,19 @@ def test_update_replaces_only_an_intact_older_version(tmp_path: Path) -> None:
     assert updated.report.state == "updated"
     assert new.verify().report.state == "verified"
     assert (filesystem.root / ".agents/skills/ludowright/SKILL.md").read_text() == "new skill\n"
+
+
+def test_packaged_revision_updates_a_v1_skill_with_the_policy_payload(tmp_path: Path) -> None:
+    filesystem = create_project(tmp_path / "project")
+    old = CodexSkillService(filesystem, definition=make_definition(1, "old skill\n"))
+    current = CodexSkillService(filesystem)
+
+    old.install()
+    result = current.update()
+
+    assert result.report.state == "updated"
+    assert current.verify().report.state == "verified"
+    assert (filesystem.root / ".agents/skills/ludowright/orchestration.json").is_file()
 
 
 def test_update_failure_restores_the_previous_version(

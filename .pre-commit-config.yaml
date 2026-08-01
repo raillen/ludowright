@@ -24,7 +24,7 @@ repos:
 
       - id: detect-secrets
         name: Detect committed secrets
-        entry: uv run detect-secrets-hook
+        entry: uv run detect-secrets-hook --baseline .secrets.baseline
         language: system
         types: [text]
         exclude: >-

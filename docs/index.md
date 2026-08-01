@@ -59,7 +59,9 @@ The repository currently establishes:
 - a versioned project-local `$ludowright` Codex skill with safe install,
   update, verification, removal, checksums, and rollback.
 
-Codex orchestration policy, project-local profile persistence, ImageGen execution, review workflows,
+The Codex orchestration policy now enforces status-first inspection, durable
+decisions, validations, approval checkpoints, and safe resume planning.
+Project-local profile persistence, ImageGen execution, review workflows,
 technical sheets, global audits, and package generation remain planned work. The
 pure deterministic visual-job planner is implemented, but it does not yet
 execute providers or persist project-local plans.

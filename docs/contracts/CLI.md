@@ -310,3 +310,9 @@ project-local `$ludowright` skill. Their `data` payload is the published
 verification is read-only and returns `checks-failed` when the target is
 missing, outdated, modified, unsupported, or incompatible. Removal refuses
 modified files and is idempotent when the skill is absent.
+
+The installed skill also contains the versioned `codex-orchestration-policy`
+data contract. Its pure adapter returns a `codex-orchestration-plan` and does
+not introduce a second CLI envelope or mutate project state. Status, governance,
+validation, approval, and resume effects must continue through their existing
+canonical commands and repositories.

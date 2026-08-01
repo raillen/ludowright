@@ -39,6 +39,7 @@ nav:
       - Visual Bible: contracts/VISUAL_BIBLE.md
       - Prompt Compiler: contracts/PROMPT_COMPILER.md
       - Codex Skill: contracts/CODEX_SKILL.md
+      - Codex Orchestration: contracts/CODEX_ORCHESTRATION.md
       - JSON Schema Publication: contracts/JSON_SCHEMAS.md
       - Project Filesystem: contracts/PROJECT_FILESYSTEM.md
       - Structured Repositories: contracts/STRUCTURED_REPOSITORIES.md
@@ -99,6 +100,7 @@ nav:
       - ADR 0032 — Visual Specialty Profiles: decisions/0032-data-defined-visual-specialty-profiles.md
       - ADR 0033 — Visual Job Planner: decisions/0033-deterministic-visual-job-planner.md
       - ADR 0034 — Codex Skill Installer: decisions/0034-versioned-codex-skill-installer.md
+      - ADR 0035 — Codex Orchestration Policy: decisions/0035-codex-orchestration-policy.md
       - ADR Template: decisions/0000-template.md
   - Operations:
       - Documentation Site: operations/DOCUMENTATION_SITE.md

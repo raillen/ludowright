@@ -1,0 +1,208 @@
+{
+  "$defs": {
+    "CodexOrchestrationActionContract": {
+      "additionalProperties": false,
+      "description": "One deterministic action selected by the orchestration policy.",
+      "properties": {
+        "action": {
+          "enum": [
+            "inspect-status",
+            "report-blockers",
+            "review-status",
+            "ask-question",
+            "record-decision",
+            "run-validations",
+            "resolve-validation",
+            "await-approval",
+            "resume-workflow",
+            "execute-phase",
+            "complete"
+          ],
+          "title": "Action",
+          "type": "string"
+        },
+        "phase_id": {
+          "anyOf": [
+            {
+              "maxLength": 80,
+              "minLength": 1,
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Phase Id"
+        },
+        "reason": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Reason",
+          "type": "string"
+        },
+        "requires_human": {
+          "default": false,
+          "title": "Requires Human",
+          "type": "boolean"
+        },
+        "subject_id": {
+          "anyOf": [
+            {
+              "maxLength": 80,
+              "minLength": 1,
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Subject Id"
+        }
+      },
+      "required": [
+        "action",
+        "reason"
+      ],
+      "title": "CodexOrchestrationActionContract",
+      "type": "object"
+    }
+  },
+  "$id": "https://schemas.ludowright.dev/v1/codex-orchestration-plan.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Stable result of evaluating one orchestration observation.",
+  "properties": {
+    "action": {
+      "$ref": "#/$defs/CodexOrchestrationActionContract"
+    },
+    "failed_validations": {
+      "default": [],
+      "items": {
+        "maxLength": 80,
+        "minLength": 1,
+        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+        "type": "string"
+      },
+      "title": "Failed Validations",
+      "type": "array"
+    },
+    "kind": {
+      "const": "codex-orchestration-plan",
+      "default": "codex-orchestration-plan",
+      "title": "Kind",
+      "type": "string"
+    },
+    "pending_approvals": {
+      "default": [],
+      "items": {
+        "maxLength": 80,
+        "minLength": 1,
+        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+        "type": "string"
+      },
+      "title": "Pending Approvals",
+      "type": "array"
+    },
+    "pending_validations": {
+      "default": [],
+      "items": {
+        "maxLength": 80,
+        "minLength": 1,
+        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+        "type": "string"
+      },
+      "title": "Pending Validations",
+      "type": "array"
+    },
+    "policy_id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Policy Id",
+      "type": "string"
+    },
+    "policy_version": {
+      "maximum": 2147483647,
+      "minimum": 1,
+      "title": "Policy Version",
+      "type": "integer"
+    },
+    "resume_workflow_id": {
+      "anyOf": [
+        {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Resume Workflow Id"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "state": {
+      "enum": [
+        "continue",
+        "awaiting-input",
+        "review-required",
+        "blocked",
+        "approval-required",
+        "complete"
+      ],
+      "title": "State",
+      "type": "string"
+    },
+    "status_blockers": {
+      "default": [],
+      "items": {
+        "maxLength": 4000,
+        "minLength": 1,
+        "type": "string"
+      },
+      "title": "Status Blockers",
+      "type": "array"
+    },
+    "status_state": {
+      "enum": [
+        "unknown",
+        "ready",
+        "needs-review",
+        "blocked"
+      ],
+      "title": "Status State",
+      "type": "string"
+    },
+    "unresolved_questions": {
+      "default": [],
+      "items": {
+        "maxLength": 80,
+        "minLength": 1,
+        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+        "type": "string"
+      },
+      "title": "Unresolved Questions",
+      "type": "array"
+    }
+  },
+  "required": [
+    "policy_id",
+    "policy_version",
+    "state",
+    "status_state",
+    "action"
+  ],
+  "title": "LudoWright Codex Orchestration Plan",
+  "type": "object"
+}

@@ -3,20 +3,24 @@
   "files": [
     {
       "path": "SKILL.md",
-      "sha256": "3f76775fcb3c0598195a45f63a77188cb202619223cba8a127e406459cd27a1a"
+      "sha256": "048dadd8c7e5d40d1d0c567ec28779def423da58e264cf7445715fe56f732db1"
     },
     {
       "path": "manifest.json",
-      "sha256": "3163e61375d614a5020d0aca8e396f7512e51991d5114c4ef36c8aaecd187b30"
+      "sha256": "ff70c59d338a3e4e74e3e48462823d1483ac525ebeec8b30892e6e958782092a"
+    },
+    {
+      "path": "orchestration.json",
+      "sha256": "74e65d23443b7eeb6ee4c40f287de9adbd0ae4fb694975807874a0e39a8d11cb"
     }
   ],
   "framework_version": "0.1.0.dev0",
   "install_path": ".agents/skills/ludowright",
-  "installed_version": 1,
+  "installed_version": 2,
   "operation": "verify",
   "schema_version": 1,
   "skill_id": "ludowright",
-  "skill_version": 1,
+  "skill_version": 2,
   "state": "verified",
   "valid": true,
   "warnings": []

@@ -23,7 +23,12 @@ from ludowright.contracts.assets import AssetContract, AssetRegistryContract
 from ludowright.contracts.atlas import AtlasMetadataContract, AtlasReportContract
 from ludowright.contracts.capture import CaptureProfileContract
 from ludowright.contracts.cli import CliResponseContract
-from ludowright.contracts.codex import CodexSkillManifestContract, CodexSkillReportContract
+from ludowright.contracts.codex import (
+    CodexOrchestrationPlanContract,
+    CodexOrchestrationPolicyContract,
+    CodexSkillManifestContract,
+    CodexSkillReportContract,
+)
 from ludowright.contracts.common import ContractModel
 from ludowright.contracts.creature_profiles import CreatureProfileContract
 from ludowright.contracts.dependencies import DependencyGraphContract
@@ -290,6 +295,18 @@ CONTRACTS: tuple[ContractDefinition, ...] = (
         "codex-skill-report.schema.json",
         "LudoWright Codex Skill Report",
         CodexSkillReportContract,
+    ),
+    ContractDefinition(
+        "codex-orchestration-policy",
+        "codex-orchestration-policy.schema.json",
+        "LudoWright Codex Orchestration Policy",
+        CodexOrchestrationPolicyContract,
+    ),
+    ContractDefinition(
+        "codex-orchestration-plan",
+        "codex-orchestration-plan.schema.json",
+        "LudoWright Codex Orchestration Plan",
+        CodexOrchestrationPlanContract,
     ),
     ContractDefinition(
         "interview-questionnaire",
