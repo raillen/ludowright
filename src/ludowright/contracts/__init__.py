@@ -1,5 +1,10 @@
 """Versioned serialization contracts and JSON Schema publication."""
 
+from ludowright.contracts.asset_discovery import (
+    AssetDiscoveryCandidateContract,
+    AssetDiscoveryIssueContract,
+    AssetDiscoveryReportContract,
+)
 from ludowright.contracts.asset_taxonomy import (
     AssetFamilyDefinitionContract,
     AssetNamingPolicyContract,
@@ -92,6 +97,9 @@ __all__ = [
     "AnswerRecordContract",
     "ApprovalContract",
     "AssetContract",
+    "AssetDiscoveryCandidateContract",
+    "AssetDiscoveryIssueContract",
+    "AssetDiscoveryReportContract",
     "AssetFamilyDefinitionContract",
     "AssetNamingPolicyContract",
     "AssetNamingRuleContract",

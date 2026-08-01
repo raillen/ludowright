@@ -1,5 +1,11 @@
 """Application use cases for LudoWright workflows."""
 
+from ludowright.application.asset_discovery import (
+    AssetDiscoveryConfirmationError,
+    AssetDiscoveryError,
+    AssetDiscoveryResult,
+    AssetDiscoveryService,
+)
 from ludowright.application.asset_registry import (
     AssetRegistryConflictError,
     AssetRegistryError,
@@ -51,6 +57,10 @@ from ludowright.application.interviews import (
 )
 
 __all__ = [
+    "AssetDiscoveryConfirmationError",
+    "AssetDiscoveryError",
+    "AssetDiscoveryResult",
+    "AssetDiscoveryService",
     "AssetRegistryConflictError",
     "AssetRegistryError",
     "AssetRegistryNotFoundError",

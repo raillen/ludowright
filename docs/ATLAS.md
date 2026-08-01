@@ -31,6 +31,7 @@ This is the main navigation map for humans and agents. Each subject should have 
 - [`contracts/ASSET_DOMAIN.md`](contracts/ASSET_DOMAIN.md) — asset families, subtypes, ownership, decomposition, hierarchy, priority, status, and completion rules.
 - [`contracts/ASSET_TAXONOMY.md`](contracts/ASSET_TAXONOMY.md) — versioned family/subtype data, naming prefixes, validation boundaries, and compatibility.
 - [`contracts/ASSET_REGISTRY.md`](contracts/ASSET_REGISTRY.md) — v1 YAML registry shape, revisioning, commands, import/export, and rollback semantics.
+- [`contracts/ASSET_DISCOVERY.md`](contracts/ASSET_DISCOVERY.md) — explicit Markdown candidate syntax, deterministic reports, confirmation, ambiguity, and provenance.
 - [`contracts/REFERENCES_AND_VISUAL_JOBS.md`](contracts/REFERENCES_AND_VISUAL_JOBS.md) — visual provenance, revision-bound references, immutable generation jobs, attempt receipts, retries, and reviews.
 - [`contracts/CAPTURE_PROFILES.md`](contracts/CAPTURE_PROFILES.md) — camera, background, lighting, validation, required views, isolated items, technical sheets, and exact versioned inheritance.
 - [`contracts/JSON_SCHEMAS.md`](contracts/JSON_SCHEMAS.md) — generated Draft 2020-12 schemas, registry, fixtures, checksums, drift checking, and compatibility policy.
@@ -49,7 +50,7 @@ This is the main navigation map for humans and agents. Each subject should have 
 - [`commands/DOCUMENTS.md`](commands/DOCUMENTS.md) — incremental document refresh syntax, dry-run, output, and failure behavior.
 - [`commands/DOCS.md`](commands/DOCS.md) — deterministic documentation audit syntax, policy, findings, and check behavior.
 - [`commands/ATLAS.md`](commands/ATLAS.md) — ATLAS generation, integrity checking, and JSON output.
-- [`commands/ASSETS.md`](commands/ASSETS.md) — asset registry CRUD, validation, batch import/export, dry-run, and failure behavior.
+- [`commands/ASSETS.md`](commands/ASSETS.md) — asset registry CRUD, discovery, validation, batch import/export, dry-run, and failure behavior.
 - [`contracts/CLI.md`](contracts/CLI.md) — dual human/JSON surfaces, response envelope, error codes, exit codes, version output, diagnostics, and compatibility rules.
 
 Published machine-readable contracts are stored under `schemas/v1/`. The source models live under `src/ludowright/contracts/`.
@@ -74,6 +75,10 @@ The initial asset taxonomy is loaded by
 `src/ludowright/taxonomy_data/`. Asset registry commands are orchestrated by
 `src/ludowright/application/asset_registry.py` and presented by
 `src/ludowright/cli/assets.py` over the shared structured repositories.
+Asset discovery is orchestrated by
+`src/ludowright/application/asset_discovery.py`; it uses the safe project
+filesystem, explicit Markdown markers, and the registry batch operation for
+confirmed candidates.
 
 ## Codex integration
 
@@ -177,6 +182,7 @@ Planned operational documents:
 - [`decisions/0020-deterministic-documentation-audit.md`](decisions/0020-deterministic-documentation-audit.md) — accepted declarative policy, explicit contradiction rules, stale-reference findings, and read-only audit behavior.
 - [`decisions/0021-data-driven-asset-taxonomy.md`](decisions/0021-data-driven-asset-taxonomy.md) — accepted versioned taxonomy data, family naming prefixes, and validation boundaries.
 - [`decisions/0022-versioned-asset-registry-persistence.md`](decisions/0022-versioned-asset-registry-persistence.md) — accepted v1 YAML registry persistence, event auditing, derived indexing, and rollback.
+- [`decisions/0023-deterministic-asset-discovery.md`](decisions/0023-deterministic-asset-discovery.md) — accepted explicit Markdown candidate declarations, deterministic IDs, confirmation, and fail-closed ambiguity handling.
 - [`decisions/0013-versioned-acyclic-dependency-invalidation-graph.md`](decisions/0013-versioned-acyclic-dependency-invalidation-graph.md) — accepted typed revision-aware DAG dependencies, stale and review propagation, persisted impact paths, safe refresh, and canonical JSON persistence.
 - [`decisions/0012-explicit-backed-up-schema-migrations.md`](decisions/0012-explicit-backed-up-schema-migrations.md) — accepted explicit contiguous migration plans, dry runs, durable SQLite backups, strict receipts, transactional apply, and guarded rollback.
 - [`decisions/0011-rebuildable-sqlite-state-index.md`](decisions/0011-rebuildable-sqlite-state-index.md) — accepted SQLite as a rebuildable derived index with WAL, strict short transactions, source digests, event checkpoints, and explicit consistency states.

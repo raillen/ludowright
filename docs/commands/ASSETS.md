@@ -1,4 +1,4 @@
-# Asset Registry CLI
+# Asset Registry and Discovery CLI
 
 ## Canonical commands
 
@@ -15,6 +15,9 @@ ludowright assets archive PROJECT prop-arcade-cabinet
 ludowright assets validate PROJECT
 ludowright assets import PROJECT imports/assets.json
 ludowright assets export PROJECT exports/assets.json
+ludowright assets discover PROJECT
+ludowright assets discover PROJECT --source .ludowright/documents/brief.md
+ludowright assets discover PROJECT --confirm candidate-<sha256>
 ```
 
 The create and update inputs are individual `asset` contracts. Import inputs
@@ -49,3 +52,30 @@ rollback is reported as `corrupt-state` with the original failure preserved.
 
 `--dry-run` validates all input and reports the planned registry revision
 without changing any project file.
+
+## Document discovery
+
+`assets discover` scans explicit candidate declarations in
+`.ludowright/documents/**/*.md`:
+
+```markdown
+<!-- ludowright:asset-candidate family="character" subtype="humanoid" --> Maya
+```
+
+It ignores declarations inside fenced code blocks and does not interpret free
+text. The first scan is read-only and returns deterministic candidate IDs with
+source evidence. Confirm candidates explicitly and non-interactively by
+repeating `--confirm`:
+
+```bash
+ludowright --json assets discover PROJECT
+ludowright assets discover PROJECT --confirm candidate-<sha256> --dry-run
+ludowright assets discover PROJECT --confirm candidate-<sha256>
+```
+
+Duplicate suggested IDs are reported as `ambiguous`; an ID already present in
+the registry is `rejected`. Neither can be confirmed. A successful confirmation
+creates the selected assets through the registry batch operation and appends
+`asset.discovered` with source path and line provenance. See
+[`ASSET_DISCOVERY.md`](../contracts/ASSET_DISCOVERY.md) for the contract and
+marker grammar.

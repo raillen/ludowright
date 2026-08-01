@@ -1,0 +1,75 @@
+{
+  "$id": "https://schemas.ludowright.dev/v1/asset-discovery-issue.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "One deterministic extraction or confirmation issue.",
+  "properties": {
+    "candidate_ids": {
+      "default": [],
+      "items": {
+        "maxLength": 80,
+        "minLength": 1,
+        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+        "type": "string"
+      },
+      "maxItems": 256,
+      "title": "Candidate Ids",
+      "type": "array"
+    },
+    "code": {
+      "enum": [
+        "invalid-declaration",
+        "duplicate-candidate",
+        "duplicate-asset-id",
+        "existing-asset-id",
+        "candidate-not-found",
+        "confirmation-blocked"
+      ],
+      "title": "Code",
+      "type": "string"
+    },
+    "kind": {
+      "const": "asset-discovery-issue",
+      "default": "asset-discovery-issue",
+      "title": "Kind",
+      "type": "string"
+    },
+    "message": {
+      "maxLength": 4000,
+      "minLength": 1,
+      "title": "Message",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "source_paths": {
+      "default": [],
+      "items": {
+        "maxLength": 1024,
+        "minLength": 1,
+        "pattern": "^[a-z0-9._-]+(?:/[a-z0-9._-]+)*$",
+        "type": "string"
+      },
+      "maxItems": 256,
+      "title": "Source Paths",
+      "type": "array"
+    },
+    "subject": {
+      "maxLength": 1024,
+      "minLength": 1,
+      "title": "Subject",
+      "type": "string"
+    }
+  },
+  "required": [
+    "code",
+    "subject",
+    "message"
+  ],
+  "title": "LudoWright Asset Discovery Issue",
+  "type": "object"
+}

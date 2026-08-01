@@ -39,6 +39,24 @@
       "sha256": "ea44ccc1194ae876fa0b92a8a663589b761eaeae54216cbc2e40045166eda8a9"
     },
     {
+      "file": "asset-discovery-candidate.schema.json",
+      "name": "asset-discovery-candidate",
+      "schema_id": "https://schemas.ludowright.dev/v1/asset-discovery-candidate.schema.json",
+      "sha256": "60f3d416624b0cedb7b9800c3fb5405c37d0acd6d139e70259b394732e48999b"
+    },
+    {
+      "file": "asset-discovery-issue.schema.json",
+      "name": "asset-discovery-issue",
+      "schema_id": "https://schemas.ludowright.dev/v1/asset-discovery-issue.schema.json",
+      "sha256": "d8e054dd7008991e81b4b310e1159a71533c5e0030bb270edb480b6cbcdb6167"
+    },
+    {
+      "file": "asset-discovery-report.schema.json",
+      "name": "asset-discovery-report",
+      "schema_id": "https://schemas.ludowright.dev/v1/asset-discovery-report.schema.json",
+      "sha256": "16e279e4b29ba9ac3ff8feaa96bd888d4d113cbc6c38c345be25501c43fa4af7"
+    },
+    {
       "file": "visual-reference.schema.json",
       "name": "visual-reference",
       "schema_id": "https://schemas.ludowright.dev/v1/visual-reference.schema.json",

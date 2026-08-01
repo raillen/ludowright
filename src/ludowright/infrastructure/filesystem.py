@@ -294,6 +294,60 @@ class ProjectFilesystem:
     ) -> str:
         return self.read_bytes(path, max_bytes=max_bytes).decode(encoding)
 
+    def list_files(
+        self,
+        directory: RepositoryPath,
+        *,
+        suffix: str | None = None,
+        max_files: int = 10_000,
+    ) -> tuple[RepositoryPath, ...]:
+        """List safe regular files below one repository-relative directory."""
+        if not isinstance(directory, RepositoryPath):
+            raise UnsafeProjectPathError("project directories must use RepositoryPath")
+        if suffix is not None and (not suffix or "/" in suffix):
+            raise ValueError("file suffix must be a non-empty filename suffix")
+        if isinstance(max_files, bool) or max_files < 1:
+            raise ValueError("file limit must be a positive integer")
+
+        target = self.resolve(directory)
+        if not os.path.lexists(target):
+            return ()
+        target_stat = os.lstat(target)
+        if stat.S_ISLNK(target_stat.st_mode):
+            raise UnsafeProjectPathError(f"project directory cannot be a symlink: {directory}")
+        if not stat.S_ISDIR(target_stat.st_mode):
+            raise ProjectFilesystemError(f"project path is not a directory: {directory}")
+
+        found: list[RepositoryPath] = []
+
+        def visit(current: Path, relative: RepositoryPath) -> None:
+            try:
+                children = sorted(current.iterdir(), key=lambda item: item.name)
+            except OSError as error:
+                raise ProjectFilesystemError(
+                    f"cannot inspect project directory: {relative}"
+                ) from error
+            for child in children:
+                child_stat = os.lstat(child)
+                child_relative = relative.child(child.name)
+                if stat.S_ISLNK(child_stat.st_mode):
+                    raise UnsafeProjectPathError(
+                        f"project directory contains a symlink: {child_relative}"
+                    )
+                if stat.S_ISDIR(child_stat.st_mode):
+                    visit(child, child_relative)
+                elif stat.S_ISREG(child_stat.st_mode) and (
+                    suffix is None or child.name.endswith(suffix)
+                ):
+                    found.append(child_relative)
+                    if len(found) > max_files:
+                        raise ProjectFilesystemError(
+                            f"project directory exceeds the {max_files}-file limit: {directory}"
+                        )
+
+        visit(target, directory)
+        return tuple(found)
+
     def write_bytes(
         self,
         path: RepositoryPath,
