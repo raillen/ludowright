@@ -91,7 +91,8 @@ def test_compilation_is_deterministic_and_contains_structured_constraints() -> N
     second = compiler.compile(_visual_bible(), _target())
 
     assert first == second
-    assert first.prompt_hash == "2f20cdf56c599ef2e5d018d56bd33ff4600f50ef7cd0a87f6ed1c17c8b232647"
+    expected = json.loads(COMPILED_PROMPT_FIXTURE.read_text(encoding="utf-8"))["prompt_hash"]
+    assert first.prompt_hash == expected
     assert first.positive_constraints == _visual_bible().prompt_constraints
     assert first.negative_constraints == _visual_bible().negative_constraints
     assert "orthographic projection" in first.positive_prompt
