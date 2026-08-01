@@ -115,6 +115,12 @@
       "title": "Creature and Animal Profiles"
     },
     {
+      "canonical_source": "contracts/HARD_SURFACE_PROFILES.md",
+      "path": "contracts/HARD_SURFACE_PROFILES.md",
+      "section": "contracts",
+      "title": "Environment and Hard-Surface Profiles"
+    },
+    {
       "canonical_source": "contracts/VISUAL_BIBLE.md",
       "path": "contracts/VISUAL_BIBLE.md",
       "section": "contracts",
@@ -407,6 +413,12 @@
       "path": "decisions/0030-data-defined-creature-animal-profiles.md",
       "section": "decisions",
       "title": "ADR 0030: Data-Defined Creature and Animal Profiles"
+    },
+    {
+      "canonical_source": "decisions/0031-data-defined-hard-surface-profiles.md",
+      "path": "decisions/0031-data-defined-hard-surface-profiles.md",
+      "section": "decisions",
+      "title": "ADR 0031: Data-Defined Environment and Hard-Surface Profiles"
     },
     {
       "canonical_source": "governance/RFC_TEMPLATE.md",

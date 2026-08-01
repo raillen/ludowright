@@ -141,6 +141,12 @@
       "sha256": "ecad67fbf58644a2138ffc58aeefba4a0f8d79f52adf8c6e5a84e374b3fbddd1"
     },
     {
+      "file": "hard-surface-profile.schema.json",
+      "name": "hard-surface-profile",
+      "schema_id": "https://schemas.ludowright.dev/v1/hard-surface-profile.schema.json",
+      "sha256": "6df2547c80ce11cfc491704f4f1ef35d3dab08ec07a2d236967afd0837a10128"
+    },
+    {
       "file": "creature-profile.schema.json",
       "name": "creature-profile",
       "schema_id": "https://schemas.ludowright.dev/v1/creature-profile.schema.json",

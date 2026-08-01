@@ -75,6 +75,13 @@ from ludowright.contracts.documentation_audit import (
     DocumentationTopicContract,
 )
 from ludowright.contracts.governance import ApprovalContract, DecisionContract
+from ludowright.contracts.hard_surface_profiles import (
+    HardSurfaceComponentContract,
+    HardSurfaceConnectionContract,
+    HardSurfaceProfileContract,
+    HardSurfaceStateContract,
+    HardSurfaceViewContract,
+)
 from ludowright.contracts.humanoid_profiles import (
     HumanoidBodyBaseContract,
     HumanoidProfileContract,
@@ -203,6 +210,11 @@ __all__ = [
     "DocumentationPhraseContract",
     "DocumentationTopicContract",
     "GenerationReceiptContract",
+    "HardSurfaceComponentContract",
+    "HardSurfaceConnectionContract",
+    "HardSurfaceProfileContract",
+    "HardSurfaceStateContract",
+    "HardSurfaceViewContract",
     "HumanoidBodyBaseContract",
     "HumanoidProfileContract",
     "HumanoidWearableContract",

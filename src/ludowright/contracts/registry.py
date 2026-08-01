@@ -36,6 +36,7 @@ from ludowright.contracts.documentation_audit import (
     DocumentationAuditReportContract,
 )
 from ludowright.contracts.governance import ApprovalContract, DecisionContract
+from ludowright.contracts.hard_surface_profiles import HardSurfaceProfileContract
 from ludowright.contracts.humanoid_profiles import HumanoidProfileContract
 from ludowright.contracts.interviews import (
     InterviewInteractionContract,
@@ -190,6 +191,12 @@ CONTRACTS: tuple[ContractDefinition, ...] = (
         "humanoid-profile.schema.json",
         "LudoWright Humanoid Profile",
         HumanoidProfileContract,
+    ),
+    ContractDefinition(
+        "hard-surface-profile",
+        "hard-surface-profile.schema.json",
+        "LudoWright Hard-Surface Profile",
+        HardSurfaceProfileContract,
     ),
     ContractDefinition(
         "creature-profile",

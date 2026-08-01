@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "kind": "hard-surface-profile",
+  "capture_profile": {
+    "schema_version": 1,
+    "kind": "capture-profile",
+    "id": "hard-surface-vehicle",
+    "version": 1,
+    "name": "Hard-Surface Vehicle",
+    "family": "vehicle",
+    "subtype": "vehicle",
+    "camera": {"projection": "orthographic", "framing_margin_percent": 14},
+    "background": {"mode": "neutral"},
+    "lighting": {"mode": "studio", "shadows": "soft"},
+    "validation": {"width": 2048, "height": 2048, "require_full_subject": true, "require_consistent_scale": true, "allow_occlusion": false},
+    "views": [
+      {"id": "front", "name": "Front", "azimuth_degrees": 0, "elevation_degrees": 0, "role": "identity"},
+      {"id": "side", "name": "Side", "azimuth_degrees": 90, "elevation_degrees": 0, "role": "construction"},
+      {"id": "rear", "name": "Rear", "azimuth_degrees": 180, "elevation_degrees": 0, "role": "construction"},
+      {"id": "top", "name": "Top", "azimuth_degrees": 0, "elevation_degrees": 90, "role": "silhouette"},
+      {"id": "underside", "name": "Underside", "azimuth_degrees": 0, "elevation_degrees": -90, "role": "construction"},
+      {"id": "exploded", "name": "Exploded", "azimuth_degrees": 45, "elevation_degrees": 20, "role": "construction"}
+    ],
+    "requirements": [
+      {"id": "root", "name": "Root", "requirement_kind": "component"},
+      {"id": "cabin", "name": "Cabin", "requirement_kind": "component"},
+      {"id": "wheels", "name": "Wheels", "requirement_kind": "component"},
+      {"id": "doors", "name": "Doors", "requirement_kind": "component", "required": false},
+      {"id": "lights", "name": "Lights", "requirement_kind": "component", "required": false},
+      {"id": "parked", "name": "Parked", "requirement_kind": "state"},
+      {"id": "driving", "name": "Driving", "requirement_kind": "state"},
+      {"id": "damaged", "name": "Damaged", "requirement_kind": "state", "required": false}
+    ],
+    "sheets": []
+  },
+  "profile_kind": "vehicle",
+  "construction_views": [
+    {"view_id": "front", "role": "whole-asset", "guidance": "Establish vehicle proportions, stance, and front identity."},
+    {"view_id": "side", "role": "side", "guidance": "Show wheelbase, ground clearance, cabin volume, and door seams."},
+    {"view_id": "rear", "role": "rear", "guidance": "Show rear structure, lights, and service access."},
+    {"view_id": "top", "role": "top", "guidance": "Show roof footprint, wheel alignment, and main surface breaks."},
+    {"view_id": "underside", "role": "underside", "guidance": "Show wheels, axles, clearance, and lower chassis construction."},
+    {"view_id": "exploded", "role": "exploded", "guidance": "Separate chassis, cabin, wheels, doors, and lights while preserving assembly relationships."}
+  ],
+  "components": [
+    {"id": "root", "name": "Root", "kind": "root"},
+    {"id": "cabin", "name": "Cabin", "kind": "structure"},
+    {"id": "wheels", "name": "Wheels", "kind": "wheel"},
+    {"id": "doors", "name": "Doors", "kind": "moving-part", "required": false},
+    {"id": "lights", "name": "Lights", "kind": "fixture", "required": false}
+  ],
+  "connection_matrix": [
+    {"source_component_id": "root", "target_component_id": "cabin", "kind": "attachment", "guidance": "Keep cabin placement, support surfaces, and body seams consistent."},
+    {"source_component_id": "root", "target_component_id": "wheels", "kind": "mount", "guidance": "Show wheel centers, axle alignment, and clearance."},
+    {"source_component_id": "cabin", "target_component_id": "doors", "kind": "hinge", "guidance": "Show door hinge axes and the closed-state seam.", "required": false},
+    {"source_component_id": "root", "target_component_id": "lights", "kind": "attachment", "guidance": "Show the light housing interface and service boundary.", "required": false}
+  ],
+  "states": [
+    {"id": "parked", "name": "Parked", "guidance": "Use a stable resting configuration with all construction lines readable."},
+    {"id": "driving", "name": "Driving", "guidance": "Show the approved operational pose without changing the canonical vehicle structure."},
+    {"id": "damaged", "name": "Damaged", "guidance": "Show only approved damage that affects the silhouette or operation.", "required": false}
+  ],
+  "outputs": [
+    {"id": "assembled-turnaround", "name": "Assembled Turnaround", "layout": "turnaround", "view_ids": ["front", "side", "rear", "top", "underside"], "subject_modes": ["asset", "components", "states"], "separate_files": true, "assembled_sheet": true},
+    {"id": "vehicle-exploded", "name": "Vehicle Exploded", "layout": "exploded", "view_ids": ["exploded", "underside"], "subject_modes": ["components", "states"], "separate_files": true, "assembled_sheet": false}
+  ]
+}

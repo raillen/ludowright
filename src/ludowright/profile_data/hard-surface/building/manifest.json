@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "kind": "hard-surface-profile",
+  "capture_profile": {
+    "schema_version": 1,
+    "kind": "capture-profile",
+    "id": "hard-surface-building",
+    "version": 1,
+    "name": "Hard-Surface Building",
+    "family": "architecture",
+    "subtype": "building",
+    "camera": {"projection": "orthographic", "framing_margin_percent": 14},
+    "background": {"mode": "neutral"},
+    "lighting": {"mode": "studio", "shadows": "soft"},
+    "validation": {"width": 2048, "height": 2048, "require_full_subject": true, "require_consistent_scale": true, "allow_occlusion": false},
+    "views": [
+      {"id": "front", "name": "Front", "azimuth_degrees": 0, "elevation_degrees": 0, "role": "identity"},
+      {"id": "side", "name": "Side", "azimuth_degrees": 90, "elevation_degrees": 0, "role": "construction"},
+      {"id": "rear", "name": "Rear", "azimuth_degrees": 180, "elevation_degrees": 0, "role": "construction"},
+      {"id": "top", "name": "Top", "azimuth_degrees": 0, "elevation_degrees": 90, "role": "silhouette"},
+      {"id": "interior", "name": "Interior", "azimuth_degrees": 45, "elevation_degrees": 0, "role": "construction"}
+    ],
+    "requirements": [
+      {"id": "root", "name": "Root", "requirement_kind": "component"},
+      {"id": "roof", "name": "Roof", "requirement_kind": "component"},
+      {"id": "openings", "name": "Openings", "requirement_kind": "component"},
+      {"id": "facade-details", "name": "Facade Details", "requirement_kind": "component", "required": false},
+      {"id": "closed", "name": "Closed", "requirement_kind": "state"},
+      {"id": "construction", "name": "Construction", "requirement_kind": "state"},
+      {"id": "damaged", "name": "Damaged", "requirement_kind": "state", "required": false}
+    ],
+    "sheets": []
+  },
+  "profile_kind": "building",
+  "construction_views": [
+    {"view_id": "front", "role": "whole-asset", "guidance": "Establish building massing, facade rhythm, entrances, and scale cues."},
+    {"view_id": "side", "role": "side", "guidance": "Show depth, wall thickness, roof slope, and side openings."},
+    {"view_id": "rear", "role": "rear", "guidance": "Show service surfaces, secondary openings, and rear structure."},
+    {"view_id": "top", "role": "top", "guidance": "Show the roof footprint, access points, and structural layout."},
+    {"view_id": "interior", "role": "interior", "guidance": "Show the interior shell, openings, and primary structural interfaces."}
+  ],
+  "components": [
+    {"id": "root", "name": "Root", "kind": "root"},
+    {"id": "roof", "name": "Roof", "kind": "panel"},
+    {"id": "openings", "name": "Openings", "kind": "opening"},
+    {"id": "facade-details", "name": "Facade Details", "kind": "fixture", "required": false}
+  ],
+  "connection_matrix": [
+    {"source_component_id": "root", "target_component_id": "roof", "kind": "attachment", "guidance": "Keep roof bearing surfaces, overhang, and wall junctions explicit."},
+    {"source_component_id": "root", "target_component_id": "openings", "kind": "socket", "guidance": "Show opening dimensions and the wall boundary that receives each opening."},
+    {"source_component_id": "root", "target_component_id": "facade-details", "kind": "mount", "guidance": "Show facade-detail attachment surfaces and service clearances.", "required": false}
+  ],
+  "states": [
+    {"id": "closed", "name": "Closed", "guidance": "Use the standard completed shell with openings in their default condition."},
+    {"id": "construction", "name": "Construction", "guidance": "Expose the structural sequence without changing the canonical building footprint."},
+    {"id": "damaged", "name": "Damaged", "guidance": "Show only approved structural or facade damage.", "required": false}
+  ],
+  "outputs": [
+    {"id": "assembled-turnaround", "name": "Assembled Turnaround", "layout": "turnaround", "view_ids": ["front", "side", "rear", "top", "interior"], "subject_modes": ["asset", "components", "states"], "separate_files": true, "assembled_sheet": true},
+    {"id": "building-construction", "name": "Building Construction", "layout": "exploded", "view_ids": ["interior", "top"], "subject_modes": ["components", "states"], "separate_files": true, "assembled_sheet": false}
+  ]
+}

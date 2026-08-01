@@ -76,8 +76,10 @@ assembly from interview answers remains a later bounded capability.
   fantasy creatures with anatomy-specific views, components, states, and
   outputs (implemented through PR40; project-local profile persistence remains
   later);
-- initial profiles for props, architecture, modular environments, foliage, UI,
-  VFX, and animation references;
+- initial environment and hard-surface profiles for props, vehicles, buildings,
+  modular kits, and interiors with directed connection matrices (implemented
+  through PR41; project-local profile persistence remains later);
+- initial profiles for foliage, UI, VFX, and animation references;
 - visual-job planning and profile-aware job derivation.
 
 ### 0.6 Codex and ImageGen Workflow

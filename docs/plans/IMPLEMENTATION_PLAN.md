@@ -399,7 +399,18 @@ or image generation is introduced.
 
 ### PR 41 — Environment and hard-surface profiles
 
-- props, vehicles, buildings, modular kits, interiors, and connection matrices.
+Status: implemented in the current slice. The v1 `hard-surface-profile`
+contract loads five versioned package manifests for props, vehicles, buildings,
+modular kits, and interiors. It validates exact asset-family/subtype mapping,
+construction components, directed connection matrices, states, views, and
+outputs, then deterministically derives the existing generic capture profile.
+No project-local profile persistence, visual-job planning, provider execution,
+event-log change, SQLite migration, dependency-graph mutation, or image
+generation is introduced.
+
+- props, vehicles, buildings, modular kits, and interiors;
+- construction components and directed connection matrices;
+- deterministic assembled and construction-detail outputs.
 
 ### PR 42 — Foliage, UI, VFX, and animation profiles
 
