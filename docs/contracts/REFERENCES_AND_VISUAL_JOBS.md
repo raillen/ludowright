@@ -131,6 +131,25 @@ and its request fingerprint.
 
 Changing prompts, references, profile revision, output count, target, or another request input creates a **new job**, normally with a new request fingerprint and an explicit superseding relationship.
 
+## Deterministic visual-job planning
+
+The pure `VisualJobPlanner` derives required immutable jobs from explicit assets,
+resolved capture profiles, selected references, and an optional dependency graph.
+It creates one job per required capture sheet and required asset, component,
+variant, or state target. Optional sheets and requirements are not planned.
+
+Planning is published as the `visual-job-plan` v1 contract. A plan contains
+sorted jobs, deterministic dependency order, profile-revision batches,
+provider-neutral workload estimates, and stable blocker codes. It is `ready` only
+when required inputs, exact approved references, dependencies, and visual-bible
+budget limits are satisfied; otherwise it is `blocked` with diagnostics.
+
+The planner consumes the dependency graph without mutating it, and does not
+write project files, event-log entries, SQLite state, prompts, receipts, or image
+outputs. Profile selection, provider execution, and persistence remain separate
+application stages. See the canonical [Visual Job Plans contract](VISUAL_JOB_PLANS.md)
+and [ADR 0033](../decisions/0033-deterministic-visual-job-planner.md).
+
 ## Retries versus superseding jobs
 
 A retry means:

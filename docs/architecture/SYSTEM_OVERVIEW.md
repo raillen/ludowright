@@ -30,7 +30,7 @@ Owns:
 - decisions and approvals;
 - documents and canonical-source relationships;
 - assets, components, variants, states, and dependencies;
-- visual bibles, generic capture profiles, and specialized humanoid/wearable, creature/animal, environment/hard-surface, and visual-specialty profiles;
+- visual bibles, generic capture profiles, specialized humanoid/wearable, creature/animal, environment/hard-surface, and visual-specialty profiles, and deterministic visual-job plans;
 - prompt templates and compiled prompt hashes;
 - visual jobs, generations, references, and receipts;
 - audits, issues, milestones, packages, and releases;
@@ -44,7 +44,7 @@ Coordinates domain behavior through explicit use cases:
 - answer guided intake;
 - generate or refresh documents;
 - discover and decompose assets;
-- plan visual jobs;
+- plan visual jobs through the pure profile-aware `VisualJobPlanner`;
 - compile provider-neutral prompts from visual bibles and approved references;
 - record a generation result;
 - approve, reject, or supersede a reference;
@@ -143,7 +143,9 @@ Examples:
 
 ## Visual-generation architecture
 
-The core creates a structured job. Codex executes it through ImageGen, then records the result. A visual job identifies:
+The core creates a structured visual-job plan and immutable jobs. Codex will
+execute ready jobs through ImageGen in a later slice, then record the result. A
+visual job identifies:
 
 - asset and component;
 - operation and required view;

@@ -430,6 +430,16 @@ dependency-graph mutation, or image generation is introduced.
 
 ### PR 43 — Visual-job planner
 
+Status: implemented in the current slice. The pure `VisualJobPlanner` derives
+required jobs from resolved capture profiles and explicit assets, validates
+exact approved references, consumes the dependency graph for deterministic
+ordering, groups jobs by exact profile revision, estimates provider-neutral
+workload, and returns the published `visual-job-plan` v1 contract with ready or
+blocked state. It does not persist plans, mutate the graph, write the event log
+or SQLite, select project-local profiles, compile prompts, call a provider, or
+execute image generation. The `visual-job-plan` schema, fixture, tests, and ADR
+are published.
+
 - required-job derivation;
 - dependency ordering;
 - batching;

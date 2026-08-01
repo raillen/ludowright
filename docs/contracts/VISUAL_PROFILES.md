@@ -70,8 +70,10 @@ capture_profile = profile.to_capture_profile()
 
 The loader rejects noncanonical IDs, missing resources, duplicate JSON keys,
 UTF-8 BOMs, invalid UTF-8, contract errors, and domain violations. Package
-data is not a project-local persisted catalog; project selection and
-profile-aware visual-job planning remain later roadmap slices.
+data is not a project-local persisted catalog; project selection remains a later
+roadmap slice. Profile-aware visual-job planning is implemented by the generic
+deterministic planner and is documented in
+[`VISUAL_JOB_PLANS.md`](VISUAL_JOB_PLANS.md).
 
 ## Published contract and compatibility
 

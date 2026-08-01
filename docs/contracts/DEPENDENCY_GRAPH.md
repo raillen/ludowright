@@ -55,6 +55,12 @@ The PR35 asset workbook derives its `Dependencies` and freshness views from
 this graph. The workbook is never authoritative for graph edges or revisions;
 it records the graph revision it observed so a report can be audited.
 
+The visual-job planner consumes this graph as an input. It uses incoming asset
+`requires` edges to order planned jobs and reports stale or omitted prerequisite
+assets as blockers. It does not mutate or persist the graph. The graph exposes a
+deterministic topological order for this projection and for other read-only
+consumers.
+
 ## Direction
 
 Every edge points from an input source to a dependent target:

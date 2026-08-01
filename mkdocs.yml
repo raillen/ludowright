@@ -30,6 +30,7 @@ nav:
       - Asset Workbook: contracts/ASSET_WORKBOOK.md
       - Asset Audit: contracts/ASSET_AUDIT.md
       - References and Visual Jobs: contracts/REFERENCES_AND_VISUAL_JOBS.md
+      - Visual Job Plans: contracts/VISUAL_JOB_PLANS.md
       - Capture Profiles: contracts/CAPTURE_PROFILES.md
       - Humanoid and Wearable Profiles: contracts/HUMANOID_PROFILES.md
       - Creature and Animal Profiles: contracts/CREATURE_PROFILES.md
@@ -94,6 +95,7 @@ nav:
       - ADR 0030 — Creature and Animal Profiles: decisions/0030-data-defined-creature-animal-profiles.md
       - ADR 0031 — Environment and Hard-Surface Profiles: decisions/0031-data-defined-hard-surface-profiles.md
       - ADR 0032 — Visual Specialty Profiles: decisions/0032-data-defined-visual-specialty-profiles.md
+      - ADR 0033 — Visual Job Planner: decisions/0033-deterministic-visual-job-planner.md
       - ADR Template: decisions/0000-template.md
   - Operations:
       - Documentation Site: operations/DOCUMENTATION_SITE.md

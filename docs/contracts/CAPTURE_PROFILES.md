@@ -27,7 +27,9 @@ profile. The first specialized package profiles are the v1
 [`HUMANOID_PROFILES.md`](HUMANOID_PROFILES.md),
 [`CREATURE_PROFILES.md`](CREATURE_PROFILES.md), and
 [`HARD_SURFACE_PROFILES.md`](HARD_SURFACE_PROFILES.md) contracts. Project-local
-profile catalogs and visual-job planning remain later visual-foundation slices.
+profile catalogs remain a later slice. Profile-aware visual-job planning is
+implemented by the pure `VisualJobPlanner`; it consumes resolved profiles and
+does not persist or execute jobs.
 
 ## Identity and revisions
 
