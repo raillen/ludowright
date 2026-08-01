@@ -1,0 +1,30 @@
+{
+  "archive_member_count": 3,
+  "artifacts": [
+    {
+      "kind": "package-manifest",
+      "path": "release/manifest.json",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "size_bytes": 1
+    },
+    {
+      "kind": "package-index",
+      "path": "release/nightly.index.json",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "size_bytes": 1
+    },
+    {
+      "kind": "package-archive",
+      "path": "release/nightly.zip",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "size_bytes": 1
+    }
+  ],
+  "integrity": "sha256",
+  "kind": "release-manifest",
+  "package_id": "nightly",
+  "project_id": "locadora-2000",
+  "release_directory": "release",
+  "release_manifest_path": "release/nightly.release.json",
+  "schema_version": 1
+}

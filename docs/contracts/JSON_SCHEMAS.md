@@ -26,6 +26,8 @@ It uses JSON Schema Draft 2020-12 and contains:
 | Contract | Published file |
 |---|---|
 | Project | `project.schema.json` |
+| Release manifest | `release-manifest.schema.json` |
+| Release verification report | `release-verification.schema.json` |
 | Package manifest | `package-manifest.schema.json` |
 | Package index | `package-index.schema.json` |
 | Decision | `decision.schema.json` |
@@ -156,7 +158,7 @@ A pull request cannot intentionally change contract code while leaving the publi
 
 The manifest supports packaging, cache validation, release verification, and downstream integrity checks.
 
-Checksums cover the canonical text of each generated schema. They do not sign or authenticate a release. Cryptographic release signing belongs to the future packaging and release process.
+Checksums cover the canonical text of each generated schema. They do not sign or authenticate a release. The local `release-manifest` uses the same SHA-256 integrity model; cryptographic release signing belongs to a future packaging and release process.
 
 ## Schema IDs
 
@@ -264,7 +266,8 @@ This publication does not yet define:
 - SQLite tables;
 - migration execution;
 - CLI JSON envelopes;
-- package manifests;
 - online schema hosting.
 
-Those are introduced in later implementation phases while consuming these canonical contracts.
+Package manifests and local release verification are published contracts that
+consume these schemas; the remaining boundaries are introduced in later
+implementation phases.

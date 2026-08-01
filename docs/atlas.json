@@ -653,6 +653,24 @@
       "path": "decisions/0044-deterministic-project-audit.md",
       "section": "decisions",
       "title": "ADR 0044: Deterministic Read-Only Global Project Audit"
+    },
+    {
+      "canonical_source": "commands/RELEASES.md",
+      "path": "commands/RELEASES.md",
+      "section": "commands",
+      "title": "Release Verification CLI"
+    },
+    {
+      "canonical_source": "contracts/RELEASE_VERIFICATION.md",
+      "path": "contracts/RELEASE_VERIFICATION.md",
+      "section": "contracts",
+      "title": "Release Verification Contract"
+    },
+    {
+      "canonical_source": "decisions/0045-deterministic-release-verification.md",
+      "path": "decisions/0045-deterministic-release-verification.md",
+      "section": "decisions",
+      "title": "ADR 0045: Deterministic Local Release Verification"
     }
   ],
   "kind": "atlas-metadata",

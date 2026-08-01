@@ -88,5 +88,6 @@ O builder consome `package-manifest v1` sem alterá-lo. Não há migração de
 projetos, event log, dependency graph ou SQLite. Mudanças incompatíveis no
 índice exigem nova versão de schema, fixture, publicação e ADR.
 
-Assinatura, auditoria de prontidão, verificação de release e publicação ficam
-fora desta etapa e pertencem aos PRs seguintes.
+O comando `release verify` consome o manifesto, o índice e o ZIP já criados,
+confirma os checksums cruzados e prepara um `release-manifest` create-only.
+Assinatura digital e publicação remota continuam fora do contrato local.

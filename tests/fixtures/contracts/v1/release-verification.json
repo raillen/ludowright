@@ -1,0 +1,63 @@
+{
+  "audit_findings": [],
+  "audit_source_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+  "audit_state": "ready",
+  "dry_run": true,
+  "gates": [
+    {
+      "code": "project-audit",
+      "detail": "project audit has no findings",
+      "paths": [],
+      "state": "passed"
+    }
+  ],
+  "kind": "release-verification",
+  "manifest_state": "planned",
+  "package_id": "nightly",
+  "project_id": "locadora-2000",
+  "project_name": "Locadora 2000",
+  "release_directory": "release",
+  "release_manifest": {
+    "archive_member_count": 3,
+    "artifacts": [
+      {
+        "kind": "package-manifest",
+        "path": "release/manifest.json",
+        "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+        "size_bytes": 1
+      },
+      {
+        "kind": "package-index",
+        "path": "release/nightly.index.json",
+        "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+        "size_bytes": 1
+      },
+      {
+        "kind": "package-archive",
+        "path": "release/nightly.zip",
+        "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+        "size_bytes": 1
+      }
+    ],
+    "integrity": "sha256",
+    "kind": "release-manifest",
+    "package_id": "nightly",
+    "project_id": "locadora-2000",
+    "release_directory": "release",
+    "release_manifest_path": "release/nightly.release.json",
+    "schema_version": 1
+  },
+  "release_manifest_path": "release/nightly.release.json",
+  "schema_version": 1,
+  "state": "ready",
+  "summary": {
+    "archive_member_count": 3,
+    "archive_size_bytes": 1,
+    "artifact_count": 3,
+    "audit_error_count": 0,
+    "audit_warning_count": 0,
+    "gate_count": 1
+  },
+  "valid": true,
+  "warning_policy": "allow"
+}

@@ -57,6 +57,10 @@ from ludowright.contracts.package_manifest import PackageManifestContract
 from ludowright.contracts.project import ProjectContract
 from ludowright.contracts.project_audit import ProjectAuditReportContract
 from ludowright.contracts.prompt_compiler import CompiledPromptContract, PromptTemplateContract
+from ludowright.contracts.release_verification import (
+    ReleaseManifestContract,
+    ReleaseVerificationReportContract,
+)
 from ludowright.contracts.technical_sheets import (
     TechnicalSheetReportContract,
     TechnicalSheetRequestContract,
@@ -99,6 +103,18 @@ CONTRACTS: tuple[ContractDefinition, ...] = (
         "project-audit.schema.json",
         "LudoWright Project Audit Report",
         ProjectAuditReportContract,
+    ),
+    ContractDefinition(
+        "release-manifest",
+        "release-manifest.schema.json",
+        "LudoWright Release Manifest",
+        ReleaseManifestContract,
+    ),
+    ContractDefinition(
+        "release-verification",
+        "release-verification.schema.json",
+        "LudoWright Release Verification Report",
+        ReleaseVerificationReportContract,
     ),
     ContractDefinition(
         "package-manifest",

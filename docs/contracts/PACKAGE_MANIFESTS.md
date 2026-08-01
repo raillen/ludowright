@@ -81,5 +81,6 @@ changes require a new schema version, generated schema, compatibility fixture,
 migration guidance, and ADR.
 
 The manifest does not sign content. PR54 uses its checksums to construct a
-reproducible archive; release signing and blocking readiness checks remain
-later roadmap stages.
+reproducible archive; PR56 provides blocking local release verification and a
+checksum manifest. Digital signing and remote publication remain later
+roadmap stages.

@@ -80,6 +80,14 @@ class PackageArchiveResult:
     member_count: int
 
 
+@dataclass(frozen=True, slots=True)
+class PackageArchiveInspection:
+    """Validated ZIP identity together with its bounded member payloads."""
+
+    result: PackageArchiveResult
+    entries: tuple[PackageArchiveEntry, ...]
+
+
 class PackageFileScanner:
     """Enumerate regular project files without following links or special files."""
 
@@ -302,6 +310,10 @@ class PackageArchiveBuilder:
 
     def validate(self, payload: bytes) -> PackageArchiveResult:
         """Validate an existing canonical ZIP payload and return its identity."""
+        return self.inspect(payload).result
+
+    def inspect(self, payload: bytes) -> PackageArchiveInspection:
+        """Validate an existing ZIP and expose its already-read members."""
         if not isinstance(payload, bytes) or not payload:
             raise PackageArchiveError("package ZIP must contain bytes")
         if len(payload) > PACKAGE_ARCHIVE_MAX_BYTES:
@@ -325,11 +337,12 @@ class PackageArchiveBuilder:
                 raise
             raise PackageArchiveError("package ZIP is malformed") from error
         _validate_archive_payload(payload, entries)
-        return PackageArchiveResult(
+        result = PackageArchiveResult(
             payload=payload,
             sha256=hashlib.sha256(payload).hexdigest(),
             member_count=len(entries),
         )
+        return PackageArchiveInspection(result=result, entries=entries)
 
 
 def _hash_regular_file(
@@ -550,6 +563,7 @@ __all__ = [
     "PackageArchiveBuilder",
     "PackageArchiveEntry",
     "PackageArchiveError",
+    "PackageArchiveInspection",
     "PackageArchiveResult",
     "PackageExcludedPath",
     "PackageFileScanner",

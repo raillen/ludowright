@@ -1,0 +1,124 @@
+{
+  "$defs": {
+    "ReleaseArtifactContract": {
+      "additionalProperties": false,
+      "description": "One release artifact and its exact SHA-256 identity.",
+      "properties": {
+        "kind": {
+          "enum": [
+            "package-manifest",
+            "package-index",
+            "package-archive"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "path": {
+          "maxLength": 1024,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)*$",
+          "title": "Path",
+          "type": "string"
+        },
+        "sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "size_bytes": {
+          "maximum": 2147483647,
+          "minimum": 0,
+          "title": "Size Bytes",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "kind",
+        "path",
+        "size_bytes",
+        "sha256"
+      ],
+      "title": "ReleaseArtifactContract",
+      "type": "object"
+    }
+  },
+  "$id": "https://schemas.ludowright.dev/v1/release-manifest.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Checksum-verifiable manifest prepared beside a local package release.",
+  "properties": {
+    "archive_member_count": {
+      "maximum": 2147483647,
+      "minimum": 0,
+      "title": "Archive Member Count",
+      "type": "integer"
+    },
+    "artifacts": {
+      "items": {
+        "$ref": "#/$defs/ReleaseArtifactContract"
+      },
+      "maxItems": 3,
+      "minItems": 3,
+      "title": "Artifacts",
+      "type": "array"
+    },
+    "integrity": {
+      "const": "sha256",
+      "default": "sha256",
+      "title": "Integrity",
+      "type": "string"
+    },
+    "kind": {
+      "const": "release-manifest",
+      "default": "release-manifest",
+      "title": "Kind",
+      "type": "string"
+    },
+    "package_id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Package Id",
+      "type": "string"
+    },
+    "project_id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Project Id",
+      "type": "string"
+    },
+    "release_directory": {
+      "maxLength": 1024,
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)*$",
+      "title": "Release Directory",
+      "type": "string"
+    },
+    "release_manifest_path": {
+      "maxLength": 1024,
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)*$",
+      "title": "Release Manifest Path",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "project_id",
+    "package_id",
+    "release_directory",
+    "release_manifest_path",
+    "archive_member_count",
+    "artifacts"
+  ],
+  "title": "LudoWright Release Manifest",
+  "type": "object"
+}
