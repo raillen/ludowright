@@ -55,13 +55,24 @@ uv run ludowright quality check
 The command executes, in order:
 
 1. all pre-commit hooks;
-2. the pytest suite with coverage;
-3. a clean-room installation test for the wheel and source distribution;
-4. generated JSON Schema drift verification;
-5. ATLAS canonical-source, link, and orphan validation;
-6. the deterministic documentation audit;
-7. the strict documentation build;
-8. the Python dependency audit.
+2. the focused pytest suite with coverage;
+3. the deterministic local-first end-to-end smoke test;
+4. a clean-room installation test for the wheel and source distribution;
+5. generated JSON Schema drift verification;
+6. ATLAS canonical-source, link, and orphan validation;
+7. the deterministic documentation audit;
+8. the strict documentation build;
+9. the Python dependency audit.
+
+The end-to-end check initializes the versioned `minimal` project, registers an
+asset, exports its derived ODS workbook, executes a fixture ImageGen provider,
+applies a human review, assembles a technical sheet, builds a reproducible
+package, audits the project, and verifies the local release. It uses only
+repository fixtures and local adapters. Run only this bounded check with:
+
+```bash
+uv run pytest -m end_to_end --no-cov
+```
 
 The clean-room check builds both publishable formats into a temporary
 directory, creates a new virtual environment for each format, installs the

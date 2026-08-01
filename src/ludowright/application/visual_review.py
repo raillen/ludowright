@@ -47,6 +47,7 @@ from ludowright.infrastructure import (
     APPROVAL_DIRECTORY,
     DEFAULT_DEPENDENCY_GRAPH_PATH,
     DEFAULT_EVENT_LOG_PATH,
+    DEFAULT_STATE_STORE_PATH,
     VISUAL_REVIEW_DIRECTORY,
     VISUAL_REVIEW_LOCK,
     DependencyGraphRepository,
@@ -54,6 +55,7 @@ from ludowright.infrastructure import (
     JsonDocumentRepository,
     ProjectFilesystem,
     RepositoryPath,
+    StateStore,
     StructuredDocumentSnapshot,
     VisualReviewRepository,
 )
@@ -579,6 +581,7 @@ class VisualReviewService:
                     timeout=5.0,
                 )
                 changed[DEFAULT_EVENT_LOG_PATH.value] = before[DEFAULT_EVENT_LOG_PATH.value]
+                _record_state_checkpoint_if_initialized(self._filesystem, event.occurred_at)
                 after_event = event.sequence
         except BaseException as error:
             try:
@@ -719,6 +722,21 @@ def _read_optional_bytes(filesystem: ProjectFilesystem, path: RepositoryPath) ->
         return filesystem.read_bytes(path, max_bytes=64 * 1024 * 1024)
     except FileNotFoundError:
         return None
+
+
+def _record_state_checkpoint_if_initialized(
+    filesystem: ProjectFilesystem,
+    occurred_at: datetime,
+) -> None:
+    """Keep the derived event checkpoint current without bootstrapping ad hoc projects."""
+    try:
+        filesystem.resolve(DEFAULT_STATE_STORE_PATH, must_exist=True)
+    except FileNotFoundError:
+        return
+    StateStore(filesystem).record_event_checkpoint(
+        EventLog(filesystem).replay(),
+        updated_at=occurred_at,
+    )
 
 
 def _restore_files(filesystem: ProjectFilesystem, before: dict[str, bytes | None]) -> None:

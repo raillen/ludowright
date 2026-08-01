@@ -72,6 +72,7 @@ packages = ["src/ludowright", "integrations"]
 addopts = "--strict-config --strict-markers --cov=ludowright --cov-report=term-missing"
 markers = [
   "clean_installation: validate published distributions in isolated environments",
+  "end_to_end: validate the complete local-first project workflow",
 ]
 testpaths = ["tests"]
 

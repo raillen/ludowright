@@ -628,7 +628,7 @@
       "canonical_source": "quality/ENGINEERING_QUALITY.md",
       "path": "quality/ENGINEERING_QUALITY.md",
       "section": "quality",
-      "title": "Engineering and Clean-Install Baseline"
+      "title": "Engineering, E2E, and Clean-Install Baseline"
     },
     {
       "canonical_source": "quality/CODEX_AGENT_EVALS.md",

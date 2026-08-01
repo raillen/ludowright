@@ -745,11 +745,7 @@ def _audit_assets(context: _AuditContext) -> AssetRegistryContract | None:
             severity=finding.severity,
             subject=finding.subject,
             paths=(path, DEFAULT_DEPENDENCY_GRAPH_PATH.value),
-            related_ids=tuple(
-                value
-                for value in (finding.asset_id, *finding.related_subjects)
-                if value is not None
-            ),
+            related_ids=(finding.asset_id,) if finding.asset_id is not None else (),
             message=finding.message,
             remediation="complete the asset registry and dependency prerequisites",
         )

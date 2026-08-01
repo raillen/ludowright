@@ -19,7 +19,7 @@ from ludowright.application import (
     ProjectAuditService,
 )
 from ludowright.cli.app import app
-from ludowright.contracts import ProjectContract
+from ludowright.contracts import AssetRegistryContract, ProjectContract
 from ludowright.domain import (
     DependencyGraph,
     DependencyKey,
@@ -38,7 +38,7 @@ from ludowright.infrastructure import (
     RepositoryPath,
     StateStore,
 )
-from ludowright.infrastructure.structured import JsonDocumentRepository
+from ludowright.infrastructure.structured import JsonDocumentRepository, YamlDocumentRepository
 
 runner = CliRunner()
 
@@ -238,6 +238,32 @@ def test_audit_validates_package_manifest_index_and_archive(tmp_path: Path) -> N
     package_category = next(item for item in report.categories if item.category == "package")
     assert package_category.item_count == 2
     assert (root / "release" / "demo.zip").is_file()
+
+
+def test_audit_keeps_semantic_asset_subjects_out_of_slug_related_ids(tmp_path: Path) -> None:
+    _root, filesystem = _project(tmp_path)
+    registry = json.loads(
+        Path("tests/fixtures/contracts/v1/asset-registry.json").read_text(encoding="utf-8")
+    )
+    registry["assets"][0]["id"] = "prop-lantern"
+    registry["assets"][0]["components"][0]["id"] = "lantern-body"
+    YamlDocumentRepository(
+        filesystem,
+        RepositoryPath("assets/registry.yaml"),
+        AssetRegistryContract,
+    ).create(AssetRegistryContract.model_validate(registry))
+
+    report = ProjectAuditService(filesystem).audit().report
+    metadata_finding = next(
+        finding
+        for finding in report.findings
+        if finding.code == "asset-incomplete-production-metadata"
+    )
+
+    assert metadata_finding.related_ids == ("prop-lantern",)
+    assert all(
+        ":" not in related_id for finding in report.findings for related_id in finding.related_ids
+    )
 
 
 __all__ = []

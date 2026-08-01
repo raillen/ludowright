@@ -90,7 +90,7 @@ nav:
       - Low-poly 3D Example: examples/LOW_POLY_3D.md
       - Modular Environment Example: examples/MODULAR_ENVIRONMENT.md
   - Quality:
-      - Engineering and Clean-Install Baseline: quality/ENGINEERING_QUALITY.md
+      - Engineering, E2E, and Clean-Install Baseline: quality/ENGINEERING_QUALITY.md
       - Codex Agent Evals: quality/CODEX_AGENT_EVALS.md
   - Governance:
       - RFC Template: governance/RFC_TEMPLATE.md

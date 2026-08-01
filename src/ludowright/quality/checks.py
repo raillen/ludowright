@@ -44,7 +44,14 @@ class CheckResult:
 
 QUALITY_CHECKS: tuple[CheckSpec, ...] = (
     CheckSpec("pre-commit", ("uv", "run", "pre-commit", "run", "--all-files")),
-    CheckSpec("tests", ("uv", "run", "pytest", "-m", "not clean_installation")),
+    CheckSpec(
+        "tests",
+        ("uv", "run", "pytest", "-m", "not clean_installation and not end_to_end"),
+    ),
+    CheckSpec(
+        "end-to-end",
+        ("uv", "run", "pytest", "-m", "end_to_end", "--no-cov"),
+    ),
     CheckSpec(
         "clean-installation",
         ("uv", "run", "pytest", "-m", "clean_installation", "--no-cov"),
