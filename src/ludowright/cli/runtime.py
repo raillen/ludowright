@@ -16,6 +16,7 @@ from ludowright.application.asset_registry import (
     AssetRegistryNotFoundError,
     AssetRegistryRollbackError,
 )
+from ludowright.application.asset_workbook import AssetWorkbookError
 from ludowright.application.document_refresh import DocumentRefreshError
 from ludowright.application.documentation_audit import DocumentationAuditError
 from ludowright.contracts.cli import (
@@ -27,6 +28,8 @@ from ludowright.domain import DomainValidationError
 from ludowright.infrastructure import (
     CorruptEventLogError,
     EventLogError,
+    OdsWorkbookConflictError,
+    OdsWorkbookError,
     ProjectFilesystemError,
     ProjectLockTimeoutError,
     ProjectRootNotFoundError,
@@ -207,6 +210,12 @@ def _known_failure(error: Exception) -> CliFailure | None:
             str(error),
             exit_code=CliExitCode.BLOCKED,
         )
+    if isinstance(error, OdsWorkbookConflictError):
+        return CliFailure(
+            CliErrorCode.CONFLICT,
+            str(error),
+            exit_code=CliExitCode.CONFLICT,
+        )
     if isinstance(error, ProjectFilesystemError):
         return CliFailure(
             CliErrorCode.CORRUPT_STATE,
@@ -234,6 +243,12 @@ def _known_failure(error: Exception) -> CliFailure | None:
             exit_code=CliExitCode.CORRUPT_STATE,
         )
     if isinstance(error, DomainValidationError):
+        return CliFailure(
+            CliErrorCode.INVALID_INPUT,
+            str(error),
+            exit_code=CliExitCode.VALIDATION,
+        )
+    if isinstance(error, (AssetWorkbookError, OdsWorkbookError)):
         return CliFailure(
             CliErrorCode.INVALID_INPUT,
             str(error),

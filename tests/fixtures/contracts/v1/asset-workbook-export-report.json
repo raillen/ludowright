@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "kind": "asset-workbook-export-report",
+  "state": "planned",
+  "dry_run": true,
+  "output_path": "exports/assets.ods",
+  "template_id": "asset-registry",
+  "template_version": 1,
+  "sheet_names": [
+    "Overview",
+    "Components",
+    "References",
+    "Status",
+    "Priority",
+    "Dependencies"
+  ],
+  "sheet_row_counts": [
+    {"sheet": "Overview", "rows": 0},
+    {"sheet": "Components", "rows": 0},
+    {"sheet": "References", "rows": 0},
+    {"sheet": "Status", "rows": 0},
+    {"sheet": "Priority", "rows": 0},
+    {"sheet": "Dependencies", "rows": 0}
+  ],
+  "registry_path": "assets/registry.yaml",
+  "registry_version": 1,
+  "state_store_schema_version": 2,
+  "dependency_graph_path": ".ludowright/dependency-graph.json",
+  "dependency_graph_revision": 0,
+  "dependency_graph_state": "absent",
+  "asset_count": 0,
+  "source_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+  "output_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+  "warnings": [
+    "visual reference details are not persisted in the current asset registry; the References sheet is an availability view"
+  ],
+  "valid": true
+}

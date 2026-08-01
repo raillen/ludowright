@@ -1,0 +1,201 @@
+{
+  "$defs": {
+    "AssetWorkbookSheetRowCountContract": {
+      "additionalProperties": false,
+      "description": "Deterministic row count for one exported sheet.",
+      "properties": {
+        "rows": {
+          "maximum": 500000,
+          "minimum": 0,
+          "title": "Rows",
+          "type": "integer"
+        },
+        "sheet": {
+          "enum": [
+            "Overview",
+            "Components",
+            "References",
+            "Status",
+            "Priority",
+            "Dependencies"
+          ],
+          "title": "Sheet",
+          "type": "string"
+        }
+      },
+      "required": [
+        "sheet",
+        "rows"
+      ],
+      "title": "AssetWorkbookSheetRowCountContract",
+      "type": "object"
+    }
+  },
+  "$id": "https://schemas.ludowright.dev/v1/asset-workbook-export-report.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Stable report for an ODS export or dry-run plan.",
+  "properties": {
+    "asset_count": {
+      "maximum": 100000,
+      "minimum": 0,
+      "title": "Asset Count",
+      "type": "integer"
+    },
+    "dependency_graph_path": {
+      "maxLength": 1024,
+      "minLength": 1,
+      "pattern": "^[a-z0-9._-]+(?:/[a-z0-9._-]+)*$",
+      "title": "Dependency Graph Path",
+      "type": "string"
+    },
+    "dependency_graph_revision": {
+      "maximum": 2147483647,
+      "minimum": 0,
+      "title": "Dependency Graph Revision",
+      "type": "integer"
+    },
+    "dependency_graph_state": {
+      "enum": [
+        "current",
+        "absent"
+      ],
+      "title": "Dependency Graph State",
+      "type": "string"
+    },
+    "dry_run": {
+      "title": "Dry Run",
+      "type": "boolean"
+    },
+    "kind": {
+      "const": "asset-workbook-export-report",
+      "default": "asset-workbook-export-report",
+      "title": "Kind",
+      "type": "string"
+    },
+    "output_path": {
+      "maxLength": 1024,
+      "minLength": 1,
+      "pattern": "^[a-z0-9._-]+(?:/[a-z0-9._-]+)*$",
+      "title": "Output Path",
+      "type": "string"
+    },
+    "output_sha256": {
+      "maxLength": 64,
+      "minLength": 64,
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Output Sha256",
+      "type": "string"
+    },
+    "registry_path": {
+      "maxLength": 1024,
+      "minLength": 1,
+      "pattern": "^[a-z0-9._-]+(?:/[a-z0-9._-]+)*$",
+      "title": "Registry Path",
+      "type": "string"
+    },
+    "registry_version": {
+      "maximum": 2147483647,
+      "minimum": 1,
+      "title": "Registry Version",
+      "type": "integer"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "sheet_names": {
+      "items": {
+        "enum": [
+          "Overview",
+          "Components",
+          "References",
+          "Status",
+          "Priority",
+          "Dependencies"
+        ],
+        "type": "string"
+      },
+      "title": "Sheet Names",
+      "type": "array"
+    },
+    "sheet_row_counts": {
+      "items": {
+        "$ref": "#/$defs/AssetWorkbookSheetRowCountContract"
+      },
+      "title": "Sheet Row Counts",
+      "type": "array"
+    },
+    "source_digest": {
+      "maxLength": 64,
+      "minLength": 64,
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Digest",
+      "type": "string"
+    },
+    "state": {
+      "enum": [
+        "planned",
+        "exported"
+      ],
+      "title": "State",
+      "type": "string"
+    },
+    "state_store_schema_version": {
+      "maximum": 2147483647,
+      "minimum": 1,
+      "title": "State Store Schema Version",
+      "type": "integer"
+    },
+    "template_id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Template Id",
+      "type": "string"
+    },
+    "template_version": {
+      "maximum": 2147483647,
+      "minimum": 1,
+      "title": "Template Version",
+      "type": "integer"
+    },
+    "valid": {
+      "default": true,
+      "title": "Valid",
+      "type": "boolean"
+    },
+    "warnings": {
+      "default": [],
+      "items": {
+        "maxLength": 4000,
+        "minLength": 1,
+        "type": "string"
+      },
+      "title": "Warnings",
+      "type": "array"
+    }
+  },
+  "required": [
+    "state",
+    "dry_run",
+    "output_path",
+    "template_id",
+    "template_version",
+    "sheet_names",
+    "sheet_row_counts",
+    "registry_path",
+    "registry_version",
+    "state_store_schema_version",
+    "dependency_graph_path",
+    "dependency_graph_revision",
+    "dependency_graph_state",
+    "asset_count",
+    "source_digest",
+    "output_sha256"
+  ],
+  "title": "LudoWright Asset Workbook Export Report",
+  "type": "object"
+}

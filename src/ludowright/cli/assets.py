@@ -20,6 +20,7 @@ from ludowright.application import (
     AssetDiscoveryService,
     AssetRegistryResult,
     AssetRegistryService,
+    AssetWorkbookExportService,
 )
 from ludowright.cli.runtime import CliExitCode, CliFailure, run_command
 from ludowright.contracts import CliErrorCode
@@ -358,6 +359,38 @@ def export_assets(
     )
 
 
+@assets_app.command("export-ods")
+def export_assets_ods(
+    context: typer.Context,
+    project: Annotated[Path, typer.Argument(help="Project directory or a path below it.")],
+    output_path: Annotated[
+        str,
+        typer.Argument(help="New project-relative ODS output path."),
+    ],
+    dry_run: Annotated[
+        bool,
+        typer.Option("--dry-run", help="Plan the export without changing project files."),
+    ] = False,
+    json_output: Annotated[
+        bool,
+        typer.Option("--json", help="Return a stable machine-readable response."),
+    ] = False,
+) -> None:
+    """Export a deterministic derived asset workbook without overwriting a file."""
+
+    def action() -> dict[str, object]:
+        service = AssetWorkbookExportService(ProjectFilesystem.discover(project))
+        return service.export(_path(output_path), dry_run=dry_run).as_data()
+
+    run_command(
+        context=context,
+        command="assets export-ods",
+        local_json=json_output,
+        action=action,
+        render_human=_render_workbook_human,
+    )
+
+
 def _run(
     *,
     context: typer.Context,
@@ -411,6 +444,34 @@ def _render_human(console: Console, data: dict[str, object]) -> None:
                 str(value.get("priority", "")),
             )
     console.print(table)
+
+
+def _render_workbook_human(console: Console, data: dict[str, object]) -> None:
+    """Render a concise asset workbook export report."""
+    console.print("[bold]Asset workbook export[/bold]")
+    console.print(f"State: {data['state']} | Dry run: {data['dry_run']}")
+    console.print(f"Output: {data['output_path']}")
+    console.print(
+        f"Template: {data['template_id']} (v{data['template_version']}) | "
+        f"Assets: {data['asset_count']}"
+    )
+    console.print(
+        f"Registry: {data['registry_path']} (v{data['registry_version']}) | "
+        f"Dependency graph: {data['dependency_graph_state']} "
+        f"(v{data['dependency_graph_revision']})"
+    )
+    counts = data.get("sheet_row_counts")
+    if isinstance(counts, list):
+        table = Table("Sheet", "Rows")
+        for value in counts:
+            if isinstance(value, dict):
+                table.add_row(str(value.get("sheet", "")), str(value.get("rows", "")))
+        console.print(table)
+    warnings = data.get("warnings")
+    if isinstance(warnings, list) and warnings:
+        console.print("Warnings:")
+        for warning in warnings:
+            console.print(f"- {warning}")
 
 
 def _render_discovery_human(console: Console, data: dict[str, object]) -> None:

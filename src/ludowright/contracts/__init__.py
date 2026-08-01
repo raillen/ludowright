@@ -21,6 +21,13 @@ from ludowright.contracts.asset_taxonomy import (
     AssetSubtypeDefinitionContract,
     AssetTaxonomyContract,
 )
+from ludowright.contracts.asset_workbook import (
+    AssetWorkbookColumnContract,
+    AssetWorkbookExportReportContract,
+    AssetWorkbookSheetContract,
+    AssetWorkbookSheetRowCountContract,
+    AssetWorkbookTemplateContract,
+)
 from ludowright.contracts.assets import AssetContract, AssetRegistryContract
 from ludowright.contracts.atlas import (
     AtlasBrokenLinkContract,
@@ -121,6 +128,11 @@ __all__ = [
     "AssetRegistryContract",
     "AssetSubtypeDefinitionContract",
     "AssetTaxonomyContract",
+    "AssetWorkbookColumnContract",
+    "AssetWorkbookExportReportContract",
+    "AssetWorkbookSheetContract",
+    "AssetWorkbookSheetRowCountContract",
+    "AssetWorkbookTemplateContract",
     "AtlasBrokenLinkContract",
     "AtlasDocumentMetadataContract",
     "AtlasLinkContract",

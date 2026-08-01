@@ -10,19 +10,12 @@ from ludowright.contracts.common import (
     ContractModel,
     DisplayText,
     PositiveRevision,
+    RepositoryPathText,
     ReviewText,
     Slug,
 )
 from ludowright.domain import AssetFamily, AssetPriority
 
-RepositoryPathText = Annotated[
-    str,
-    StringConstraints(
-        min_length=1,
-        max_length=1_024,
-        pattern=r"^[a-z0-9._-]+(?:/[a-z0-9._-]+)*$",
-    ),
-]
 DiscoverySubject = Annotated[str, StringConstraints(min_length=1, max_length=1_024)]
 AssetDiscoveryState = Literal["empty", "pending", "ambiguous", "invalid", "planned", "confirmed"]
 AssetDiscoveryIssueCode = Literal[

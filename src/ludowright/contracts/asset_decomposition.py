@@ -16,19 +16,11 @@ from ludowright.contracts.common import (
     ContractModel,
     DisplayText,
     PositiveRevision,
+    RepositoryPathText,
     ReviewText,
     Slug,
 )
 from ludowright.domain import AssetFamily, CaptureSubjectMode, InvalidationMode
-
-RepositoryPathText = Annotated[
-    str,
-    Field(
-        min_length=1,
-        max_length=1_024,
-        pattern=r"^[a-z0-9._-]+(?:/[a-z0-9._-]+)*$",
-    ),
-]
 
 DecompositionState = Literal["current", "planned", "updated", "invalid"]
 CorrectionSeverity = Literal["error", "warning", "info"]

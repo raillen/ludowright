@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "kind": "asset-workbook-template",
+  "template_id": "asset-registry",
+  "template_version": 1,
+  "sheets": [
+    {
+      "id": "overview",
+      "name": "Overview",
+      "columns": [
+        {"id": "asset_id", "label": "Asset ID"},
+        {"id": "name", "label": "Name"},
+        {"id": "family", "label": "Family"},
+        {"id": "subtype", "label": "Subtype"},
+        {"id": "status", "label": "Status"},
+        {"id": "priority", "label": "Priority"},
+        {"id": "component_count", "label": "Components"},
+        {"id": "variant_count", "label": "Variants"},
+        {"id": "state_count", "label": "States"},
+        {"id": "required_item_count", "label": "Required Items"},
+        {"id": "dependency_count", "label": "Dependencies"},
+        {"id": "freshness", "label": "Freshness"}
+      ]
+    },
+    {
+      "id": "components",
+      "name": "Components",
+      "columns": [
+        {"id": "asset_id", "label": "Asset ID"},
+        {"id": "item_kind", "label": "Item Kind"},
+        {"id": "item_id", "label": "Item ID"},
+        {"id": "name", "label": "Name"},
+        {"id": "status", "label": "Status"},
+        {"id": "required", "label": "Required"},
+        {"id": "parent_id", "label": "Parent ID"}
+      ]
+    },
+    {
+      "id": "references",
+      "name": "References",
+      "columns": [
+        {"id": "asset_id", "label": "Asset ID"},
+        {"id": "reference_id", "label": "Reference ID"},
+        {"id": "status", "label": "Status"},
+        {"id": "freshness", "label": "Freshness"},
+        {"id": "source", "label": "Source"}
+      ]
+    },
+    {
+      "id": "status",
+      "name": "Status",
+      "columns": [
+        {"id": "asset_id", "label": "Asset ID"},
+        {"id": "subject_kind", "label": "Subject Kind"},
+        {"id": "subject_id", "label": "Subject ID"},
+        {"id": "name", "label": "Name"},
+        {"id": "status", "label": "Status"},
+        {"id": "required", "label": "Required"},
+        {"id": "readiness", "label": "Readiness"}
+      ]
+    },
+    {
+      "id": "priority",
+      "name": "Priority",
+      "columns": [
+        {"id": "priority", "label": "Priority"},
+        {"id": "priority_rank", "label": "Priority Rank"},
+        {"id": "asset_id", "label": "Asset ID"},
+        {"id": "name", "label": "Name"},
+        {"id": "status", "label": "Status"}
+      ]
+    },
+    {
+      "id": "dependencies",
+      "name": "Dependencies",
+      "columns": [
+        {"id": "source", "label": "Source"},
+        {"id": "target", "label": "Target"},
+        {"id": "relation", "label": "Relation"},
+        {"id": "invalidation_mode", "label": "Invalidation"},
+        {"id": "observed_source_revision", "label": "Observed Source Revision"},
+        {"id": "source_freshness", "label": "Source Freshness"},
+        {"id": "target_freshness", "label": "Target Freshness"}
+      ]
+    }
+  ]
+}

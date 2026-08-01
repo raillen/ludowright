@@ -69,6 +69,18 @@
       "sha256": "1af7a12790940723924f71d7ccf866805175bb9c612f52d0041d15af09af1b26"
     },
     {
+      "file": "asset-workbook-template.schema.json",
+      "name": "asset-workbook-template",
+      "schema_id": "https://schemas.ludowright.dev/v1/asset-workbook-template.schema.json",
+      "sha256": "a0ada5eff70f457bbda64cde12b841d49d42571b837f5f2d84aa0a012e5cfe21"
+    },
+    {
+      "file": "asset-workbook-export-report.schema.json",
+      "name": "asset-workbook-export-report",
+      "schema_id": "https://schemas.ludowright.dev/v1/asset-workbook-export-report.schema.json",
+      "sha256": "8db5dceb643499f3285daa4254ae05532960eb5da6f8b0efd62c5a3a3de0b0d5"
+    },
+    {
       "file": "visual-reference.schema.json",
       "name": "visual-reference",
       "schema_id": "https://schemas.ludowright.dev/v1/visual-reference.schema.json",

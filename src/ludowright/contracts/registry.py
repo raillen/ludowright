@@ -14,6 +14,10 @@ from ludowright.contracts.asset_discovery import (
     AssetDiscoveryReportContract,
 )
 from ludowright.contracts.asset_taxonomy import AssetTaxonomyContract
+from ludowright.contracts.asset_workbook import (
+    AssetWorkbookExportReportContract,
+    AssetWorkbookTemplateContract,
+)
 from ludowright.contracts.assets import AssetContract, AssetRegistryContract
 from ludowright.contracts.atlas import AtlasMetadataContract, AtlasReportContract
 from ludowright.contracts.capture import CaptureProfileContract
@@ -109,6 +113,18 @@ CONTRACTS: tuple[ContractDefinition, ...] = (
         "asset-decomposition-report.schema.json",
         "LudoWright Asset Decomposition Report",
         AssetDecompositionReportContract,
+    ),
+    ContractDefinition(
+        "asset-workbook-template",
+        "asset-workbook-template.schema.json",
+        "LudoWright Asset Workbook Template",
+        AssetWorkbookTemplateContract,
+    ),
+    ContractDefinition(
+        "asset-workbook-export-report",
+        "asset-workbook-export-report.schema.json",
+        "LudoWright Asset Workbook Export Report",
+        AssetWorkbookExportReportContract,
     ),
     ContractDefinition(
         "visual-reference",
