@@ -101,6 +101,20 @@ plano, o status, a ação e as capacidades exigidas. Os agentes não têm
 autoridade de aprovação; o resultado preserva o checkpoint humano. Consulte o
 [contrato de agentes](../contracts/CODEX_AGENTS.md).
 
+## Avaliação de conformidade
+
+A suíte offline dos agentes verifica as rotas e as fronteiras entre policy,
+prompt, ImageGen, receipts e revisão. Ela usa apenas fixtures e providers de
+teste locais:
+
+```bash
+uv run pytest --no-cov tests/test_codex_agent_evals.py -q
+```
+
+Essa avaliação não executa fases completas nem substitui a aprovação humana.
+O contrato, os cenários e as limitações estão em
+[`CODEX_AGENT_EVALS.md`](../quality/CODEX_AGENT_EVALS.md).
+
 ## Execução ImageGen
 
 O PR46 não adiciona um comando CLI independente. A integração Codex expõe
@@ -111,6 +125,7 @@ prompt, inputs, paths e revisões.
 
 O modo `dry_run` retorna o mesmo plano determinístico sem lock, chamada ao
 provider ou escrita. Execução real é create-only: manifesto ou PNG existente
-gera conflito, e falhas removem os artefatos criados pela tentativa. Receipts,
-referências geradas e revisão de aprovação são workflows posteriores e
-canônicos, não efeitos implícitos dos agentes.
+gera conflito, e falhas removem os artefatos criados pela tentativa. O
+adaptador persiste o receipt terminal e as referências geradas como candidatas;
+a revisão e a aprovação continuam workflows canônicos separados, não efeitos
+implícitos dos agentes.

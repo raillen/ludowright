@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "kind": "codex-agent-eval-cases",
+  "catalog_id": "default",
+  "catalog_version": 1,
+  "route_cases": [
+    {
+      "task_id": "asset-planning",
+      "agent_id": "asset-planner",
+      "action": "execute-phase",
+      "required_capabilities": ["asset-decomposition"]
+    },
+    {
+      "task_id": "consistency-review",
+      "agent_id": "consistency-reviewer",
+      "action": "await-approval",
+      "required_capabilities": ["reference-review"]
+    },
+    {
+      "task_id": "game-design",
+      "agent_id": "game-design-architect",
+      "action": "record-decision",
+      "required_capabilities": ["decision-analysis"]
+    },
+    {
+      "task_id": "generation",
+      "agent_id": "generation-operator",
+      "action": "execute-phase",
+      "required_capabilities": ["generation-execution"]
+    },
+    {
+      "task_id": "interview",
+      "agent_id": "interviewer",
+      "action": "ask-question",
+      "required_capabilities": ["answer-provenance"]
+    },
+    {
+      "task_id": "quality-audit",
+      "agent_id": "quality-auditor",
+      "action": "run-validations",
+      "required_capabilities": ["quality-gates"]
+    },
+    {
+      "task_id": "release-verification",
+      "agent_id": "release-verifier",
+      "action": "await-approval",
+      "required_capabilities": ["release-gates"]
+    },
+    {
+      "task_id": "technical-architecture",
+      "agent_id": "technical-architect",
+      "action": "record-decision",
+      "required_capabilities": ["architecture-analysis"]
+    },
+    {
+      "task_id": "visual-direction",
+      "agent_id": "visual-director",
+      "action": "await-approval",
+      "required_capabilities": ["reference-selection"]
+    }
+  ],
+  "forbidden_boundaries": [
+    "approve-reference",
+    "invent-decision",
+    "overwrite-approved-artifact"
+  ],
+  "scenario_ids": [
+    "status-before-routing",
+    "no-decision-reinvention",
+    "approved-reference-enforcement",
+    "prompt-receipt-creation",
+    "selective-regeneration",
+    "approval-and-safety"
+  ]
+}

@@ -95,6 +95,9 @@ assembly from interview answers remains a later bounded capability.
   rollback (implemented through PR46);
 - Codex-specific agents and routing (versioned nine-agent catalog and pure
   deterministic router implemented through PR49);
+- offline specialist-agent conformance evals for status, decisions, references,
+  receipts, selective regeneration, approval, and safety (implemented through
+  PR50);
 - approved-reference selection;
 - prompt, input, output, and checksum receipts (receipts, candidate generated
   references, metadata, timestamps, and PNG validation implemented through
@@ -118,7 +121,7 @@ assembly from interview answers remains a later bounded capability.
 - interviewer, game-design, technical-architecture, asset-planning, visual-direction, generation, consistency-review, quality-audit, and release-verification roles;
 - resumable phases and recommended next actions;
 - bounded parallel delegation;
-- agent evals.
+- complete phase execution and provider-backed agent evaluation.
 
 ### 0.9 Public Beta
 

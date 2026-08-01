@@ -119,8 +119,9 @@ providers. A ordem e os códigos estão no contrato
 A skill pode encaminhar um job selecionado de um plano `ready` e seu prompt
 compilado para o adaptador `ImageGenExecutor`. O adaptador usa o provider
 injetado pelo host, grava o contrato `imagegen-operation` e faz uma chamada por
-view, com validação PNG, lock, escrita atômica e rollback. Essa integração não
-cria receipts, referências ou aprovações e não substitui os comandos canônicos.
+view, com validação PNG, lock, escrita atômica, rollback, receipt terminal e
+referências candidatas. A aprovação continua no workflow de revisão e não é
+inferida pela skill.
 
 ## Agentes especialistas
 
@@ -137,5 +138,6 @@ comandos canônicos.
 ## Limites desta versão
 
 O catálogo seleciona papéis, mas não executa fases completas nem substitui o
-CLI, o event log, o SQLite, o grafo ou os providers. Evals de conformidade e
-delegação operacional permanecem no PR50.
+CLI, o event log, o SQLite, o grafo ou os providers. A suíte offline de
+conformidade foi implementada no PR50; delegação operacional e execução de
+fases completas permanecem fora desta etapa.
