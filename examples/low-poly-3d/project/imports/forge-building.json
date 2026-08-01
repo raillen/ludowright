@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "kind": "asset",
+  "id": "bldg-forge",
+  "name": "Forge Building",
+  "family": "architecture",
+  "subtype": "building",
+  "priority": "high",
+  "status": "planned",
+  "components": [
+    {"id": "root", "name": "Root", "status": "planned", "required": true},
+    {"id": "roof", "name": "Roof", "status": "planned", "required": true},
+    {"id": "openings", "name": "Openings", "status": "planned", "required": true},
+    {"id": "facade-details", "name": "Facade Details", "status": "planned", "required": false}
+  ],
+  "variants": [],
+  "states": [
+    {"id": "closed", "name": "Closed", "status": "planned", "required": true},
+    {"id": "construction", "name": "Construction", "status": "planned", "required": true}
+  ]
+}

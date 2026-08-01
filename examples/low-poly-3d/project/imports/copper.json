@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "kind": "asset",
+  "id": "chr-copper",
+  "name": "Copper",
+  "family": "character",
+  "subtype": "humanoid",
+  "priority": "critical",
+  "status": "planned",
+  "components": [
+    {"id": "base-body", "name": "Body Base", "status": "planned", "required": true},
+    {"id": "jacket", "name": "Jacket", "status": "planned", "required": true},
+    {"id": "trousers", "name": "Trousers", "status": "planned", "required": true},
+    {"id": "footwear", "name": "Footwear", "status": "planned", "required": true},
+    {"id": "backpack", "name": "Backpack", "status": "planned", "required": false}
+  ],
+  "variants": [],
+  "states": []
+}

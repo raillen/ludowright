@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "kind": "technical-sheet-request",
+  "id": "forge-building-sheet",
+  "name": "Forge building sheet",
+  "template_id": "minimal",
+  "template_version": 1,
+  "sheet_kind": "turnaround",
+  "inputs": [{
+    "id": "front",
+    "label": "Forge front",
+    "reference_id": "ref-forge-front",
+    "image_path": "normalized/forge-front.png",
+    "sha256": "5e4747b1d8664bd550cf8d491e69abb48ad3bf61b465d5ea8f6035b6b7f9ae6f"
+  }]
+}

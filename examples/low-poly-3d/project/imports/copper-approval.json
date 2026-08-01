@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "kind": "approval",
+  "id": "approval-copper-front-v1",
+  "subject": {
+    "subject_kind": "reference",
+    "id": "ref-copper-front",
+    "revision": "sha256:copper-front-v1",
+    "label": "Copper front turnaround reference"
+  },
+  "history": [{
+    "sequence": 1,
+    "status": "pending",
+    "note": "Review neutral base, proportions, and wearable separation."
+  }]
+}

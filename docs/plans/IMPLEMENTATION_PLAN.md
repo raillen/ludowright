@@ -705,7 +705,19 @@ migration, or derived state is introduced.
 
 ### PR 59 — Low-poly 3D example
 
-A complete character and environment reference flow with segmented components.
+Status: implemented in the current slice. The deterministic Copper & Forge
+example covers a humanoid character and a building with segmented components,
+construction states, captured candidate references, immutable jobs, pending
+approvals, and checksum-bound sheet requests. Its tests consume the packaged
+`humanoid/minimal` and `hard-surface/building` profiles through the shared
+planner, verify deterministic job derivation, and confirm that candidate
+references block readiness. No project-local profile catalog, provider
+execution, schema, migration, or derived state is introduced.
+
+- low-poly humanoid and building scenario;
+- reusable packaged profiles with component and state projections;
+- paired references, jobs, approvals, sheet requests, and PNG fixtures;
+- segmented planning, approval-gate, cross-contract, and determinism tests.
 
 ### PR 60 — Modular environment example
 

@@ -79,6 +79,7 @@ nav:
   - Examples:
       - Minimal Example: examples/MINIMAL.md
       - 2D Sprite Example: examples/2D.md
+      - Low-poly 3D Example: examples/LOW_POLY_3D.md
   - Quality:
       - Engineering Baseline: quality/ENGINEERING_QUALITY.md
       - Codex Agent Evals: quality/CODEX_AGENT_EVALS.md
