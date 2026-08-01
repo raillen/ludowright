@@ -158,9 +158,11 @@ A vulnerability must not be ignored silently. Any temporary exception requires:
 
 The repository keeps `.secrets.baseline` as the reviewed
 detect-secrets baseline. It contains only deterministic SHA-256 checksums from
-versioned Codex skill manifests and their contract fixtures. These values identify
-local payloads; they are not credentials. When one of these checksums changes, the
-baseline must be regenerated and reviewed together with the manifest change.
+versioned Codex skill manifests, their contract fixtures, and the committed
+example image fixtures. These values identify local payloads; they are not
+credentials. When one of these checksums changes, the baseline must be
+regenerated and reviewed together with the corresponding fixture or manifest
+change.
 
 Never commit real credentials merely to test detection. Use clearly fake values and avoid strings that resemble active provider tokens.
 

@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "kind": "capture-profile",
+  "id": "courier-sprite",
+  "version": 1,
+  "name": "Courier Sprite Profile",
+  "family": "character",
+  "subtype": "humanoid",
+  "camera": {
+    "projection": "orthographic",
+    "framing_margin_percent": 8
+  },
+  "background": {
+    "mode": "transparent"
+  },
+  "lighting": {
+    "mode": "flat",
+    "shadows": "none"
+  },
+  "validation": {
+    "width": 256,
+    "height": 256,
+    "require_full_subject": true,
+    "require_consistent_scale": true,
+    "require_neutral_pose": false,
+    "allow_occlusion": false
+  },
+  "views": [
+    {
+      "id": "front",
+      "name": "Front",
+      "azimuth_degrees": 0,
+      "elevation_degrees": 0,
+      "role": "identity"
+    },
+    {
+      "id": "side",
+      "name": "Side",
+      "azimuth_degrees": 90,
+      "elevation_degrees": 0,
+      "role": "construction"
+    },
+    {
+      "id": "silhouette",
+      "name": "Silhouette",
+      "azimuth_degrees": 45,
+      "elevation_degrees": 0,
+      "role": "silhouette"
+    }
+  ],
+  "requirements": [
+    {
+      "id": "subject",
+      "name": "Subject",
+      "requirement_kind": "component"
+    },
+    {
+      "id": "body",
+      "name": "Body",
+      "requirement_kind": "component"
+    },
+    {
+      "id": "idle",
+      "name": "Idle",
+      "requirement_kind": "state"
+    },
+    {
+      "id": "run",
+      "name": "Run",
+      "requirement_kind": "state"
+    }
+  ],
+  "sheets": [
+    {
+      "id": "sprite-views",
+      "name": "Sprite Views",
+      "layout": "grid",
+      "view_ids": ["front", "side", "silhouette"],
+      "subject_modes": ["asset", "components", "states"],
+      "separate_files": true,
+      "assembled_sheet": true,
+      "required": true
+    }
+  ]
+}
