@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "kind": "asset",
+  "id": "chr-courier",
+  "name": "Starfall Courier",
+  "family": "character",
+  "subtype": "humanoid",
+  "priority": "high",
+  "status": "planned",
+  "components": [
+    {
+      "id": "subject",
+      "name": "Subject",
+      "status": "planned",
+      "required": true
+    },
+    {
+      "id": "body",
+      "name": "Body",
+      "status": "planned",
+      "required": true
+    }
+  ],
+  "variants": [],
+  "states": [
+    {
+      "id": "idle",
+      "name": "Idle",
+      "status": "planned",
+      "required": true
+    },
+    {
+      "id": "run",
+      "name": "Run",
+      "status": "planned",
+      "required": true
+    }
+  ]
+}

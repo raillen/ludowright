@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "kind": "approval",
+  "id": "approval-courier-front-v1",
+  "subject": {
+    "subject_kind": "reference",
+    "id": "ref-courier-front",
+    "revision": "sha256:courier-front-v1",
+    "label": "Courier front sprite reference"
+  },
+  "history": [
+    {
+      "sequence": 1,
+      "status": "pending",
+      "note": "Sprite silhouette and pixel scale require human review."
+    }
+  ]
+}
