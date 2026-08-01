@@ -117,6 +117,12 @@
       "sha256": "6ad7ef46bd2f5b5bc010d6c3f1556e06ca030e628076351d200479a50fc860fb"
     },
     {
+      "file": "visual-bible.schema.json",
+      "name": "visual-bible",
+      "schema_id": "https://schemas.ludowright.dev/v1/visual-bible.schema.json",
+      "sha256": "ade335c29d495910dce05e453d18c55b8990fb6a2b6dd3c2382de4dc4b589e0e"
+    },
+    {
       "file": "migration-receipt.schema.json",
       "name": "migration-receipt",
       "schema_id": "https://schemas.ludowright.dev/v1/migration-receipt.schema.json",

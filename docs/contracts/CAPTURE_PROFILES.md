@@ -18,10 +18,12 @@ A profile can specify:
 
 Profiles describe production requirements. They do not execute providers or store image binaries.
 
-Asset decomposition currently derives a recommendation report from versioned
-data in `src/ludowright/decomposition_data/recommendations.json`. The reported
-profile ID and version are advisory and do not create or resolve an executable
-capture profile. Profile catalogs and visual-job planning remain part of the
+The project-level visual direction consumed by future profiles is defined by
+the v1 [`VISUAL_BIBLE.md`](VISUAL_BIBLE.md) contract. Asset decomposition
+still derives a recommendation report from versioned data in
+`src/ludowright/decomposition_data/recommendations.json`. The reported profile
+ID and version are advisory and do not create or resolve an executable capture
+profile. Profile catalogs and visual-job planning remain later
 visual-foundation slices.
 
 ## Identity and revisions

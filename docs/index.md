@@ -42,8 +42,10 @@ The repository currently establishes:
 - deterministic read-only asset audits for orphan graph nodes, incomplete
   specifications, invalid dependencies, missing capture profiles, and
   incomplete production ownership metadata.
+- a strict v1 visual bible contract for shared shape, proportion, palette,
+  material, camera, lighting, detail, budget, and prompt constraints.
 
-Executable capture profiles, ImageGen execution, review workflows, technical
+Executable capture profiles, prompt compilation, ImageGen execution, review workflows, technical
 sheets, global audits, and package generation remain planned work.
 
 ## Start here

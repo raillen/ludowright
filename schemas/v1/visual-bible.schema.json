@@ -1,0 +1,468 @@
+{
+  "$defs": {
+    "CameraContract": {
+      "additionalProperties": false,
+      "properties": {
+        "focal_length_mm": {
+          "anyOf": [
+            {
+              "maximum": 300,
+              "minimum": 10,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Focal Length Mm"
+        },
+        "framing_margin_percent": {
+          "default": 10,
+          "maximum": 50,
+          "minimum": 0,
+          "title": "Framing Margin Percent",
+          "type": "integer"
+        },
+        "projection": {
+          "$ref": "#/$defs/CameraProjection"
+        }
+      },
+      "required": [
+        "projection"
+      ],
+      "title": "CameraContract",
+      "type": "object"
+    },
+    "CameraProjection": {
+      "enum": [
+        "orthographic",
+        "perspective",
+        "isometric"
+      ],
+      "title": "CameraProjection",
+      "type": "string"
+    },
+    "DetailLevel": {
+      "description": "Production detail bands shared by visual jobs and future profiles.",
+      "enum": [
+        "proxy",
+        "low",
+        "medium",
+        "high",
+        "hero"
+      ],
+      "title": "DetailLevel",
+      "type": "string"
+    },
+    "DetailLevelRuleContract": {
+      "additionalProperties": false,
+      "properties": {
+        "guidance": {
+          "maxLength": 1000,
+          "minLength": 1,
+          "title": "Guidance",
+          "type": "string"
+        },
+        "level": {
+          "$ref": "#/$defs/DetailLevel"
+        }
+      },
+      "required": [
+        "level",
+        "guidance"
+      ],
+      "title": "DetailLevelRuleContract",
+      "type": "object"
+    },
+    "LevelOfDetailContract": {
+      "additionalProperties": false,
+      "properties": {
+        "default_level": {
+          "$ref": "#/$defs/DetailLevel"
+        },
+        "levels": {
+          "items": {
+            "$ref": "#/$defs/DetailLevelRuleContract"
+          },
+          "minItems": 1,
+          "title": "Levels",
+          "type": "array"
+        }
+      },
+      "required": [
+        "default_level",
+        "levels"
+      ],
+      "title": "LevelOfDetailContract",
+      "type": "object"
+    },
+    "LightingContract": {
+      "additionalProperties": false,
+      "properties": {
+        "custom_label": {
+          "anyOf": [
+            {
+              "maxLength": 120,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Custom Label"
+        },
+        "mode": {
+          "$ref": "#/$defs/LightingMode"
+        },
+        "shadows": {
+          "$ref": "#/$defs/ShadowMode"
+        }
+      },
+      "required": [
+        "mode",
+        "shadows"
+      ],
+      "title": "LightingContract",
+      "type": "object"
+    },
+    "LightingMode": {
+      "enum": [
+        "flat",
+        "studio",
+        "natural",
+        "dramatic",
+        "unlit",
+        "custom"
+      ],
+      "title": "LightingMode",
+      "type": "string"
+    },
+    "MaterialFinish": {
+      "description": "Controlled surface finish vocabulary for material guidance.",
+      "enum": [
+        "matte",
+        "satin",
+        "semi-gloss",
+        "glossy",
+        "metallic",
+        "translucent",
+        "emissive",
+        "stylized"
+      ],
+      "title": "MaterialFinish",
+      "type": "string"
+    },
+    "MaterialRuleContract": {
+      "additionalProperties": false,
+      "properties": {
+        "finish": {
+          "$ref": "#/$defs/MaterialFinish"
+        },
+        "guidance": {
+          "maxLength": 1000,
+          "minLength": 1,
+          "title": "Guidance",
+          "type": "string"
+        },
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "finish",
+        "guidance"
+      ],
+      "title": "MaterialRuleContract",
+      "type": "object"
+    },
+    "PaletteColorContract": {
+      "additionalProperties": false,
+      "properties": {
+        "color": {
+          "pattern": "^#[0-9A-F]{6}$",
+          "title": "Color",
+          "type": "string"
+        },
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "role": {
+          "$ref": "#/$defs/PaletteRole"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "color",
+        "role"
+      ],
+      "title": "PaletteColorContract",
+      "type": "object"
+    },
+    "PaletteRole": {
+      "description": "Semantic role for a color in the shared visual palette.",
+      "enum": [
+        "primary",
+        "secondary",
+        "accent",
+        "neutral",
+        "background",
+        "highlight"
+      ],
+      "title": "PaletteRole",
+      "type": "string"
+    },
+    "ProportionRuleContract": {
+      "additionalProperties": false,
+      "properties": {
+        "guidance": {
+          "maxLength": 1000,
+          "minLength": 1,
+          "title": "Guidance",
+          "type": "string"
+        },
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "guidance"
+      ],
+      "title": "ProportionRuleContract",
+      "type": "object"
+    },
+    "ShadowMode": {
+      "enum": [
+        "none",
+        "contact",
+        "soft",
+        "full"
+      ],
+      "title": "ShadowMode",
+      "type": "string"
+    },
+    "ShapeLanguageContract": {
+      "additionalProperties": false,
+      "properties": {
+        "avoid": {
+          "default": [],
+          "items": {
+            "maxLength": 120,
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Avoid",
+          "type": "array"
+        },
+        "primary": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Primary",
+          "type": "string"
+        },
+        "secondary": {
+          "default": [],
+          "items": {
+            "maxLength": 120,
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Secondary",
+          "type": "array"
+        }
+      },
+      "required": [
+        "primary"
+      ],
+      "title": "ShapeLanguageContract",
+      "type": "object"
+    },
+    "VisualBudgetContract": {
+      "additionalProperties": false,
+      "properties": {
+        "max_generated_outputs": {
+          "maximum": 1000000,
+          "minimum": 1,
+          "title": "Max Generated Outputs",
+          "type": "integer"
+        },
+        "max_references_per_asset": {
+          "maximum": 1000000,
+          "minimum": 1,
+          "title": "Max References Per Asset",
+          "type": "integer"
+        },
+        "max_visual_jobs": {
+          "maximum": 1000000,
+          "minimum": 1,
+          "title": "Max Visual Jobs",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "max_visual_jobs",
+        "max_generated_outputs",
+        "max_references_per_asset"
+      ],
+      "title": "VisualBudgetContract",
+      "type": "object"
+    }
+  },
+  "$id": "https://schemas.ludowright.dev/v1/visual-bible.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "budget": {
+      "$ref": "#/$defs/VisualBudgetContract"
+    },
+    "camera": {
+      "$ref": "#/$defs/CameraContract"
+    },
+    "id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Id",
+      "type": "string"
+    },
+    "kind": {
+      "const": "visual-bible",
+      "default": "visual-bible",
+      "title": "Kind",
+      "type": "string"
+    },
+    "level_of_detail": {
+      "$ref": "#/$defs/LevelOfDetailContract"
+    },
+    "lighting": {
+      "$ref": "#/$defs/LightingContract"
+    },
+    "materials": {
+      "items": {
+        "$ref": "#/$defs/MaterialRuleContract"
+      },
+      "minItems": 1,
+      "title": "Materials",
+      "type": "array"
+    },
+    "name": {
+      "maxLength": 120,
+      "minLength": 1,
+      "title": "Name",
+      "type": "string"
+    },
+    "negative_constraints": {
+      "items": {
+        "maxLength": 1000,
+        "minLength": 1,
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Negative Constraints",
+      "type": "array"
+    },
+    "palette": {
+      "items": {
+        "$ref": "#/$defs/PaletteColorContract"
+      },
+      "minItems": 1,
+      "title": "Palette",
+      "type": "array"
+    },
+    "project_id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Project Id",
+      "type": "string"
+    },
+    "prompt_constraints": {
+      "items": {
+        "maxLength": 1000,
+        "minLength": 1,
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Prompt Constraints",
+      "type": "array"
+    },
+    "proportions": {
+      "items": {
+        "$ref": "#/$defs/ProportionRuleContract"
+      },
+      "minItems": 1,
+      "title": "Proportions",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "shape_language": {
+      "$ref": "#/$defs/ShapeLanguageContract"
+    },
+    "version": {
+      "maximum": 2147483647,
+      "minimum": 1,
+      "title": "Version",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "id",
+    "version",
+    "name",
+    "project_id",
+    "shape_language",
+    "proportions",
+    "palette",
+    "materials",
+    "lighting",
+    "camera",
+    "level_of_detail",
+    "budget",
+    "prompt_constraints",
+    "negative_constraints"
+  ],
+  "title": "LudoWright Visual Bible",
+  "type": "object"
+}

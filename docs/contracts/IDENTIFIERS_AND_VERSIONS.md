@@ -115,6 +115,7 @@ The current identifier types are:
 | `CaptureProfileId` | Reusable capture-profile lineage |
 | `CaptureViewId` | Required or optional view within a profile |
 | `CaptureSheetId` | Technical-sheet requirement within a profile |
+| `VisualBibleId` | Versioned project visual direction contract |
 | `DecisionId` | Recorded decision |
 | `ApprovalId` | Approval request and immutable approval history |
 | `EventId` | One immutable project event-log record |
@@ -163,6 +164,7 @@ Persisted schemas, deterministic templates, and capture or production profiles u
 | `SchemaVersion` | `1` | `v1` |
 | `TemplateVersion` | `3` | `v3` |
 | `ProfileVersion` | `12` | `v12` |
+| `VisualBibleVersion` | `4` | `v4` |
 
 Accepted parser inputs:
 

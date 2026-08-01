@@ -103,6 +103,16 @@ from ludowright.contracts.visual import (
     VisualReferenceContract,
     VisualReviewContract,
 )
+from ludowright.contracts.visual_bible import (
+    DetailLevelRuleContract,
+    LevelOfDetailContract,
+    MaterialRuleContract,
+    PaletteColorContract,
+    ProportionRuleContract,
+    ShapeLanguageContract,
+    VisualBibleContract,
+    VisualBudgetContract,
+)
 
 __all__ = [
     "CONTRACTS",
@@ -152,6 +162,7 @@ __all__ = [
     "DependencyGraphContract",
     "DependencyKeyContract",
     "DependencyNodeContract",
+    "DetailLevelRuleContract",
     "DispositionRecordContract",
     "DocumentManualSectionContract",
     "DocumentRefreshRequestContract",
@@ -172,10 +183,17 @@ __all__ = [
     "InterviewQuestionViewContract",
     "InterviewSessionContract",
     "InvalidationCauseContract",
+    "LevelOfDetailContract",
+    "MaterialRuleContract",
     "MigrationReceiptContract",
     "MigrationRunStatus",
+    "PaletteColorContract",
     "ProjectContract",
+    "ProportionRuleContract",
     "QuestionnaireContract",
+    "ShapeLanguageContract",
+    "VisualBibleContract",
+    "VisualBudgetContract",
     "VisualJobContract",
     "VisualReferenceContract",
     "VisualReviewContract",

@@ -43,6 +43,7 @@ It uses JSON Schema Draft 2020-12 and contains:
 | Generation receipt | `generation-receipt.schema.json` |
 | Visual review | `visual-review.schema.json` |
 | Capture profile | `capture-profile.schema.json` |
+| Visual bible | `visual-bible.schema.json` |
 | Migration receipt | `migration-receipt.schema.json` |
 | Dependency graph | `dependency-graph.schema.json` |
 | Document template | `document-template.schema.json` |

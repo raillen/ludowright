@@ -48,6 +48,7 @@ from ludowright.contracts.visual import (
     VisualReferenceContract,
     VisualReviewContract,
 )
+from ludowright.contracts.visual_bible import VisualBibleContract
 
 SCHEMA_VERSION = 1
 JSON_SCHEMA_DRAFT = "https://json-schema.org/draft/2020-12/schema"
@@ -162,6 +163,12 @@ CONTRACTS: tuple[ContractDefinition, ...] = (
         "capture-profile.schema.json",
         "LudoWright Capture Profile",
         CaptureProfileContract,
+    ),
+    ContractDefinition(
+        "visual-bible",
+        "visual-bible.schema.json",
+        "LudoWright Visual Bible",
+        VisualBibleContract,
     ),
     ContractDefinition(
         "migration-receipt",

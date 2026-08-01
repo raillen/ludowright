@@ -62,7 +62,9 @@ assembly from interview answers remains a later bounded capability.
 
 ### 0.5 Visual Foundation
 
-- visual-bible schema;
+- versioned visual-bible schema for shared shape, proportion, palette, material,
+  lighting, camera, detail, budget, and positive/negative constraints
+  (implemented through PR37);
 - shared prompt constraints and negative constraints;
 - capture-profile model and inheritance;
 - initial profiles for humanoids, creatures, props, architecture, modular environments, foliage, UI, VFX, and animation references;

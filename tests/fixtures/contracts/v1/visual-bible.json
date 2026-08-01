@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "kind": "visual-bible",
+  "id": "default-visual-bible",
+  "version": 1,
+  "name": "Default Visual Bible",
+  "project_id": "ludowright-demo",
+  "shape_language": {
+    "primary": "clean rounded silhouettes",
+    "secondary": [
+      "soft bevels"
+    ],
+    "avoid": [
+      "unreadable micro-detail"
+    ]
+  },
+  "proportions": [
+    {
+      "id": "humanoid-silhouette",
+      "name": "Humanoid silhouette",
+      "guidance": "Keep the torso readable and the head-to-body relationship consistent across views."
+    }
+  ],
+  "palette": [
+    {
+      "id": "ink",
+      "name": "Ink",
+      "color": "#1F2937",
+      "role": "primary"
+    },
+    {
+      "id": "paper",
+      "name": "Paper",
+      "color": "#F9FAFB",
+      "role": "background"
+    },
+    {
+      "id": "accent",
+      "name": "Accent",
+      "color": "#F59E0B",
+      "role": "accent"
+    }
+  ],
+  "materials": [
+    {
+      "id": "painted-matte",
+      "name": "Painted matte",
+      "finish": "matte",
+      "guidance": "Prefer broad, quiet value transitions and avoid photorealistic surface noise."
+    }
+  ],
+  "lighting": {
+    "mode": "studio",
+    "shadows": "soft"
+  },
+  "camera": {
+    "projection": "orthographic",
+    "framing_margin_percent": 10
+  },
+  "level_of_detail": {
+    "default_level": "medium",
+    "levels": [
+      {
+        "level": "low",
+        "guidance": "Preserve silhouette and the largest readable color blocks."
+      },
+      {
+        "level": "medium",
+        "guidance": "Preserve primary components, material separation, and defining details."
+      },
+      {
+        "level": "high",
+        "guidance": "Add approved construction and material details without visual noise."
+      }
+    ]
+  },
+  "budget": {
+    "max_visual_jobs": 128,
+    "max_generated_outputs": 512,
+    "max_references_per_asset": 16
+  },
+  "prompt_constraints": [
+    "Use a centered subject with clear silhouette separation.",
+    "Keep the approved palette relationships stable across views."
+  ],
+  "negative_constraints": [
+    "Do not add uncontrolled text, logos, or watermarks.",
+    "Do not present generated views as geometrically exact blueprints."
+  ]
+}

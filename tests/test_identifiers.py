@@ -14,6 +14,7 @@ from ludowright.domain import (
     InvalidIdentifierError,
     InvalidNameError,
     ProjectId,
+    VisualBibleId,
     slugify,
     validate_slug,
 )
@@ -48,9 +49,11 @@ def test_slugify_normalizes_international_display_names() -> None:
 def test_identifier_types_do_not_compare_equal() -> None:
     project_id = ProjectId("shared-value")
     asset_id = AssetId("shared-value")
+    visual_bible_id = VisualBibleId("shared-value")
 
     assert project_id != asset_id
-    assert len({project_id, asset_id}) == 2
+    assert project_id != visual_bible_id
+    assert len({project_id, asset_id, visual_bible_id}) == 3
     assert repr(project_id) == "ProjectId('shared-value')"
 
 
