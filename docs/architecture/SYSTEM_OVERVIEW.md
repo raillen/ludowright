@@ -31,6 +31,7 @@ Owns:
 - documents and canonical-source relationships;
 - assets, components, variants, states, and dependencies;
 - visual bibles and capture profiles;
+- prompt templates and compiled prompt hashes;
 - visual jobs, generations, references, and receipts;
 - audits, issues, milestones, packages, and releases;
 - IDs, versions, status transitions, and validation policies.
@@ -44,6 +45,7 @@ Coordinates domain behavior through explicit use cases:
 - generate or refresh documents;
 - discover and decompose assets;
 - plan visual jobs;
+- compile provider-neutral prompts from visual bibles and approved references;
 - record a generation result;
 - approve, reject, or supersede a reference;
 - assemble sheets;

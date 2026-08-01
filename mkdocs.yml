@@ -32,6 +32,7 @@ nav:
       - References and Visual Jobs: contracts/REFERENCES_AND_VISUAL_JOBS.md
       - Capture Profiles: contracts/CAPTURE_PROFILES.md
       - Visual Bible: contracts/VISUAL_BIBLE.md
+      - Prompt Compiler: contracts/PROMPT_COMPILER.md
       - JSON Schema Publication: contracts/JSON_SCHEMAS.md
       - Project Filesystem: contracts/PROJECT_FILESYSTEM.md
       - Structured Repositories: contracts/STRUCTURED_REPOSITORIES.md
@@ -84,6 +85,7 @@ nav:
       - ADR 0025 — Derived Asset ODS Export: decisions/0025-deterministic-asset-ods-export.md
       - ADR 0026 — Deterministic Asset Audit: decisions/0026-deterministic-asset-audit.md
       - ADR 0027 — Versioned Visual Bible Contract: decisions/0027-versioned-visual-bible-contract.md
+      - ADR 0028 — Deterministic Prompt Compiler: decisions/0028-deterministic-provider-neutral-prompt-compiler.md
       - ADR Template: decisions/0000-template.md
   - Operations:
       - Documentation Site: operations/DOCUMENTATION_SITE.md

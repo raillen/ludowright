@@ -65,10 +65,12 @@ assembly from interview answers remains a later bounded capability.
 - versioned visual-bible schema for shared shape, proportion, palette, material,
   lighting, camera, detail, budget, and positive/negative constraints
   (implemented through PR37);
-- shared prompt constraints and negative constraints;
+- provider-neutral layered prompt compilation, approved-reference resolution,
+  structured positive/negative constraints, and deterministic prompt hashing
+  (implemented through PR38);
 - capture-profile model and inheritance;
 - initial profiles for humanoids, creatures, props, architecture, modular environments, foliage, UI, VFX, and animation references;
-- visual-job planning and prompt compilation.
+- visual-job planning and profile-aware job derivation.
 
 ### 0.6 Codex and ImageGen Workflow
 
