@@ -58,7 +58,8 @@ Todos os agentes têm `can_approve: false` e declaram as proibições de aprovar
 referências, inventar decisões e sobrescrever artefatos aprovados. O roteador
 não confere autoridade por ausência de resposta e não transforma uma sugestão
 em mutação canônica. Execução de fases e chamadas a providers continuam nas
-superfícies existentes; o PR50 adicionará a suíte de evals.
+superfícies existentes. O PR50 adiciona a suíte offline de conformidade em
+[`CODEX_AGENT_EVALS.md`](../quality/CODEX_AGENT_EVALS.md).
 
 Não há alteração no event log, SQLite, dependency graph ou arquivos do projeto.
 O catálogo é recurso versionado da skill e sua integridade é protegida pelo
@@ -68,6 +69,7 @@ manifesto e por checksum.
 
 ```bash
 uv run pytest --no-cov tests/test_codex_agents.py tests/test_codex_skill.py
+uv run pytest --no-cov tests/test_codex_agent_evals.py -q
 uv run python -m ludowright.contracts check
 ```
 

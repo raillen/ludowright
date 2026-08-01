@@ -67,6 +67,7 @@ nav:
       - Plan to 1.0: plans/IMPLEMENTATION_PLAN.md
   - Quality:
       - Engineering Baseline: quality/ENGINEERING_QUALITY.md
+      - Codex Agent Evals: quality/CODEX_AGENT_EVALS.md
   - Governance:
       - RFC Template: governance/RFC_TEMPLATE.md
       - ADR 0001 — Identifiers and Versions: decisions/0001-typed-identifiers-and-revision-versions.md

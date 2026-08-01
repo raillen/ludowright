@@ -78,5 +78,6 @@ de um job pronto é uma responsabilidade separada do adaptador em
 `integrations/codex/imagegen.py`, que reutiliza esta política para chegar ao
 checkpoint correto. Receipts e revisão visual foram implementados nos PRs
 47–48. O catálogo e o roteador de agentes especialistas estão definidos em
-[`CODEX_AGENTS.md`](CODEX_AGENTS.md); evals de conformidade permanecem no PR50.
+[`CODEX_AGENTS.md`](CODEX_AGENTS.md). A suíte offline de conformidade do PR50
+está descrita em [`CODEX_AGENT_EVALS.md`](../quality/CODEX_AGENT_EVALS.md).
 Consulte o [contrato de execução ImageGen](IMAGEGEN_EXECUTION.md).

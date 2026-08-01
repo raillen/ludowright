@@ -174,7 +174,7 @@ Planned documents:
 
 - approval checkpoints;
 - recovery and retry behavior;
-- evals for agent compliance.
+- phase-execution orchestration.
 
 ## Visual production
 
@@ -202,6 +202,7 @@ Future bounded changes should receive their own plan under `plans/`.
 ## Quality
 
 - [`quality/ENGINEERING_QUALITY.md`](quality/ENGINEERING_QUALITY.md) — pre-commit, unified quality commands, coverage, property tests, schema drift, dependency audits, secret scanning, CI, and failure policy.
+- [`quality/CODEX_AGENT_EVALS.md`](quality/CODEX_AGENT_EVALS.md) — offline specialist-agent conformance scenarios and safety invariants.
 - [`contracts/JSON_SCHEMAS.md`](contracts/JSON_SCHEMAS.md) — schema-generation, checksum, fixture, and compatibility validation rules.
 - [`contracts/STRUCTURED_REPOSITORIES.md`](contracts/STRUCTURED_REPOSITORIES.md) — parser limits, deterministic round trips, duplicate-key rejection, and optimistic concurrency tests.
 - [`contracts/EVENT_LOG.md`](contracts/EVENT_LOG.md) — replay integrity, chained hashes, sequence, concurrency, corruption, and incomplete-tail recovery tests.
@@ -213,7 +214,6 @@ Future bounded changes should receive their own plan under `plans/`.
 Planned detailed documents:
 
 - snapshot testing;
-- agent evals;
 - release verification;
 - performance budgets.
 

@@ -44,7 +44,7 @@ suas rotas determinísticas: `interviewer`, `game-design-architect`,
 
 O roteador só encaminha uma tarefa depois que o plano da policy confirma que o
 status foi inspecionado. Ele valida a ação permitida, as capacidades exigidas,
-as evidências declaradas e a rota da tarefa. Um resultado bloqueado deve ser
+os escopos declarados e a rota da tarefa. Um resultado bloqueado deve ser
 reportado; não invente um agente alternativo nem uma capacidade ausente.
 
 Os agentes podem propor e validar mudanças pelas superfícies canônicas, mas
@@ -54,7 +54,8 @@ próprio output, e checkpoints humanos continuam explícitos no plano.
 ## Limite desta versão
 
 A política seleciona a próxima ação e o catálogo encaminha o especialista; os
-adaptadores continuam sem executar providers nem gravar decisões, aprovações ou
-receipts por conta própria. Essas mutações continuam nas superfícies canônicas
-do núcleo. Evals de conformidade e execução de fases completas permanecem em
-etapas posteriores do roadmap.
+adaptadores não gravam decisões ou aprovações por conta própria. Receipts e
+referências candidatas são persistidos pelo adaptador ImageGen canônico, e a
+aprovação continua nas superfícies de revisão do núcleo. A suíte offline de
+conformidade foi implementada no PR50; execução de fases completas permanece
+em etapas posteriores do roadmap.

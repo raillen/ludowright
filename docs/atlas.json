@@ -563,6 +563,12 @@
       "path": "quality/ENGINEERING_QUALITY.md",
       "section": "quality",
       "title": "Engineering Quality Baseline"
+    },
+    {
+      "canonical_source": "quality/CODEX_AGENT_EVALS.md",
+      "path": "quality/CODEX_AGENT_EVALS.md",
+      "section": "quality",
+      "title": "Codex Agent Evaluation Suite"
     }
   ],
   "kind": "atlas-metadata",

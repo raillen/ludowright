@@ -68,7 +68,7 @@ Provides:
 - job-to-ImageGen execution;
 - review checkpoints;
 - resumable next-action suggestions;
-- agent eval fixtures.
+- deterministic agent eval fixtures.
 
 The PR44 installer lives in `integrations/codex/skill_installer.py` and ships
 the versioned data from `integrations/codex/skills/ludowright/`. The PR45
@@ -81,8 +81,10 @@ and candidate references. The PR48 review workflow lives in
 `src/ludowright/application/visual_review.py` and projects human approval,
 reference status, dependency invalidation, and event history through canonical
 repositories. PR49 adds the versioned specialist catalog and pure route
-selection in `integrations/codex/agents.py`; it does not execute a phase or
-mutate project state. A typed MCP-like adapter may
+selection in `integrations/codex/agents.py`; PR50 adds the offline conformance
+suite in `tests/test_codex_agent_evals.py` and
+`tests/fixtures/codex-agent-evals.json`. Neither executes a phase or mutates
+project state. A typed MCP-like adapter may
 be added only if CLI boundaries prove insufficient.
 
 ### Infrastructure

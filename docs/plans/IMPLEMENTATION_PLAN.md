@@ -473,7 +473,7 @@ canonical state. The published `codex-orchestration-policy` and
 `codex-orchestration-plan` v1 contracts, schemas, fixtures, tests, and ADR are
 included. Provider execution, receipts, reviews, and specialist agents remain
 separate concerns after this policy stage; they are implemented incrementally
-by PR46, PR47, PR48, and PR49. Agent evals remain in PR50.
+by PR46, PR47, PR48, and PR49. Agent conformance evals are covered in PR50.
 
 - inspect status first;
 - ask only unresolved questions;
@@ -553,6 +553,15 @@ determinism tests, ADR, and canonical contract documentation are included.
 - release verifier.
 
 ### PR 50 — Agent eval suite
+
+Status: implemented in the current slice. The offline table-driven suite covers
+all nine published routes and verifies status-first routing, decision and
+approval boundaries, exact approved-reference enforcement, prompt/receipt
+lineage, selective regeneration without overwrite, and human review
+projection. It uses temporary projects and an injected PNG provider, so it does
+not call Codex, the network, or a real provider. The fixture, focused tests,
+canonical quality documentation, and ATLAS updates are included. Full phase
+execution and provider-backed model evaluation remain future work.
 
 - state inspection;
 - no decision reinvention;
