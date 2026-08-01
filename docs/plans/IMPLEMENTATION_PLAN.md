@@ -796,7 +796,10 @@ candidate sign-off remain required before 1.0.
 - security review (implemented in the current slice; threat model and negative-control tests);
 - documentation audit (implemented in the current follow-up slice; coverage and executable evidence are published in `docs/quality/PUBLIC_BETA_DOCUMENTATION_AUDIT.md`);
 - beta feedback fixes (initial public-example compatibility sweep implemented;
-  external-project feedback remains required);
+  an opt-in external-project asset slice now validates two real assets through
+  image normalization, profile derivation, deterministic job planning, and
+  candidate-reference blocking; provider execution and broader external
+  feedback remain required);
 - release candidate and stable release checklist (implemented in this
   follow-up slice; external-project evidence and final human sign-off remain
   required).

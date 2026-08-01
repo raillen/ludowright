@@ -21,6 +21,7 @@ def test_public_beta_audit_is_registered_and_matches_current_documentation() -> 
         "tests/test_example_cli_smoke.py",
         "compatibilidade inicial",
         "feedback de uso em projetos reais",
+        "EXTERNAL_PROJECT_BETA_VALIDATION.md",
         "release candidate",
         "Não há mudança de API pública",
     ):

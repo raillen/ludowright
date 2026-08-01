@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kind": "external-beta-slice",
+  "project_label": "Convergência",
+  "manifest": "art/manifests/assets_manifest.json",
+  "samples": [
+    {
+      "external_id": "UII-022",
+      "expected_slug": "codex_icon",
+      "expected_category": "ui_icon",
+      "image": "art/modular-ui/concepts/codex_icon_candidate.png",
+      "asset": {
+        "id": "ui-codex-icon",
+        "name": "Codex icon",
+        "family": "ui",
+        "subtype": "interface-icon",
+        "components": [
+          {"id": "subject", "name": "Subject"},
+          {"id": "icon", "name": "Icon"}
+        ],
+        "states": [
+          {"id": "default", "name": "Default"}
+        ]
+      },
+      "profile": "interface-icon"
+    },
+    {
+      "external_id": "CHV-0102",
+      "expected_slug": "fulgor_portrait_ui",
+      "expected_category": "champion",
+      "image": "art/modular-ui/concepts/fulgor_portrait_candidate.png",
+      "asset": {
+        "id": "chr-fulgor",
+        "name": "Fulgor",
+        "family": "character",
+        "subtype": "humanoid",
+        "components": [
+          {"id": "base-body", "name": "Body Base"},
+          {"id": "jacket", "name": "Jacket"},
+          {"id": "trousers", "name": "Trousers"},
+          {"id": "footwear", "name": "Footwear"}
+        ]
+      },
+      "profile": "humanoid:minimal"
+    }
+  ]
+}
