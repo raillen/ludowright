@@ -68,6 +68,12 @@ from ludowright.contracts.documentation_audit import (
     DocumentationTopicContract,
 )
 from ludowright.contracts.governance import ApprovalContract, DecisionContract
+from ludowright.contracts.humanoid_profiles import (
+    HumanoidBodyBaseContract,
+    HumanoidProfileContract,
+    HumanoidWearableContract,
+    NeutralRepresentationPolicyContract,
+)
 from ludowright.contracts.interviews import (
     AnswerProvenanceContract,
     AnswerRecordContract,
@@ -185,6 +191,9 @@ __all__ = [
     "DocumentationPhraseContract",
     "DocumentationTopicContract",
     "GenerationReceiptContract",
+    "HumanoidBodyBaseContract",
+    "HumanoidProfileContract",
+    "HumanoidWearableContract",
     "InterviewBlockedQuestionContract",
     "InterviewInteractionContract",
     "InterviewProgressContract",
@@ -195,6 +204,7 @@ __all__ = [
     "MaterialRuleContract",
     "MigrationReceiptContract",
     "MigrationRunStatus",
+    "NeutralRepresentationPolicyContract",
     "PaletteColorContract",
     "ProjectContract",
     "PromptLayerContract",

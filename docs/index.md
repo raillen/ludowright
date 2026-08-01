@@ -44,9 +44,14 @@ The repository currently establishes:
   incomplete production ownership metadata.
 - a strict v1 visual bible contract for shared shape, proportion, palette,
   material, camera, lighting, detail, budget, and prompt constraints.
+- a provider-neutral deterministic prompt compiler with approved-reference
+  resolution and canonical prompt hashes.
+- the initial data-defined humanoid/wearable profile with a neutral body base,
+  per-view requirements, isolated categories, and assembled outputs.
 
-Executable capture profiles, prompt compilation, ImageGen execution, review workflows, technical
-sheets, global audits, and package generation remain planned work.
+Project-local profile persistence, visual-job planning, ImageGen execution,
+review workflows, technical sheets, global audits, and package generation
+remain planned work.
 
 ## Start here
 

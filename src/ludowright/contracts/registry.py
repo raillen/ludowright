@@ -35,6 +35,7 @@ from ludowright.contracts.documentation_audit import (
     DocumentationAuditReportContract,
 )
 from ludowright.contracts.governance import ApprovalContract, DecisionContract
+from ludowright.contracts.humanoid_profiles import HumanoidProfileContract
 from ludowright.contracts.interviews import (
     InterviewInteractionContract,
     InterviewSessionContract,
@@ -182,6 +183,12 @@ CONTRACTS: tuple[ContractDefinition, ...] = (
         "compiled-prompt.schema.json",
         "LudoWright Compiled Prompt",
         CompiledPromptContract,
+    ),
+    ContractDefinition(
+        "humanoid-profile",
+        "humanoid-profile.schema.json",
+        "LudoWright Humanoid Profile",
+        HumanoidProfileContract,
     ),
     ContractDefinition(
         "migration-receipt",

@@ -30,7 +30,7 @@ Owns:
 - decisions and approvals;
 - documents and canonical-source relationships;
 - assets, components, variants, states, and dependencies;
-- visual bibles and capture profiles;
+- visual bibles, generic capture profiles, and specialized humanoid/wearable profiles;
 - prompt templates and compiled prompt hashes;
 - visual jobs, generations, references, and receipts;
 - audits, issues, milestones, packages, and releases;
@@ -105,6 +105,8 @@ Derived outputs must contain or reference their source version and generation me
 - A decision record is canonical for rationale and status.
 - Structured asset specifications are canonical for asset data.
 - The visual bible and capture profiles are canonical for visual-generation requirements.
+- Specialized package profiles reuse those capture semantics and remain canonical
+  data definitions until a later project-local profile catalog is introduced.
 - Approved individual references are canonical visual inputs.
 - Contact sheets and spreadsheets are derived.
 - Chat messages are never canonical.

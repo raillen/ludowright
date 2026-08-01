@@ -63,6 +63,12 @@ from ludowright.application.documentation_audit import (
     DocumentationAuditor,
     render_documentation_audit,
 )
+from ludowright.application.humanoid_profiles import (
+    HumanoidProfileDefinitionError,
+    HumanoidProfileError,
+    HumanoidProfileNotFoundError,
+    load_humanoid_profile,
+)
 from ludowright.application.interviews import (
     InterviewApplicationError,
     InterviewService,
@@ -119,6 +125,9 @@ __all__ = [
     "DocumentationAudit",
     "DocumentationAuditError",
     "DocumentationAuditor",
+    "HumanoidProfileDefinitionError",
+    "HumanoidProfileError",
+    "HumanoidProfileNotFoundError",
     "InterviewApplicationError",
     "InterviewService",
     "InterviewView",
@@ -129,6 +138,7 @@ __all__ = [
     "RenderedDocument",
     "load_asset_taxonomy",
     "load_document_template_manifest",
+    "load_humanoid_profile",
     "load_prompt_template",
     "render_atlas_markdown",
     "render_documentation_audit",

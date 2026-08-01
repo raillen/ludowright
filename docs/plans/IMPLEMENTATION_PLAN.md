@@ -371,6 +371,13 @@ or visual-job schema change is introduced.
 
 ### PR 39 — Humanoid and wearable profiles
 
+Status: implemented in the current slice. The v1 `humanoid-profile` contract
+loads the versioned `minimal` package data, makes the neutral body-base policy
+and humanoid wearable categories explicit, and deterministically derives the
+existing generic capture profile with per-view and assembled outputs. No
+project-local profile persistence, visual-job planning, provider execution,
+event-log change, SQLite migration, or image generation is introduced.
+
 - body base;
 - per-view images;
 - hair, garments, footwear, accessories, props, details, and assembled outputs;

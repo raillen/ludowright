@@ -135,6 +135,12 @@
       "sha256": "4c8ff3c55ac586d16d784b7f0a94e2dc4dd10bce6e796834c84cfdc5518c0354"
     },
     {
+      "file": "humanoid-profile.schema.json",
+      "name": "humanoid-profile",
+      "schema_id": "https://schemas.ludowright.dev/v1/humanoid-profile.schema.json",
+      "sha256": "ecad67fbf58644a2138ffc58aeefba4a0f8d79f52adf8c6e5a84e374b3fbddd1"
+    },
+    {
       "file": "migration-receipt.schema.json",
       "name": "migration-receipt",
       "schema_id": "https://schemas.ludowright.dev/v1/migration-receipt.schema.json",

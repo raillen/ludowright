@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "kind": "humanoid-profile",
+  "capture_profile": {
+    "schema_version": 1,
+    "kind": "capture-profile",
+    "id": "humanoid-fixture",
+    "version": 1,
+    "name": "Humanoid Fixture",
+    "family": "character",
+    "subtype": "humanoid",
+    "camera": {
+      "projection": "orthographic"
+    },
+    "background": {
+      "mode": "neutral"
+    },
+    "lighting": {
+      "mode": "studio",
+      "shadows": "soft"
+    },
+    "validation": {
+      "width": 1024,
+      "height": 1024,
+      "require_neutral_pose": true
+    },
+    "views": [
+      {
+        "id": "front",
+        "name": "Front",
+        "azimuth_degrees": 0,
+        "elevation_degrees": 0,
+        "role": "identity"
+      }
+    ],
+    "requirements": [
+      {
+        "id": "base-body",
+        "name": "Body Base",
+        "requirement_kind": "component"
+      }
+    ]
+  },
+  "neutral_representation": {
+    "mode": "technical-mannequin",
+    "guidance": "Use a technical mannequin with neutral proportions."
+  },
+  "body_base": {
+    "id": "base-body",
+    "name": "Body Base"
+  },
+  "outputs": [
+    {
+      "id": "assembled-front",
+      "name": "Assembled Front",
+      "layout": "grid",
+      "view_ids": [
+        "front"
+      ],
+      "subject_modes": [
+        "asset"
+      ],
+      "separate_files": false,
+      "assembled_sheet": true
+    }
+  ]
+}
