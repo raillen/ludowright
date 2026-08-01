@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "kind": "package-index",
+  "package_id": "nightly",
+  "project_id": "locadora-2000",
+  "manifest_path": "manifest.json",
+  "manifest_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+  "archive_path": "release/nightly.zip",
+  "index_path": "release/nightly.index.json",
+  "archive_manifest_path": "__ludowright__/package-manifest.json",
+  "archive_index_path": "__ludowright__/package-index.json",
+  "compression": "deflate",
+  "zip_timestamp": "1980-01-01T00:00:00",
+  "entries": [
+    {
+      "path": "README.md",
+      "source_path": "README.md",
+      "kind": "project-file",
+      "size_bytes": 4,
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "path": "__ludowright__/package-manifest.json",
+      "source_path": "manifest.json",
+      "kind": "package-manifest",
+      "size_bytes": 1,
+      "sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+    }
+  ],
+  "archive_member_count": 3,
+  "payload_size_bytes": 5
+}

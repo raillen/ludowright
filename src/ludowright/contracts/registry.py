@@ -52,6 +52,7 @@ from ludowright.contracts.interviews import (
     QuestionnaireContract,
 )
 from ludowright.contracts.migrations import MigrationReceiptContract
+from ludowright.contracts.package_builder import PackageIndexContract
 from ludowright.contracts.package_manifest import PackageManifestContract
 from ludowright.contracts.project import ProjectContract
 from ludowright.contracts.prompt_compiler import CompiledPromptContract, PromptTemplateContract
@@ -97,6 +98,12 @@ CONTRACTS: tuple[ContractDefinition, ...] = (
         "package-manifest.schema.json",
         "LudoWright Package Manifest",
         PackageManifestContract,
+    ),
+    ContractDefinition(
+        "package-index",
+        "package-index.schema.json",
+        "LudoWright Package Index",
+        PackageIndexContract,
     ),
     ContractDefinition("decision", "decision.schema.json", "LudoWright Decision", DecisionContract),
     ContractDefinition("approval", "approval.schema.json", "LudoWright Approval", ApprovalContract),
