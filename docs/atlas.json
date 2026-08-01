@@ -181,6 +181,12 @@
       "title": "ImageGen Job Execution"
     },
     {
+      "canonical_source": "contracts/IMAGE_NORMALIZATION.md",
+      "path": "contracts/IMAGE_NORMALIZATION.md",
+      "section": "contracts",
+      "title": "Image Normalization Contract"
+    },
+    {
       "canonical_source": "contracts/DECISIONS_AND_APPROVALS.md",
       "path": "contracts/DECISIONS_AND_APPROVALS.md",
       "section": "contracts",
@@ -517,6 +523,12 @@
       "title": "ADR 0039: Versioned Codex Specialist Agents and Routing"
     },
     {
+      "canonical_source": "decisions/0040-image-normalization.md",
+      "path": "decisions/0040-image-normalization.md",
+      "section": "decisions",
+      "title": "ADR 0040: Deterministic Image Normalization Boundary"
+    },
+    {
       "canonical_source": "governance/RFC_TEMPLATE.md",
       "path": "governance/RFC_TEMPLATE.md",
       "section": "governance",
@@ -569,6 +581,12 @@
       "path": "quality/CODEX_AGENT_EVALS.md",
       "section": "quality",
       "title": "Codex Agent Evaluation Suite"
+    },
+    {
+      "canonical_source": "commands/IMAGES.md",
+      "path": "commands/IMAGES.md",
+      "section": "commands",
+      "title": "Images CLI"
     }
   ],
   "kind": "atlas-metadata",

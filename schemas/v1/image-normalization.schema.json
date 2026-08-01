@@ -1,0 +1,283 @@
+{
+  "$defs": {
+    "ImageNormalizationBoundsContract": {
+      "additionalProperties": false,
+      "description": "Subject bounds placed inside the normalized canvas.",
+      "properties": {
+        "height": {
+          "maximum": 16384,
+          "minimum": 1,
+          "title": "Height",
+          "type": "integer"
+        },
+        "left": {
+          "maximum": 16383,
+          "minimum": 0,
+          "title": "Left",
+          "type": "integer"
+        },
+        "top": {
+          "maximum": 16383,
+          "minimum": 0,
+          "title": "Top",
+          "type": "integer"
+        },
+        "width": {
+          "maximum": 16384,
+          "minimum": 1,
+          "title": "Width",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "left",
+        "top",
+        "width",
+        "height"
+      ],
+      "title": "ImageNormalizationBoundsContract",
+      "type": "object"
+    },
+    "ImageNormalizationOutputContract": {
+      "additionalProperties": false,
+      "description": "One deterministic PNG artifact emitted by normalization.",
+      "properties": {
+        "artifact": {
+          "enum": [
+            "normalized",
+            "neutral",
+            "thumbnail",
+            "alignment-guide"
+          ],
+          "title": "Artifact",
+          "type": "string"
+        },
+        "format": {
+          "const": "png",
+          "default": "png",
+          "title": "Format",
+          "type": "string"
+        },
+        "height": {
+          "maximum": 16384,
+          "minimum": 1,
+          "title": "Height",
+          "type": "integer"
+        },
+        "path": {
+          "maxLength": 1024,
+          "minLength": 1,
+          "pattern": "^[a-z0-9._-]+(?:/[a-z0-9._-]+)*$",
+          "title": "Path",
+          "type": "string"
+        },
+        "sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "size_bytes": {
+          "maximum": 67108864,
+          "minimum": 1,
+          "title": "Size Bytes",
+          "type": "integer"
+        },
+        "width": {
+          "maximum": 16384,
+          "minimum": 1,
+          "title": "Width",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "artifact",
+        "path",
+        "sha256",
+        "size_bytes",
+        "width",
+        "height"
+      ],
+      "title": "ImageNormalizationOutputContract",
+      "type": "object"
+    },
+    "ImageNormalizationPaddingContract": {
+      "additionalProperties": false,
+      "description": "Actual empty padding around the fitted subject in output pixels.",
+      "properties": {
+        "bottom": {
+          "maximum": 16384,
+          "minimum": 0,
+          "title": "Bottom",
+          "type": "integer"
+        },
+        "left": {
+          "maximum": 16384,
+          "minimum": 0,
+          "title": "Left",
+          "type": "integer"
+        },
+        "right": {
+          "maximum": 16384,
+          "minimum": 0,
+          "title": "Right",
+          "type": "integer"
+        },
+        "top": {
+          "maximum": 16384,
+          "minimum": 0,
+          "title": "Top",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "left",
+        "top",
+        "right",
+        "bottom"
+      ],
+      "title": "ImageNormalizationPaddingContract",
+      "type": "object"
+    }
+  },
+  "$id": "https://schemas.ludowright.dev/v1/image-normalization.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Canonical metadata for one normalized image set.",
+  "properties": {
+    "canvas_height": {
+      "maximum": 16384,
+      "minimum": 64,
+      "title": "Canvas Height",
+      "type": "integer"
+    },
+    "canvas_width": {
+      "maximum": 16384,
+      "minimum": 64,
+      "title": "Canvas Width",
+      "type": "integer"
+    },
+    "id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Id",
+      "type": "string"
+    },
+    "kind": {
+      "const": "image-normalization",
+      "default": "image-normalization",
+      "title": "Kind",
+      "type": "string"
+    },
+    "neutral_background": {
+      "pattern": "^#[0-9A-F]{6}$",
+      "title": "Neutral Background",
+      "type": "string"
+    },
+    "orientation_applied": {
+      "title": "Orientation Applied",
+      "type": "boolean"
+    },
+    "outputs": {
+      "items": {
+        "$ref": "#/$defs/ImageNormalizationOutputContract"
+      },
+      "title": "Outputs",
+      "type": "array"
+    },
+    "padding": {
+      "$ref": "#/$defs/ImageNormalizationPaddingContract"
+    },
+    "requested_padding": {
+      "maximum": 8192,
+      "minimum": 0,
+      "title": "Requested Padding",
+      "type": "integer"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "source_format": {
+      "enum": [
+        "png",
+        "jpeg",
+        "webp"
+      ],
+      "title": "Source Format",
+      "type": "string"
+    },
+    "source_height": {
+      "maximum": 16384,
+      "minimum": 1,
+      "title": "Source Height",
+      "type": "integer"
+    },
+    "source_orientation": {
+      "maximum": 8,
+      "minimum": 1,
+      "title": "Source Orientation",
+      "type": "integer"
+    },
+    "source_path": {
+      "maxLength": 1024,
+      "minLength": 1,
+      "pattern": "^[a-z0-9._-]+(?:/[a-z0-9._-]+)*$",
+      "title": "Source Path",
+      "type": "string"
+    },
+    "source_sha256": {
+      "maxLength": 64,
+      "minLength": 64,
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Sha256",
+      "type": "string"
+    },
+    "source_width": {
+      "maximum": 16384,
+      "minimum": 1,
+      "title": "Source Width",
+      "type": "integer"
+    },
+    "subject_bounds": {
+      "$ref": "#/$defs/ImageNormalizationBoundsContract"
+    },
+    "thumbnail_height": {
+      "maximum": 4096,
+      "minimum": 16,
+      "title": "Thumbnail Height",
+      "type": "integer"
+    },
+    "thumbnail_width": {
+      "maximum": 4096,
+      "minimum": 16,
+      "title": "Thumbnail Width",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "id",
+    "source_path",
+    "source_sha256",
+    "source_format",
+    "source_width",
+    "source_height",
+    "source_orientation",
+    "orientation_applied",
+    "canvas_width",
+    "canvas_height",
+    "requested_padding",
+    "padding",
+    "subject_bounds",
+    "thumbnail_width",
+    "thumbnail_height",
+    "neutral_background",
+    "outputs"
+  ],
+  "title": "LudoWright Image Normalization Report",
+  "type": "object"
+}

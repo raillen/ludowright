@@ -178,6 +178,12 @@ identifies:
 
 Each technical view is generated separately. Clothing, hair, accessories, and props are independent components. Consolidated technical sheets are composed deterministically from approved files.
 
+The PR51 `images normalize` workflow is the first derived-image boundary: it
+applies bounded EXIF orientation, dimensions, padding, transparent/neutral
+backgrounds, thumbnails, and alignment guides, then records an
+`image-normalization` report. It does not approve or replace the source
+reference; technical-sheet assembly remains a later application workflow.
+
 ## Persistence and file safety
 
 - writes should be atomic;

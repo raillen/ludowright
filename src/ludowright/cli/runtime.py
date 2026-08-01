@@ -19,6 +19,10 @@ from ludowright.application.asset_registry import (
 from ludowright.application.asset_workbook import AssetWorkbookError
 from ludowright.application.document_refresh import DocumentRefreshError
 from ludowright.application.documentation_audit import DocumentationAuditError
+from ludowright.application.image_normalization import (
+    ImageNormalizationConflictError,
+    ImageNormalizationRollbackError,
+)
 from ludowright.application.visual_review import (
     VisualReviewConflictError,
     VisualReviewError,
@@ -34,6 +38,8 @@ from ludowright.domain import DomainValidationError
 from ludowright.infrastructure import (
     CorruptEventLogError,
     EventLogError,
+    ImageNormalizationError,
+    ImageNormalizationValidationError,
     OdsWorkbookConflictError,
     OdsWorkbookError,
     ProjectFilesystemError,
@@ -253,6 +259,30 @@ def _known_failure(error: Exception) -> CliFailure | None:
             exit_code=CliExitCode.VALIDATION,
         )
     if isinstance(error, VisualReviewError):
+        return CliFailure(
+            CliErrorCode.INVALID_INPUT,
+            str(error),
+            exit_code=CliExitCode.VALIDATION,
+        )
+    if isinstance(error, ImageNormalizationConflictError):
+        return CliFailure(
+            CliErrorCode.CONFLICT,
+            str(error),
+            exit_code=CliExitCode.CONFLICT,
+        )
+    if isinstance(error, ImageNormalizationRollbackError):
+        return CliFailure(
+            CliErrorCode.CORRUPT_STATE,
+            str(error),
+            exit_code=CliExitCode.CORRUPT_STATE,
+        )
+    if isinstance(error, ImageNormalizationValidationError):
+        return CliFailure(
+            CliErrorCode.INVALID_INPUT,
+            str(error),
+            exit_code=CliExitCode.VALIDATION,
+        )
+    if isinstance(error, ImageNormalizationError):
         return CliFailure(
             CliErrorCode.INVALID_INPUT,
             str(error),

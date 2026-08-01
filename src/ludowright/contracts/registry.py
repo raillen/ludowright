@@ -45,6 +45,7 @@ from ludowright.contracts.documentation_audit import (
 from ludowright.contracts.governance import ApprovalContract, DecisionContract
 from ludowright.contracts.hard_surface_profiles import HardSurfaceProfileContract
 from ludowright.contracts.humanoid_profiles import HumanoidProfileContract
+from ludowright.contracts.image_normalization import ImageNormalizationReportContract
 from ludowright.contracts.interviews import (
     InterviewInteractionContract,
     InterviewSessionContract,
@@ -231,6 +232,12 @@ CONTRACTS: tuple[ContractDefinition, ...] = (
         "visual-profile.schema.json",
         "LudoWright Visual Profile",
         VisualProfileContract,
+    ),
+    ContractDefinition(
+        "image-normalization",
+        "image-normalization.schema.json",
+        "LudoWright Image Normalization Report",
+        ImageNormalizationReportContract,
     ),
     ContractDefinition(
         "migration-receipt",

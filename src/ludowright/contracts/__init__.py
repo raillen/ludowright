@@ -107,6 +107,12 @@ from ludowright.contracts.humanoid_profiles import (
     HumanoidWearableContract,
     NeutralRepresentationPolicyContract,
 )
+from ludowright.contracts.image_normalization import (
+    ImageNormalizationBoundsContract,
+    ImageNormalizationOutputContract,
+    ImageNormalizationPaddingContract,
+    ImageNormalizationReportContract,
+)
 from ludowright.contracts.interviews import (
     AnswerProvenanceContract,
     AnswerRecordContract,
@@ -276,6 +282,10 @@ __all__ = [
     "HumanoidWearableContract",
     "ImageGenOperationContract",
     "ImageGenOutputContract",
+    "ImageNormalizationBoundsContract",
+    "ImageNormalizationOutputContract",
+    "ImageNormalizationPaddingContract",
+    "ImageNormalizationReportContract",
     "InterviewBlockedQuestionContract",
     "InterviewInteractionContract",
     "InterviewProgressContract",
