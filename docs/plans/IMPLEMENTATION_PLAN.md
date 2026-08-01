@@ -414,6 +414,15 @@ generation is introduced.
 
 ### PR 42 — Foliage, UI, VFX, and animation profiles
 
+Status: implemented in the current slice. The v1 `visual-profile` contract
+loads eight deterministic package-data profiles for trees, plants, UI,
+particle and shader effects, locomotion, and motion sets. It validates exact
+taxonomy mappings, typed components, optional variants, required states,
+specialized views, and capture-sheet outputs while deriving the existing
+generic capture profile. No project-local profile persistence, visual-job
+planning, provider execution, event-log change, SQLite migration,
+dependency-graph mutation, or image generation is introduced.
+
 - trees and plants;
 - UI components;
 - VFX concepts;
