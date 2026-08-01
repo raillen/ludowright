@@ -29,9 +29,12 @@ idea → guided intake → modular documentation → asset registry
 
 ## Current status
 
-LudoWright is in the **pre-alpha beta-preparation phase**. Product vision, long-term roadmap, layered architecture, documentation navigation, the initial Python package, project initialization, CLI workflows, tests, CI, asset planning, the v1 visual bible schema, a provider-neutral deterministic prompt compiler, the initial data-defined humanoid/wearable, creature/animal, environment/hard-surface, and visual-specialty profiles, the pure deterministic visual-job planner, the versioned project-local `$ludowright` skill installer, its status-first orchestration policy, provider-bound ImageGen operation execution, generation receipts, review workflows, technical sheets, audits, specialist routing, package generation, local release verification, and deterministic example inputs are established. Clean installation tutorials and public-beta readiness remain the next bounded slices.
+LudoWright is in the **pre-alpha beta-preparation phase**. Product vision, long-term roadmap, layered architecture, documentation navigation, the initial Python package, project initialization, CLI workflows, tests, CI, asset planning, the v1 visual bible schema, a provider-neutral deterministic prompt compiler, the initial data-defined humanoid/wearable, creature/animal, environment/hard-surface, and visual-specialty profiles, the pure deterministic visual-job planner, the versioned project-local `$ludowright` skill installer, its status-first orchestration policy, provider-bound ImageGen operation execution, generation receipts, review workflows, technical sheets, audits, specialist routing, package generation, local release verification, and deterministic example inputs are established. The supported checkout installation and first-project guides are now available; the remaining tutorials and public-beta readiness are still bounded follow-up slices.
 
 See the ordered implementation program in [`docs/plans/IMPLEMENTATION_PLAN.md`](docs/plans/IMPLEMENTATION_PLAN.md).
+
+Start with the [installation guide](docs/getting-started/INSTALLATION.md) and
+then follow the [first-project tutorial](docs/getting-started/FIRST_PROJECT.md).
 
 ## Development setup
 

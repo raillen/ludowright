@@ -67,13 +67,17 @@ ImageGen adapter executes a selected ready job through an injected provider,
 records a deterministic operation manifest, validates one PNG per view, and
 rolls back partial failures. Generation receipts, review workflows, technical
 sheets, global audits, package manifests, reproducible package builds, local
-release verification, and deterministic example inputs are implemented; clean
-installation tutorials and beta readiness remain the next bounded work. The
+release verification, and deterministic example inputs are implemented. The
+supported checkout installation path and first-project tutorial cover Linux,
+Windows, macOS, `ludowright init`, dry-run, and project-local skill setup; the
+remaining tutorials and beta readiness remain the next bounded work. The
 pure deterministic visual-job planner does not execute providers or persist
 project-local plans.
 
 ## Start here
 
+- [Installation](getting-started/INSTALLATION.md) — supported local setup for Linux, Windows, and macOS.
+- [First project](getting-started/FIRST_PROJECT.md) — create and verify a minimal project.
 - [Documentation Atlas](ATLAS.md) — canonical navigation map.
 - [Product Vision](product/PRODUCT_VISION.md) — mission, users, principles, and boundaries.
 - [Roadmap](product/ROADMAP.md) — planned releases and long-term direction.

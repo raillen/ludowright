@@ -11,6 +11,9 @@ strict: true
 nav:
   - Home: index.md
   - Documentation Atlas: ATLAS.md
+  - Getting started:
+      - Installation: getting-started/INSTALLATION.md
+      - First project: getting-started/FIRST_PROJECT.md
   - Product:
       - Product Vision: product/PRODUCT_VISION.md
       - Product Document Set: product/PRODUCT_DOCUMENT_SET.md
