@@ -772,8 +772,9 @@ of PR62.
 
 ### PR 62 — Public beta and 1.0 readiness
 
-Status: the clean-room installation, end-to-end validation, and migration
-compatibility-matrix sub-slices are implemented in the current chain. The
+Status: the clean-room installation, end-to-end validation, migration
+compatibility-matrix, and security-review sub-slices are implemented in the
+current chain. The
 quality gate now builds the wheel and source distribution in a temporary
 directory, installs each format into a fresh virtual environment, and runs the
 installed CLI from outside the checkout. Its end-to-end smoke test exercises
@@ -781,13 +782,14 @@ the local-first path from `init` through assets, ImageGen execution, review,
 technical sheets, package build, project audit, and release verification. The
 migration matrix covers the supported v1→v2 transition, current-schema
 no-ops, downgrade rejection, and missing contiguous paths while preserving the
-existing backup/rollback tests. Security review, documentation audit, beta
-feedback, and release-candidate work remain bounded follow-up slices of PR62.
+existing backup/rollback tests. The threat model and negative-control security
+tests are published in the current slice. Documentation audit, beta feedback,
+and release-candidate work remain bounded follow-up slices of PR62.
 
 - clean-room installation tests (implemented in the current slice);
 - end-to-end validation (implemented in the current slice);
 - migration compatibility matrix (implemented in the current slice);
-- security review;
+- security review (implemented in the current slice; threat model and negative-control tests);
 - documentation audit;
 - beta feedback fixes;
 - release candidate and stable release checklist.

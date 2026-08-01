@@ -372,6 +372,20 @@ def test_project_override_cannot_extend_an_undeclared_file(tmp_path: Path) -> No
         DocumentTemplateEngine(filesystem).render("minimal", _context())
 
 
+def test_project_override_cannot_access_python_object_internals(tmp_path: Path) -> None:
+    filesystem = ProjectFilesystem(tmp_path)
+    filesystem.write_text(
+        RepositoryPath(".ludowright/templates/minimal/base.md.jinja"),
+        "{{ title.__class__.__mro__ }}\n",
+    )
+
+    with pytest.raises(DocumentTemplateRenderError, match="could not be rendered"):
+        DocumentTemplateEngine(filesystem).render(
+            "minimal",
+            {"title": "Unsafe", "body": "Body", "sections": []},
+        )
+
+
 def test_manifest_rejects_undeclared_entrypoint_and_traversal() -> None:
     with pytest.raises(ValidationError):
         DocumentTemplateManifestContract(

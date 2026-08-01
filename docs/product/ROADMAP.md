@@ -141,8 +141,8 @@ assembly from interview answers remains a later bounded capability.
 - minimal example project (implemented through PR57 and the PR19 initializer), 2D sprite example
   (implemented through PR58), and low-poly 3D example (implemented through
   PR59), and modular-environment example (implemented through PR60);
-- end-to-end validation and migration matrix tests are implemented in the
-  current PR62 slice;
+- end-to-end validation, migration matrix tests, and the security review are
+  implemented in the current PR62 slice;
 - usability and compatibility fixes from real projects;
 - release candidate.
 

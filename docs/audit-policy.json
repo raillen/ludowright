@@ -60,6 +60,11 @@
       "title": "Product roadmap"
     },
     {
+      "canonical_source": "security/THREAT_MODEL.md",
+      "id": "security-threat-model",
+      "title": "Security threat model"
+    },
+    {
       "canonical_source": "contracts/STRUCTURED_REPOSITORIES.md",
       "id": "structured-repositories",
       "title": "Structured repositories contract"

@@ -5,8 +5,9 @@ from __future__ import annotations
 import hashlib
 import json
 from concurrent.futures import ThreadPoolExecutor
+from io import BytesIO
 from pathlib import Path
-from zipfile import ZIP_DEFLATED, ZipFile
+from zipfile import ZIP_DEFLATED, ZIP_STORED, ZipFile, ZipInfo
 
 import pytest
 from typer.testing import CliRunner
@@ -30,6 +31,20 @@ from ludowright.infrastructure import (
 
 FIXTURE = Path("tests/fixtures/contracts/v1/project.json")
 runner = CliRunner()
+
+
+def _raw_zip(
+    entries: tuple[tuple[str | ZipInfo, bytes], ...],
+    *,
+    compression: int = ZIP_DEFLATED,
+    comment: bytes = b"",
+) -> bytes:
+    output = BytesIO()
+    with ZipFile(output, mode="w", compression=compression) as archive:
+        for name, payload in entries:
+            archive.writestr(name, payload)
+        archive.comment = comment
+    return output.getvalue()
 
 
 def _project(tmp_path: Path) -> tuple[Path, ProjectFilesystem]:
@@ -246,6 +261,26 @@ def test_archive_builder_rejects_traversal_and_duplicate_entries() -> None:
                 PackageArchiveEntry(path="same.txt", payload=b"y"),
             )
         )
+
+
+def test_archive_inspector_rejects_hostile_zip_members() -> None:
+    builder = PackageArchiveBuilder()
+
+    with pytest.raises(PackageArchiveError):
+        builder.inspect(_raw_zip((("../outside.txt", b"x"),)))
+
+    symlink = ZipInfo("link.txt")
+    symlink.compress_type = ZIP_DEFLATED
+    symlink.create_system = 3
+    symlink.external_attr = 0o120777 << 16
+    with pytest.raises(PackageArchiveError):
+        builder.inspect(_raw_zip(((symlink, b"x"),)))
+
+    with pytest.raises(PackageArchiveError):
+        builder.inspect(_raw_zip((("stored.txt", b"x"),), compression=ZIP_STORED))
+
+    with pytest.raises(PackageArchiveError):
+        builder.inspect(_raw_zip((("comment.txt", b"x"),), comment=b"untrusted"))
 
 
 def test_package_build_cli_has_human_json_and_error_envelope(tmp_path: Path) -> None:

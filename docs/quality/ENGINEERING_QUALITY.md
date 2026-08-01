@@ -84,6 +84,16 @@ recovery:
 uv run pytest --no-cov tests/test_migrations.py
 ```
 
+The public-beta security review has a focused negative-control set for the
+Jinja sandbox and package archive validator:
+
+```bash
+uv run pytest --no-cov tests/test_package_builder.py tests/test_document_templates.py
+```
+
+The threat model and residual-risk register live in
+[`security/THREAT_MODEL.md`](../security/THREAT_MODEL.md).
+
 The clean-room check builds both publishable formats into a temporary
 directory, creates a new virtual environment for each format, installs the
 artifact with its runtime dependencies, and executes `ludowright --version`
