@@ -8,8 +8,9 @@ Instale a skill local em um projeto LudoWright existente:
 ludowright codex skill install /caminho/do/projeto
 ```
 
-O comando grava somente `.agents/skills/ludowright/manifest.json` e
-`.agents/skills/ludowright/SKILL.md`. Um destino não vazio ou alterado é
+O comando grava somente os arquivos declarados pelo manifesto em
+`.agents/skills/ludowright/`. Atualmente eles são `manifest.json`, `SKILL.md`,
+`orchestration.json` e `agents.json`. Um destino não vazio ou alterado é
 recusado.
 
 Para revisar o plano sem alterar o projeto:
@@ -73,7 +74,7 @@ contratos para automação.
 
 ## Política de orquestração
 
-A skill instalada na revisão 2 inclui a política declarativa em
+A skill instalada na revisão 3 inclui a política declarativa em
 `.agents/skills/ludowright/orchestration.json`. Ela não é um novo comando nem um
 segundo armazenamento de estado. O adaptador Codex a usa para planejar uma única
 próxima ação:
@@ -92,6 +93,14 @@ própria.
 Consulte o [contrato da política](../contracts/CODEX_ORCHESTRATION.md) para a
 ordem completa, os contratos publicados e os limites desta etapa.
 
+## Agentes especialistas
+
+O arquivo `.agents/skills/ludowright/agents.json` declara as nove rotas
+especialistas. O adaptador seleciona um agente somente depois de validar o
+plano, o status, a ação e as capacidades exigidas. Os agentes não têm
+autoridade de aprovação; o resultado preserva o checkpoint humano. Consulte o
+[contrato de agentes](../contracts/CODEX_AGENTS.md).
+
 ## Execução ImageGen
 
 O PR46 não adiciona um comando CLI independente. A integração Codex expõe
@@ -103,4 +112,5 @@ prompt, inputs, paths e revisões.
 O modo `dry_run` retorna o mesmo plano determinístico sem lock, chamada ao
 provider ou escrita. Execução real é create-only: manifesto ou PNG existente
 gera conflito, e falhas removem os artefatos criados pela tentativa. Receipts,
-referências geradas e aprovação ainda são etapas posteriores.
+referências geradas e revisão de aprovação são workflows posteriores e
+canônicos, não efeitos implícitos dos agentes.

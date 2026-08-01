@@ -163,6 +163,12 @@
       "title": "Codex Orchestration Policy"
     },
     {
+      "canonical_source": "contracts/CODEX_AGENTS.md",
+      "path": "contracts/CODEX_AGENTS.md",
+      "section": "contracts",
+      "title": "Codex Specialist Agents Contract"
+    },
+    {
       "canonical_source": "contracts/CODEX_SKILL.md",
       "path": "contracts/CODEX_SKILL.md",
       "section": "contracts",
@@ -503,6 +509,12 @@
       "path": "decisions/0038-visual-review-workflow.md",
       "section": "decisions",
       "title": "ADR 0038: Canonical Visual Review Workflow"
+    },
+    {
+      "canonical_source": "decisions/0039-codex-specialist-agents.md",
+      "path": "decisions/0039-codex-specialist-agents.md",
+      "section": "decisions",
+      "title": "ADR 0039: Versioned Codex Specialist Agents and Routing"
     },
     {
       "canonical_source": "governance/RFC_TEMPLATE.md",

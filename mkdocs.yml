@@ -40,6 +40,7 @@ nav:
       - Prompt Compiler: contracts/PROMPT_COMPILER.md
       - Codex Skill: contracts/CODEX_SKILL.md
       - Codex Orchestration: contracts/CODEX_ORCHESTRATION.md
+      - Codex Specialist Agents: contracts/CODEX_AGENTS.md
       - ImageGen Execution: contracts/IMAGEGEN_EXECUTION.md
       - JSON Schema Publication: contracts/JSON_SCHEMAS.md
       - Project Filesystem: contracts/PROJECT_FILESYSTEM.md
@@ -106,6 +107,7 @@ nav:
       - ADR 0036 — ImageGen Job Execution: decisions/0036-imagegen-job-execution.md
       - ADR 0037 — Generation Receipts: decisions/0037-generation-receipts.md
       - ADR 0038 — Visual Review Workflow: decisions/0038-visual-review-workflow.md
+      - ADR 0039 — Codex Specialist Agents: decisions/0039-codex-specialist-agents.md
       - ADR Template: decisions/0000-template.md
   - Operations:
       - Documentation Site: operations/DOCUMENTATION_SITE.md

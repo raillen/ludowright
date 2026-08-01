@@ -21,12 +21,13 @@ A fonte da skill fica em:
 integrations/codex/skills/ludowright/manifest.json
 integrations/codex/skills/ludowright/SKILL.md
 integrations/codex/skills/ludowright/orchestration.json
+integrations/codex/skills/ludowright/agents.json
 ```
 
 O manifesto publicado é o contrato `codex-skill-manifest` v1. Ele declara:
 
 - ID `ludowright` e invocação `$ludowright`;
-- revisão inteira da skill (atualmente `2`);
+- revisão inteira da skill (atualmente `3`);
 - versão mínima do LudoWright;
 - caminho canônico de instalação;
 - entrypoint `SKILL.md`;
@@ -45,7 +46,9 @@ O destino é sempre relativo ao projeto descoberto:
 ```text
 .agents/skills/ludowright/
 ├── manifest.json
-└── SKILL.md
+├── SKILL.md
+├── orchestration.json
+└── agents.json
 ```
 
 O nome `SKILL.md` preserva a convenção case-sensitive do Codex. A extensão
@@ -119,8 +122,20 @@ injetado pelo host, grava o contrato `imagegen-operation` e faz uma chamada por
 view, com validação PNG, lock, escrita atômica e rollback. Essa integração não
 cria receipts, referências ou aprovações e não substitui os comandos canônicos.
 
+## Agentes especialistas
+
+A revisão 3 inclui `agents.json`, o catálogo dos nove papéis e suas rotas. O
+adaptador carrega o catálogo com validação estrita e o `CodexAgentRouter`
+encaminha somente tarefas compatíveis com o plano, capacidades e ações
+declaradas. A especificação canônica está em
+[`CODEX_AGENTS.md`](CODEX_AGENTS.md).
+
+Agentes não possuem autoridade de aprovação. A aprovação humana continua sendo
+um checkpoint explícito da policy e sua gravação continua responsabilidade dos
+comandos canônicos.
+
 ## Limites desta versão
 
-Receipts, revisão visual e agentes especialistas pertencem aos PRs seguintes.
-A aprovação humana é um checkpoint exigido pela política, mas sua gravação
-continua sendo responsabilidade dos comandos canônicos.
+O catálogo seleciona papéis, mas não executa fases completas nem substitui o
+CLI, o event log, o SQLite, o grafo ou os providers. Evals de conformidade e
+delegação operacional permanecem no PR50.

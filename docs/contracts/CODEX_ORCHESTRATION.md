@@ -27,7 +27,8 @@ Ela declara:
 - as invariantes de perguntar somente o que está pendente, registrar decisões,
   exigir aprovação e retomar a partir de estado durável.
 
-O manifesto da skill passou para a revisão 2 e inclui esse arquivo com checksum.
+O manifesto da skill passou para a revisão 3 e inclui esse arquivo e o catálogo
+de agentes especialistas com seus checksums.
 Alterações na política são atualizações versionadas da skill, nunca mudanças
 silenciosas no projeto instalado.
 
@@ -75,5 +76,7 @@ em [`CODEX_SKILL.md`](CODEX_SKILL.md).
 O planejador continua sem efeitos colaterais e não executa ImageGen. A execução
 de um job pronto é uma responsabilidade separada do adaptador em
 `integrations/codex/imagegen.py`, que reutiliza esta política para chegar ao
-checkpoint correto. Receipts, revisão visual e agentes especialistas permanecem
-nos PRs 47–50. Consulte o [contrato de execução ImageGen](IMAGEGEN_EXECUTION.md).
+checkpoint correto. Receipts e revisão visual foram implementados nos PRs
+47–48. O catálogo e o roteador de agentes especialistas estão definidos em
+[`CODEX_AGENTS.md`](CODEX_AGENTS.md); evals de conformidade permanecem no PR50.
+Consulte o [contrato de execução ImageGen](IMAGEGEN_EXECUTION.md).

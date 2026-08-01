@@ -59,7 +59,7 @@ def test_repository_atlas_is_current_and_complete() -> None:
     result = AtlasGenerator(Path(__file__).parents[1]).generate()
 
     assert result.valid
-    assert len(result.report.documents) == 92
+    assert len(result.report.documents) == 94
     assert result.report.broken_links == ()
     assert result.report.orphan_documents == ()
 

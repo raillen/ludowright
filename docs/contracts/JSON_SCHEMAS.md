@@ -61,6 +61,8 @@ It uses JSON Schema Draft 2020-12 and contains:
 | Codex skill report | `codex-skill-report.schema.json` |
 | Codex orchestration policy | `codex-orchestration-policy.schema.json` |
 | Codex orchestration plan | `codex-orchestration-plan.schema.json` |
+| Codex agent catalog | `codex-agent-catalog.schema.json` |
+| Codex agent route | `codex-agent-route.schema.json` |
 | Interview questionnaire | `interview-questionnaire.schema.json` |
 | Interview session | `interview-session.schema.json` |
 | Interview interaction | `interview-interaction.schema.json` |

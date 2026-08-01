@@ -45,6 +45,7 @@ This is the main navigation map for humans and agents. Each subject should have 
 - [`contracts/VISUAL_BIBLE.md`](contracts/VISUAL_BIBLE.md) — project-level visual direction, palette, materials, detail levels, budgets, and prompt constraints.
 - [`contracts/PROMPT_COMPILER.md`](contracts/PROMPT_COMPILER.md) — versioned prompt layers, approved-reference resolution, structured constraints, deterministic rendering, and prompt hashing.
 - [`contracts/CODEX_ORCHESTRATION.md`](contracts/CODEX_ORCHESTRATION.md) — declarative Codex policy, deterministic next-action plans, checkpoints, validation, and resumability.
+- [`contracts/CODEX_AGENTS.md`](contracts/CODEX_AGENTS.md) — versioned specialist roles, capabilities, routing, evidence boundaries, and human approval limits.
 - [`contracts/CODEX_SKILL.md`](contracts/CODEX_SKILL.md) — versioned project-local `$ludowright` skill package, lifecycle semantics, checksums, and safe failure behavior.
 - [`contracts/IMAGEGEN_EXECUTION.md`](contracts/IMAGEGEN_EXECUTION.md) — provider boundary, deterministic operation manifests, one-view execution, PNG validation, conflicts, dry-run, and rollback.
 - [`contracts/JSON_SCHEMAS.md`](contracts/JSON_SCHEMAS.md) — generated Draft 2020-12 schemas, registry, fixtures, checksums, drift checking, and compatibility policy.
@@ -167,10 +168,10 @@ state or image files.
 - [`decisions/0036-imagegen-job-execution.md`](decisions/0036-imagegen-job-execution.md) — provider boundary, immutable operation record, and safe rollback.
 - [`decisions/0037-generation-receipts.md`](decisions/0037-generation-receipts.md) — durable terminal receipts, generated references, checksums, and rollback semantics.
 - [`decisions/0038-visual-review-workflow.md`](decisions/0038-visual-review-workflow.md) — receipt-bound human approval, reviewer separation, dependency invalidation, supersession, and rollback.
+- [`decisions/0039-codex-specialist-agents.md`](decisions/0039-codex-specialist-agents.md) — versioned specialist catalog, deterministic routing, and no agent approval authority.
 
 Planned documents:
 
-- agent roles and routing;
 - approval checkpoints;
 - recovery and retry behavior;
 - evals for agent compliance.

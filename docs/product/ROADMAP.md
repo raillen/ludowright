@@ -93,7 +93,8 @@ assembly from interview answers remains a later bounded capability.
 - provider-bound ImageGen execution with deterministic operation manifests,
   one PNG per view, safe paths, atomic writes, dry-run, conflict detection, and
   rollback (implemented through PR46);
-- Codex-specific agents and routing;
+- Codex-specific agents and routing (versioned nine-agent catalog and pure
+  deterministic router implemented through PR49);
 - approved-reference selection;
 - prompt, input, output, and checksum receipts (receipts, candidate generated
   references, metadata, timestamps, and PNG validation implemented through

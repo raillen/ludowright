@@ -472,9 +472,8 @@ returns one deterministic next action; it does not execute providers or mutate
 canonical state. The published `codex-orchestration-policy` and
 `codex-orchestration-plan` v1 contracts, schemas, fixtures, tests, and ADR are
 included. Provider execution, receipts, reviews, and specialist agents remain
-separate concerns after this policy stage; PR46 implements provider-bound
-ImageGen execution, while receipts, reviews, and specialist agents remain in
-later slices.
+separate concerns after this policy stage; they are implemented incrementally
+by PR46, PR47, PR48, and PR49. Agent evals remain in PR50.
 
 - inspect status first;
 - ask only unresolved questions;
@@ -534,6 +533,14 @@ contract, and lifecycle tests plus ADR and command documentation are included.
 - dependency invalidation.
 
 ### PR 49 — Codex specialist agents
+
+Status: implemented in the current slice. The project-local skill revision 3
+ships a validated `codex-agent-catalog` with nine data-defined specialist
+profiles and one deterministic route per task. `CodexAgentRouter` consumes the
+existing orchestration plan, fails closed before status inspection or when a
+route/action/capability is incompatible, preserves human checkpoints, and
+never grants approval authority. Schemas, fixtures, focused security and
+determinism tests, ADR, and canonical contract documentation are included.
 
 - interviewer;
 - game-design architect;
