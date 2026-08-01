@@ -12,6 +12,8 @@ from rich.console import Console
 from rich.table import Table
 
 from ludowright.application import (
+    AssetAuditError,
+    AssetAuditService,
     AssetDecompositionError,
     AssetDecompositionService,
     AssetDecompositionValidationError,
@@ -391,6 +393,63 @@ def export_assets_ods(
     )
 
 
+@assets_app.command("audit")
+def audit_assets(
+    context: typer.Context,
+    project: Annotated[Path, typer.Argument(help="Project directory or a path below it.")],
+    check: Annotated[
+        bool,
+        typer.Option("--check", help="Fail when blocking asset findings are present."),
+    ] = False,
+    dry_run: Annotated[
+        bool,
+        typer.Option(
+            "--dry-run",
+            help="Repeat the read-only audit with explicit dry-run metadata.",
+        ),
+    ] = False,
+    json_output: Annotated[
+        bool,
+        typer.Option("--json", help="Return a stable machine-readable response."),
+    ] = False,
+) -> None:
+    """Audit asset completeness, dependencies, profiles, and ownership."""
+
+    def action() -> dict[str, object]:
+        try:
+            report = AssetAuditService(ProjectFilesystem.discover(project)).audit(dry_run=dry_run)
+        except AssetAuditError as error:
+            raise CliFailure(
+                code=CliErrorCode.CONFLICT,
+                message=str(error),
+                exit_code=CliExitCode.CONFLICT,
+            ) from error
+        except ValidationError as error:
+            raise CliFailure(
+                code=CliErrorCode.CORRUPT_STATE,
+                message=str(error),
+                exit_code=CliExitCode.CORRUPT_STATE,
+            ) from error
+        data = report.as_data()
+        if check and not report.report.valid:
+            raise CliFailure(
+                code=CliErrorCode.CHECKS_FAILED,
+                message="Asset audit found blocking findings.",
+                exit_code=CliExitCode.CHECKS_FAILED,
+                details={"errors": report.report.error_count},
+                data=data,
+            )
+        return data
+
+    run_command(
+        context=context,
+        command="assets audit",
+        local_json=json_output,
+        action=action,
+        render_human=_render_audit_human,
+    )
+
+
 def _run(
     *,
     context: typer.Context,
@@ -472,6 +531,34 @@ def _render_workbook_human(console: Console, data: dict[str, object]) -> None:
         console.print("Warnings:")
         for warning in warnings:
             console.print(f"- {warning}")
+
+
+def _render_audit_human(console: Console, data: dict[str, object]) -> None:
+    """Render the deterministic asset audit report with Rich."""
+    console.print("[bold]Asset audit[/bold]")
+    console.print(f"State: {data['state']} | Dry run: {data['dry_run']}")
+    console.print(f"Assets: {data['asset_count']}")
+    console.print(
+        f"Registry: {data['registry_path']} (v{data['registry_version']}) | "
+        f"Dependency graph: {data['dependency_graph_state']} "
+        f"(v{data['dependency_graph_revision']})"
+    )
+    findings = data.get("findings")
+    if isinstance(findings, list) and findings:
+        table = Table("Severity", "Code", "Subject", "Message")
+        for value in findings:
+            if isinstance(value, dict):
+                table.add_row(
+                    str(value.get("severity", "")),
+                    str(value.get("code", "")),
+                    str(value.get("subject", "")),
+                    str(value.get("message", "")),
+                )
+        console.print(table)
+    if data.get("valid"):
+        console.print("[green]Asset audit: valid[/green]")
+    else:
+        console.print("[bold red]Asset audit: invalid[/bold red]")
 
 
 def _render_discovery_human(console: Console, data: dict[str, object]) -> None:
