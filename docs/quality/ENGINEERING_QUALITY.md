@@ -39,6 +39,9 @@ The hooks verify:
 - strict mypy typing;
 - likely committed secrets.
 
+The strict mypy hook covers both `src/` and the optional adapter packages under
+`integrations/`.
+
 Hooks use check-only behavior. They do not silently reformat or rewrite files.
 
 ## Unified quality command

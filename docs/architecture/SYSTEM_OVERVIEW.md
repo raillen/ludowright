@@ -70,7 +70,10 @@ Provides:
 - resumable next-action suggestions;
 - agent eval fixtures.
 
-It calls application use cases through the CLI initially. A typed in-process or MCP-like adapter may be added only if CLI boundaries prove insufficient.
+The PR44 installer lives in `integrations/codex/skill_installer.py` and ships
+the versioned data from `integrations/codex/skills/ludowright/`. It calls
+application use cases through the CLI initially. A typed in-process or
+MCP-like adapter may be added only if CLI boundaries prove insufficient.
 
 ### Infrastructure
 
@@ -86,6 +89,11 @@ Implements:
 - Git metadata;
 - ZIP packaging;
 - atomic writes, locks, backups, and migrations.
+
+The filesystem also exposes a restricted case-sensitive child-file boundary for
+external integration formats such as `SKILL.md`. It reuses root containment,
+symlink rejection, atomic replacement, and lock ownership; it does not relax
+the lowercase `RepositoryPath` grammar.
 
 ## Canonical state model
 

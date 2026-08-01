@@ -450,6 +450,15 @@ are published.
 
 ### PR 44 — Codex skill installer
 
+Status: implemented in the current slice. The project-local `$ludowright` skill
+is a versioned data package under `integrations/codex/`. The `codex skill`
+commands install, update, verify, and remove it with checksums, framework
+version checks, dry-run planning, Rich/JSON output, exclusive locking, atomic
+writes, and rollback. Modified or unrelated files are never overwritten or
+removed. The published `codex-skill-manifest` and `codex-skill-report` v1
+contracts, schemas, fixtures, tests, and ADR are included. Orchestration policy,
+provider execution, receipts, and approvals remain separate PRs.
+
 - project-local `$ludowright` skill;
 - installation, update, verification, and removal;
 - version checks.

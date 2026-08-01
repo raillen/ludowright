@@ -20,6 +20,9 @@ _MAX_REPOSITORY_PATH_LENGTH = 1_024
 _MAX_SEGMENT_LENGTH = 255
 _MAX_LOCK_METADATA_BYTES = 16_384
 _ALLOWED_SEGMENT_CHARACTERS = frozenset("abcdefghijklmnopqrstuvwxyz0123456789._-")
+_ALLOWED_CHILD_FILENAME_CHARACTERS = frozenset(
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._-"
+)
 _RESERVED_WINDOWS_NAMES = {
     "aux",
     "clock$",
@@ -360,12 +363,182 @@ class ProjectFilesystem:
             raise TypeError("atomic byte writes require an immutable bytes payload")
         target = self.resolve(path)
         parent = self._ensure_parent(path)
-        self._assert_safe_write_target(target)
+        return self._write_atomic_target(
+            target,
+            parent,
+            payload,
+            mode=mode,
+            temporary_prefix=path.name,
+        )
 
+    def write_child_bytes(
+        self,
+        directory: RepositoryPath,
+        filename: str,
+        payload: bytes,
+        *,
+        mode: int | None = None,
+    ) -> Path:
+        """Atomically write a case-sensitive integration file in one safe directory.
+
+        Repository paths remain lowercase and portable. Some external integration
+        formats, such as Codex skills, require a conventional case-sensitive file
+        name like ``SKILL.md``. This boundary validates that one filename without
+        allowing callers to provide another path or escape the project root.
+        """
+        _validate_child_filename(filename)
+        if not isinstance(payload, bytes):
+            raise TypeError("atomic byte writes require an immutable bytes payload")
+        parent = self.ensure_directory(directory)
+        target = parent / filename
+        self._assert_lexically_inside(target)
+        self._assert_safe_existing_prefix(target)
+        return self._write_atomic_target(
+            target,
+            parent,
+            payload,
+            mode=mode,
+            temporary_prefix=filename,
+        )
+
+    def read_child_bytes(
+        self,
+        directory: RepositoryPath,
+        filename: str,
+        *,
+        max_bytes: int | None = None,
+    ) -> bytes:
+        """Read one case-sensitive integration file beneath a safe directory."""
+        target = self._resolve_child(directory, filename, must_exist=True)
+        return self._read_regular_file(target, max_bytes=max_bytes)
+
+    def list_child_files(self, directory: RepositoryPath) -> tuple[str, ...]:
+        """List immediate regular integration files without changing their case."""
+        target = self.resolve(directory)
+        if not os.path.lexists(target):
+            return ()
+        target_stat = os.lstat(target)
+        if stat.S_ISLNK(target_stat.st_mode):
+            raise UnsafeProjectPathError(f"project directory cannot be a symlink: {directory}")
+        if not stat.S_ISDIR(target_stat.st_mode):
+            raise ProjectFilesystemError(f"project path is not a directory: {directory}")
+
+        found: list[str] = []
+        for child in sorted(target.iterdir(), key=lambda item: item.name):
+            child_stat = os.lstat(child)
+            if stat.S_ISLNK(child_stat.st_mode):
+                raise UnsafeProjectPathError(
+                    f"project directory contains a symlink: {directory}/{child.name}"
+                )
+            _validate_child_filename(child.name)
+            if not stat.S_ISREG(child_stat.st_mode):
+                raise ProjectFilesystemError(
+                    f"project integration directory contains a non-file: {directory}/{child.name}"
+                )
+            found.append(child.name)
+        return tuple(found)
+
+    def directory_exists(self, path: RepositoryPath) -> bool:
+        """Return whether one repository-relative path is a safe directory."""
+        target = self.resolve(path)
+        if not os.path.lexists(target):
+            return False
+        target_stat = os.lstat(target)
+        if stat.S_ISLNK(target_stat.st_mode):
+            raise UnsafeProjectPathError(f"project path cannot be a symlink: {path}")
+        if not stat.S_ISDIR(target_stat.st_mode):
+            raise ProjectFilesystemError(f"project path is not a directory: {path}")
+        return True
+
+    def remove_child_file(self, directory: RepositoryPath, filename: str) -> bool:
+        """Remove one regular integration file without following symlinks."""
+        target = self._resolve_child(directory, filename)
+        if not os.path.lexists(target):
+            return False
+        target_stat = os.lstat(target)
+        if stat.S_ISLNK(target_stat.st_mode):
+            raise UnsafeProjectPathError(
+                f"project integration paths cannot remove symlinks: {directory}/{filename}"
+            )
+        if not stat.S_ISREG(target_stat.st_mode):
+            raise ProjectFilesystemError(
+                f"project integration path is not a regular file: {directory}/{filename}"
+            )
+        target.unlink()
+        _fsync_directory(target.parent)
+        return True
+
+    def remove_empty_directory(self, path: RepositoryPath) -> bool:
+        """Remove one safe empty directory and report whether it existed."""
+        target = self.resolve(path)
+        if not os.path.lexists(target):
+            return False
+        target_stat = os.lstat(target)
+        if stat.S_ISLNK(target_stat.st_mode):
+            raise UnsafeProjectPathError(f"project paths cannot remove symlinks: {path}")
+        if not stat.S_ISDIR(target_stat.st_mode):
+            raise ProjectFilesystemError(f"project path is not a directory: {path}")
+        try:
+            target.rmdir()
+        except OSError as error:
+            raise ProjectFilesystemError(f"project directory is not empty: {path}") from error
+        _fsync_directory(target.parent)
+        return True
+
+    def _resolve_child(
+        self,
+        directory: RepositoryPath,
+        filename: str,
+        *,
+        must_exist: bool = False,
+    ) -> Path:
+        _validate_child_filename(filename)
+        parent = self.resolve(directory)
+        target = parent / filename
+        self._assert_lexically_inside(target)
+        self._assert_safe_existing_prefix(target)
+        if must_exist:
+            if not os.path.lexists(target):
+                raise FileNotFoundError(target)
+            if stat.S_ISLNK(os.lstat(target).st_mode):
+                raise UnsafeProjectPathError(
+                    "project integration paths cannot resolve through symlinks: "
+                    f"{directory}/{filename}"
+                )
+        return target
+
+    def _read_regular_file(self, target: Path, *, max_bytes: int | None = None) -> bytes:
+        target_stat = os.lstat(target)
+        if not stat.S_ISREG(target_stat.st_mode):
+            raise ProjectFilesystemError(f"project path is not a regular file: {target}")
+        if max_bytes is not None:
+            _validate_size_limit(max_bytes)
+            if target_stat.st_size > max_bytes:
+                raise ProjectFilesystemError(
+                    f"project file exceeds the {max_bytes}-byte read limit: {target}"
+                )
+        with target.open("rb") as stream:
+            payload = stream.read() if max_bytes is None else stream.read(max_bytes + 1)
+        if max_bytes is not None and len(payload) > max_bytes:
+            raise ProjectFilesystemError(
+                f"project file changed beyond the {max_bytes}-byte read limit: {target}"
+            )
+        return payload
+
+    def _write_atomic_target(
+        self,
+        target: Path,
+        parent: Path,
+        payload: bytes,
+        *,
+        mode: int | None,
+        temporary_prefix: str,
+    ) -> Path:
+        self._assert_safe_write_target(target)
         file_mode = mode if mode is not None else self._existing_or_default_mode(target)
         descriptor, temporary_name = tempfile.mkstemp(
             dir=parent,
-            prefix=f".{path.name}.",
+            prefix=f".{temporary_prefix}.",
             suffix=".tmp",
         )
         temporary = Path(temporary_name)
@@ -589,6 +762,28 @@ class ProjectLock:
 def _validate_size_limit(value: int) -> None:
     if isinstance(value, bool) or not isinstance(value, int) or value < 0:
         raise ValueError("a file size limit must be a non-negative integer")
+
+
+def _validate_child_filename(filename: str) -> None:
+    if not isinstance(filename, str) or not filename or filename != filename.strip():
+        raise UnsafeProjectPathError("integration filenames must be non-empty and trimmed")
+    if len(filename) > _MAX_SEGMENT_LENGTH:
+        raise UnsafeProjectPathError(
+            f"integration filenames cannot exceed {_MAX_SEGMENT_LENGTH} characters"
+        )
+    if not filename.isascii() or "/" in filename or "\\" in filename:
+        raise UnsafeProjectPathError("integration filenames must be one ASCII path segment")
+    if filename in {".", ".."}:
+        raise UnsafeProjectPathError("integration filenames cannot contain dot traversal")
+    if any(character not in _ALLOWED_CHILD_FILENAME_CHARACTERS for character in filename):
+        raise UnsafeProjectPathError(
+            "integration filenames may use ASCII letters, digits, dots, hyphens, and underscores"
+        )
+    if filename.endswith("."):
+        raise UnsafeProjectPathError("integration filenames cannot end with a dot")
+    basename = filename.split(".", maxsplit=1)[0].lower()
+    if basename in _RESERVED_WINDOWS_NAMES:
+        raise UnsafeProjectPathError(f"integration filename {filename!r} is reserved on Windows")
 
 
 def _validate_lock_name(name: str) -> None:

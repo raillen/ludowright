@@ -56,6 +56,8 @@ It uses JSON Schema Draft 2020-12 and contains:
 | ATLAS metadata | `atlas-metadata.schema.json` |
 | ATLAS report | `atlas-report.schema.json` |
 | CLI response | `cli-response.schema.json` |
+| Codex skill manifest | `codex-skill-manifest.schema.json` |
+| Codex skill report | `codex-skill-report.schema.json` |
 | Interview questionnaire | `interview-questionnaire.schema.json` |
 | Interview session | `interview-session.schema.json` |
 | Interview interaction | `interview-interaction.schema.json` |

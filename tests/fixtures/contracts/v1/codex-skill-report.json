@@ -1,0 +1,23 @@
+{
+  "dry_run": false,
+  "files": [
+    {
+      "path": "SKILL.md",
+      "sha256": "3f76775fcb3c0598195a45f63a77188cb202619223cba8a127e406459cd27a1a"
+    },
+    {
+      "path": "manifest.json",
+      "sha256": "3163e61375d614a5020d0aca8e396f7512e51991d5114c4ef36c8aaecd187b30"
+    }
+  ],
+  "framework_version": "0.1.0.dev0",
+  "install_path": ".agents/skills/ludowright",
+  "installed_version": 1,
+  "operation": "verify",
+  "schema_version": 1,
+  "skill_id": "ludowright",
+  "skill_version": 1,
+  "state": "verified",
+  "valid": true,
+  "warnings": []
+}

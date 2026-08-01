@@ -1,0 +1,159 @@
+{
+  "$defs": {
+    "CodexSkillFileContract": {
+      "additionalProperties": false,
+      "description": "One case-sensitive file shipped by a Codex skill.",
+      "properties": {
+        "path": {
+          "maxLength": 255,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Path",
+          "type": "string"
+        },
+        "sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "title": "CodexSkillFileContract",
+      "type": "object"
+    }
+  },
+  "$id": "https://schemas.ludowright.dev/v1/codex-skill-report.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Stable report returned by Codex skill lifecycle commands.",
+  "properties": {
+    "dry_run": {
+      "title": "Dry Run",
+      "type": "boolean"
+    },
+    "files": {
+      "items": {
+        "$ref": "#/$defs/CodexSkillFileContract"
+      },
+      "maxItems": 33,
+      "minItems": 1,
+      "title": "Files",
+      "type": "array"
+    },
+    "framework_version": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^\\d+(?:\\.\\d+){1,3}(?:[.-](?:dev|a|b|rc)\\d+)?$",
+      "title": "Framework Version",
+      "type": "string"
+    },
+    "install_path": {
+      "maxLength": 1024,
+      "minLength": 1,
+      "pattern": "^[a-z0-9._-]+(?:/[a-z0-9._-]+)*$",
+      "title": "Install Path",
+      "type": "string"
+    },
+    "installed_version": {
+      "anyOf": [
+        {
+          "maximum": 2147483647,
+          "minimum": 1,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Installed Version"
+    },
+    "kind": {
+      "const": "codex-skill-report",
+      "default": "codex-skill-report",
+      "title": "Kind",
+      "type": "string"
+    },
+    "operation": {
+      "enum": [
+        "install",
+        "update",
+        "verify",
+        "remove"
+      ],
+      "title": "Operation",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "skill_id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Skill Id",
+      "type": "string"
+    },
+    "skill_version": {
+      "maximum": 2147483647,
+      "minimum": 1,
+      "title": "Skill Version",
+      "type": "integer"
+    },
+    "state": {
+      "enum": [
+        "planned",
+        "installed",
+        "already-installed",
+        "updated",
+        "already-up-to-date",
+        "verified",
+        "removed",
+        "not-installed",
+        "outdated",
+        "modified",
+        "invalid",
+        "unsupported",
+        "incompatible",
+        "conflict"
+      ],
+      "title": "State",
+      "type": "string"
+    },
+    "valid": {
+      "title": "Valid",
+      "type": "boolean"
+    },
+    "warnings": {
+      "default": [],
+      "items": {
+        "maxLength": 4000,
+        "minLength": 1,
+        "type": "string"
+      },
+      "title": "Warnings",
+      "type": "array"
+    }
+  },
+  "required": [
+    "operation",
+    "state",
+    "dry_run",
+    "skill_id",
+    "skill_version",
+    "install_path",
+    "framework_version",
+    "files",
+    "valid"
+  ],
+  "title": "LudoWright Codex Skill Report",
+  "type": "object"
+}

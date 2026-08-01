@@ -1,0 +1,17 @@
+{
+  "description": "Operar projetos LudoWright usando o estado canônico do repositório e o CLI local.",
+  "entrypoint": "SKILL.md",
+  "files": [
+    {
+      "path": "SKILL.md",
+      "sha256": "3f76775fcb3c0598195a45f63a77188cb202619223cba8a127e406459cd27a1a"
+    }
+  ],
+  "id": "ludowright",
+  "install_path": ".agents/skills/ludowright",
+  "invocation": "$ludowright",
+  "kind": "codex-skill-manifest",
+  "minimum_ludowright_version": "0.1.0.dev0",
+  "schema_version": 1,
+  "version": 1
+}

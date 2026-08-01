@@ -65,7 +65,7 @@ Repository = "https://github.com/raillen/ludowright"
 Issues = "https://github.com/raillen/ludowright/issues"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/ludowright"]
+packages = ["src/ludowright", "integrations"]
 
 [tool.pytest.ini_options]
 addopts = "--strict-config --strict-markers --cov=ludowright --cov-report=term-missing"

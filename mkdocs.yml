@@ -38,6 +38,7 @@ nav:
       - Visual Specialty Profiles: contracts/VISUAL_PROFILES.md
       - Visual Bible: contracts/VISUAL_BIBLE.md
       - Prompt Compiler: contracts/PROMPT_COMPILER.md
+      - Codex Skill: contracts/CODEX_SKILL.md
       - JSON Schema Publication: contracts/JSON_SCHEMAS.md
       - Project Filesystem: contracts/PROJECT_FILESYSTEM.md
       - Structured Repositories: contracts/STRUCTURED_REPOSITORIES.md
@@ -57,6 +58,7 @@ nav:
       - Documentation Audit CLI: commands/DOCS.md
       - ATLAS CLI: commands/ATLAS.md
       - Asset Registry, Discovery, Decomposition, Workbook, and Audit CLI: commands/ASSETS.md
+      - Codex Skill CLI: commands/CODEX.md
   - Implementation:
       - Plan to 1.0: plans/IMPLEMENTATION_PLAN.md
   - Quality:
@@ -96,6 +98,7 @@ nav:
       - ADR 0031 — Environment and Hard-Surface Profiles: decisions/0031-data-defined-hard-surface-profiles.md
       - ADR 0032 — Visual Specialty Profiles: decisions/0032-data-defined-visual-specialty-profiles.md
       - ADR 0033 — Visual Job Planner: decisions/0033-deterministic-visual-job-planner.md
+      - ADR 0034 — Codex Skill Installer: decisions/0034-versioned-codex-skill-installer.md
       - ADR Template: decisions/0000-template.md
   - Operations:
       - Documentation Site: operations/DOCUMENTATION_SITE.md
