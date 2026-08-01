@@ -103,6 +103,12 @@
       "title": "Capture Profiles"
     },
     {
+      "canonical_source": "contracts/HUMANOID_PROFILES.md",
+      "path": "contracts/HUMANOID_PROFILES.md",
+      "section": "contracts",
+      "title": "Humanoid and Wearable Profiles"
+    },
+    {
       "canonical_source": "contracts/VISUAL_BIBLE.md",
       "path": "contracts/VISUAL_BIBLE.md",
       "section": "contracts",
@@ -383,6 +389,12 @@
       "path": "decisions/0028-deterministic-provider-neutral-prompt-compiler.md",
       "section": "decisions",
       "title": "ADR 0028: Deterministic Provider-Neutral Prompt Compiler"
+    },
+    {
+      "canonical_source": "decisions/0029-data-defined-humanoid-wearable-profiles.md",
+      "path": "decisions/0029-data-defined-humanoid-wearable-profiles.md",
+      "section": "decisions",
+      "title": "ADR 0029: Data-Defined Humanoid and Wearable Profiles"
     },
     {
       "canonical_source": "governance/RFC_TEMPLATE.md",

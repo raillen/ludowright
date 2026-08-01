@@ -22,8 +22,9 @@ The initial audit covers five bounded categories:
 - `invalid-dependency` — an asset dependency references an unknown registry
   asset or an asset-to-asset edge uses a relation other than `requires`;
 - `missing-capture-profile` — the project has no executable persisted
-  capture-profile catalog. Decomposition recommendations do not count as
-  executable profiles;
+  capture-profile catalog. Packaged profiles such as the v1 humanoid profile
+  are reusable definitions but do not count as a project-local catalog;
+  decomposition recommendations also do not count as executable profiles;
 - `incomplete-production-metadata` — an active asset or required production
   item has no owner.
 

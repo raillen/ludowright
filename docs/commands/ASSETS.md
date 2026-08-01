@@ -135,6 +135,9 @@ marker grammar.
 
 The decomposition contract and report are defined in
 [`ASSET_DECOMPOSITION.md`](../contracts/ASSET_DECOMPOSITION.md).
+The packaged humanoid profile is defined in
+[`HUMANOID_PROFILES.md`](../contracts/HUMANOID_PROFILES.md); it does not yet
+create a project-local profile catalog.
 The workbook report and versioned template are defined in
 [`ASSET_WORKBOOK.md`](../contracts/ASSET_WORKBOOK.md).
 
