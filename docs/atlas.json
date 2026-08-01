@@ -559,6 +559,18 @@
       "title": "LudoWright"
     },
     {
+      "canonical_source": "getting-started/FIRST_PROJECT.md",
+      "path": "getting-started/FIRST_PROJECT.md",
+      "section": "getting-started",
+      "title": "First Project"
+    },
+    {
+      "canonical_source": "getting-started/INSTALLATION.md",
+      "path": "getting-started/INSTALLATION.md",
+      "section": "getting-started",
+      "title": "Installation"
+    },
+    {
       "canonical_source": "operations/DOCUMENTATION_SITE.md",
       "path": "operations/DOCUMENTATION_SITE.md",
       "section": "operations",

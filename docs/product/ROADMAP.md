@@ -132,8 +132,10 @@ assembly from interview answers remains a later bounded capability.
 
 ### 0.9 Public Beta
 
-- clean installation path;
-- complete public documentation;
+- clean installation path (initial checkout guides for Linux, Windows, and
+  macOS are implemented; clean-room package installation remains a 1.0 gate);
+- complete public documentation (installation and first-project guides are
+  implemented; the remaining tutorial set is still pending);
 - minimal example project (implemented through PR57 and the PR19 initializer), 2D sprite example
   (implemented through PR58), and low-poly 3D example (implemented through
   PR59), and modular-environment example (implemented through PR60);
