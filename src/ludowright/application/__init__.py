@@ -110,6 +110,13 @@ from ludowright.application.package_manifest import (
     PackageManifestResult,
     PackageManifestService,
 )
+from ludowright.application.project_audit import (
+    ProjectAuditConflictError,
+    ProjectAuditCorruptError,
+    ProjectAuditError,
+    ProjectAuditResult,
+    ProjectAuditService,
+)
 from ludowright.application.prompt_compiler import (
     PromptCompiler,
     PromptTemplateDefinitionError,
@@ -214,6 +221,11 @@ __all__ = [
     "PackageManifestInputError",
     "PackageManifestResult",
     "PackageManifestService",
+    "ProjectAuditConflictError",
+    "ProjectAuditCorruptError",
+    "ProjectAuditError",
+    "ProjectAuditResult",
+    "ProjectAuditService",
     "PromptCompiler",
     "PromptTemplateDefinitionError",
     "PromptTemplateError",

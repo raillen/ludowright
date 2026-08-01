@@ -177,6 +177,7 @@ class StateStore:
         *,
         busy_timeout_ms: int = _DEFAULT_BUSY_TIMEOUT_MS,
         source_read_limit: int = _DEFAULT_SOURCE_LIMIT,
+        read_only: bool = False,
     ) -> None:
         if not isinstance(filesystem, ProjectFilesystem):
             raise TypeError("state store requires ProjectFilesystem")
@@ -191,8 +192,11 @@ class StateStore:
         self._path = path
         self._busy_timeout_ms = busy_timeout_ms
         self._source_read_limit = source_read_limit
+        self._read_only = read_only
+        if not isinstance(read_only, bool):
+            raise TypeError("state store read_only must be a boolean")
         parent = path.parent
-        if parent is not None:
+        if parent is not None and not read_only:
             self._filesystem.ensure_directory(parent)
         self._database_path = self._filesystem.resolve(path)
         self._sidecars = tuple(
@@ -201,10 +205,21 @@ class StateStore:
             )
             for suffix in ("-journal", "-shm", "-wal")
         )
-        with self._filesystem.lock(_STATE_STORE_LOCK, timeout=busy_timeout_ms / 1000):
-            self._assert_safe_database_files()
-            self._initialize_schema()
-            self._assert_safe_database_files()
+        if read_only:
+            self._assert_safe_database_files(require_database=True)
+            with self._connect() as connection:
+                current_version = int(connection.execute("PRAGMA user_version").fetchone()[0])
+                if current_version != STATE_SCHEMA_VERSION:
+                    raise UnsupportedStateSchemaError(
+                        f"state schema v{current_version} is not supported by "
+                        f"v{STATE_SCHEMA_VERSION}"
+                    )
+                self._validate_schema(connection)
+        else:
+            with self._filesystem.lock(_STATE_STORE_LOCK, timeout=busy_timeout_ms / 1000):
+                self._assert_safe_database_files()
+                self._initialize_schema()
+                self._assert_safe_database_files()
 
     @property
     def path(self) -> RepositoryPath:
@@ -544,6 +559,8 @@ class StateStore:
     @contextmanager
     def _transaction(self, *, write: bool) -> Iterator[sqlite3.Connection]:
         if write:
+            if self._read_only:
+                raise StateStoreError("read-only state store cannot perform writes")
             with (
                 self._filesystem.lock(
                     STATE_STORE_WRITE_LOCK,
@@ -577,12 +594,22 @@ class StateStore:
 
     @contextmanager
     def _connect(self) -> Iterator[sqlite3.Connection]:
-        self._assert_safe_database_files()
-        connection = sqlite3.connect(
-            self._database_path,
-            timeout=self._busy_timeout_ms / 1000,
-            isolation_level=None,
-        )
+        self._assert_safe_database_files(require_database=self._read_only)
+        if self._read_only and os.path.lexists(self._sidecars[2]):
+            raise StateStoreError("read-only state inspection refuses an active SQLite WAL")
+        if self._read_only:
+            connection = sqlite3.connect(
+                f"{self._database_path.as_uri()}?mode=ro&immutable=1",
+                uri=True,
+                timeout=self._busy_timeout_ms / 1000,
+                isolation_level=None,
+            )
+        else:
+            connection = sqlite3.connect(
+                self._database_path,
+                timeout=self._busy_timeout_ms / 1000,
+                isolation_level=None,
+            )
         connection.row_factory = sqlite3.Row
         try:
             connection.execute("PRAGMA foreign_keys = ON")
@@ -590,14 +617,21 @@ class StateStore:
             connection.execute("PRAGMA synchronous = FULL")
             connection.execute("PRAGMA temp_store = MEMORY")
             connection.execute("PRAGMA trusted_schema = OFF")
-            journal_mode = connection.execute("PRAGMA journal_mode = WAL").fetchone()[0]
-            if str(journal_mode).lower() != "wal":
+            if self._read_only:
+                connection.execute("PRAGMA query_only = ON")
+                journal_mode = connection.execute("PRAGMA journal_mode").fetchone()[0]
+            else:
+                journal_mode = connection.execute("PRAGMA journal_mode = WAL").fetchone()[0]
+            allowed_journal_modes = {"wal", "delete"} if self._read_only else {"wal"}
+            if str(journal_mode).lower() not in allowed_journal_modes:
                 raise StateStoreError("SQLite state store requires WAL journal mode")
             yield connection
         finally:
             connection.close()
 
-    def _assert_safe_database_files(self) -> None:
+    def _assert_safe_database_files(self, *, require_database: bool = False) -> None:
+        if require_database and not os.path.lexists(self._database_path):
+            raise FileNotFoundError(self._database_path)
         for candidate in (self._database_path, *self._sidecars):
             if not os.path.lexists(candidate):
                 continue

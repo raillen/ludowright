@@ -86,6 +86,20 @@ The default busy timeout is 5,000 milliseconds.
 
 WAL allows concurrent readers and serialized writers. `synchronous=FULL` favors durability over maximum write throughput for project metadata.
 
+## Immutable read-only inspection
+
+`StateStore(filesystem, read_only=True)` is reserved for audits and other
+non-mutating inspections. It requires an existing database at the current
+schema version, validates the schema and integrity, rejects an already active
+`-wal` sidecar, and opens SQLite with `mode=ro&immutable=1`. The connection
+cannot create or remove databases, journals, shared-memory files, or WAL
+sidecars, and write methods fail closed with `StateStoreError`.
+
+An active WAL is rejected because an immutable connection must not silently
+ignore uncheckpointed pages. The caller should retry after the writer closes
+or completes its transaction. This boundary is used by the global project
+audit and does not replace the normal WAL-backed writer path.
+
 ## Schema version
 
 The current database uses:

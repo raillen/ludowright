@@ -186,8 +186,65 @@ class PackageFileScanner:
             ),
         )
 
-    def read_file(self, path: str) -> tuple[PackageFileSnapshot, bytes]:
+    def list_paths(self, *, suffix: str | None = None) -> tuple[str, ...]:
+        """List safe project-relative files without reading their contents."""
+        if suffix is not None and (not suffix or "/" in suffix):
+            raise ValueError("file suffix must be a non-empty filename suffix")
+
+        paths: list[str] = []
+        scanned_files = 0
+
+        def visit(directory: Path, relative_parts: tuple[str, ...]) -> None:
+            nonlocal scanned_files
+            try:
+                children = sorted(directory.iterdir(), key=lambda item: item.name)
+            except OSError as error:
+                relative = "/".join(relative_parts) or "."
+                raise PackageManifestScanError(
+                    f"cannot inspect project directory: {relative}"
+                ) from error
+
+            for child in children:
+                child_parts = (*relative_parts, child.name)
+                relative = "/".join(child_parts)
+                _validate_scanned_path(relative)
+                try:
+                    child_stat = os.lstat(child)
+                except OSError as error:
+                    raise PackageManifestScanError(
+                        f"cannot inspect project path: {relative}"
+                    ) from error
+                if stat.S_ISLNK(child_stat.st_mode):
+                    raise PackageManifestScanUnsafePathError(
+                        f"package scan encountered a symlink: {relative}"
+                    )
+                if stat.S_ISDIR(child_stat.st_mode):
+                    visit(child, child_parts)
+                    continue
+                if not stat.S_ISREG(child_stat.st_mode):
+                    raise PackageManifestScanUnsafePathError(
+                        f"package scan encountered a non-regular path: {relative}"
+                    )
+                scanned_files += 1
+                if scanned_files > self._max_files:
+                    raise PackageManifestScanLimitError(
+                        f"project exceeds the {self._max_files}-file path limit"
+                    )
+                if suffix is None or child.name.endswith(suffix):
+                    paths.append(relative)
+
+        visit(self._filesystem.root, ())
+        return tuple(sorted(paths))
+
+    def read_file(
+        self,
+        path: str,
+        *,
+        max_bytes: int | None = None,
+    ) -> tuple[PackageFileSnapshot, bytes]:
         """Read one package-path file without applying RepositoryPath casing rules."""
+        read_limit = self._max_file_bytes if max_bytes is None else max_bytes
+        _validate_positive_limit(read_limit, "file read limit")
         _validate_scanned_path(path)
         target = _resolve_package_path(self._filesystem, path)
         target_stat = os.lstat(target)
@@ -197,15 +254,15 @@ class PackageFileScanner:
             raise PackageManifestScanUnsafePathError(
                 f"package scan encountered a non-regular path: {path}"
             )
-        if target_stat.st_size > self._max_file_bytes:
+        if target_stat.st_size > read_limit:
             raise PackageManifestScanLimitError(
-                f"project file exceeds the {self._max_file_bytes}-byte package limit: {path}"
+                f"project file exceeds the {read_limit}-byte package limit: {path}"
             )
         return _read_regular_file(
             target,
             path,
             expected_size=target_stat.st_size,
-            max_bytes=self._max_file_bytes,
+            max_bytes=read_limit,
         )
 
 

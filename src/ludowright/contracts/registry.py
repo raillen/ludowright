@@ -55,6 +55,7 @@ from ludowright.contracts.migrations import MigrationReceiptContract
 from ludowright.contracts.package_builder import PackageIndexContract
 from ludowright.contracts.package_manifest import PackageManifestContract
 from ludowright.contracts.project import ProjectContract
+from ludowright.contracts.project_audit import ProjectAuditReportContract
 from ludowright.contracts.prompt_compiler import CompiledPromptContract, PromptTemplateContract
 from ludowright.contracts.technical_sheets import (
     TechnicalSheetReportContract,
@@ -93,6 +94,12 @@ class ContractDefinition:
 
 CONTRACTS: tuple[ContractDefinition, ...] = (
     ContractDefinition("project", "project.schema.json", "LudoWright Project", ProjectContract),
+    ContractDefinition(
+        "project-audit",
+        "project-audit.schema.json",
+        "LudoWright Project Audit Report",
+        ProjectAuditReportContract,
+    ),
     ContractDefinition(
         "package-manifest",
         "package-manifest.schema.json",

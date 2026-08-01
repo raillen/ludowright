@@ -9,6 +9,12 @@
       "sha256": "49466fb7b4716bc428ff7e261adffc93f02c9b8c5ae9527e6783f445ada93f62"
     },
     {
+      "file": "project-audit.schema.json",
+      "name": "project-audit",
+      "schema_id": "https://schemas.ludowright.dev/v1/project-audit.schema.json",
+      "sha256": "631059275dbae77eb3dd7304cc4a176d33d10b324e10f94c148cf613b255a6bc"
+    },
+    {
       "file": "package-manifest.schema.json",
       "name": "package-manifest",
       "schema_id": "https://schemas.ludowright.dev/v1/package-manifest.schema.json",

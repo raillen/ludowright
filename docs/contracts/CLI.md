@@ -68,6 +68,20 @@ archive SHA-256, archive size, deterministic index, and final state:
 ludowright --json package build ./my-game release/package-manifest.json release
 ```
 
+Project audits use the same envelope and expose the complete readiness report:
+
+```bash
+ludowright audit ./my-game
+ludowright audit ./my-game --check
+ludowright --json audit ./my-game --check
+```
+
+The report covers product, documents, assets, references, jobs, approvals,
+sheets, and package readiness. `--check` returns exit code `1` with
+`checks-failed` when the report is not `ready`; a normal audit still returns a
+successful envelope when it found warnings or blockers. The canonical report
+contract is documented in [`PROJECT_AUDITS.md`](PROJECT_AUDITS.md).
+
 Global settings are inherited by nested command groups.
 
 ## JSON envelope

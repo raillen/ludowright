@@ -72,16 +72,17 @@ This is the main navigation map for humans and agents. Each subject should have 
 - [`commands/IMAGES.md`](commands/IMAGES.md) — normalize local images into deterministic PNG outputs and reports.
 - [`commands/SHEETS.md`](commands/SHEETS.md) — assemble approved PNGs into deterministic technical sheets and reports.
 - [`commands/PACKAGES.md`](commands/PACKAGES.md) — create manifests and build reproducible ZIP releases with checksums, dry-run, and create-only behavior.
+- [`commands/AUDIT.md`](commands/AUDIT.md) — read-only global readiness audit syntax, Rich/JSON output, check policy, and failure behavior.
 - [`contracts/CLI.md`](contracts/CLI.md) — dual human/JSON surfaces, response envelope, error codes, exit codes, version output, diagnostics, and compatibility rules.
+- [`contracts/PROJECT_AUDITS.md`](contracts/PROJECT_AUDITS.md) — global readiness categories, source evidence, deterministic findings, immutable SQLite inspection, and conflict policy.
 - [`contracts/PACKAGE_MANIFESTS.md`](contracts/PACKAGE_MANIFESTS.md) — package inventory shape, path policy, source versions, provenance, exclusions, and compatibility.
 - [`contracts/PACKAGE_BUILDS.md`](contracts/PACKAGE_BUILDS.md) — reproducible ZIP members, package index, release directory, safety limits, and rollback.
 
 Published machine-readable contracts are stored under `schemas/v1/`. The source models live under `src/ludowright/contracts/`.
 
-Planned canonical contracts:
-
-- project manifest;
-- release manifest.
+Published canonical contracts include the project manifest, package manifest,
+package index, and project-audit report. The release manifest and release
+verification contract remain planned for PR56.
 
 The guided-documentation model is implemented in `src/ludowright/domain/interviews.py`, orchestrated by `src/ludowright/application/interviews.py`, and adapted at the external boundary by `src/ludowright/contracts/interviews.py`. The published interview contracts are `interview-questionnaire` and `interview-session`; CLI presentation lives in `src/ludowright/cli/interview.py`.
 
@@ -137,8 +138,16 @@ checksums, and create-only/dry-run semantics are published. ZIP package
 building is implemented by `src/ludowright/application/package_builder.py`
 over `PackageArchiveBuilder` in `src/ludowright/infrastructure/package_manifest.py`;
 it consumes the manifest, validates source checksums, writes fixed ZIP metadata,
-and publishes a v1 `package-index` alongside the release archive. Global audit
-and release verification remain later stages.
+and publishes a v1 `package-index` alongside the release archive. Release
+verification remains a later stage.
+
+The global project audit is implemented by
+`src/ludowright/application/project_audit.py` and presented by
+`src/ludowright/cli/audit.py`. It composes the existing canonical repositories
+and audits product, documents, assets, references, jobs, approvals, sheets,
+and package readiness without writing project state. The v1 `project-audit`
+contract records source evidence, stable findings, category summaries, and
+recommended actions; release verification remains a separate stage.
 
 The initial asset taxonomy is loaded by
 `src/ludowright/application/asset_taxonomy.py` from versioned JSON data under
@@ -208,6 +217,7 @@ state or image files.
 - [`decisions/0041-deterministic-technical-sheet-assembly.md`](decisions/0041-deterministic-technical-sheet-assembly.md) — data-defined layouts, approved inputs, deterministic rendering, and create-only persistence.
 - [`decisions/0042-deterministic-package-manifest.md`](decisions/0042-deterministic-package-manifest.md) — deterministic inventory boundary, exclusions, and manifest-only staging.
 - [`decisions/0043-deterministic-package-builder.md`](decisions/0043-deterministic-package-builder.md) — fixed ZIP metadata, package index, release directory, and create-only rollback.
+- [`decisions/0044-deterministic-project-audit.md`](decisions/0044-deterministic-project-audit.md) — read-only global readiness report, immutable SQLite inspection, deterministic evidence, and conflict policy.
 
 Planned documents:
 
