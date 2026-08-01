@@ -48,6 +48,9 @@ The repository currently establishes:
   resolution and canonical prompt hashes.
 - the initial data-defined humanoid/wearable profile with a neutral body base,
   per-view requirements, isolated categories, and assembled outputs.
+- initial data-defined creature/animal profiles for quadrupeds, birds, fish,
+  insects, and fantasy creatures with anatomy-specific views, components,
+  states, and outputs.
 
 Project-local profile persistence, visual-job planning, ImageGen execution,
 review workflows, technical sheets, global audits, and package generation

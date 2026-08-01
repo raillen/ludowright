@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "kind": "creature-profile",
+  "capture_profile": {
+    "schema_version": 1,
+    "kind": "capture-profile",
+    "id": "creature-fantasy",
+    "version": 1,
+    "name": "Fantasy Creature",
+    "family": "creature",
+    "subtype": "fantasy-creature",
+    "camera": {"projection": "orthographic", "framing_margin_percent": 14},
+    "background": {"mode": "neutral"},
+    "lighting": {"mode": "studio", "shadows": "soft"},
+    "validation": {"width": 2048, "height": 2048, "require_full_subject": true, "require_consistent_scale": true, "allow_occlusion": false},
+    "views": [
+      {"id": "front", "name": "Front", "azimuth_degrees": 0, "elevation_degrees": 0, "role": "identity"},
+      {"id": "side", "name": "Side", "azimuth_degrees": 90, "elevation_degrees": 0, "role": "construction"},
+      {"id": "rear", "name": "Rear", "azimuth_degrees": 180, "elevation_degrees": 0, "role": "construction"},
+      {"id": "top", "name": "Top", "azimuth_degrees": 0, "elevation_degrees": 90, "role": "silhouette"},
+      {"id": "underside", "name": "Underside", "azimuth_degrees": 0, "elevation_degrees": -90, "role": "construction"}
+    ],
+    "requirements": [
+      {"id": "body", "name": "Body", "requirement_kind": "component"},
+      {"id": "head", "name": "Head", "requirement_kind": "component"},
+      {"id": "limbs", "name": "Limbs", "requirement_kind": "component"},
+      {"id": "tail", "name": "Tail", "requirement_kind": "component", "required": false},
+      {"id": "horns", "name": "Horns", "requirement_kind": "component", "required": false},
+      {"id": "shell", "name": "Shell", "requirement_kind": "component", "required": false},
+      {"id": "neutral", "name": "Neutral", "requirement_kind": "state"},
+      {"id": "action", "name": "Action", "requirement_kind": "state"},
+      {"id": "damaged", "name": "Damaged", "requirement_kind": "state", "required": false}
+    ],
+    "sheets": []
+  },
+  "anatomy": {"kind": "fantasy-creature", "guidance": "Preserve the creature's readable body plan while isolating unusual appendages, silhouette features, and states."},
+  "anatomy_views": [
+    {"view_id": "front", "role": "whole-body", "guidance": "Establish scale, stance, head alignment, and the primary silhouette."},
+    {"view_id": "side", "role": "head", "guidance": "Show muzzle or face structure, neck transition, and profile-defining features."},
+    {"view_id": "rear", "role": "limb", "guidance": "Show limb placement, joints, tail or shell attachment, and rear silhouette."},
+    {"view_id": "top", "role": "silhouette", "guidance": "Show the footprint, unusual appendages, and overall shape language."},
+    {"view_id": "underside", "role": "underside", "guidance": "Show belly construction and attachment details that are hidden in the main views."}
+  ],
+  "components": [
+    {"id": "body", "name": "Body", "kind": "body"},
+    {"id": "head", "name": "Head", "kind": "head"},
+    {"id": "limbs", "name": "Limbs", "kind": "limb"},
+    {"id": "tail", "name": "Tail", "kind": "tail", "required": false},
+    {"id": "horns", "name": "Horns", "kind": "horn", "required": false},
+    {"id": "shell", "name": "Shell", "kind": "shell", "required": false}
+  ],
+  "states": [
+    {"id": "neutral", "name": "Neutral", "guidance": "Use a balanced neutral pose that exposes the complete body plan."},
+    {"id": "action", "name": "Action", "guidance": "Show the characteristic action pose while preserving appendage readability."},
+    {"id": "damaged", "name": "Damaged", "guidance": "Show only the approved damage state without changing the canonical anatomy.", "required": false}
+  ],
+  "outputs": [
+    {"id": "assembled-turnaround", "name": "Assembled Turnaround", "layout": "turnaround", "view_ids": ["front", "side", "rear", "top", "underside"], "subject_modes": ["asset", "components", "states"], "separate_files": true, "assembled_sheet": true},
+    {"id": "anatomy-details", "name": "Anatomy Details", "layout": "grid", "view_ids": ["side", "rear", "underside"], "subject_modes": ["components", "states"], "separate_files": true, "assembled_sheet": false}
+  ]
+}

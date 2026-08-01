@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "kind": "creature-profile",
+  "capture_profile": {
+    "schema_version": 1,
+    "kind": "capture-profile",
+    "id": "creature-quadruped",
+    "version": 1,
+    "name": "Quadruped Creature",
+    "family": "creature",
+    "subtype": "quadruped",
+    "camera": {"projection": "orthographic", "framing_margin_percent": 12},
+    "background": {"mode": "neutral"},
+    "lighting": {"mode": "studio", "shadows": "soft"},
+    "validation": {"width": 2048, "height": 2048, "require_full_subject": true, "require_consistent_scale": true, "allow_occlusion": false},
+    "views": [
+      {"id": "front", "name": "Front", "azimuth_degrees": 0, "elevation_degrees": 0, "role": "identity"},
+      {"id": "side", "name": "Side", "azimuth_degrees": 90, "elevation_degrees": 0, "role": "construction"},
+      {"id": "rear", "name": "Rear", "azimuth_degrees": 180, "elevation_degrees": 0, "role": "construction"},
+      {"id": "top", "name": "Top", "azimuth_degrees": 0, "elevation_degrees": 90, "role": "silhouette"},
+      {"id": "underside", "name": "Underside", "azimuth_degrees": 0, "elevation_degrees": -90, "role": "construction"}
+    ],
+    "requirements": [
+      {"id": "body", "name": "Body", "requirement_kind": "component"},
+      {"id": "head", "name": "Head", "requirement_kind": "component"},
+      {"id": "front-legs", "name": "Front Legs", "requirement_kind": "component"},
+      {"id": "rear-legs", "name": "Rear Legs", "requirement_kind": "component"},
+      {"id": "tail", "name": "Tail", "requirement_kind": "component", "required": false},
+      {"id": "neutral", "name": "Neutral", "requirement_kind": "state"},
+      {"id": "locomotion", "name": "Locomotion", "requirement_kind": "state"},
+      {"id": "damaged", "name": "Damaged", "requirement_kind": "state", "required": false}
+    ],
+    "sheets": []
+  },
+  "anatomy": {"kind": "quadruped", "guidance": "Keep weight distribution, four-limb support, spine line, head direction, and tail attachment readable."},
+  "anatomy_views": [
+    {"view_id": "front", "role": "whole-body", "guidance": "Establish front silhouette, stance width, and head alignment."},
+    {"view_id": "side", "role": "limb", "guidance": "Show spine, leg articulation, paw contact, and body depth."},
+    {"view_id": "rear", "role": "tail", "guidance": "Show hindquarter structure and tail attachment."},
+    {"view_id": "top", "role": "silhouette", "guidance": "Show body width, limb spacing, and silhouette footprint."},
+    {"view_id": "underside", "role": "underside", "guidance": "Show belly clearance and useful paw or attachment details."}
+  ],
+  "components": [
+    {"id": "body", "name": "Body", "kind": "body"},
+    {"id": "head", "name": "Head", "kind": "head"},
+    {"id": "front-legs", "name": "Front Legs", "kind": "limb"},
+    {"id": "rear-legs", "name": "Rear Legs", "kind": "limb"},
+    {"id": "tail", "name": "Tail", "kind": "tail", "required": false}
+  ],
+  "states": [
+    {"id": "neutral", "name": "Neutral", "guidance": "Use a balanced neutral standing or resting pose."},
+    {"id": "locomotion", "name": "Locomotion", "guidance": "Show the characteristic gait without obscuring limb joints."},
+    {"id": "damaged", "name": "Damaged", "guidance": "Show the approved damaged state only when it affects silhouette or function.", "required": false}
+  ],
+  "outputs": [
+    {"id": "assembled-turnaround", "name": "Assembled Turnaround", "layout": "turnaround", "view_ids": ["front", "side", "rear", "top", "underside"], "subject_modes": ["asset", "components", "states"], "separate_files": true, "assembled_sheet": true},
+    {"id": "anatomy-details", "name": "Anatomy Details", "layout": "grid", "view_ids": ["side", "rear", "underside"], "subject_modes": ["components", "states"], "separate_files": true, "assembled_sheet": false}
+  ]
+}

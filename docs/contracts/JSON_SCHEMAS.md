@@ -44,6 +44,7 @@ It uses JSON Schema Draft 2020-12 and contains:
 | Visual review | `visual-review.schema.json` |
 | Capture profile | `capture-profile.schema.json` |
 | Humanoid profile | `humanoid-profile.schema.json` |
+| Creature profile | `creature-profile.schema.json` |
 | Visual bible | `visual-bible.schema.json` |
 | Prompt template | `prompt-template.schema.json` |
 | Compiled prompt | `compiled-prompt.schema.json` |

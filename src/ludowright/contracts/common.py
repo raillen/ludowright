@@ -24,6 +24,7 @@ RepositoryPathText = Annotated[
 ]
 DisplayText = Annotated[str, StringConstraints(min_length=1, max_length=120)]
 ReviewText = Annotated[str, StringConstraints(min_length=1, max_length=4_000)]
+ProfileGuidanceText = Annotated[str, StringConstraints(min_length=1, max_length=1_000)]
 RevisionText = Annotated[
     str,
     StringConstraints(

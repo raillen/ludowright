@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import unicodedata
 from dataclasses import dataclass
 from enum import StrEnum
 
@@ -15,9 +14,13 @@ from ludowright.domain.capture_profiles import (
 from ludowright.domain.errors import InvalidCaptureProfileError
 from ludowright.domain.identifiers import CaptureProfileId, ComponentId
 from ludowright.domain.names import DisplayName
+from ludowright.domain.profile_guidance import (
+    MAX_PROFILE_GUIDANCE_LENGTH,
+    validate_profile_guidance,
+)
 from ludowright.domain.versions import ProfileVersion
 
-MAX_HUMANOID_PROFILE_GUIDANCE_LENGTH = 1_000
+MAX_HUMANOID_PROFILE_GUIDANCE_LENGTH = MAX_PROFILE_GUIDANCE_LENGTH
 
 
 class NeutralRepresentationMode(StrEnum):
@@ -49,7 +52,7 @@ class NeutralRepresentationPolicy:
     def __post_init__(self) -> None:
         if not isinstance(self.mode, NeutralRepresentationMode):
             raise InvalidCaptureProfileError("neutral representation mode must be canonical")
-        _validate_guidance(self.guidance, "neutral representation guidance")
+        validate_profile_guidance(self.guidance, "neutral representation guidance")
 
 
 @dataclass(frozen=True, slots=True)
@@ -206,19 +209,6 @@ class HumanoidProfile:
             for output in self.outputs
         ):
             raise InvalidCaptureProfileError("humanoid outputs must reference profile views")
-
-
-def _validate_guidance(value: str, field_name: str) -> None:
-    if not isinstance(value, str) or not value:
-        raise InvalidCaptureProfileError(f"{field_name} cannot be empty")
-    if len(value) > MAX_HUMANOID_PROFILE_GUIDANCE_LENGTH:
-        raise InvalidCaptureProfileError(
-            f"{field_name} cannot exceed {MAX_HUMANOID_PROFILE_GUIDANCE_LENGTH} characters"
-        )
-    if unicodedata.normalize("NFC", value) != value:
-        raise InvalidCaptureProfileError(f"{field_name} must use Unicode NFC")
-    if any(unicodedata.category(character).startswith("C") for character in value):
-        raise InvalidCaptureProfileError(f"{field_name} cannot contain control characters")
 
 
 __all__ = [

@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "kind": "creature-profile",
+  "capture_profile": {
+    "schema_version": 1,
+    "kind": "capture-profile",
+    "id": "creature-fixture",
+    "version": 1,
+    "name": "Creature Fixture",
+    "family": "creature",
+    "subtype": "quadruped",
+    "camera": {"projection": "orthographic"},
+    "background": {"mode": "neutral"},
+    "lighting": {"mode": "studio", "shadows": "soft"},
+    "validation": {"width": 1024, "height": 1024, "require_full_subject": true, "require_consistent_scale": true, "allow_occlusion": false},
+    "views": [
+      {"id": "front", "name": "Front", "azimuth_degrees": 0, "elevation_degrees": 0, "role": "identity"}
+    ],
+    "requirements": [
+      {"id": "body", "name": "Body", "requirement_kind": "component"},
+      {"id": "neutral", "name": "Neutral", "requirement_kind": "state"}
+    ],
+    "sheets": []
+  },
+  "anatomy": {"kind": "quadruped", "guidance": "Keep the body plan and four-limb support readable."},
+  "anatomy_views": [
+    {"view_id": "front", "role": "whole-body", "guidance": "Establish the complete front silhouette and stance."}
+  ],
+  "components": [
+    {"id": "body", "name": "Body", "kind": "body"}
+  ],
+  "states": [
+    {"id": "neutral", "name": "Neutral", "guidance": "Use a balanced neutral pose."}
+  ],
+  "outputs": [
+    {"id": "assembled", "name": "Assembled", "layout": "turnaround", "view_ids": ["front"], "subject_modes": ["asset", "components", "states"], "separate_files": true, "assembled_sheet": true}
+  ]
+}

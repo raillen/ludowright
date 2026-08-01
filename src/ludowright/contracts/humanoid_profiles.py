@@ -4,10 +4,10 @@ from __future__ import annotations
 
 from typing import Annotated, Literal, Self
 
-from pydantic import Field, StringConstraints, model_validator
+from pydantic import Field, model_validator
 
 from ludowright.contracts.capture import CaptureProfileContract, CaptureSheetContract
-from ludowright.contracts.common import ContractModel, DisplayText, Slug
+from ludowright.contracts.common import ContractModel, DisplayText, ProfileGuidanceText, Slug
 from ludowright.domain import (
     ComponentId,
     DisplayName,
@@ -18,8 +18,6 @@ from ludowright.domain import (
     NeutralRepresentationMode,
     NeutralRepresentationPolicy,
 )
-
-ProfileGuidanceText = Annotated[str, StringConstraints(min_length=1, max_length=1_000)]
 
 
 class NeutralRepresentationPolicyContract(ContractModel):
