@@ -1,5 +1,6 @@
 """Application use cases for LudoWright workflows."""
 
+from ludowright.application.asset_audit import AssetAuditError, AssetAuditResult, AssetAuditService
 from ludowright.application.asset_decomposition import (
     AssetDecompositionError,
     AssetDecompositionResult,
@@ -69,6 +70,9 @@ from ludowright.application.interviews import (
 )
 
 __all__ = [
+    "AssetAuditError",
+    "AssetAuditResult",
+    "AssetAuditService",
     "AssetDecompositionError",
     "AssetDecompositionResult",
     "AssetDecompositionRollbackError",

@@ -67,3 +67,6 @@ Concurrent exports to the same target have one winner and one semantic
 No migration is needed for existing projects. Future incompatible workbook
 templates or report shapes require a new template/schema version and an
 explicit compatibility decision.
+
+Asset completeness auditing is a separate read-only projection and never
+becomes a workbook sheet or workbook source of truth.

@@ -325,6 +325,15 @@ the current 1.4.x line and no SQLite migration is introduced.
 
 ### PR 36 — Asset audit
 
+- Status: implemented in the current slice. `assets audit` is a deterministic,
+  read-only report over the canonical registry and dependency graph. It detects
+  orphan asset nodes, incomplete specifications and ownership metadata,
+  invalid asset dependencies, and the current absence of executable persisted
+  capture profiles. Blocking findings use `--check` and the shared
+  `checks-failed` envelope; the new v1 report has a fixture and generated
+  schema. Existing registry, graph, event-log, and SQLite formats remain
+  compatible without migration.
+
 - orphans;
 - missing specs;
 - invalid dependencies;

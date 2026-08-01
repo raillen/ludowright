@@ -1,0 +1,187 @@
+{
+  "$defs": {
+    "AssetAuditFindingContract": {
+      "additionalProperties": false,
+      "description": "One deterministic finding produced by the asset audit.",
+      "properties": {
+        "asset_id": {
+          "anyOf": [
+            {
+              "maxLength": 80,
+              "minLength": 1,
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Asset Id"
+        },
+        "code": {
+          "enum": [
+            "orphan-asset-node",
+            "missing-specification",
+            "invalid-dependency",
+            "missing-capture-profile",
+            "incomplete-production-metadata"
+          ],
+          "title": "Code",
+          "type": "string"
+        },
+        "message": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Message",
+          "type": "string"
+        },
+        "related_subjects": {
+          "default": [],
+          "items": {
+            "maxLength": 4000,
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 32,
+          "title": "Related Subjects",
+          "type": "array"
+        },
+        "severity": {
+          "enum": [
+            "error",
+            "warning"
+          ],
+          "title": "Severity",
+          "type": "string"
+        },
+        "subject": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Subject",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "severity",
+        "subject",
+        "message"
+      ],
+      "title": "AssetAuditFindingContract",
+      "type": "object"
+    }
+  },
+  "$id": "https://schemas.ludowright.dev/v1/asset-audit.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Stable read-only result for one asset audit.",
+  "properties": {
+    "asset_count": {
+      "maximum": 100000,
+      "minimum": 0,
+      "title": "Asset Count",
+      "type": "integer"
+    },
+    "dependency_graph_path": {
+      "maxLength": 1024,
+      "minLength": 1,
+      "pattern": "^[a-z0-9._-]+(?:/[a-z0-9._-]+)*$",
+      "title": "Dependency Graph Path",
+      "type": "string"
+    },
+    "dependency_graph_revision": {
+      "maximum": 2147483647,
+      "minimum": 0,
+      "title": "Dependency Graph Revision",
+      "type": "integer"
+    },
+    "dependency_graph_state": {
+      "enum": [
+        "current",
+        "absent"
+      ],
+      "title": "Dependency Graph State",
+      "type": "string"
+    },
+    "dry_run": {
+      "title": "Dry Run",
+      "type": "boolean"
+    },
+    "findings": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/AssetAuditFindingContract"
+      },
+      "maxItems": 100000,
+      "title": "Findings",
+      "type": "array"
+    },
+    "kind": {
+      "const": "asset-audit",
+      "default": "asset-audit",
+      "title": "Kind",
+      "type": "string"
+    },
+    "registry_path": {
+      "maxLength": 1024,
+      "minLength": 1,
+      "pattern": "^[a-z0-9._-]+(?:/[a-z0-9._-]+)*$",
+      "title": "Registry Path",
+      "type": "string"
+    },
+    "registry_version": {
+      "maximum": 2147483647,
+      "minimum": 1,
+      "title": "Registry Version",
+      "type": "integer"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "source_digest": {
+      "maxLength": 64,
+      "minLength": 64,
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Digest",
+      "type": "string"
+    },
+    "state": {
+      "enum": [
+        "empty",
+        "valid",
+        "findings"
+      ],
+      "title": "State",
+      "type": "string"
+    },
+    "state_store_schema_version": {
+      "maximum": 2147483647,
+      "minimum": 1,
+      "title": "State Store Schema Version",
+      "type": "integer"
+    },
+    "valid": {
+      "default": true,
+      "title": "Valid",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "state",
+    "dry_run",
+    "registry_path",
+    "registry_version",
+    "state_store_schema_version",
+    "dependency_graph_path",
+    "dependency_graph_revision",
+    "dependency_graph_state",
+    "asset_count",
+    "source_digest"
+  ],
+  "title": "LudoWright Asset Audit Report",
+  "type": "object"
+}

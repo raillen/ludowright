@@ -73,9 +73,10 @@ dual-read policy, and an ADR. The registry revision is not an event-log
 sequence and must not be used as one.
 
 ODS output is implemented as a derived projection in PR35; it never changes
-the registry contract or writes back to the YAML document. Completeness audits
-remain a later PR. Decomposition recommendations in PR34 are derived guidance
-only.
+the registry contract or writes back to the YAML document. The read-only
+completeness audit is implemented by PR36 as a separate application service
+and report. It does not change registry persistence or turn decomposition
+recommendations into executable capture profiles.
 
 Document candidate discovery is defined separately in
 [`ASSET_DISCOVERY.md`](ASSET_DISCOVERY.md). Confirmed candidates reuse this

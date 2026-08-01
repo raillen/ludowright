@@ -1,0 +1,16 @@
+{
+  "asset_count": 0,
+  "dependency_graph_path": ".ludowright/dependency-graph.json",
+  "dependency_graph_revision": 0,
+  "dependency_graph_state": "absent",
+  "dry_run": false,
+  "findings": [],
+  "kind": "asset-audit",
+  "registry_path": "assets/registry.yaml",
+  "registry_version": 1,
+  "schema_version": 1,
+  "source_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+  "state": "empty",
+  "state_store_schema_version": 2,
+  "valid": true
+}

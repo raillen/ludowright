@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from ludowright.contracts.asset_audit import AssetAuditReportContract
 from ludowright.contracts.asset_decomposition import (
     AssetDecompositionContract,
     AssetDecompositionReportContract,
@@ -125,6 +126,12 @@ CONTRACTS: tuple[ContractDefinition, ...] = (
         "asset-workbook-export-report.schema.json",
         "LudoWright Asset Workbook Export Report",
         AssetWorkbookExportReportContract,
+    ),
+    ContractDefinition(
+        "asset-audit",
+        "asset-audit.schema.json",
+        "LudoWright Asset Audit Report",
+        AssetAuditReportContract,
     ),
     ContractDefinition(
         "visual-reference",

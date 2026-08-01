@@ -91,6 +91,12 @@
       "title": "Asset Workbook Contract"
     },
     {
+      "canonical_source": "contracts/ASSET_AUDIT.md",
+      "path": "contracts/ASSET_AUDIT.md",
+      "section": "contracts",
+      "title": "Asset Audit Contract"
+    },
+    {
       "canonical_source": "contracts/CAPTURE_PROFILES.md",
       "path": "contracts/CAPTURE_PROFILES.md",
       "section": "contracts",
@@ -347,6 +353,12 @@
       "path": "decisions/0025-deterministic-asset-ods-export.md",
       "section": "decisions",
       "title": "ADR 0025: Deterministic Derived Asset ODS Export"
+    },
+    {
+      "canonical_source": "decisions/0026-deterministic-asset-audit.md",
+      "path": "decisions/0026-deterministic-asset-audit.md",
+      "section": "decisions",
+      "title": "ADR 0026 — Deterministic Asset Audit"
     },
     {
       "canonical_source": "governance/RFC_TEMPLATE.md",
