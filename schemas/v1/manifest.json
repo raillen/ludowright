@@ -171,6 +171,12 @@
       "sha256": "d562d2abe0ce50646cc2fb11396ebba32e152207e574d3eba2b1c8cfce00eaaf"
     },
     {
+      "file": "image-normalization.schema.json",
+      "name": "image-normalization",
+      "schema_id": "https://schemas.ludowright.dev/v1/image-normalization.schema.json",
+      "sha256": "36d95963c0b26950348f2cf57d46e093c8d2ec0145312b9d2f037e5670654270"
+    },
+    {
       "file": "migration-receipt.schema.json",
       "name": "migration-receipt",
       "schema_id": "https://schemas.ludowright.dev/v1/migration-receipt.schema.json",

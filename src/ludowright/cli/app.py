@@ -14,6 +14,7 @@ from ludowright.cli.codex import codex_app
 from ludowright.cli.diagnostics import collect_diagnostics, render_diagnostics
 from ludowright.cli.docs import docs_app
 from ludowright.cli.documents import documents_app
+from ludowright.cli.images import images_app
 from ludowright.cli.interview import interview_app
 from ludowright.cli.quality import quality_app
 from ludowright.cli.review import review_command
@@ -36,6 +37,7 @@ app.add_typer(quality_app, name="quality")
 app.add_typer(codex_app, name="codex")
 app.add_typer(assets_app, name="assets")
 app.add_typer(interview_app, name="interview")
+app.add_typer(images_app, name="images")
 app.add_typer(documents_app, name="documents")
 app.add_typer(docs_app, name="docs")
 app.command("atlas")(generate_atlas)

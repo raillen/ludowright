@@ -81,6 +81,12 @@ from ludowright.application.humanoid_profiles import (
     HumanoidProfileNotFoundError,
     load_humanoid_profile,
 )
+from ludowright.application.image_normalization import (
+    ImageNormalizationConflictError,
+    ImageNormalizationResult,
+    ImageNormalizationRollbackError,
+    ImageNormalizationService,
+)
 from ludowright.application.interviews import (
     InterviewApplicationError,
     InterviewService,
@@ -161,6 +167,10 @@ __all__ = [
     "HumanoidProfileDefinitionError",
     "HumanoidProfileError",
     "HumanoidProfileNotFoundError",
+    "ImageNormalizationConflictError",
+    "ImageNormalizationResult",
+    "ImageNormalizationRollbackError",
+    "ImageNormalizationService",
     "InterviewApplicationError",
     "InterviewService",
     "InterviewView",
