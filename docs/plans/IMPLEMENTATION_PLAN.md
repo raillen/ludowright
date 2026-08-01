@@ -294,9 +294,19 @@ dependencies, and ODS remain separate concerns.
 
 ### PR 34 — Asset decomposition
 
-- components, variants, states, and dependencies;
-- capture-profile recommendation;
-- guided corrections.
+Status: implemented in the current slice. `assets decompose` now validates
+complete component, variant, state, and prerequisite-asset replacements,
+coordinates the canonical dependency graph with the existing registry
+event/state rollback boundary, emits deterministic recommendation reports,
+supports inspection, dry-run, guided corrections, Rich and JSON output, and is
+idempotent for identical input. The new v1 input/report schemas have fixtures
+and generated manifest entries. Recommendation keys are advisory only;
+executable capture profiles and independent component graph nodes remain later
+visual-foundation work.
+
+- components, variants, states, and asset-to-asset prerequisites;
+- data-defined capture-profile recommendation;
+- guided corrections and graph/registry rollback.
 
 ### PR 35 — ODS export
 

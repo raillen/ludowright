@@ -43,6 +43,14 @@ SQLite may later index this graph for queries, but it must remain rebuildable fr
 
 Application services remain responsible for updating the graph in the same logical workflow as canonical document writes and event-log records. This PR does not claim a cross-resource atomic transaction.
 
+The asset decomposition service is the first workflow that coordinates this
+graph with another canonical resource. It creates prerequisite-asset →
+decomposed-asset `requires` edges, writes the graph atomically before the
+registry replacement, and restores the graph after a registry failure when an
+optimistic byte check proves that restoration is safe. The graph remains the
+only authority for cross-asset relationships; component, variant, and state
+collections remain inside the asset aggregate.
+
 ## Direction
 
 Every edge points from an input source to a dependent target:

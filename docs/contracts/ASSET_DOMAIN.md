@@ -13,7 +13,12 @@ It supports visual and non-visual work, including:
 - animation, UI, VFX, and audio;
 - project-specific families through an extensible subtype.
 
-Capture views, prompts, references, generation receipts, file paths, budgets, dependencies, and engine import settings belong to later contracts. The persisted collection shape is defined separately in [`ASSET_REGISTRY.md`](ASSET_REGISTRY.md).
+Capture views, prompts, references, generation receipts, file paths, budgets,
+and engine import settings belong to later contracts. Asset-to-asset
+dependencies are persisted by the canonical dependency graph when a
+decomposition is applied. The persisted collection shape is defined separately
+in [`ASSET_REGISTRY.md`](ASSET_REGISTRY.md), and the decomposition workflow is
+defined in [`ASSET_DECOMPOSITION.md`](ASSET_DECOMPOSITION.md).
 
 ## Classification
 
@@ -221,7 +226,6 @@ in [`ASSET_REGISTRY.md`](ASSET_REGISTRY.md).
 
 This contract does not yet define:
 
-- asset-to-asset dependencies;
 - blockers or risk records;
 - estimates and budgets;
 - capture profiles;
@@ -231,7 +235,6 @@ This contract does not yet define:
 - engine import settings;
 - ODS rows;
 - document candidate discovery syntax and confirmation;
-- capture-profile recommendations;
 - workbook formatting.
 
 Those capabilities will reference the asset aggregate rather than expanding it

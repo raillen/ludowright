@@ -28,7 +28,7 @@
       "canonical_source": "commands/ASSETS.md",
       "path": "commands/ASSETS.md",
       "section": "commands",
-      "title": "Asset Registry and Discovery CLI"
+      "title": "Asset Registry, Discovery, and Decomposition CLI"
     },
     {
       "canonical_source": "commands/INTERVIEW.md",
@@ -77,6 +77,12 @@
       "path": "contracts/ASSET_DISCOVERY.md",
       "section": "contracts",
       "title": "Asset Discovery Contract"
+    },
+    {
+      "canonical_source": "contracts/ASSET_DECOMPOSITION.md",
+      "path": "contracts/ASSET_DECOMPOSITION.md",
+      "section": "contracts",
+      "title": "Asset Decomposition Contract"
     },
     {
       "canonical_source": "contracts/CAPTURE_PROFILES.md",
@@ -323,6 +329,12 @@
       "path": "decisions/0023-deterministic-asset-discovery.md",
       "section": "decisions",
       "title": "ADR 0023 — Deterministic Asset Discovery and Explicit Confirmation"
+    },
+    {
+      "canonical_source": "decisions/0024-asset-decomposition-workflow.md",
+      "path": "decisions/0024-asset-decomposition-workflow.md",
+      "section": "decisions",
+      "title": "ADR 0024: Deterministic Asset Decomposition Workflow"
     },
     {
       "canonical_source": "governance/RFC_TEMPLATE.md",
