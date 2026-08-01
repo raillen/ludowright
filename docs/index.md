@@ -74,7 +74,8 @@ guides cover Linux, Windows, macOS, `ludowright init`, dry-run, profile
 contracts, deterministic planning, project-local skill setup, conservative
 failure recovery, and safe skill removal; the quality gate now validates the
 local-first end-to-end path and clean-room wheel and source-distribution
-installation, while beta readiness remains the next bounded work.
+installation, while real-project beta feedback and release-candidate work
+remain the next bounded work.
 The pure deterministic visual-job planner does not execute providers or persist
 project-local plans.
 
@@ -91,6 +92,7 @@ project-local plans.
 - [Roadmap](product/ROADMAP.md) — planned releases and long-term direction.
 - [System Overview](architecture/SYSTEM_OVERVIEW.md) — architecture and dependency rules.
 - [Implementation Plan](plans/IMPLEMENTATION_PLAN.md) — ordered pull requests to the first stable release.
+- [Public-beta documentation audit](quality/PUBLIC_BETA_DOCUMENTATION_AUDIT.md) — current coverage, executable evidence, and remaining readiness work.
 
 ## Repository policies
 

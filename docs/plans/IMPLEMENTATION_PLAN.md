@@ -759,8 +759,8 @@ skill updates, and safe project-local skill removal. The guides are published
 in the MkDocs navigation and covered by executable documentation-flow and
 example contract tests.
 
-PR61 is complete in this chain. Clean-room package installation remains part
-of PR62.
+PR61 is complete in this chain. Clean-room package installation is tracked
+under PR62 and implemented in its current chain.
 
 - Linux, Windows, and macOS checkout installation;
 - first project from the versioned `minimal` template;
@@ -773,8 +773,8 @@ of PR62.
 ### PR 62 — Public beta and 1.0 readiness
 
 Status: the clean-room installation, end-to-end validation, migration
-compatibility-matrix, and security-review sub-slices are implemented in the
-current chain. The
+compatibility-matrix, security-review, and documentation-audit sub-slices are
+implemented in the current chain. The
 quality gate now builds the wheel and source distribution in a temporary
 directory, installs each format into a fresh virtual environment, and runs the
 installed CLI from outside the checkout. Its end-to-end smoke test exercises
@@ -783,14 +783,14 @@ technical sheets, package build, project audit, and release verification. The
 migration matrix covers the supported v1→v2 transition, current-schema
 no-ops, downgrade rejection, and missing contiguous paths while preserving the
 existing backup/rollback tests. The threat model and negative-control security
-tests are published in the current slice. Documentation audit, beta feedback,
-and release-candidate work remain bounded follow-up slices of PR62.
+tests are published in the current slice. Beta feedback and release-candidate
+work remain bounded follow-up slices of PR62.
 
 - clean-room installation tests (implemented in the current slice);
 - end-to-end validation (implemented in the current slice);
 - migration compatibility matrix (implemented in the current slice);
 - security review (implemented in the current slice; threat model and negative-control tests);
-- documentation audit;
+- documentation audit (implemented in the current follow-up slice; coverage and executable evidence are published in `docs/quality/PUBLIC_BETA_DOCUMENTATION_AUDIT.md`);
 - beta feedback fixes;
 - release candidate and stable release checklist.
 

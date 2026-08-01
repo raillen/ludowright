@@ -55,6 +55,11 @@
       "title": "Product vision"
     },
     {
+      "canonical_source": "quality/PUBLIC_BETA_DOCUMENTATION_AUDIT.md",
+      "id": "public-beta-documentation-audit",
+      "title": "Public-beta documentation audit"
+    },
+    {
       "canonical_source": "product/ROADMAP.md",
       "id": "roadmap",
       "title": "Product roadmap"

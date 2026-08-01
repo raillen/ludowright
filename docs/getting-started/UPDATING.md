@@ -130,7 +130,7 @@ checksums do envelope JSON são a evidência estável.
 | Rede falhou no `git fetch` ou `uv sync` | Corrija a rede/proxy/certificados e repita; não desative TLS nem publique credenciais. |
 | Skill modificada | Preserve os arquivos, compare o manifesto e decida manualmente como recuperar; `update` não sobrescreve. |
 | Update falhou no meio | Verifique a skill e preserve a causa; o contrato tenta restaurar a revisão anterior. |
-| Projeto antigo exige migração | Não invente uma migração nem apague o SQLite; a matriz de migração faz parte da readiness do PR62. |
+| Projeto antigo exige migração | Não invente uma migração nem apague o SQLite; consulte a [matriz de compatibilidade publicada](../contracts/MIGRATIONS.md) antes de qualquer atualização. |
 
 Em POSIX use `./my-game`; no PowerShell use `.\my-game`. O caminho da skill é
 sempre `.agents/skills/ludowright/` dentro do projeto descoberto.

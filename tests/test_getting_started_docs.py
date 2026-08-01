@@ -222,7 +222,7 @@ def test_update_guide_matches_current_skill_update_contract(tmp_path: Path) -> N
         "modified",
         "resource-not-found",
         "corrupt-state",
-        "PR62",
+        "matriz de compatibilidade publicada",
         "ludowright update",
         "migração automática de projeto",
     ):

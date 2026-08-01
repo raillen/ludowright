@@ -143,6 +143,7 @@ assembly from interview answers remains a later bounded capability.
   PR59), and modular-environment example (implemented through PR60);
 - end-to-end validation, migration matrix tests, and the security review are
   implemented in the current PR62 slice;
+- documentation audit is implemented in the current PR62 follow-up slice;
 - usability and compatibility fixes from real projects;
 - release candidate.
 
