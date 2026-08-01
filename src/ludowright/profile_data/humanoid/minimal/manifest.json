@@ -1,0 +1,196 @@
+{
+  "schema_version": 1,
+  "kind": "humanoid-profile",
+  "capture_profile": {
+    "schema_version": 1,
+    "kind": "capture-profile",
+    "id": "humanoid-minimal",
+    "version": 1,
+    "name": "Minimal Humanoid",
+    "family": "character",
+    "subtype": "humanoid",
+    "camera": {
+      "projection": "orthographic",
+      "framing_margin_percent": 10
+    },
+    "background": {
+      "mode": "neutral"
+    },
+    "lighting": {
+      "mode": "studio",
+      "shadows": "soft"
+    },
+    "validation": {
+      "width": 2048,
+      "height": 2048,
+      "require_full_subject": true,
+      "require_consistent_scale": true,
+      "require_neutral_pose": true,
+      "allow_occlusion": false
+    },
+    "views": [
+      {
+        "id": "front",
+        "name": "Front",
+        "azimuth_degrees": 0,
+        "elevation_degrees": 0,
+        "role": "identity",
+        "required": true
+      },
+      {
+        "id": "side",
+        "name": "Side",
+        "azimuth_degrees": 90,
+        "elevation_degrees": 0,
+        "role": "construction",
+        "required": true
+      },
+      {
+        "id": "rear",
+        "name": "Rear",
+        "azimuth_degrees": 180,
+        "elevation_degrees": 0,
+        "role": "construction",
+        "required": true
+      }
+    ],
+    "requirements": [
+      {
+        "id": "base-body",
+        "name": "Body Base",
+        "requirement_kind": "component",
+        "required": true
+      },
+      {
+        "id": "hair",
+        "name": "Hair",
+        "requirement_kind": "component",
+        "required": false
+      },
+      {
+        "id": "jacket",
+        "name": "Jacket",
+        "requirement_kind": "component",
+        "required": true
+      },
+      {
+        "id": "trousers",
+        "name": "Trousers",
+        "requirement_kind": "component",
+        "required": true
+      },
+      {
+        "id": "footwear",
+        "name": "Footwear",
+        "requirement_kind": "component",
+        "required": true
+      },
+      {
+        "id": "backpack",
+        "name": "Backpack",
+        "requirement_kind": "component",
+        "required": false
+      },
+      {
+        "id": "hand-prop",
+        "name": "Hand Prop",
+        "requirement_kind": "component",
+        "required": false
+      },
+      {
+        "id": "face-detail",
+        "name": "Face Detail",
+        "requirement_kind": "component",
+        "required": false
+      }
+    ],
+    "sheets": []
+  },
+  "neutral_representation": {
+    "mode": "neutral-bodysuit",
+    "guidance": "Use a neutral bodysuit or fitted neutral base that keeps proportions and attachment points readable; treat images as modeling references, not exact geometric blueprints."
+  },
+  "body_base": {
+    "id": "base-body",
+    "name": "Body Base"
+  },
+  "wearables": [
+    {
+      "id": "hair",
+      "name": "Hair",
+      "kind": "hair",
+      "required": false
+    },
+    {
+      "id": "jacket",
+      "name": "Jacket",
+      "kind": "garment",
+      "required": true
+    },
+    {
+      "id": "trousers",
+      "name": "Trousers",
+      "kind": "garment",
+      "required": true
+    },
+    {
+      "id": "footwear",
+      "name": "Footwear",
+      "kind": "footwear",
+      "required": true
+    },
+    {
+      "id": "backpack",
+      "name": "Backpack",
+      "kind": "accessory",
+      "required": false
+    },
+    {
+      "id": "hand-prop",
+      "name": "Hand Prop",
+      "kind": "prop",
+      "required": false
+    },
+    {
+      "id": "face-detail",
+      "name": "Face Detail",
+      "kind": "detail",
+      "required": false
+    }
+  ],
+  "outputs": [
+    {
+      "id": "assembled-turnaround",
+      "name": "Assembled Turnaround",
+      "layout": "turnaround",
+      "view_ids": [
+        "front",
+        "side",
+        "rear"
+      ],
+      "subject_modes": [
+        "asset",
+        "components"
+      ],
+      "separate_files": true,
+      "assembled_sheet": true,
+      "required": true
+    },
+    {
+      "id": "component-views",
+      "name": "Component Views",
+      "layout": "grid",
+      "view_ids": [
+        "front",
+        "side",
+        "rear"
+      ],
+      "subject_modes": [
+        "components"
+      ],
+      "separate_files": true,
+      "assembled_sheet": false,
+      "required": true
+    }
+  ]
+}

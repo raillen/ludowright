@@ -100,6 +100,14 @@ from ludowright.domain.governance import (
     ReviewNote,
     SubjectRevision,
 )
+from ludowright.domain.humanoid_profiles import (
+    HumanoidBodyBase,
+    HumanoidProfile,
+    HumanoidWearable,
+    HumanoidWearableKind,
+    NeutralRepresentationMode,
+    NeutralRepresentationPolicy,
+)
 from ludowright.domain.identifiers import (
     ApprovalId,
     AssetId,
@@ -277,6 +285,10 @@ __all__ = [
     "GenerationReceipt",
     "GenerationSeries",
     "HexColor",
+    "HumanoidBodyBase",
+    "HumanoidProfile",
+    "HumanoidWearable",
+    "HumanoidWearableKind",
     "Identifier",
     "InterviewSession",
     "InterviewSessionId",
@@ -313,6 +325,8 @@ __all__ = [
     "LightingSpec",
     "MaterialFinish",
     "MaterialRule",
+    "NeutralRepresentationMode",
+    "NeutralRepresentationPolicy",
     "OptionId",
     "OwnerId",
     "OwnerKind",

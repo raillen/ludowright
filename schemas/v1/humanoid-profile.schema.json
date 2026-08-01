@@ -1,0 +1,719 @@
+{
+  "$defs": {
+    "AssetFamily": {
+      "description": "Stable top-level production families.",
+      "enum": [
+        "character",
+        "creature",
+        "environment",
+        "architecture",
+        "prop",
+        "vehicle",
+        "vegetation",
+        "terrain",
+        "material",
+        "texture",
+        "animation",
+        "ui",
+        "vfx",
+        "audio",
+        "other"
+      ],
+      "title": "AssetFamily",
+      "type": "string"
+    },
+    "BackgroundContract": {
+      "additionalProperties": false,
+      "properties": {
+        "color": {
+          "anyOf": [
+            {
+              "pattern": "^#[0-9A-F]{6}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Color"
+        },
+        "mode": {
+          "$ref": "#/$defs/BackgroundMode"
+        }
+      },
+      "required": [
+        "mode"
+      ],
+      "title": "BackgroundContract",
+      "type": "object"
+    },
+    "BackgroundMode": {
+      "enum": [
+        "transparent",
+        "solid",
+        "neutral",
+        "environment"
+      ],
+      "title": "BackgroundMode",
+      "type": "string"
+    },
+    "CameraContract": {
+      "additionalProperties": false,
+      "properties": {
+        "focal_length_mm": {
+          "anyOf": [
+            {
+              "maximum": 300,
+              "minimum": 10,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Focal Length Mm"
+        },
+        "framing_margin_percent": {
+          "default": 10,
+          "maximum": 50,
+          "minimum": 0,
+          "title": "Framing Margin Percent",
+          "type": "integer"
+        },
+        "projection": {
+          "$ref": "#/$defs/CameraProjection"
+        }
+      },
+      "required": [
+        "projection"
+      ],
+      "title": "CameraContract",
+      "type": "object"
+    },
+    "CameraProjection": {
+      "enum": [
+        "orthographic",
+        "perspective",
+        "isometric"
+      ],
+      "title": "CameraProjection",
+      "type": "string"
+    },
+    "CaptureProfileContract": {
+      "additionalProperties": false,
+      "properties": {
+        "background": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BackgroundContract"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "camera": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CameraContract"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "family": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AssetFamily"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "const": "capture-profile",
+          "default": "capture-profile",
+          "title": "Kind",
+          "type": "string"
+        },
+        "lighting": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/LightingContract"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "name": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "parent": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CaptureProfileRefContract"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "requirements": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/CaptureRequirementContract"
+          },
+          "title": "Requirements",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": 1,
+          "default": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "sheets": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/CaptureSheetContract"
+          },
+          "title": "Sheets",
+          "type": "array"
+        },
+        "subtype": {
+          "anyOf": [
+            {
+              "maxLength": 80,
+              "minLength": 1,
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Subtype"
+        },
+        "validation": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CaptureValidationContract"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "version": {
+          "maximum": 2147483647,
+          "minimum": 1,
+          "title": "Version",
+          "type": "integer"
+        },
+        "views": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/CaptureViewContract"
+          },
+          "title": "Views",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "version",
+        "name",
+        "family"
+      ],
+      "title": "CaptureProfileContract",
+      "type": "object"
+    },
+    "CaptureProfileRefContract": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "version": {
+          "maximum": 2147483647,
+          "minimum": 1,
+          "title": "Version",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "version"
+      ],
+      "title": "CaptureProfileRefContract",
+      "type": "object"
+    },
+    "CaptureRequirementContract": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "required": {
+          "default": true,
+          "title": "Required",
+          "type": "boolean"
+        },
+        "requirement_kind": {
+          "$ref": "#/$defs/CaptureRequirementKind"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "requirement_kind"
+      ],
+      "title": "CaptureRequirementContract",
+      "type": "object"
+    },
+    "CaptureRequirementKind": {
+      "enum": [
+        "component",
+        "variant",
+        "state"
+      ],
+      "title": "CaptureRequirementKind",
+      "type": "string"
+    },
+    "CaptureSheetContract": {
+      "additionalProperties": false,
+      "properties": {
+        "assembled_sheet": {
+          "default": true,
+          "title": "Assembled Sheet",
+          "type": "boolean"
+        },
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "layout": {
+          "$ref": "#/$defs/SheetLayout"
+        },
+        "name": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "required": {
+          "default": true,
+          "title": "Required",
+          "type": "boolean"
+        },
+        "separate_files": {
+          "default": true,
+          "title": "Separate Files",
+          "type": "boolean"
+        },
+        "subject_modes": {
+          "items": {
+            "$ref": "#/$defs/CaptureSubjectMode"
+          },
+          "minItems": 1,
+          "title": "Subject Modes",
+          "type": "array",
+          "uniqueItems": true
+        },
+        "view_ids": {
+          "items": {
+            "maxLength": 80,
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "View Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "layout",
+        "view_ids",
+        "subject_modes"
+      ],
+      "title": "CaptureSheetContract",
+      "type": "object"
+    },
+    "CaptureSubjectMode": {
+      "enum": [
+        "asset",
+        "components",
+        "variants",
+        "states"
+      ],
+      "title": "CaptureSubjectMode",
+      "type": "string"
+    },
+    "CaptureValidationContract": {
+      "additionalProperties": false,
+      "properties": {
+        "allow_occlusion": {
+          "default": false,
+          "title": "Allow Occlusion",
+          "type": "boolean"
+        },
+        "height": {
+          "maximum": 16384,
+          "minimum": 64,
+          "title": "Height",
+          "type": "integer"
+        },
+        "require_consistent_scale": {
+          "default": true,
+          "title": "Require Consistent Scale",
+          "type": "boolean"
+        },
+        "require_full_subject": {
+          "default": true,
+          "title": "Require Full Subject",
+          "type": "boolean"
+        },
+        "require_neutral_pose": {
+          "default": false,
+          "title": "Require Neutral Pose",
+          "type": "boolean"
+        },
+        "width": {
+          "maximum": 16384,
+          "minimum": 64,
+          "title": "Width",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "width",
+        "height"
+      ],
+      "title": "CaptureValidationContract",
+      "type": "object"
+    },
+    "CaptureViewContract": {
+      "additionalProperties": false,
+      "properties": {
+        "azimuth_degrees": {
+          "maximum": 359,
+          "minimum": 0,
+          "title": "Azimuth Degrees",
+          "type": "integer"
+        },
+        "elevation_degrees": {
+          "maximum": 90,
+          "minimum": -90,
+          "title": "Elevation Degrees",
+          "type": "integer"
+        },
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "required": {
+          "default": true,
+          "title": "Required",
+          "type": "boolean"
+        },
+        "role": {
+          "$ref": "#/$defs/ReferenceRole",
+          "default": "construction"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "azimuth_degrees",
+        "elevation_degrees"
+      ],
+      "title": "CaptureViewContract",
+      "type": "object"
+    },
+    "HumanoidBodyBaseContract": {
+      "additionalProperties": false,
+      "description": "Required body-base component.",
+      "properties": {
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ],
+      "title": "HumanoidBodyBaseContract",
+      "type": "object"
+    },
+    "HumanoidWearableContract": {
+      "additionalProperties": false,
+      "description": "One categorized wearable, prop, or detail component.",
+      "properties": {
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/HumanoidWearableKind"
+        },
+        "name": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "required": {
+          "default": true,
+          "title": "Required",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "kind"
+      ],
+      "title": "HumanoidWearableContract",
+      "type": "object"
+    },
+    "HumanoidWearableKind": {
+      "description": "Categories that can be isolated from a humanoid body base.",
+      "enum": [
+        "hair",
+        "garment",
+        "footwear",
+        "accessory",
+        "prop",
+        "detail"
+      ],
+      "title": "HumanoidWearableKind",
+      "type": "string"
+    },
+    "LightingContract": {
+      "additionalProperties": false,
+      "properties": {
+        "custom_label": {
+          "anyOf": [
+            {
+              "maxLength": 120,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Custom Label"
+        },
+        "mode": {
+          "$ref": "#/$defs/LightingMode"
+        },
+        "shadows": {
+          "$ref": "#/$defs/ShadowMode"
+        }
+      },
+      "required": [
+        "mode",
+        "shadows"
+      ],
+      "title": "LightingContract",
+      "type": "object"
+    },
+    "LightingMode": {
+      "enum": [
+        "flat",
+        "studio",
+        "natural",
+        "dramatic",
+        "unlit",
+        "custom"
+      ],
+      "title": "LightingMode",
+      "type": "string"
+    },
+    "NeutralRepresentationMode": {
+      "description": "Approved body-base presentation modes for humanoid references.",
+      "enum": [
+        "neutral-bodysuit",
+        "fitted-neutral-clothing",
+        "technical-mannequin"
+      ],
+      "title": "NeutralRepresentationMode",
+      "type": "string"
+    },
+    "NeutralRepresentationPolicyContract": {
+      "additionalProperties": false,
+      "description": "Explicit body-base representation policy.",
+      "properties": {
+        "guidance": {
+          "maxLength": 1000,
+          "minLength": 1,
+          "title": "Guidance",
+          "type": "string"
+        },
+        "mode": {
+          "$ref": "#/$defs/NeutralRepresentationMode"
+        }
+      },
+      "required": [
+        "mode",
+        "guidance"
+      ],
+      "title": "NeutralRepresentationPolicyContract",
+      "type": "object"
+    },
+    "ReferenceRole": {
+      "description": "Production purpose served by a visual reference.",
+      "enum": [
+        "identity",
+        "silhouette",
+        "proportion",
+        "construction",
+        "material",
+        "color",
+        "style",
+        "context",
+        "negative",
+        "output",
+        "other"
+      ],
+      "title": "ReferenceRole",
+      "type": "string"
+    },
+    "ShadowMode": {
+      "enum": [
+        "none",
+        "contact",
+        "soft",
+        "full"
+      ],
+      "title": "ShadowMode",
+      "type": "string"
+    },
+    "SheetLayout": {
+      "enum": [
+        "grid",
+        "turnaround",
+        "exploded",
+        "contact-sheet"
+      ],
+      "title": "SheetLayout",
+      "type": "string"
+    }
+  },
+  "$id": "https://schemas.ludowright.dev/v1/humanoid-profile.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Data-defined humanoid specialization over the capture-profile contract.",
+  "properties": {
+    "body_base": {
+      "$ref": "#/$defs/HumanoidBodyBaseContract"
+    },
+    "capture_profile": {
+      "$ref": "#/$defs/CaptureProfileContract"
+    },
+    "kind": {
+      "const": "humanoid-profile",
+      "default": "humanoid-profile",
+      "title": "Kind",
+      "type": "string"
+    },
+    "neutral_representation": {
+      "$ref": "#/$defs/NeutralRepresentationPolicyContract"
+    },
+    "outputs": {
+      "items": {
+        "$ref": "#/$defs/CaptureSheetContract"
+      },
+      "minItems": 1,
+      "title": "Outputs",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "wearables": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/HumanoidWearableContract"
+      },
+      "title": "Wearables",
+      "type": "array"
+    }
+  },
+  "required": [
+    "capture_profile",
+    "neutral_representation",
+    "body_base",
+    "outputs"
+  ],
+  "title": "LudoWright Humanoid Profile",
+  "type": "object"
+}
