@@ -46,6 +46,7 @@ nav:
       - Technical Sheets: contracts/TECHNICAL_SHEETS.md
       - Package Manifests: contracts/PACKAGE_MANIFESTS.md
       - Package Builds: contracts/PACKAGE_BUILDS.md
+      - Project Audits: contracts/PROJECT_AUDITS.md
       - JSON Schema Publication: contracts/JSON_SCHEMAS.md
       - Project Filesystem: contracts/PROJECT_FILESYSTEM.md
       - Structured Repositories: contracts/STRUCTURED_REPOSITORIES.md
@@ -70,6 +71,7 @@ nav:
       - Images CLI: commands/IMAGES.md
       - Technical Sheets CLI: commands/SHEETS.md
       - Packages CLI: commands/PACKAGES.md
+      - Project Audit CLI: commands/AUDIT.md
   - Implementation:
       - Plan to 1.0: plans/IMPLEMENTATION_PLAN.md
   - Quality:
@@ -120,6 +122,7 @@ nav:
       - ADR 0041 — Technical Sheet Assembly: decisions/0041-deterministic-technical-sheet-assembly.md
       - ADR 0042 — Package Manifest: decisions/0042-deterministic-package-manifest.md
       - ADR 0043 — Package Builder: decisions/0043-deterministic-package-builder.md
+      - ADR 0044 — Project Audit: decisions/0044-deterministic-project-audit.md
       - ADR Template: decisions/0000-template.md
   - Operations:
       - Documentation Site: operations/DOCUMENTATION_SITE.md

@@ -52,6 +52,11 @@ Coordinates domain behavior through explicit use cases:
 - run audits;
 - build a release package.
 
+The global `audit` use case is read-only and composes existing product,
+document, asset, visual, sheet, and package repositories. It records no new
+canonical state; its v1 report is a deterministic readiness projection that
+the later release verifier can consume.
+
 Application code depends on ports, not concrete infrastructure.
 
 ### CLI
@@ -201,8 +206,9 @@ dry-run is read-only. The `package build` command in the same CLI module uses
 `src/ludowright/application/package_builder.py` and the deterministic
 `PackageArchiveBuilder` infrastructure adapter to validate the manifest's
 source checksums, create a fixed-metadata ZIP, and write a v1 package index in
-a create-only release directory. Global audit and release verification remain
-separate stages.
+a create-only release directory. The `audit` command validates the complete
+chain without writing project files or SQLite sidecars; release verification
+remains a separate stage.
 
 ## Persistence and file safety
 

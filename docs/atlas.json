@@ -635,6 +635,24 @@
       "path": "decisions/0043-deterministic-package-builder.md",
       "section": "decisions",
       "title": "ADR 0043: Deterministic Package Builder"
+    },
+    {
+      "canonical_source": "commands/AUDIT.md",
+      "path": "commands/AUDIT.md",
+      "section": "commands",
+      "title": "Project Audit CLI"
+    },
+    {
+      "canonical_source": "contracts/PROJECT_AUDITS.md",
+      "path": "contracts/PROJECT_AUDITS.md",
+      "section": "contracts",
+      "title": "Project Audit Contract"
+    },
+    {
+      "canonical_source": "decisions/0044-deterministic-project-audit.md",
+      "path": "decisions/0044-deterministic-project-audit.md",
+      "section": "decisions",
+      "title": "ADR 0044: Deterministic Read-Only Global Project Audit"
     }
   ],
   "kind": "atlas-metadata",

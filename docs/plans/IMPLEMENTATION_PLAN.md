@@ -640,6 +640,16 @@ separate later slices.
 
 ### PR 55 — Global project audit
 
+Status: implemented in the current slice. `ludowright audit PROJECT` now
+produces the v1 `project-audit` report across product, documents, assets,
+references, jobs, approvals, sheets, and package readiness. It is read-only,
+deterministic, safe against symlinks and concurrent source changes, supports
+Rich/JSON output, `--check`, and explicit dry-run reporting, and reuses the
+current event-log, dependency-graph, package-scanner, archive, asset-audit,
+structured-repository, and immutable SQLite boundaries. The published schema,
+fixture, tests, ADR, command documentation, STATE_STORE read-only contract,
+and ATLAS updates are included. Release verification remains PR56.
+
 - product, documents, assets, references, jobs, approvals, sheets, and package readiness;
 - machine-readable report.
 
