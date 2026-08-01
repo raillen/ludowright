@@ -14,6 +14,7 @@ This is the main navigation map for humans and agents. Each subject should have 
 - [`getting-started/INSTALLATION.md`](getting-started/INSTALLATION.md) — supported checkout installation for Linux, Windows, and macOS.
 - [`getting-started/FIRST_PROJECT.md`](getting-started/FIRST_PROJECT.md) — deterministic first-project flow with `init`, dry-run, and project-local skill installation.
 - [`getting-started/CHARACTER_WORKFLOW.md`](getting-started/CHARACTER_WORKFLOW.md) — character workflow, custom capture profile, humanoid package profile, planning, and approval boundaries.
+- [`getting-started/TROUBLESHOOTING.md`](getting-started/TROUBLESHOOTING.md) — conservative diagnosis and recovery for checkout installation, project initialization, Codex skill, and quality-gate failures.
 
 ## Product
 
@@ -174,12 +175,13 @@ Rich/JSON output and dry-run, rejects unsafe paths and symlinks, and performs
 conservative rollback after partial failure. The template and manifest
 provenance contracts are published at v1; the state store remains at schema v2.
 
-The supported installation and first-project path is documented in
-`getting-started/INSTALLATION.md` and `getting-started/FIRST_PROJECT.md`. It
-uses the repository checkout with `uv`, keeps the Python and platform
-requirements explicit, and exercises the non-interactive `init` and
-project-local Codex skill commands. Clean-room package installation and the
-remaining tutorials are reserved for later public-beta slices.
+The supported installation, first-project, character/custom-profile, and
+troubleshooting path is documented in `getting-started/`. It uses the
+repository checkout with `uv`, keeps the Python and platform requirements
+explicit, exercises the non-interactive `init` and project-local Codex skill
+commands, and records conservative recovery for published CLI error codes.
+Clean-room package installation, update, and uninstall remain reserved for
+later public-beta slices.
 
 The initial asset taxonomy is loaded by
 `src/ludowright/application/asset_taxonomy.py` from versioned JSON data under

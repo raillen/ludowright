@@ -99,5 +99,6 @@ humanas podem evoluir.
 
 O [exemplo mínimo](../examples/MINIMAL.md) fornece entradas contratuais para um
 fluxo 2D completo. Os tutoriais de personagem, perfil customizado,
-troubleshooting avançado, atualização e remoção serão adicionados nas próximas
-fatias da etapa de instalação e tutoriais.
+atualização e remoção seguem nas próximas fatias da etapa de instalação e
+tutoriais. Para falhas no ambiente, no `init`, na skill ou no quality gate,
+consulte o guia de [troubleshooting](TROUBLESHOOTING.md).

@@ -82,6 +82,9 @@ uv run ludowright --json diagnostics
 Revise caminhos locais e informações da máquina antes de publicar o
 diagnóstico. O comando pode expor dados sensíveis do ambiente.
 
+Para uma matriz de falhas e recuperação segura, consulte o guia de
+[troubleshooting](TROUBLESHOOTING.md).
+
 ## Próximo passo
 
 Com a instalação verificada, siga o [tutorial do primeiro

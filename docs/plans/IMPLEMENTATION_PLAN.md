@@ -747,24 +747,26 @@ derived state is introduced.
 
 ### PR 61 — Installation and tutorial set
 
-Status: the first two bounded sub-slices are implemented in the current chain.
+Status: the first three bounded sub-slices are implemented in the current chain.
 The supported checkout installation path for Linux, Windows, and macOS, the
 non-interactive first-project tutorial, and the character/custom-profile guide
-now exercise `ludowright init`, its JSON dry-run, create-only behavior,
-project-local Codex skill installation and verification, v1 profile contracts,
-deterministic planning, and the approval gate. The guides are published in the
-MkDocs navigation and covered by executable documentation-flow and example
-contract tests.
+plus the troubleshooting guide now exercise `ludowright init`, its JSON
+dry-run, create-only behavior, project-local Codex skill installation and
+verification, v1 profile contracts, deterministic planning, the approval gate,
+and conservative recovery using the published CLI error codes. The guides are
+published in the MkDocs navigation and covered by executable documentation-flow
+and example contract tests.
 
-Remaining PR61 sub-slices are intentionally separate: troubleshooting beyond
-the installation baseline, update, and uninstall. Clean-room package
-installation remains part of PR62.
+Remaining PR61 sub-slices are intentionally separate: the bounded
+troubleshooting baseline is implemented in this chain; update and uninstall
+remain. Clean-room package installation remains part of PR62.
 
 - Linux, Windows, and macOS checkout installation;
 - first project from the versioned `minimal` template;
 - Codex skill installation and verification walkthrough;
 - character workflow and custom profile;
-- troubleshooting, update, and uninstall follow-up tutorials.
+- troubleshooting and conservative failure recovery;
+- update and uninstall follow-up tutorials.
 
 ### PR 62 — Public beta and 1.0 readiness
 

@@ -577,6 +577,12 @@
       "title": "Character Workflow and Custom Profile"
     },
     {
+      "canonical_source": "getting-started/TROUBLESHOOTING.md",
+      "path": "getting-started/TROUBLESHOOTING.md",
+      "section": "getting-started",
+      "title": "Troubleshooting"
+    },
+    {
       "canonical_source": "operations/DOCUMENTATION_SITE.md",
       "path": "operations/DOCUMENTATION_SITE.md",
       "section": "operations",
