@@ -1,0 +1,267 @@
+{
+  "$defs": {
+    "CodexAgentProfileContract": {
+      "additionalProperties": false,
+      "description": "One data-defined specialist role in the local Codex adapter.",
+      "properties": {
+        "allowed_actions": {
+          "items": {
+            "enum": [
+              "inspect-status",
+              "report-blockers",
+              "review-status",
+              "ask-question",
+              "record-decision",
+              "run-validations",
+              "resolve-validation",
+              "await-approval",
+              "resume-workflow",
+              "execute-phase",
+              "complete"
+            ],
+            "type": "string"
+          },
+          "maxItems": 16,
+          "minItems": 1,
+          "title": "Allowed Actions",
+          "type": "array"
+        },
+        "can_approve": {
+          "const": false,
+          "default": false,
+          "title": "Can Approve",
+          "type": "boolean"
+        },
+        "capabilities": {
+          "items": {
+            "maxLength": 80,
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "maxItems": 32,
+          "minItems": 1,
+          "title": "Capabilities",
+          "type": "array"
+        },
+        "forbidden_actions": {
+          "items": {
+            "maxLength": 80,
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "maxItems": 16,
+          "minItems": 1,
+          "title": "Forbidden Actions",
+          "type": "array"
+        },
+        "guidance": {
+          "items": {
+            "maxLength": 1000,
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "Guidance",
+          "type": "array"
+        },
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "phase_ids": {
+          "items": {
+            "maxLength": 80,
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "Phase Ids",
+          "type": "array"
+        },
+        "purpose": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Purpose",
+          "type": "string"
+        },
+        "reads": {
+          "items": {
+            "maxLength": 80,
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "maxItems": 32,
+          "minItems": 1,
+          "title": "Reads",
+          "type": "array"
+        },
+        "requires_human_checkpoint": {
+          "default": true,
+          "title": "Requires Human Checkpoint",
+          "type": "boolean"
+        },
+        "version": {
+          "maximum": 2147483647,
+          "minimum": 1,
+          "title": "Version",
+          "type": "integer"
+        },
+        "writes": {
+          "default": [],
+          "items": {
+            "maxLength": 80,
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "maxItems": 32,
+          "title": "Writes",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "version",
+        "name",
+        "purpose",
+        "phase_ids",
+        "capabilities",
+        "reads",
+        "guidance",
+        "allowed_actions",
+        "forbidden_actions"
+      ],
+      "title": "CodexAgentProfileContract",
+      "type": "object"
+    },
+    "CodexAgentRouteRuleContract": {
+      "additionalProperties": false,
+      "description": "Deterministic task-to-agent route declared by the catalog.",
+      "properties": {
+        "agent_id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Agent Id",
+          "type": "string"
+        },
+        "allowed_actions": {
+          "items": {
+            "enum": [
+              "inspect-status",
+              "report-blockers",
+              "review-status",
+              "ask-question",
+              "record-decision",
+              "run-validations",
+              "resolve-validation",
+              "await-approval",
+              "resume-workflow",
+              "execute-phase",
+              "complete"
+            ],
+            "type": "string"
+          },
+          "maxItems": 16,
+          "minItems": 1,
+          "title": "Allowed Actions",
+          "type": "array"
+        },
+        "task_id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Task Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "task_id",
+        "agent_id",
+        "allowed_actions"
+      ],
+      "title": "CodexAgentRouteRuleContract",
+      "type": "object"
+    }
+  },
+  "$id": "https://schemas.ludowright.dev/v1/codex-agent-catalog.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Versioned catalog shipped with the project-local Codex skill.",
+  "properties": {
+    "agents": {
+      "items": {
+        "$ref": "#/$defs/CodexAgentProfileContract"
+      },
+      "maxItems": 32,
+      "minItems": 1,
+      "title": "Agents",
+      "type": "array"
+    },
+    "id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Id",
+      "type": "string"
+    },
+    "kind": {
+      "const": "codex-agent-catalog",
+      "default": "codex-agent-catalog",
+      "title": "Kind",
+      "type": "string"
+    },
+    "routes": {
+      "items": {
+        "$ref": "#/$defs/CodexAgentRouteRuleContract"
+      },
+      "maxItems": 64,
+      "minItems": 1,
+      "title": "Routes",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "skill_id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Skill Id",
+      "type": "string"
+    },
+    "version": {
+      "maximum": 2147483647,
+      "minimum": 1,
+      "title": "Version",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "id",
+    "version",
+    "skill_id",
+    "agents",
+    "routes"
+  ],
+  "title": "LudoWright Codex Agent Catalog",
+  "type": "object"
+}

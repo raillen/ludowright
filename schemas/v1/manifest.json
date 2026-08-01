@@ -255,6 +255,18 @@
       "sha256": "4995f8d46665c600224a714edcc478c78f806cce930ba871809cf65c2bc301a1"
     },
     {
+      "file": "codex-agent-catalog.schema.json",
+      "name": "codex-agent-catalog",
+      "schema_id": "https://schemas.ludowright.dev/v1/codex-agent-catalog.schema.json",
+      "sha256": "76d821f71e95ea092fe85636a9b9481d8fa968c67c62321f78802648be8cd8d1"
+    },
+    {
+      "file": "codex-agent-route.schema.json",
+      "name": "codex-agent-route",
+      "schema_id": "https://schemas.ludowright.dev/v1/codex-agent-route.schema.json",
+      "sha256": "46fb456e1ea88ae54395930a3b03e303d2577390919d36be27c9d6ea8ec1cfec"
+    },
+    {
       "file": "interview-questionnaire.schema.json",
       "name": "interview-questionnaire",
       "schema_id": "https://schemas.ludowright.dev/v1/interview-questionnaire.schema.json",

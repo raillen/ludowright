@@ -1,0 +1,20 @@
+{
+  "action": "await-approval",
+  "agent_id": "visual-director",
+  "can_approve": false,
+  "capabilities": [
+    "capture-profile-analysis",
+    "prompt-direction",
+    "reference-selection",
+    "visual-bible-analysis"
+  ],
+  "catalog_id": "default",
+  "catalog_version": 1,
+  "kind": "codex-agent-route",
+  "missing_capabilities": [],
+  "reason": "The route requires an explicit human checkpoint.",
+  "requires_human": true,
+  "schema_version": 1,
+  "state": "routed",
+  "task_id": "visual-direction"
+}

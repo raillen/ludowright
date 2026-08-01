@@ -29,6 +29,7 @@ from ludowright.contracts.codex import (
     CodexSkillManifestContract,
     CodexSkillReportContract,
 )
+from ludowright.contracts.codex_agents import CodexAgentCatalogContract, CodexAgentRouteContract
 from ludowright.contracts.common import ContractModel
 from ludowright.contracts.creature_profiles import CreatureProfileContract
 from ludowright.contracts.dependencies import DependencyGraphContract
@@ -314,6 +315,18 @@ CONTRACTS: tuple[ContractDefinition, ...] = (
         "codex-orchestration-plan.schema.json",
         "LudoWright Codex Orchestration Plan",
         CodexOrchestrationPlanContract,
+    ),
+    ContractDefinition(
+        "codex-agent-catalog",
+        "codex-agent-catalog.schema.json",
+        "LudoWright Codex Agent Catalog",
+        CodexAgentCatalogContract,
+    ),
+    ContractDefinition(
+        "codex-agent-route",
+        "codex-agent-route.schema.json",
+        "LudoWright Codex Agent Route",
+        CodexAgentRouteContract,
     ),
     ContractDefinition(
         "interview-questionnaire",

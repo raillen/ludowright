@@ -34,7 +34,27 @@ posteriores.
 
 ## Limite desta versão
 
-A política seleciona a próxima ação e orienta o Codex; o planejador não executa
-providers nem grava decisões, aprovações ou receipts por conta própria. Essas
-mutações continuam nas superfícies canônicas do núcleo. Receipts, revisão visual
-e agentes especialistas pertencem às etapas posteriores do roadmap.
+## Agentes especialistas
+
+O catálogo versionado em `agents.json` declara os nove papéis especialistas e
+suas rotas determinísticas: `interviewer`, `game-design-architect`,
+`technical-architect`, `asset-planner`, `visual-director`,
+`generation-operator`, `consistency-reviewer`, `quality-auditor` e
+`release-verifier`.
+
+O roteador só encaminha uma tarefa depois que o plano da policy confirma que o
+status foi inspecionado. Ele valida a ação permitida, as capacidades exigidas,
+as evidências declaradas e a rota da tarefa. Um resultado bloqueado deve ser
+reportado; não invente um agente alternativo nem uma capacidade ausente.
+
+Os agentes podem propor e validar mudanças pelas superfícies canônicas, mas
+nenhum agente possui autoridade de aprovação. O agente de geração não aprova o
+próprio output, e checkpoints humanos continuam explícitos no plano.
+
+## Limite desta versão
+
+A política seleciona a próxima ação e o catálogo encaminha o especialista; os
+adaptadores continuam sem executar providers nem gravar decisões, aprovações ou
+receipts por conta própria. Essas mutações continuam nas superfícies canônicas
+do núcleo. Evals de conformidade e execução de fases completas permanecem em
+etapas posteriores do roadmap.

@@ -56,6 +56,13 @@ from ludowright.contracts.codex import (
     CodexSkillManifestContract,
     CodexSkillReportContract,
 )
+from ludowright.contracts.codex_agents import (
+    CodexAgentCatalogContract,
+    CodexAgentProfileContract,
+    CodexAgentRouteContract,
+    CodexAgentRouteRuleContract,
+    CodexAgentRoutingContextContract,
+)
 from ludowright.contracts.creature_profiles import (
     CreatureAnatomyContract,
     CreatureAnatomyViewContract,
@@ -215,6 +222,11 @@ __all__ = [
     "CliErrorContract",
     "CliMetaContract",
     "CliResponseContract",
+    "CodexAgentCatalogContract",
+    "CodexAgentProfileContract",
+    "CodexAgentRouteContract",
+    "CodexAgentRouteRuleContract",
+    "CodexAgentRoutingContextContract",
     "CodexOrchestrationActionContract",
     "CodexOrchestrationCheckpointContract",
     "CodexOrchestrationContextContract",

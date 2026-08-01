@@ -1,0 +1,130 @@
+{
+  "$id": "https://schemas.ludowright.dev/v1/codex-agent-route.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Stable result of selecting a specialist without executing it.",
+  "properties": {
+    "action": {
+      "enum": [
+        "inspect-status",
+        "report-blockers",
+        "review-status",
+        "ask-question",
+        "record-decision",
+        "run-validations",
+        "resolve-validation",
+        "await-approval",
+        "resume-workflow",
+        "execute-phase",
+        "complete"
+      ],
+      "title": "Action",
+      "type": "string"
+    },
+    "agent_id": {
+      "anyOf": [
+        {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Agent Id"
+    },
+    "can_approve": {
+      "const": false,
+      "default": false,
+      "title": "Can Approve",
+      "type": "boolean"
+    },
+    "capabilities": {
+      "default": [],
+      "items": {
+        "maxLength": 80,
+        "minLength": 1,
+        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+        "type": "string"
+      },
+      "title": "Capabilities",
+      "type": "array"
+    },
+    "catalog_id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Catalog Id",
+      "type": "string"
+    },
+    "catalog_version": {
+      "maximum": 2147483647,
+      "minimum": 1,
+      "title": "Catalog Version",
+      "type": "integer"
+    },
+    "kind": {
+      "const": "codex-agent-route",
+      "default": "codex-agent-route",
+      "title": "Kind",
+      "type": "string"
+    },
+    "missing_capabilities": {
+      "default": [],
+      "items": {
+        "maxLength": 80,
+        "minLength": 1,
+        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+        "type": "string"
+      },
+      "title": "Missing Capabilities",
+      "type": "array"
+    },
+    "reason": {
+      "maxLength": 4000,
+      "minLength": 1,
+      "title": "Reason",
+      "type": "string"
+    },
+    "requires_human": {
+      "title": "Requires Human",
+      "type": "boolean"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "state": {
+      "enum": [
+        "routed",
+        "blocked",
+        "complete"
+      ],
+      "title": "State",
+      "type": "string"
+    },
+    "task_id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Task Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "catalog_id",
+    "catalog_version",
+    "task_id",
+    "action",
+    "state",
+    "requires_human",
+    "reason"
+  ],
+  "title": "LudoWright Codex Agent Route",
+  "type": "object"
+}

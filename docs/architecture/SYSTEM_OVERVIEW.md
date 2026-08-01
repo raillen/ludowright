@@ -80,7 +80,9 @@ deterministic operation and validated output per view. PR47 persists receipts
 and candidate references. The PR48 review workflow lives in
 `src/ludowright/application/visual_review.py` and projects human approval,
 reference status, dependency invalidation, and event history through canonical
-repositories. A typed MCP-like adapter may
+repositories. PR49 adds the versioned specialist catalog and pure route
+selection in `integrations/codex/agents.py`; it does not execute a phase or
+mutate project state. A typed MCP-like adapter may
 be added only if CLI boundaries prove insufficient.
 
 ### Infrastructure
