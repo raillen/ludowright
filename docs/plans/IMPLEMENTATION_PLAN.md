@@ -136,6 +136,16 @@ Exit: repository installs, imports, tests, and clearly explains the product.
 
 ### PR 19 — Project initialization
 
+Status: implemented in the current slice. `ludowright init` creates a valid
+local-first project from the data-defined version 1 `minimal` template. It
+derives a ProjectId, writes the marker last, initializes the empty event log,
+revision-one dependency graph, and current SQLite state store, and supports
+Rich/JSON output, non-interactive execution, dry-run, create-only conflicts,
+safe paths, locking, and conservative rollback. The template and additive
+manifest provenance contracts, schema fixture, tests, ADR, command
+documentation, and ATLAS updates are included. Existing v1 manifests without
+template provenance remain compatible.
+
 - `ludowright init`;
 - template selection;
 - initial manifest and directories;
@@ -737,7 +747,10 @@ derived state is introduced.
 
 ### PR 61 — Installation and tutorial set
 
-Linux, Windows, macOS, Codex skill, first project, character workflow, custom profile, troubleshooting, update, and uninstall.
+Linux, Windows, macOS, Codex skill, first project, character workflow, custom
+profile, troubleshooting, update, and uninstall. This slice depends on the
+implemented PR19 initializer and must exercise `ludowright init` in its
+clean-room and first-project instructions.
 
 ### PR 62 — Public beta and 1.0 readiness
 

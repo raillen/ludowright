@@ -98,6 +98,19 @@ for the package manifest, package index, and ZIP. Warnings block by default;
 the checksum manifest or a lock. The canonical contract is documented in
 [`RELEASE_VERIFICATION.md`](RELEASE_VERIFICATION.md).
 
+Project initialization uses the same dual surface:
+
+```bash
+ludowright init ./my-game --name "My Game" --template minimal
+ludowright --json init ./my-game --name "My Game" --non-interactive
+```
+
+Its data reports the project directory, ProjectId, selected template, files
+and directories planned or created, schema versions, dry-run flag, warnings,
+and final state. Expected invalid paths and names use `invalid-input` with
+exit code `4`; occupied targets use `conflict` with exit code `5`; a failure
+after mutation uses `internal-error` with exit code `70` after rollback.
+
 Global settings are inherited by nested command groups.
 
 ## JSON envelope
@@ -111,7 +124,7 @@ Every successfully parsed command in JSON mode emits one compact JSON object to 
   "command": "status",
   "ok": true,
   "data": {
-    "status": "foundation",
+    "status": "beta-preparation",
     "version": "0.1.0.dev0"
   },
   "error": null,

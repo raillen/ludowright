@@ -14,10 +14,10 @@ This roadmap describes product capability, not fixed dates. Minor-version bounda
 
 ### 0.2 Project Core
 
-- `ludowright init`;
-- project manifest;
-- filesystem layout;
-- state store and event log;
+- `ludowright init`, versioned `minimal` template, project manifest, and
+  filesystem layout (implemented through the project-initialization slice);
+- current-version state store and empty valid event log (implemented through
+  the project-initialization slice);
 - decisions and approvals;
 - schema and template versioning;
 - migrations, backup, and dry-run behavior;
@@ -134,7 +134,7 @@ assembly from interview answers remains a later bounded capability.
 
 - clean installation path;
 - complete public documentation;
-- minimal example project (implemented through PR57), 2D sprite example
+- minimal example project (implemented through PR57 and the PR19 initializer), 2D sprite example
   (implemented through PR58), and low-poly 3D example (implemented through
   PR59), and modular-environment example (implemented through PR60);
 - end-to-end tests and migration tests;
