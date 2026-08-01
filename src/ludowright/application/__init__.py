@@ -93,6 +93,7 @@ from ludowright.application.prompt_compiler import (
     PromptTemplateNotFoundError,
     load_prompt_template,
 )
+from ludowright.application.visual_planning import VisualJobPlanner
 from ludowright.application.visual_profiles import (
     VisualProfileDefinitionError,
     VisualProfileError,
@@ -160,6 +161,7 @@ __all__ = [
     "PromptTemplateError",
     "PromptTemplateNotFoundError",
     "RenderedDocument",
+    "VisualJobPlanner",
     "VisualProfileDefinitionError",
     "VisualProfileError",
     "VisualProfileNotFoundError",

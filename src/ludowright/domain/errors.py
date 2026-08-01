@@ -63,6 +63,10 @@ class InvalidVisualJobError(DomainValidationError):
     """Raised when a deterministic visual job specification is invalid."""
 
 
+class InvalidVisualPlanError(DomainValidationError):
+    """Raised when a deterministic visual-job plan is invalid."""
+
+
 class InvalidGenerationReceiptError(DomainValidationError):
     """Raised when a generation receipt or retry series is invalid."""
 

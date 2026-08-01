@@ -80,7 +80,8 @@ assembly from interview answers remains a later bounded capability.
   modular kits, and interiors with directed connection matrices (implemented
   through PR41; project-local profile persistence remains later);
 - initial foliage, UI, VFX, and animation profiles (implemented through PR42);
-- visual-job planning and profile-aware job derivation.
+- visual-job planning and profile-aware job derivation (implemented through
+  PR43; project-local profile selection and execution remain later).
 
 ### 0.6 Codex and ImageGen Workflow
 

@@ -57,9 +57,10 @@ The repository currently establishes:
 - initial data-defined visual-specialty profiles for trees, plants, UI,
   particle and shader effects, locomotion, and motion sets.
 
-Project-local profile persistence, visual-job planning, ImageGen execution,
-review workflows, technical sheets, global audits, and package generation
-remain planned work.
+Project-local profile persistence, ImageGen execution, review workflows,
+technical sheets, global audits, and package generation remain planned work. The
+pure deterministic visual-job planner is implemented, but it does not yet
+execute providers or persist project-local plans.
 
 ## Start here
 

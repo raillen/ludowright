@@ -50,6 +50,15 @@ class ReferenceTargetContract(ContractModel):
     variant_id: Slug | None = None
     state_id: Slug | None = None
 
+    @classmethod
+    def from_domain(cls, value: ReferenceTarget) -> Self:
+        return cls(
+            asset_id=value.asset_id.value,
+            component_id=value.component_id.value if value.component_id is not None else None,
+            variant_id=value.variant_id.value if value.variant_id is not None else None,
+            state_id=value.state_id.value if value.state_id is not None else None,
+        )
+
     def to_domain(self) -> ReferenceTarget:
         return ReferenceTarget(
             asset_id=AssetId(self.asset_id),
@@ -144,6 +153,20 @@ class VisualJobContract(ContractModel):
     output_roles: Annotated[tuple[ReferenceRole, ...], Field(min_length=1)]
     expected_output_count: Annotated[int, Field(ge=1, le=64)]
     supersedes: Slug | None = None
+
+    @classmethod
+    def from_domain(cls, value: VisualJob) -> Self:
+        return cls(
+            id=value.id.value,
+            name=value.name.value,
+            target=ReferenceTargetContract.from_domain(value.target),
+            profile_version=value.profile_version.value,
+            request_revision=value.request_revision.value,
+            input_reference_ids=tuple(item.value for item in value.input_reference_ids),
+            output_roles=value.output_roles,
+            expected_output_count=value.expected_output_count,
+            supersedes=value.supersedes.value if value.supersedes is not None else None,
+        )
 
     def to_domain(self) -> VisualJob:
         return VisualJob(

@@ -557,6 +557,10 @@ class DependencyGraph:
         """Return persisted deterministic reasons for one node's freshness state."""
         return self.get_node(key).invalidations
 
+    def topological_order(self) -> tuple[DependencyKey, ...]:
+        """Return all graph nodes in deterministic dependency order."""
+        return _topological_order(tuple(node.key for node in self.nodes), self.edges)
+
     def _node_map(self) -> dict[DependencyKey, DependencyNode]:
         return {node.key: node for node in self.nodes}
 
@@ -744,6 +748,13 @@ def _assert_acyclic(
     nodes: tuple[DependencyKey, ...],
     edges: tuple[DependencyEdge, ...],
 ) -> None:
+    _topological_order(nodes, edges)
+
+
+def _topological_order(
+    nodes: tuple[DependencyKey, ...],
+    edges: tuple[DependencyEdge, ...],
+) -> tuple[DependencyKey, ...]:
     adjacency: dict[DependencyKey, list[DependencyKey]] = {node: [] for node in nodes}
     indegree = {node: 0 for node in nodes}
     for edge in edges:
@@ -758,16 +769,16 @@ def _assert_acyclic(
             key=_key_sort_key,
         )
     )
-    visited = 0
+    ordered: list[DependencyKey] = []
     while pending:
         node = pending.popleft()
-        visited += 1
+        ordered.append(node)
         for target in adjacency[node]:
             indegree[target] -= 1
             if indegree[target] == 0:
                 pending.append(target)
 
-    if visited != len(nodes):
+    if len(ordered) != len(nodes):
         remaining = tuple(
             sorted(
                 (node for node, count in indegree.items() if count > 0),
@@ -777,3 +788,4 @@ def _assert_acyclic(
         rendered = ", ".join(node.token for node in remaining[:12])
         suffix = "" if len(remaining) <= 12 else ", ..."
         raise DependencyCycleError(f"dependency cycle detected among: {rendered}{suffix}")
+    return tuple(ordered)

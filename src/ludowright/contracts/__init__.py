@@ -139,6 +139,13 @@ from ludowright.contracts.visual_bible import (
     VisualBibleContract,
     VisualBudgetContract,
 )
+from ludowright.contracts.visual_planning import (
+    VisualJobBatchContract,
+    VisualJobDependencyContract,
+    VisualJobPlanContract,
+    VisualPlanBlockerContract,
+    VisualWorkloadEstimateContract,
+)
 from ludowright.contracts.visual_profiles import (
     VisualComponentContract,
     VisualProfileContract,
@@ -246,13 +253,18 @@ __all__ = [
     "VisualBibleContract",
     "VisualBudgetContract",
     "VisualComponentContract",
+    "VisualJobBatchContract",
     "VisualJobContract",
+    "VisualJobDependencyContract",
+    "VisualJobPlanContract",
+    "VisualPlanBlockerContract",
     "VisualProfileContract",
     "VisualReferenceContract",
     "VisualReviewContract",
     "VisualStateContract",
     "VisualVariantContract",
     "VisualViewContract",
+    "VisualWorkloadEstimateContract",
     "build_schema",
     "publication_drift",
     "publication_files",

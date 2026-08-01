@@ -53,6 +53,7 @@ from ludowright.contracts.visual import (
     VisualReviewContract,
 )
 from ludowright.contracts.visual_bible import VisualBibleContract
+from ludowright.contracts.visual_planning import VisualJobPlanContract
 from ludowright.contracts.visual_profiles import VisualProfileContract
 
 SCHEMA_VERSION = 1
@@ -150,6 +151,12 @@ CONTRACTS: tuple[ContractDefinition, ...] = (
         "visual-job.schema.json",
         "LudoWright Visual Job",
         VisualJobContract,
+    ),
+    ContractDefinition(
+        "visual-job-plan",
+        "visual-job-plan.schema.json",
+        "LudoWright Visual Job Plan",
+        VisualJobPlanContract,
     ),
     ContractDefinition(
         "generation-receipt",

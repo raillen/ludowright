@@ -99,6 +99,12 @@
       "sha256": "3ca6d29c5b426009b163a018f5bcca5d2b1e1496509a6435d89a3d9cf645e8df"
     },
     {
+      "file": "visual-job-plan.schema.json",
+      "name": "visual-job-plan",
+      "schema_id": "https://schemas.ludowright.dev/v1/visual-job-plan.schema.json",
+      "sha256": "06657d309b7737283c958c8e74ca999c72de68fa21f2e0ebcc7cd2de6ce55089"
+    },
+    {
       "file": "generation-receipt.schema.json",
       "name": "generation-receipt",
       "schema_id": "https://schemas.ludowright.dev/v1/generation-receipt.schema.json",

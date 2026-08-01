@@ -78,6 +78,18 @@ class JobId(Identifier):
     kind = "job"
 
 
+class VisualPlanId(Identifier):
+    """Identifier for one deterministic visual-job plan."""
+
+    kind = "visual-plan"
+
+
+class VisualBatchId(Identifier):
+    """Identifier for one deterministic visual-job batch."""
+
+    kind = "visual-batch"
+
+
 class ReceiptId(Identifier):
     """Identifier for one immutable generation attempt receipt."""
 

@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "kind": "visual-job-plan",
+  "id": "fixture-plan",
+  "name": "Fixture Plan",
+  "state": "ready",
+  "dependency_graph_revision": 1,
+  "visual_bible_id": null,
+  "visual_bible_version": null,
+  "jobs": [
+    {
+      "schema_version": 1,
+      "kind": "visual-job",
+      "id": "job-6172cd5b4ac36de07e7134a0e5c2806f092a48575730ee61",
+      "name": "Lantern - Main Sheet - asset 6172cd5b",
+      "target": {
+        "asset_id": "fixture-prop",
+        "component_id": null,
+        "variant_id": null,
+        "state_id": null
+      },
+      "profile_version": 1,
+      "request_revision": "sha256:6172cd5b4ac36de07e7134a0e5c2806f092a48575730ee61e87da1f457dc2838",
+      "input_reference_ids": [],
+      "output_roles": [
+        "identity",
+        "construction"
+      ],
+      "expected_output_count": 2,
+      "supersedes": null
+    }
+  ],
+  "ordered_job_ids": [
+    "job-6172cd5b4ac36de07e7134a0e5c2806f092a48575730ee61"
+  ],
+  "dependencies": [],
+  "batches": [
+    {
+      "id": "batch-3f463b8c1a22f4528d3844bd2e9103157506535f33c0905b",
+      "profile_id": "prop-capture",
+      "profile_version": 1,
+      "job_ids": [
+        "job-6172cd5b4ac36de07e7134a0e5c2806f092a48575730ee61"
+      ],
+      "output_count": 2,
+      "estimated_cost_units": 2,
+      "estimated_workload_units": 2
+    }
+  ],
+  "workload": {
+    "job_count": 1,
+    "output_count": 2,
+    "batch_count": 1,
+    "estimated_cost_units": 2,
+    "estimated_workload_units": 2
+  },
+  "blockers": []
+}
