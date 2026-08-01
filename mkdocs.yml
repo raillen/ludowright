@@ -44,6 +44,7 @@ nav:
       - ImageGen Execution: contracts/IMAGEGEN_EXECUTION.md
       - Image Normalization: contracts/IMAGE_NORMALIZATION.md
       - Technical Sheets: contracts/TECHNICAL_SHEETS.md
+      - Package Manifests: contracts/PACKAGE_MANIFESTS.md
       - JSON Schema Publication: contracts/JSON_SCHEMAS.md
       - Project Filesystem: contracts/PROJECT_FILESYSTEM.md
       - Structured Repositories: contracts/STRUCTURED_REPOSITORIES.md
@@ -67,6 +68,7 @@ nav:
       - Review CLI: commands/REVIEWS.md
       - Images CLI: commands/IMAGES.md
       - Technical Sheets CLI: commands/SHEETS.md
+      - Package Manifest CLI: commands/PACKAGES.md
   - Implementation:
       - Plan to 1.0: plans/IMPLEMENTATION_PLAN.md
   - Quality:
@@ -115,6 +117,7 @@ nav:
       - ADR 0039 — Codex Specialist Agents: decisions/0039-codex-specialist-agents.md
       - ADR 0040 — Image Normalization: decisions/0040-image-normalization.md
       - ADR 0041 — Technical Sheet Assembly: decisions/0041-deterministic-technical-sheet-assembly.md
+      - ADR 0042 — Package Manifest: decisions/0042-deterministic-package-manifest.md
       - ADR Template: decisions/0000-template.md
   - Operations:
       - Documentation Site: operations/DOCUMENTATION_SITE.md

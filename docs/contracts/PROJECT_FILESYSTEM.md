@@ -84,6 +84,11 @@ assets/ação.json
 
 Human-readable Unicode names belong in structured data. They are never used directly as canonical repository paths.
 
+Package manifests have a separate read-only inventory path boundary so they can
+describe valid case-sensitive files such as `README.md`. The package scanner
+still rejects traversal, symlinks, special files, and paths outside the
+resolved project root; it does not weaken `RepositoryPath` for writes.
+
 ## Root containment
 
 `ProjectFilesystem` resolves one existing root directory to its canonical absolute location.

@@ -189,6 +189,17 @@ template selects deterministic layouts, and the application writes a PNG plus
 It remains a derived workflow and does not mutate approval, event-log, graph, or
 SQLite state.
 
+Package manifest generation is implemented by
+`src/ludowright/infrastructure/package_manifest.py` and
+`src/ludowright/application/package_manifest.py`; the `package manifest`
+command lives in `src/ludowright/cli/packages.py`. It inventories regular
+project files with deterministic SHA-256 checksums, validates known structured
+sources through existing repositories, records visual provenance and license
+labels, and explicitly excludes transient paths and rebuildable SQLite state.
+It uses the project lock and atomic filesystem writer only for a real output;
+dry-run is read-only. ZIP building and release verification remain separate
+stages.
+
 ## Persistence and file safety
 
 - writes should be atomic;

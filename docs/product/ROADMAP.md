@@ -115,7 +115,9 @@ assembly from interview answers remains a later bounded capability.
   (initial deterministic assembly implemented through PR52; contact-sheet
   packaging remains later);
 - deterministic assembly from approved images (implemented through PR52);
-- package manifests, indexes, checksums, and ZIP output;
+- package manifest inventory, checksums, source versions, provenance, and
+  exclusions (manifest implemented through PR53; archive indexes and ZIP output
+  remain PR54);
 - release-readiness checks.
 
 ### 0.8 Guided Orchestration
