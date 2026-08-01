@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "kind": "visual-job",
+  "id": "job-lantern-front-v1",
+  "name": "Lantern front reference",
+  "target": {
+    "asset_id": "prop-lantern"
+  },
+  "profile_version": 1,
+  "request_revision": "sha256:lantern-request-v1",
+  "input_reference_ids": [],
+  "output_roles": [
+    "identity"
+  ],
+  "expected_output_count": 1
+}

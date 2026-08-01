@@ -225,6 +225,7 @@ state or image files.
 - [`decisions/0042-deterministic-package-manifest.md`](decisions/0042-deterministic-package-manifest.md) — deterministic inventory boundary, exclusions, and manifest-only staging.
 - [`decisions/0043-deterministic-package-builder.md`](decisions/0043-deterministic-package-builder.md) — fixed ZIP metadata, package index, release directory, and create-only rollback.
 - [`decisions/0044-deterministic-project-audit.md`](decisions/0044-deterministic-project-audit.md) — read-only global readiness report, immutable SQLite inspection, deterministic evidence, and conflict policy.
+- [`decisions/0045-deterministic-release-verification.md`](decisions/0045-deterministic-release-verification.md) — deterministic local release gates, checksum manifest, warning policy, and no-signing boundary.
 
 Planned documents:
 
@@ -253,6 +254,11 @@ Planned detailed documents:
 - [`plans/IMPLEMENTATION_PLAN.md`](plans/IMPLEMENTATION_PLAN.md) — ordered PR program for the first stable release.
 
 Future bounded changes should receive their own plan under `plans/`.
+
+## Examples
+
+- [`examples/MINIMAL.md`](examples/MINIMAL.md) — deterministic Lantern Path
+  example inputs, fixture checksum, workflow boundaries, and local execution.
 
 ## Quality
 
