@@ -88,6 +88,9 @@ Para uma matriz de falhas e recuperação segura, consulte o guia de
 Para atualizar o checkout e a skill instalada em um projeto, consulte
 [Atualização segura](UPDATING.md).
 
+Para remover ou reinstalar a skill sem apagar os dados do projeto, consulte
+[Remoção segura](UNINSTALLING.md).
+
 ## Próximo passo
 
 Com a instalação verificada, siga o [tutorial do primeiro

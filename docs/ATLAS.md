@@ -16,6 +16,7 @@ This is the main navigation map for humans and agents. Each subject should have 
 - [`getting-started/CHARACTER_WORKFLOW.md`](getting-started/CHARACTER_WORKFLOW.md) — character workflow, custom capture profile, humanoid package profile, planning, and approval boundaries.
 - [`getting-started/TROUBLESHOOTING.md`](getting-started/TROUBLESHOOTING.md) — conservative diagnosis and recovery for checkout installation, project initialization, Codex skill, and quality-gate failures.
 - [`getting-started/UPDATING.md`](getting-started/UPDATING.md) — safe checkout, environment, and project-local skill update flow.
+- [`getting-started/UNINSTALLING.md`](getting-started/UNINSTALLING.md) — safe removal and reinstallation of the project-local Codex skill.
 
 ## Product
 
@@ -176,13 +177,14 @@ Rich/JSON output and dry-run, rejects unsafe paths and symlinks, and performs
 conservative rollback after partial failure. The template and manifest
 provenance contracts are published at v1; the state store remains at schema v2.
 
-The supported installation, first-project, character/custom-profile, and
-troubleshooting path is documented in `getting-started/`. It uses the
+The supported installation, first-project, character/custom-profile,
+troubleshooting, update, and uninstall path is documented in
+`getting-started/`. It uses the
 repository checkout with `uv`, keeps the Python and platform requirements
 explicit, exercises the non-interactive `init` and project-local Codex skill
 commands, and records conservative recovery for published CLI error codes.
-Clean-room package installation, update, and uninstall remain reserved for
-later public-beta slices.
+Clean-room package installation remains reserved for the later public-beta
+readiness slice.
 
 The initial asset taxonomy is loaded by
 `src/ludowright/application/asset_taxonomy.py` from versioned JSON data under
