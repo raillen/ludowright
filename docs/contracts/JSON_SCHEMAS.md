@@ -58,6 +58,8 @@ It uses JSON Schema Draft 2020-12 and contains:
 | CLI response | `cli-response.schema.json` |
 | Codex skill manifest | `codex-skill-manifest.schema.json` |
 | Codex skill report | `codex-skill-report.schema.json` |
+| Codex orchestration policy | `codex-orchestration-policy.schema.json` |
+| Codex orchestration plan | `codex-orchestration-plan.schema.json` |
 | Interview questionnaire | `interview-questionnaire.schema.json` |
 | Interview session | `interview-session.schema.json` |
 | Interview interaction | `interview-interaction.schema.json` |

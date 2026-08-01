@@ -156,6 +156,12 @@ A vulnerability must not be ignored silently. Any temporary exception requires:
 
 `detect-secrets` checks tracked text files through pre-commit and the scheduled security workflow.
 
+The repository keeps `.secrets.baseline` as the reviewed
+detect-secrets baseline. It contains only deterministic SHA-256 checksums from
+versioned Codex skill manifests and their contract fixtures. These values identify
+local payloads; they are not credentials. When one of these checksums changes, the
+baseline must be regenerated and reviewed together with the manifest change.
+
 Never commit real credentials merely to test detection. Use clearly fake values and avoid strings that resemble active provider tokens.
 
 A detected value may be allowlisted only when it is demonstrably non-secret and the reason is reviewable.

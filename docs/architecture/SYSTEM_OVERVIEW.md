@@ -71,9 +71,12 @@ Provides:
 - agent eval fixtures.
 
 The PR44 installer lives in `integrations/codex/skill_installer.py` and ships
-the versioned data from `integrations/codex/skills/ludowright/`. It calls
-application use cases through the CLI initially. A typed in-process or
-MCP-like adapter may be added only if CLI boundaries prove insufficient.
+the versioned data from `integrations/codex/skills/ludowright/`. The PR45
+orchestration policy and pure next-action planner live in
+`integrations/codex/orchestration.py`; they consume read-only observations and
+delegate all mutations to canonical application/CLI boundaries. A typed
+in-process or MCP-like adapter may be added only if CLI boundaries prove
+insufficient.
 
 ### Infrastructure
 

@@ -465,6 +465,15 @@ provider execution, receipts, and approvals remain separate PRs.
 
 ### PR 45 — Codex orchestration policy
 
+Status: implemented in the current slice. The versioned skill policy declares
+ordered phases, validation commands, decision and approval checkpoints, and
+durable-resume evidence. A pure planner consumes a read-only observation and
+returns one deterministic next action; it does not execute providers or mutate
+canonical state. The published `codex-orchestration-policy` and
+`codex-orchestration-plan` v1 contracts, schemas, fixtures, tests, and ADR are
+included. Provider execution, receipts, reviews, and specialist agents remain
+separate slices.
+
 - inspect status first;
 - ask only unresolved questions;
 - record decisions;

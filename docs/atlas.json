@@ -151,6 +151,12 @@
       "title": "Command-Line Interface Contract"
     },
     {
+      "canonical_source": "contracts/CODEX_ORCHESTRATION.md",
+      "path": "contracts/CODEX_ORCHESTRATION.md",
+      "section": "contracts",
+      "title": "Codex Orchestration Policy"
+    },
+    {
       "canonical_source": "contracts/CODEX_SKILL.md",
       "path": "contracts/CODEX_SKILL.md",
       "section": "contracts",
@@ -461,6 +467,12 @@
       "path": "decisions/0034-versioned-codex-skill-installer.md",
       "section": "decisions",
       "title": "ADR 0034: Versioned Project-Local Codex Skill Installer"
+    },
+    {
+      "canonical_source": "decisions/0035-codex-orchestration-policy.md",
+      "path": "decisions/0035-codex-orchestration-policy.md",
+      "section": "decisions",
+      "title": "ADR 0035: Declarative Codex Orchestration Policy"
     },
     {
       "canonical_source": "governance/RFC_TEMPLATE.md",

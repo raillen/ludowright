@@ -87,6 +87,9 @@ assembly from interview answers remains a later bounded capability.
 
 - versioned project-local `$ludowright` skill with install, update, verification,
   removal, checksums, dry-run, and rollback (implemented through PR44);
+- declarative Codex orchestration policy with status-first inspection, unresolved
+  question handling, decision recording, validation gates, human approval
+  checkpoints, and durable resume planning (implemented through PR45);
 - Codex-specific agents and routing;
 - execution of structured visual jobs through ImageGen;
 - approved-reference selection;
