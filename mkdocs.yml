@@ -103,6 +103,7 @@ nav:
       - ADR 0034 — Codex Skill Installer: decisions/0034-versioned-codex-skill-installer.md
       - ADR 0035 — Codex Orchestration Policy: decisions/0035-codex-orchestration-policy.md
       - ADR 0036 — ImageGen Job Execution: decisions/0036-imagegen-job-execution.md
+      - ADR 0037 — Generation Receipts: decisions/0037-generation-receipts.md
       - ADR Template: decisions/0000-template.md
   - Operations:
       - Documentation Site: operations/DOCUMENTATION_SITE.md

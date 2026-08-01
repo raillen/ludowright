@@ -2,20 +2,26 @@
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from dataclasses import dataclass
+from datetime import UTC, datetime
 from typing import Literal, Protocol
 
 from ludowright.contracts import (
+    GenerationReceiptContract,
     ImageGenOperationContract,
     ImageGenOutputContract,
 )
 from ludowright.contracts.visual import ReferenceTargetContract
 from ludowright.domain import CompiledPrompt, VisualJob
 from ludowright.infrastructure import (
+    GenerationReceiptAttempt,
+    GenerationReceiptRepository,
     JsonDocumentRepository,
     ProjectFilesystem,
     RepositoryPath,
     StructuredDocumentConflictError,
+    ValidatedGenerationOutput,
     validate_png_payload,
 )
 
@@ -39,6 +45,32 @@ class ImageGenProviderError(ImageGenExecutionError):
 
 class ImageGenRollbackError(ImageGenExecutionError):
     """Raised when execution failed and cleanup could not restore the target."""
+
+
+class ImageGenReceiptError(ImageGenExecutionError):
+    """Raised when a terminal execution result could not be persisted."""
+
+
+@dataclass(frozen=True, slots=True)
+class ImageGenProviderMetadata:
+    """Provider identity supplied by the host when it is available."""
+
+    provider: str = "unspecified"
+    model: str = "unspecified"
+    tool: str | None = None
+
+    def __post_init__(self) -> None:
+        for label, value in (("provider", self.provider), ("model", self.model)):
+            if not isinstance(value, str) or not value or value != value.strip():
+                raise ValueError(f"ImageGen {label} metadata must be non-empty text")
+            if len(value) > 120:
+                raise ValueError(f"ImageGen {label} metadata cannot exceed 120 characters")
+        if self.tool is not None and (
+            not isinstance(self.tool, str) or not self.tool or self.tool != self.tool.strip()
+        ):
+            raise ValueError("ImageGen tool metadata must be non-empty text when provided")
+        if self.tool is not None and len(self.tool) > 120:
+            raise ValueError("ImageGen tool metadata cannot exceed 120 characters")
 
 
 class ImageGenProvider(Protocol):
@@ -89,6 +121,7 @@ class ImageGenExecutionResult:
     operation: ImageGenOperation
     state: ImageGenExecutionState
     dry_run: bool
+    receipt: GenerationReceiptContract | None = None
 
     def as_data(self) -> dict[str, object]:
         """Return JSON-compatible execution data without provider payloads."""
@@ -98,6 +131,7 @@ class ImageGenExecutionResult:
             "operation": self.operation.contract.model_dump(mode="json"),
             "output_paths": [path.value for path in self.operation.output_paths],
             "state": self.state,
+            "receipt": self.receipt.model_dump(mode="json") if self.receipt is not None else None,
         }
 
 
@@ -160,8 +194,11 @@ class ImageGenExecutor:
         *,
         dry_run: bool = False,
         timeout: float = 5.0,
+        metadata: ImageGenProviderMetadata | None = None,
+        clock: Callable[[], datetime] | None = None,
+        receipt_repository: GenerationReceiptRepository | None = None,
     ) -> ImageGenExecutionResult:
-        """Execute one PNG request per view and record the immutable operation."""
+        """Execute one PNG request per view and persist its terminal receipt."""
         if not isinstance(filesystem, ProjectFilesystem):
             raise TypeError("ImageGen execution requires ProjectFilesystem")
         if not isinstance(operation, ImageGenOperation):
@@ -170,12 +207,23 @@ class ImageGenExecutor:
             return ImageGenExecutionResult(operation=operation, state="planned", dry_run=True)
         if not hasattr(provider, "generate") or not callable(provider.generate):
             raise TypeError("ImageGen execution requires a provider with generate()")
+        if metadata is not None and not isinstance(metadata, ImageGenProviderMetadata):
+            raise TypeError("ImageGen metadata requires ImageGenProviderMetadata")
+        metadata = metadata or ImageGenProviderMetadata()
+        if clock is not None and not callable(clock):
+            raise TypeError("ImageGen clock must be callable")
+        clock = clock or (lambda: datetime.now(UTC))
+        receipt_repository = receipt_repository or GenerationReceiptRepository()
 
         created_directories: tuple[RepositoryPath, ...] = ()
         created_outputs: list[RepositoryPath] = []
+        validated_outputs: list[ValidatedGenerationOutput] = []
         manifest_created = False
-        try:
-            with filesystem.lock(IMAGEGEN_LOCK_NAME, timeout=timeout):
+        attempt: GenerationReceiptAttempt | None = None
+        started_at: str | None = None
+        receipt: GenerationReceiptContract | None = None
+        with filesystem.lock(IMAGEGEN_LOCK_NAME, timeout=timeout):
+            try:
                 created_directories = _ensure_output_directory(
                     filesystem,
                     RepositoryPath(operation.contract.output_directory),
@@ -197,12 +245,14 @@ class ImageGenExecutor:
                         f"ImageGen operation already exists: {operation.manifest_path}"
                     ) from error
                 manifest_created = True
+                started_at = _format_timestamp(clock())
+                attempt = receipt_repository.next_attempt(filesystem, operation.contract)
 
                 for output in operation.contract.outputs:
                     request = ImageGenRequest(operation=operation.contract, output=output)
                     try:
                         payload = provider.generate(request)
-                        validate_png_payload(payload)
+                        validation = validate_png_payload(payload)
                     except Exception as error:
                         raise ImageGenProviderError(
                             f"ImageGen provider failed for output {output.path}"
@@ -211,20 +261,67 @@ class ImageGenExecutor:
                     _assert_missing(filesystem, output_path)
                     filesystem.write_bytes(output_path, payload)
                     created_outputs.append(output_path)
+                    validated_outputs.append(
+                        ValidatedGenerationOutput(
+                            index=output.index,
+                            role=output.role,
+                            path=output_path,
+                            validation=validation,
+                        )
+                    )
 
-            return ImageGenExecutionResult(operation=operation, state="executed", dry_run=False)
-        except Exception as error:
-            rollback_error = _rollback(
-                filesystem,
-                manifest_path=operation.manifest_path if manifest_created else None,
-                output_paths=tuple(created_outputs),
-                directories=created_directories,
-            )
-            if rollback_error is not None:
-                raise ImageGenRollbackError(
-                    "ImageGen execution failed and cleanup was incomplete"
-                ) from error
-            raise
+                if attempt is None or started_at is None:
+                    raise ImageGenExecutionError("ImageGen receipt attempt was not prepared")
+                receipt = receipt_repository.record_success(
+                    filesystem,
+                    operation.contract,
+                    attempt,
+                    provider=metadata.provider,
+                    model=metadata.model,
+                    tool=metadata.tool,
+                    started_at=started_at,
+                    completed_at=_format_timestamp(clock()),
+                    outputs=tuple(validated_outputs),
+                )
+            except Exception as error:
+                rollback_error = _rollback(
+                    filesystem,
+                    manifest_path=operation.manifest_path if manifest_created else None,
+                    output_paths=tuple(created_outputs),
+                    directories=created_directories,
+                )
+                receipt_error: Exception | None = None
+                if attempt is not None and receipt is None and started_at is not None:
+                    try:
+                        receipt = receipt_repository.record_failure(
+                            filesystem,
+                            operation.contract,
+                            attempt,
+                            provider=metadata.provider,
+                            model=metadata.model,
+                            tool=metadata.tool,
+                            started_at=started_at,
+                            completed_at=_failure_timestamp(clock),
+                            failure_note=_failure_note(error),
+                        )
+                    except Exception as persistence_error:
+                        receipt_error = persistence_error
+                if rollback_error is not None:
+                    raise ImageGenRollbackError(
+                        "ImageGen execution failed and cleanup was incomplete"
+                    ) from error
+                if receipt_error is not None:
+                    raise ImageGenReceiptError(
+                        "ImageGen execution failed and its receipt could not be persisted"
+                    ) from error
+                raise
+
+        return ImageGenExecutionResult(
+            operation=operation,
+            state="executed",
+            dry_run=False,
+            receipt=receipt,
+        )
 
 
 def _ensure_output_directory(
@@ -249,6 +346,26 @@ def _assert_missing(filesystem: ProjectFilesystem, path: RepositoryPath) -> None
     except FileNotFoundError:
         return
     raise ImageGenConflictError(f"ImageGen target already exists: {path}")
+
+
+def _format_timestamp(value: datetime) -> str:
+    if not isinstance(value, datetime) or value.tzinfo is None:
+        raise ImageGenExecutionError("ImageGen timestamps must be timezone-aware")
+    normalized = value.astimezone(UTC)
+    return normalized.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+
+
+def _failure_timestamp(clock: Callable[[], datetime]) -> str:
+    try:
+        return _format_timestamp(clock())
+    except Exception:
+        return _format_timestamp(datetime.now(UTC))
+
+
+def _failure_note(error: Exception) -> str:
+    message = str(error).strip()
+    detail = f"{type(error).__name__}: {message}" if message else type(error).__name__
+    return detail[:4_000]
 
 
 def _rollback(
@@ -286,6 +403,8 @@ __all__ = [
     "ImageGenOperation",
     "ImageGenProvider",
     "ImageGenProviderError",
+    "ImageGenProviderMetadata",
+    "ImageGenReceiptError",
     "ImageGenRequest",
     "ImageGenRollbackError",
 ]

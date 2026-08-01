@@ -7,28 +7,15 @@ from typing import Annotated, Literal, Self
 
 from pydantic import Field, StringConstraints, model_validator
 
-from ludowright.contracts.common import ContractModel, PositiveRevision, Slug
+from ludowright.contracts.common import (
+    ContractModel,
+    PositiveRevision,
+    RepositoryPathText,
+    Sha256Text,
+    Slug,
+    UtcTimestampText,
+)
 
-Sha256Text = Annotated[
-    str,
-    StringConstraints(min_length=64, max_length=64, pattern=r"^[0-9a-f]{64}$"),
-]
-RepositoryPathText = Annotated[
-    str,
-    StringConstraints(
-        min_length=1,
-        max_length=1_024,
-        pattern=r"^[a-z0-9._-]+(?:/[a-z0-9._-]+)*$",
-    ),
-]
-UtcTimestampText = Annotated[
-    str,
-    StringConstraints(
-        min_length=27,
-        max_length=27,
-        pattern=r"^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{6}Z$",
-    ),
-]
 FailureText = Annotated[str, StringConstraints(min_length=1, max_length=4_000)]
 
 

@@ -205,6 +205,16 @@ A successful receipt:
 - contains no failure note;
 - produces exactly the output count declared by the job.
 
+The provider adapter also records, for each successful output:
+
+- its repository-relative PNG path and deterministic reference ID;
+- the exact byte count and SHA-256 checksum;
+- the validated PNG dimensions, format, and non-animated result.
+
+Receipts may additionally record the operation ID, compiled prompt hash,
+provider tool label, and canonical UTC start/completion timestamps. These
+fields are adapter metadata and do not change the immutable job request.
+
 A failed receipt:
 
 - contains a review note describing the failure;
@@ -225,7 +235,10 @@ Rules:
 - a successful attempt is terminal and cannot be retried;
 - successful output count matches the job specification.
 
-Operational timestamps, actor identity, latency, costs, and provider payloads belong to future event-log and adapter contracts.
+The current ImageGen adapter persists receipts and candidate generated
+references as canonical JSON files under `.ludowright/generation-receipts/`
+and `.ludowright/visual-references/`. Operational actor identity, latency,
+costs, raw provider payloads, and event-log projection remain future concerns.
 
 ## Visual reviews
 
@@ -259,14 +272,16 @@ Reviewer identity, permissions, separation of duties, and agent restrictions bel
 
 ## Persistence boundary
 
-These domain objects do not define:
+The domain objects do not define:
 
 - repository-relative file paths;
 - image binary storage;
 - provider API payloads;
-- timestamps;
+- adapter timestamps and provider metadata;
 - monetary cost;
 - database indexes;
 - serialization format.
 
-Those concerns will be added by schemas, repositories, the event log, and provider adapters without weakening the domain invariants above.
+The receipt repository and provider adapter add those concerns without
+weakening the domain invariants above. Generated reference records remain
+candidates until the review and approval workflow accepts them.

@@ -27,8 +27,10 @@ Quando um plano visual estiver `ready`, encaminhe o job selecionado e seu
 `CompiledPrompt` ao `ImageGenExecutor` da integração Codex. O provider é
 injetado pelo host; a execução registra um `imagegen-operation`, faz exatamente
 uma chamada por view, valida PNG não animado, usa paths relativos, lock,
-escrita atômica, dry-run e rollback. Não trate a presença do manifesto como um
-receipt: checksums, referências geradas e aprovação são etapas posteriores.
+escrita atômica, dry-run, rollback e um receipt terminal com checksums,
+referências candidatas e metadados disponíveis. Não trate a presença do
+manifesto ou do receipt como aprovação: revisão e aprovação são etapas
+posteriores.
 
 ## Limite desta versão
 

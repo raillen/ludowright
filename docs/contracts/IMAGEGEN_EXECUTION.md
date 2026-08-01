@@ -12,9 +12,9 @@ The execution boundary is implemented by
 `imagegen-operation` contract at
 `schemas/v1/imagegen-operation.schema.json`.
 
-This slice does not create generation receipts, references, approvals, event-log
-entries, or SQLite state. Those records belong to later execution and review
-slices.
+This slice creates the terminal generation receipt and candidate generated
+references described below. It does not create approvals, event-log entries, or
+SQLite state. Approval and review remain later slices.
 
 ## Preparation
 
@@ -65,15 +65,24 @@ Execution acquires the project lock `imagegen-execution`. It then:
 2. refuses an existing operation manifest or output;
 3. writes the operation manifest atomically before the first provider call;
 4. calls the provider and writes each validated PNG atomically;
-5. returns `executed` only after every output exists.
+5. validates and persists one candidate reference per output;
+6. persists a successful generation receipt only after every output and
+   reference exists;
+7. returns `executed` only after the receipt is durable.
 
 Any conflict is fail-closed and never overwrites an existing file. A provider,
 validation, or write failure removes the manifest, outputs created by this
-attempt, and empty directories created by this attempt. If cleanup itself
-fails, the original error remains the cause of `ImageGenRollbackError`.
+attempt, and empty directories created by this attempt, then persists a failed
+receipt without output references. If cleanup itself fails, the original error
+remains the cause of `ImageGenRollbackError`. If the terminal receipt cannot be
+persisted, the original execution failure remains the cause of
+`ImageGenReceiptError`.
 
 The operation is therefore create-only and retry-safe: a completed target must
-be explicitly handled as a conflict rather than silently regenerated.
+be explicitly handled as a conflict rather than silently regenerated. A failed
+attempt can be retried after its rolled-back operation is absent; the next
+receipt uses the contiguous attempt number and points to the previous receipt
+with `retry_of`.
 
 ## Dry-run and compatibility
 
@@ -85,3 +94,26 @@ schema version 1 and is registered in the generated schema manifest and the v1
 compatibility fixtures. It intentionally has no output checksums, provider
 metadata, timestamps, receipt ID, or generated-reference IDs; PR47 adds those
 responsibilities without changing the immutable job or prompt contracts.
+
+## Generation receipts
+
+Receipts are persisted as canonical JSON under:
+
+```text
+.ludowright/generation-receipts/<job-id>/<receipt-id>.json
+```
+
+The additive v1 receipt fields include operation and prompt fingerprints,
+provider/model/tool labels, canonical UTC timestamps, deterministic generated
+reference IDs, output paths, byte sizes, SHA-256 checksums, dimensions, and the
+bounded non-animated PNG validation result.
+
+Candidate generated-reference contracts are persisted under:
+
+```text
+.ludowright/visual-references/<reference-id>.json
+```
+
+They point to the exact job and receipt and remain in `candidate` status. A
+receipt is not approval. If provider metadata is unavailable, the adapter uses
+`unspecified` labels. Dry-run creates neither images, references, nor receipts.

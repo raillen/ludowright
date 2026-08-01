@@ -499,6 +499,17 @@ references, checksums, and provider metadata remain PR47 responsibilities.
 
 ### PR 47 — Generation receipts
 
+Status: implemented in the current slice. ImageGen now persists one immutable
+terminal receipt per execution attempt, deterministic candidate generated
+references, prompt and operation fingerprints, provider/model/tool metadata,
+canonical UTC timestamps, output checksums, dimensions, and bounded PNG
+validation facts. Failed provider, validation, and write attempts roll back
+partial operation artifacts before keeping a failed receipt; retries use
+contiguous attempt numbers and `retry_of`. The additive receipt fields preserve
+older v1 documents, and no SQLite migration or event-log projection is needed.
+The receipt repository, contract fixture/schema, focused security/concurrency
+tests, ADR, and documentation are included.
+
 - checksums;
 - model and tool metadata when available;
 - references and prompt hash;

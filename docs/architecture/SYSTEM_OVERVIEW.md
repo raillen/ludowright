@@ -158,7 +158,7 @@ Examples:
 
 The core creates a structured visual-job plan and immutable jobs. Codex executes
 jobs selected from ready plans through the provider-neutral ImageGen boundary;
-generation receipts record the terminal result in a later slice. A visual job
+generation receipts record the terminal result and exact output provenance. A visual job
 identifies:
 
 - asset and component;

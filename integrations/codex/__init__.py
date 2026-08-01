@@ -11,6 +11,8 @@ from integrations.codex.imagegen import (
     ImageGenOperation,
     ImageGenProvider,
     ImageGenProviderError,
+    ImageGenProviderMetadata,
+    ImageGenReceiptError,
     ImageGenRequest,
     ImageGenRollbackError,
 )
@@ -66,6 +68,8 @@ __all__ = [
     "ImageGenOperation",
     "ImageGenProvider",
     "ImageGenProviderError",
+    "ImageGenProviderMetadata",
+    "ImageGenReceiptError",
     "ImageGenRequest",
     "ImageGenRollbackError",
     "load_codex_orchestration_policy",

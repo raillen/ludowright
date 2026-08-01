@@ -4,10 +4,30 @@
   "id": "receipt-maya-front-1",
   "job_id": "job-maya-front-v1",
   "attempt": 1,
+  "completed_at": "2026-08-01T12:00:01.123456Z",
+  "model": "Image Model",
+  "operation_id": "imagegen-maya-front-v1",
+  "outputs": [
+    {
+      "path": "references/chr-maya/job-maya-front-v1/01-output.png",
+      "reference_id": "ref-maya-front-output",
+      "role": "output",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "size_bytes": 1234,
+      "validation": {
+        "animated": false,
+        "format": "png",
+        "height": 1024,
+        "width": 1024
+      }
+    }
+  ],
+  "prompt_hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
   "status": "succeeded",
   "provider": "OpenAI",
-  "model": "Image Model",
   "request_revision": "sha256:request123",
+  "started_at": "2026-08-01T12:00:00.123456Z",
+  "tool": "codex-imagegen",
   "output_reference_ids": [
     "ref-maya-front-output"
   ]

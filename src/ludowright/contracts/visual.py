@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from pathlib import PurePosixPath
 from typing import Annotated, Literal, Self
 
 from pydantic import Field, model_validator
@@ -11,9 +12,12 @@ from ludowright.contracts.common import (
     DisplayText,
     HttpsUriText,
     PositiveRevision,
+    RepositoryPathText,
     ReviewText,
     RevisionText,
+    Sha256Text,
     Slug,
+    UtcTimestampText,
 )
 from ludowright.domain import (
     ApprovalId,
@@ -189,6 +193,39 @@ class VisualJobContract(ContractModel):
         return self
 
 
+class GenerationOutputValidationContract(ContractModel):
+    """Bounded validation facts for one persisted generated PNG."""
+
+    format: Literal["png"] = "png"
+    animated: Literal[False] = False
+    width: Annotated[int, Field(ge=1, le=4_294_967_295)]
+    height: Annotated[int, Field(ge=1, le=4_294_967_295)]
+
+
+class GenerationOutputContract(ContractModel):
+    """One generated reference and its exact immutable artifact identity."""
+
+    reference_id: Slug
+    role: ReferenceRole
+    path: RepositoryPathText
+    sha256: Sha256Text
+    size_bytes: Annotated[int, Field(ge=1, le=64 * 1024 * 1024)]
+    validation: GenerationOutputValidationContract
+
+    @model_validator(mode="after")
+    def validate_output(self) -> Self:
+        path = PurePosixPath(self.path)
+        if (
+            path.is_absolute()
+            or path.as_posix() != self.path
+            or any(segment in {".", ".."} for segment in path.parts)
+        ):
+            raise ValueError("generation output paths must be normalized relative paths")
+        if not self.path.endswith(".png"):
+            raise ValueError("generation output paths must use the .png extension")
+        return self
+
+
 class GenerationReceiptContract(ContractModel):
     schema_version: Literal[1] = 1
     kind: Literal["generation-receipt"] = "generation-receipt"
@@ -198,8 +235,14 @@ class GenerationReceiptContract(ContractModel):
     status: ReceiptStatus
     provider: DisplayText
     model: DisplayText
+    tool: DisplayText | None = None
     request_revision: RevisionText
+    operation_id: Slug | None = None
+    prompt_hash: Sha256Text | None = None
+    started_at: UtcTimestampText | None = None
+    completed_at: UtcTimestampText | None = None
     output_reference_ids: tuple[Slug, ...] = ()
+    outputs: Annotated[tuple[GenerationOutputContract, ...], Field(max_length=64)] = ()
     failure_note: ReviewText | None = None
     retry_of: Slug | None = None
 
@@ -221,6 +264,13 @@ class GenerationReceiptContract(ContractModel):
 
     @model_validator(mode="after")
     def validate_receipt(self) -> Self:
+        if (self.started_at is None) != (self.completed_at is None):
+            raise ValueError("generation receipt timestamps must be provided together")
+        output_ids = tuple(output.reference_id for output in self.outputs)
+        if self.outputs and output_ids != self.output_reference_ids:
+            raise ValueError("generation receipt outputs must match its reference IDs")
+        if self.outputs and self.status is not ReceiptStatus.SUCCEEDED:
+            raise ValueError("only a successful generation receipt may contain output details")
         self.to_domain()
         return self
 

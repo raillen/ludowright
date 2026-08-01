@@ -2,11 +2,13 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import struct
 import threading
 import zlib
 from concurrent.futures import ThreadPoolExecutor
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import cast
 
@@ -17,11 +19,12 @@ from integrations.codex import (
     ImageGenExecutor,
     ImageGenProvider,
     ImageGenProviderError,
+    ImageGenProviderMetadata,
     ImageGenRequest,
 )
 from pydantic import ValidationError
 
-from ludowright.contracts import ImageGenOperationContract
+from ludowright.contracts import GenerationOutputContract, ImageGenOperationContract
 from ludowright.domain import (
     AssetId,
     DisplayName,
@@ -32,7 +35,12 @@ from ludowright.domain import (
     SubjectRevision,
     VisualJob,
 )
-from ludowright.infrastructure import ProjectFilesystem, RepositoryPath, UnsafeProjectPathError
+from ludowright.infrastructure import (
+    GenerationReceiptRepository,
+    ProjectFilesystem,
+    RepositoryPath,
+    UnsafeProjectPathError,
+)
 
 PROMPT_FIXTURE = Path("tests/fixtures/contracts/v1/compiled-prompt.json")
 
@@ -153,6 +161,7 @@ def test_dry_run_does_not_call_provider_or_write_files(tmp_path: Path) -> None:
     assert result.dry_run is True
     assert provider.calls == []
     assert not (filesystem.root / "references").exists()
+    assert not (filesystem.root / ".ludowright" / "generation-receipts").exists()
 
 
 def test_execute_writes_one_png_per_view_and_operation_record(tmp_path: Path) -> None:
@@ -175,6 +184,54 @@ def test_execute_writes_one_png_per_view_and_operation_record(tmp_path: Path) ->
     assert all(
         filesystem.resolve(path, must_exist=True).is_file() for path in operation.output_paths
     )
+
+
+def test_execute_persists_success_receipt_references_and_validation(tmp_path: Path) -> None:
+    filesystem = make_filesystem(tmp_path / "project")
+    operation = ImageGenExecutor().prepare(
+        make_job(roles=(ReferenceRole.IDENTITY, ReferenceRole.CONSTRUCTION)),
+        make_prompt(),
+        RepositoryPath("references/hero/job-hero-front-v1"),
+    )
+    timestamps = iter(
+        (
+            datetime(2026, 8, 1, 12, 0, 0, 123456, tzinfo=UTC),
+            datetime(2026, 8, 1, 12, 0, 1, 123456, tzinfo=UTC),
+        )
+    )
+
+    result = ImageGenExecutor().execute(
+        filesystem,
+        operation,
+        FakeImageGenProvider(),
+        metadata=ImageGenProviderMetadata(
+            provider="OpenAI",
+            model="Image Model",
+            tool="codex-imagegen",
+        ),
+        clock=lambda: next(timestamps),
+    )
+
+    assert result.receipt is not None
+    receipt = result.receipt
+    assert receipt.status.value == "succeeded"
+    assert receipt.prompt_hash == operation.contract.prompt_hash
+    assert receipt.tool == "codex-imagegen"
+    assert receipt.started_at == "2026-08-01T12:00:00.123456Z"
+    assert receipt.completed_at == "2026-08-01T12:00:01.123456Z"
+    assert tuple(output.reference_id for output in receipt.outputs) == receipt.output_reference_ids
+    assert all(output.validation.format == "png" for output in receipt.outputs)
+    assert all(output.validation.animated is False for output in receipt.outputs)
+    assert all(
+        output.sha256 == hashlib.sha256(png_payload()).hexdigest() for output in receipt.outputs
+    )
+    assert all(
+        (filesystem.root / ".ludowright" / "visual-references" / f"{reference_id}.json").is_file()
+        for reference_id in receipt.output_reference_ids
+    )
+
+    persisted = GenerationReceiptRepository().list_for_job(filesystem, operation.contract.job_id)
+    assert persisted == (receipt,)
 
 
 def test_execute_refuses_existing_targets_without_overwriting(tmp_path: Path) -> None:
@@ -205,6 +262,80 @@ def test_provider_failure_rolls_back_manifest_outputs_and_new_directories(tmp_pa
         ImageGenExecutor().execute(filesystem, operation, FakeImageGenProvider(fail_at=2))
 
     assert not (filesystem.root / "references").exists()
+
+
+def test_provider_failure_persists_failed_receipt_after_rollback(tmp_path: Path) -> None:
+    filesystem = make_filesystem(tmp_path / "project")
+    operation = ImageGenExecutor().prepare(
+        make_job(roles=(ReferenceRole.IDENTITY, ReferenceRole.CONSTRUCTION)),
+        make_prompt(),
+        RepositoryPath("references/hero/job-hero-front-v1"),
+    )
+    timestamps = iter(
+        (
+            datetime(2026, 8, 1, 12, 0, 0, tzinfo=UTC),
+            datetime(2026, 8, 1, 12, 0, 1, tzinfo=UTC),
+        )
+    )
+
+    with pytest.raises(ImageGenProviderError):
+        ImageGenExecutor().execute(
+            filesystem,
+            operation,
+            FakeImageGenProvider(fail_at=2),
+            clock=lambda: next(timestamps),
+        )
+
+    receipts = GenerationReceiptRepository().list_for_job(filesystem, operation.contract.job_id)
+    assert len(receipts) == 1
+    assert receipts[0].status.value == "failed"
+    assert receipts[0].attempt == 1
+    assert receipts[0].output_reference_ids == ()
+    assert receipts[0].failure_note is not None
+    assert "ImageGenProviderError" in receipts[0].failure_note
+    assert not (filesystem.root / "references").exists()
+
+
+def test_retry_persists_contiguous_attempt_and_previous_receipt(tmp_path: Path) -> None:
+    filesystem = make_filesystem(tmp_path / "project")
+    executor = ImageGenExecutor()
+    operation = executor.prepare(
+        make_job(),
+        make_prompt(),
+        RepositoryPath("references/hero/job-hero-front-v1"),
+    )
+    first_times = iter(
+        (
+            datetime(2026, 8, 1, 12, 0, 0, tzinfo=UTC),
+            datetime(2026, 8, 1, 12, 0, 1, tzinfo=UTC),
+        )
+    )
+    with pytest.raises(ImageGenProviderError):
+        executor.execute(
+            filesystem,
+            operation,
+            FakeImageGenProvider(fail_at=1),
+            clock=lambda: next(first_times),
+        )
+
+    second_times = iter(
+        (
+            datetime(2026, 8, 1, 12, 0, 2, tzinfo=UTC),
+            datetime(2026, 8, 1, 12, 0, 3, tzinfo=UTC),
+        )
+    )
+    result = executor.execute(
+        filesystem,
+        operation,
+        FakeImageGenProvider(),
+        clock=lambda: next(second_times),
+    )
+
+    assert result.receipt is not None
+    receipts = GenerationReceiptRepository().list_for_job(filesystem, operation.contract.job_id)
+    assert tuple(receipt.attempt for receipt in receipts) == (1, 2)
+    assert result.receipt.attempt == 2
+    assert result.receipt.retry_of == receipts[0].id
 
 
 def test_invalid_or_animated_provider_payload_is_rejected_and_cleaned(tmp_path: Path) -> None:
@@ -261,6 +392,9 @@ def test_concurrent_execution_allows_one_writer(tmp_path: Path) -> None:
 
     assert sorted(states) == ["conflict", "executed"]
     assert (filesystem.root / "references/hero/operation.json").is_file()
+    assert (
+        len(GenerationReceiptRepository().list_for_job(filesystem, operation.contract.job_id)) == 1
+    )
 
 
 def test_operation_contract_rejects_tampered_revision_and_traversal() -> None:
@@ -279,6 +413,18 @@ def test_operation_contract_rejects_tampered_revision_and_traversal() -> None:
     payload["output_directory"] = "../outside"
     with pytest.raises(ValidationError, match="relative path"):
         ImageGenOperationContract.model_validate(payload)
+
+
+def test_generation_output_contract_rejects_traversal() -> None:
+    with pytest.raises(ValidationError, match="normalized relative paths"):
+        GenerationOutputContract(
+            reference_id="ref-output",
+            role=ReferenceRole.OUTPUT,
+            path="../outside.png",
+            sha256="a" * 64,
+            size_bytes=10,
+            validation={"width": 1, "height": 1},
+        )
 
 
 def test_operation_rejects_manifest_outside_output_directory() -> None:

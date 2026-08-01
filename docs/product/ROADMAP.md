@@ -95,7 +95,9 @@ assembly from interview answers remains a later bounded capability.
   rollback (implemented through PR46);
 - Codex-specific agents and routing;
 - approved-reference selection;
-- prompt, input, output, and checksum receipts;
+- prompt, input, output, and checksum receipts (receipts, candidate generated
+  references, metadata, timestamps, and PNG validation implemented through
+  PR47);
 - retries, superseding, and selective correction;
 - human approval checkpoints.
 
