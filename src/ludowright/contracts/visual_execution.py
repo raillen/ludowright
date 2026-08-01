@@ -135,8 +135,10 @@ def _operation_digest(value: ImageGenOperationContract) -> str:
 
 def _validate_safe_path(value: str, label: str) -> None:
     path = PurePosixPath(value)
-    if path.is_absolute() or path.as_posix() != value or any(
-        segment in {".", ".."} for segment in path.parts
+    if (
+        path.is_absolute()
+        or path.as_posix() != value
+        or any(segment in {".", ".."} for segment in path.parts)
     ):
         raise ValueError(f"{label} must be a normalized relative path")
 
