@@ -147,7 +147,9 @@ assembly from interview answers remains a later bounded capability.
 - usability and compatibility fixes from the initial public-example sweep are
   implemented; validation with real projects remains before the release
   candidate;
-- release candidate.
+- release-candidate and stable-release evidence checklist is published;
+  candidate approval remains blocked until real-project validation and human
+  sign-off.
 
 ## 1.0 — Stable production framework
 

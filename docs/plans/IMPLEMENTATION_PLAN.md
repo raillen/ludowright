@@ -785,8 +785,10 @@ migration matrix covers the supported v1→v2 transition, current-schema
 no-ops, downgrade rejection, and missing contiguous paths while preserving the
 existing backup/rollback tests. The threat model and negative-control security
 tests are published in the current slice. The public-example sweep is not a
-substitute for feedback from external projects; that feedback and
-release-candidate work remain bounded follow-up slices of PR62.
+substitute for feedback from external projects. The release-candidate and
+stable-release checklist is now published in
+`docs/quality/RELEASE_CANDIDATE_CHECKLIST.md`; external feedback and human
+candidate sign-off remain required before 1.0.
 
 - clean-room installation tests (implemented in the current slice);
 - end-to-end validation (implemented in the current slice);
@@ -795,7 +797,9 @@ release-candidate work remain bounded follow-up slices of PR62.
 - documentation audit (implemented in the current follow-up slice; coverage and executable evidence are published in `docs/quality/PUBLIC_BETA_DOCUMENTATION_AUDIT.md`);
 - beta feedback fixes (initial public-example compatibility sweep implemented;
   external-project feedback remains required);
-- release candidate and stable release checklist.
+- release candidate and stable release checklist (implemented in this
+  follow-up slice; external-project evidence and final human sign-off remain
+  required).
 
 ## Cross-cutting requirements
 

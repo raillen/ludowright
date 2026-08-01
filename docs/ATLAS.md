@@ -305,6 +305,7 @@ Future bounded changes should receive their own plan under `plans/`.
 - [`quality/ENGINEERING_QUALITY.md`](quality/ENGINEERING_QUALITY.md) — pre-commit, unified quality commands, local-first end-to-end validation, migration compatibility matrix, clean-room package installation, coverage, property tests, schema drift, dependency audits, secret scanning, CI, and failure policy.
 - [`quality/CODEX_AGENT_EVALS.md`](quality/CODEX_AGENT_EVALS.md) — offline specialist-agent conformance scenarios and safety invariants.
 - [`quality/PUBLIC_BETA_DOCUMENTATION_AUDIT.md`](quality/PUBLIC_BETA_DOCUMENTATION_AUDIT.md) — current documentation coverage, executable evidence, and remaining beta-readiness work.
+- [`quality/RELEASE_CANDIDATE_CHECKLIST.md`](quality/RELEASE_CANDIDATE_CHECKLIST.md) — evidence gates and human sign-off criteria for release candidate and stable release.
 - [`contracts/JSON_SCHEMAS.md`](contracts/JSON_SCHEMAS.md) — schema-generation, checksum, fixture, and compatibility validation rules.
 - [`contracts/STRUCTURED_REPOSITORIES.md`](contracts/STRUCTURED_REPOSITORIES.md) — parser limits, deterministic round trips, duplicate-key rejection, and optimistic concurrency tests.
 - [`contracts/EVENT_LOG.md`](contracts/EVENT_LOG.md) — replay integrity, chained hashes, sequence, concurrency, corruption, and incomplete-tail recovery tests.
