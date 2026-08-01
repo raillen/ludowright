@@ -19,6 +19,7 @@ from ludowright.contracts.common import (
     Slug,
     UtcTimestampText,
 )
+from ludowright.contracts.governance import ReviewActorContract
 from ludowright.domain import (
     ApprovalId,
     AssetId,
@@ -107,6 +108,21 @@ class ReferenceProvenanceContract(ContractModel):
             ),
         )
 
+    @classmethod
+    def from_domain(cls, value: ReferenceProvenance) -> Self:
+        return cls(
+            origin=value.origin,
+            content_revision=value.content_revision.value,
+            source_uri=value.source_uri.value if value.source_uri is not None else None,
+            source_job_id=value.source_job_id.value if value.source_job_id is not None else None,
+            source_receipt_id=(
+                value.source_receipt_id.value if value.source_receipt_id is not None else None
+            ),
+            parent_reference_ids=tuple(item.value for item in value.parent_reference_ids),
+            creator=value.creator.value if value.creator is not None else None,
+            license_label=value.license_label.value if value.license_label is not None else None,
+        )
+
     @model_validator(mode="after")
     def validate_provenance(self) -> Self:
         self.to_domain()
@@ -137,6 +153,19 @@ class VisualReferenceContract(ContractModel):
             superseded_by=(
                 ReferenceId(self.superseded_by) if self.superseded_by is not None else None
             ),
+        )
+
+    @classmethod
+    def from_domain(cls, value: VisualReference) -> Self:
+        return cls(
+            id=value.id.value,
+            name=value.name.value,
+            target=ReferenceTargetContract.from_domain(value.target),
+            role=value.role,
+            provenance=ReferenceProvenanceContract.from_domain(value.provenance),
+            status=value.status,
+            approval_id=value.approval_id.value if value.approval_id is not None else None,
+            superseded_by=value.superseded_by.value if value.superseded_by is not None else None,
         )
 
     @model_validator(mode="after")
@@ -285,6 +314,8 @@ class VisualReviewContract(ContractModel):
     note: ReviewText | None = None
     approval_id: Slug | None = None
     supersedes: Slug | None = None
+    reviewer: ReviewActorContract | None = None
+    producer: ReviewActorContract | None = None
 
     def to_domain(self) -> VisualReview:
         return VisualReview(
@@ -297,6 +328,26 @@ class VisualReviewContract(ContractModel):
             note=ReviewNote(self.note) if self.note is not None else None,
             approval_id=(ApprovalId(self.approval_id) if self.approval_id is not None else None),
             supersedes=(ReviewId(self.supersedes) if self.supersedes is not None else None),
+            reviewer=self.reviewer.to_domain() if self.reviewer is not None else None,
+            producer=self.producer.to_domain() if self.producer is not None else None,
+        )
+
+    @classmethod
+    def from_domain(cls, value: VisualReview) -> Self:
+        return cls(
+            id=value.id.value,
+            receipt_id=value.receipt_id.value,
+            outcome=value.outcome,
+            reviewed_reference_ids=tuple(item.value for item in value.reviewed_reference_ids),
+            note=value.note.value if value.note is not None else None,
+            approval_id=value.approval_id.value if value.approval_id is not None else None,
+            supersedes=value.supersedes.value if value.supersedes is not None else None,
+            reviewer=ReviewActorContract.from_domain(value.reviewer)
+            if value.reviewer is not None
+            else None,
+            producer=ReviewActorContract.from_domain(value.producer)
+            if value.producer is not None
+            else None,
         )
 
     @model_validator(mode="after")

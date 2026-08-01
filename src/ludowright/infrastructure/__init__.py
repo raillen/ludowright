@@ -79,6 +79,13 @@ from ludowright.infrastructure.ods import (
     OdsWorkbookError,
     OdsWorkbookWriter,
 )
+from ludowright.infrastructure.review_workflow import (
+    APPROVAL_DIRECTORY,
+    VISUAL_REVIEW_DIRECTORY,
+    VISUAL_REVIEW_LOCK,
+    VISUAL_REVIEW_MAX_BYTES,
+    VisualReviewRepository,
+)
 from ludowright.infrastructure.state_store import (
     DEFAULT_STATE_STORE_PATH,
     STATE_SCHEMA_VERSION,
@@ -107,6 +114,7 @@ from ludowright.infrastructure.structured import (
 )
 
 __all__ = [
+    "APPROVAL_DIRECTORY",
     "DEFAULT_DEPENDENCY_GRAPH_PATH",
     "DEFAULT_DOCUMENT_DIRECTORY",
     "DEFAULT_EVENT_LOG_PATH",
@@ -123,6 +131,9 @@ __all__ = [
     "STATE_MIGRATIONS",
     "STATE_SCHEMA_VERSION",
     "TARGET_STATE_SCHEMA_VERSION",
+    "VISUAL_REVIEW_DIRECTORY",
+    "VISUAL_REVIEW_LOCK",
+    "VISUAL_REVIEW_MAX_BYTES",
     "CorruptEventLogError",
     "DependencyGraphRepository",
     "DependencyGraphSnapshot",
@@ -187,6 +198,7 @@ __all__ = [
     "UnsafeProjectPathError",
     "UnsupportedStateSchemaError",
     "ValidatedGenerationOutput",
+    "VisualReviewRepository",
     "WorkflowProgress",
     "YamlDocumentRepository",
     "validate_png_payload",

@@ -14,7 +14,7 @@ from ludowright.domain.errors import (
     InvalidDecisionError,
     InvalidDecisionTransitionError,
 )
-from ludowright.domain.identifiers import ApprovalId, DecisionId, Identifier
+from ludowright.domain.identifiers import ApprovalId, DecisionId, Identifier, OwnerId
 from ludowright.domain.names import DisplayName
 
 MAX_REVIEW_NOTE_LENGTH = 4_000
@@ -84,6 +84,27 @@ class ApprovalSubject:
             raise InvalidApprovalError("an approval subject requires a subject revision")
         if self.label is not None and not isinstance(self.label, DisplayName):
             raise InvalidApprovalError("an approval subject label must be a display name")
+
+
+class ReviewerKind(StrEnum):
+    """Trust class used by the review policy boundary."""
+
+    HUMAN = "human"
+    AGENT = "agent"
+
+
+@dataclass(frozen=True, slots=True)
+class ReviewActor:
+    """Stable identity and trust class for one review participant."""
+
+    id: OwnerId
+    kind: ReviewerKind
+
+    def __post_init__(self) -> None:
+        if not isinstance(self.id, OwnerId):
+            raise InvalidApprovalError("a review actor requires a typed owner ID")
+        if not isinstance(self.kind, ReviewerKind):
+            raise InvalidApprovalError("a review actor requires a valid kind")
 
 
 class DecisionStatus(StrEnum):

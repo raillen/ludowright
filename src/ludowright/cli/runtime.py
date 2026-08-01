@@ -19,6 +19,12 @@ from ludowright.application.asset_registry import (
 from ludowright.application.asset_workbook import AssetWorkbookError
 from ludowright.application.document_refresh import DocumentRefreshError
 from ludowright.application.documentation_audit import DocumentationAuditError
+from ludowright.application.visual_review import (
+    VisualReviewConflictError,
+    VisualReviewError,
+    VisualReviewRollbackError,
+    VisualReviewValidationError,
+)
 from ludowright.contracts.cli import (
     CliErrorCode,
     CliErrorContract,
@@ -227,6 +233,30 @@ def _known_failure(error: Exception) -> CliFailure | None:
             CliErrorCode.CONFLICT,
             str(error),
             exit_code=CliExitCode.CONFLICT,
+        )
+    if isinstance(error, VisualReviewConflictError):
+        return CliFailure(
+            CliErrorCode.CONFLICT,
+            str(error),
+            exit_code=CliExitCode.CONFLICT,
+        )
+    if isinstance(error, VisualReviewRollbackError):
+        return CliFailure(
+            CliErrorCode.CORRUPT_STATE,
+            str(error),
+            exit_code=CliExitCode.CORRUPT_STATE,
+        )
+    if isinstance(error, VisualReviewValidationError):
+        return CliFailure(
+            CliErrorCode.INVALID_INPUT,
+            str(error),
+            exit_code=CliExitCode.VALIDATION,
+        )
+    if isinstance(error, VisualReviewError):
+        return CliFailure(
+            CliErrorCode.INVALID_INPUT,
+            str(error),
+            exit_code=CliExitCode.VALIDATION,
         )
     if isinstance(
         error,

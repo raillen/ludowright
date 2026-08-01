@@ -56,6 +56,34 @@ class ValidatedGenerationOutput:
 class GenerationReceiptRepository:
     """Persist append-only receipts and candidate generated references."""
 
+    def load(
+        self,
+        filesystem: ProjectFilesystem,
+        receipt_id: str,
+    ) -> GenerationReceiptContract:
+        """Load exactly one receipt by its immutable ID."""
+        if not isinstance(receipt_id, str) or not receipt_id:
+            raise GenerationReceiptError("a receipt lookup requires a non-empty ID")
+        matches: list[GenerationReceiptContract] = []
+        for path in filesystem.list_files(
+            GENERATION_RECEIPT_DIRECTORY,
+            suffix=".json",
+            max_files=10_000,
+        ):
+            snapshot = JsonDocumentRepository(
+                filesystem,
+                path,
+                GenerationReceiptContract,
+                max_bytes=GENERATION_RECEIPT_MAX_BYTES,
+            ).load()
+            if snapshot.value.id == receipt_id:
+                matches.append(snapshot.value)
+        if not matches:
+            raise FileNotFoundError(f"generation receipt does not exist: {receipt_id}")
+        if len(matches) != 1:
+            raise GenerationReceiptError(f"generation receipt ID is not unique: {receipt_id}")
+        return matches[0]
+
     def list_for_job(
         self,
         filesystem: ProjectFilesystem,

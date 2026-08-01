@@ -1,5 +1,36 @@
 {
   "$defs": {
+    "ReviewActorContract": {
+      "additionalProperties": false,
+      "description": "Persisted review participant identity used by the policy boundary.",
+      "properties": {
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/ReviewerKind"
+        }
+      },
+      "required": [
+        "id",
+        "kind"
+      ],
+      "title": "ReviewActorContract",
+      "type": "object"
+    },
+    "ReviewerKind": {
+      "description": "Trust class used by the review policy boundary.",
+      "enum": [
+        "human",
+        "agent"
+      ],
+      "title": "ReviewerKind",
+      "type": "string"
+    },
     "VisualReviewOutcome": {
       "description": "Human review outcome for generated visual outputs.",
       "enum": [
@@ -60,6 +91,17 @@
     "outcome": {
       "$ref": "#/$defs/VisualReviewOutcome"
     },
+    "producer": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ReviewActorContract"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
     "receipt_id": {
       "maxLength": 80,
       "minLength": 1,
@@ -77,6 +119,17 @@
       "minItems": 1,
       "title": "Reviewed Reference Ids",
       "type": "array"
+    },
+    "reviewer": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ReviewActorContract"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
     },
     "schema_version": {
       "const": 1,

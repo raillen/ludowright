@@ -11,7 +11,7 @@ from ludowright.domain.errors import (
     InvalidVisualJobError,
     InvalidVisualReviewError,
 )
-from ludowright.domain.governance import ReviewNote, SubjectRevision
+from ludowright.domain.governance import ReviewActor, ReviewerKind, ReviewNote, SubjectRevision
 from ludowright.domain.identifiers import (
     ApprovalId,
     JobId,
@@ -278,6 +278,8 @@ class VisualReview:
     note: ReviewNote | None = None
     approval_id: ApprovalId | None = None
     supersedes: ReviewId | None = None
+    reviewer: ReviewActor | None = None
+    producer: ReviewActor | None = None
 
     def __post_init__(self) -> None:
         if not isinstance(self.id, ReviewId):
@@ -291,7 +293,23 @@ class VisualReview:
             raise InvalidVisualReviewError("a superseded review ID must be typed")
         if self.supersedes == self.id:
             raise InvalidVisualReviewError("a visual review cannot supersede itself")
+        self._validate_reviewer_separation()
         self._validate_outcome_contract()
+
+    def _validate_reviewer_separation(self) -> None:
+        if self.reviewer is None and self.producer is None:
+            return
+        if not isinstance(self.reviewer, ReviewActor):
+            raise InvalidVisualReviewError("a review with provenance requires a reviewer")
+        if self.producer is not None and not isinstance(self.producer, ReviewActor):
+            raise InvalidVisualReviewError("a review producer must be a review actor")
+        if self.producer is not None and self.reviewer.id == self.producer.id:
+            raise InvalidVisualReviewError("a reviewer cannot review their own generation")
+        if (
+            self.outcome is VisualReviewOutcome.ACCEPTED
+            and self.reviewer.kind is not ReviewerKind.HUMAN
+        ):
+            raise InvalidVisualReviewError("only a human reviewer may approve generated output")
 
     def _validate_reviewed_outputs(self) -> None:
         if not isinstance(self.reviewed_reference_ids, tuple):

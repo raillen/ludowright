@@ -86,7 +86,7 @@ from ludowright.contracts.documentation_audit import (
     DocumentationPhraseContract,
     DocumentationTopicContract,
 )
-from ludowright.contracts.governance import ApprovalContract, DecisionContract
+from ludowright.contracts.governance import ApprovalContract, DecisionContract, ReviewActorContract
 from ludowright.contracts.hard_surface_profiles import (
     HardSurfaceComponentContract,
     HardSurfaceConnectionContract,
@@ -281,6 +281,7 @@ __all__ = [
     "PromptTemplateContract",
     "ProportionRuleContract",
     "QuestionnaireContract",
+    "ReviewActorContract",
     "ShapeLanguageContract",
     "VisualBibleContract",
     "VisualBudgetContract",
