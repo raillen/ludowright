@@ -21,7 +21,7 @@ correções dela forem registradas e revisadas.
 | Migrações | `uv run pytest --no-cov tests/test_migrations.py` | Validado na cadeia de compatibilidade |
 | Segurança | `uv run pre-commit run detect-secrets --all-files` e `uv run pip-audit` | Incluído no gate de release |
 | Exemplos públicos | `uv run pytest --no-cov tests/test_example_cli_smoke.py -q` | Validado para os quatro exemplos |
-| Projeto real externo | execução autorizada, relatório de uso e correções verificadas | **Pendente** |
+| Projeto real externo | execução autorizada, relatório de uso e correções verificadas | **Slice executado; provider e revisão humana pendentes** |
 
 O comando `quality release` é a entrada operacional para um candidato. Ele
 executa o gate normal e acrescenta a construção do wheel e do source
@@ -36,10 +36,12 @@ distribution. A saída do comando e os links dos artefatos devem ser anexados
 - [x] O fluxo end-to-end usa somente fixtures e adapters locais identificados.
 - [x] O estado de beta e os riscos residuais estão publicados no modelo de
       ameaça e na auditoria de documentação beta.
-- [ ] Um ou mais projetos reais externos foram executados com autorização e
-      tiveram seus resultados registrados.
+- [x] Um ou mais projetos reais externos foram executados com autorização e
+      tiveram seus resultados registrados. O slice inicial está documentado em
+      [`quality/EXTERNAL_PROJECT_BETA_VALIDATION.md`](EXTERNAL_PROJECT_BETA_VALIDATION.md).
 - [ ] Os problemas de usabilidade ou compatibilidade encontrados externamente
-      foram corrigidos, testados e documentados.
+      foram corrigidos, testados e documentados. O primeiro slice ainda não
+      executa provider real nem substitui a revisão do fluxo completo.
 - [ ] Uma revisão humana confirmou que não há defeito bloqueador conhecido
       para a release candidate.
 - [ ] Os artefatos candidatos foram gerados pelo gate de release e seus

@@ -147,6 +147,9 @@ assembly from interview answers remains a later bounded capability.
 - usability and compatibility fixes from the initial public-example sweep are
   implemented; validation with real projects remains before the release
   candidate;
+- an opt-in external-project beta slice validates a small selection of real
+  assets without modifying the source project, including deterministic image
+  preparation and approval-gated visual planning;
 - release-candidate and stable-release evidence checklist is published;
   candidate approval remains blocked until real-project validation and human
   sign-off.

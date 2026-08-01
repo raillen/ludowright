@@ -643,6 +643,12 @@
       "title": "Public-beta Documentation Audit"
     },
     {
+      "canonical_source": "quality/EXTERNAL_PROJECT_BETA_VALIDATION.md",
+      "path": "quality/EXTERNAL_PROJECT_BETA_VALIDATION.md",
+      "section": "quality",
+      "title": "External Project Beta Validation"
+    },
+    {
       "canonical_source": "quality/RELEASE_CANDIDATE_CHECKLIST.md",
       "path": "quality/RELEASE_CANDIDATE_CHECKLIST.md",
       "section": "quality",

@@ -50,14 +50,18 @@ Implementado e documentado:
 - revisão de segurança com modelo de ameaça e testes negativos;
 - documentação pública mínima e auditoria determinística de cobertura,
   links, órfãos, fontes canônicas e referências obsoletas.
+- validação beta opt-in com um slice pequeno de projeto externo, incluindo
+  normalização determinística, derivação de perfis, planejamento de jobs e
+  bloqueio de referências candidatas; o procedimento está em
+  [`quality/EXTERNAL_PROJECT_BETA_VALIDATION.md`](EXTERNAL_PROJECT_BETA_VALIDATION.md).
 - compatibilidade inicial dos quatro exemplos públicos com `init` e registro
   de assets pela CLI; o fluxo mínimo foi corrigido para não prometer uma sheet
   antes de existir receipt e aprovação aplicados.
 
 Ainda pendente para a prontidão 1.0:
 
-- feedback de uso em projetos reais e correções de usabilidade/compatibilidade
-  derivadas desse feedback;
+- geração por provider em staging, feedback de uso em projetos reais e
+  correções de usabilidade/compatibilidade derivadas desse feedback;
 - aprovação da release candidate e da release estável. O checklist operacional
   já está publicado em
   [`quality/RELEASE_CANDIDATE_CHECKLIST.md`](RELEASE_CANDIDATE_CHECKLIST.md).
