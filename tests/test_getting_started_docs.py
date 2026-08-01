@@ -22,6 +22,7 @@ INSTALLATION_GUIDE = REPOSITORY_ROOT / "docs/getting-started/INSTALLATION.md"
 FIRST_PROJECT_GUIDE = REPOSITORY_ROOT / "docs/getting-started/FIRST_PROJECT.md"
 CHARACTER_WORKFLOW_GUIDE = REPOSITORY_ROOT / "docs/getting-started/CHARACTER_WORKFLOW.md"
 TROUBLESHOOTING_GUIDE = REPOSITORY_ROOT / "docs/getting-started/TROUBLESHOOTING.md"
+UPDATING_GUIDE = REPOSITORY_ROOT / "docs/getting-started/UPDATING.md"
 
 
 def test_installation_guide_covers_supported_platforms_and_verification() -> None:
@@ -205,6 +206,68 @@ def test_troubleshooting_guide_matches_current_cli_recovery_contracts(
     quality_payload = json.loads(quality.stdout)
     assert quality.exit_code == int(CliExitCode.SUCCESS)
     assert quality_payload["data"]["dry_run"] is True
+
+
+def test_update_guide_matches_current_skill_update_contract(tmp_path: Path) -> None:
+    guide = UPDATING_GUIDE.read_text(encoding="utf-8")
+
+    for expected in (
+        "git pull --ff-only",
+        "uv sync --all-extras",
+        "codex skill update",
+        "--dry-run",
+        "already-up-to-date",
+        "outdated",
+        "modified",
+        "resource-not-found",
+        "corrupt-state",
+        "PR62",
+        "ludowright update",
+        "migração automática de projeto",
+    ):
+        assert expected in guide
+
+    runner = CliRunner()
+    project = tmp_path / "project"
+    initialized = runner.invoke(
+        app,
+        [
+            "init",
+            str(project),
+            "--name",
+            "Update Game",
+            "--non-interactive",
+        ],
+    )
+    assert initialized.exit_code == int(CliExitCode.SUCCESS)
+
+    installed = runner.invoke(app, ["codex", "skill", "install", str(project)])
+    assert installed.exit_code == int(CliExitCode.SUCCESS)
+
+    planned = runner.invoke(
+        app,
+        [
+            "--json",
+            "codex",
+            "skill",
+            "update",
+            str(project),
+            "--dry-run",
+        ],
+    )
+    planned_payload = json.loads(planned.stdout)
+    assert planned.exit_code == int(CliExitCode.SUCCESS)
+    assert planned_payload["data"]["state"] == "already-up-to-date"
+    assert planned_payload["data"]["dry_run"] is True
+
+    updated = runner.invoke(
+        app,
+        ["--json", "codex", "skill", "update", str(project)],
+    )
+    updated_payload = json.loads(updated.stdout)
+    assert updated.exit_code == int(CliExitCode.SUCCESS)
+    assert updated_payload["data"]["state"] == "already-up-to-date"
+    assert updated_payload["data"]["dry_run"] is False
 
 
 __all__ = []
