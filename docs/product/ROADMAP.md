@@ -133,7 +133,8 @@ assembly from interview answers remains a later bounded capability.
 ### 0.9 Public Beta
 
 - clean installation path (initial checkout guides for Linux, Windows, and
-  macOS are implemented; clean-room package installation remains a 1.0 gate);
+  macOS plus a clean-room wheel/sdist installation check are implemented; the
+  remaining 1.0 readiness work is tracked under PR62);
 - complete public documentation (installation, first-project,
   character/custom-profile, troubleshooting, update, and uninstall guides are
   implemented);

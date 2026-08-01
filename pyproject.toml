@@ -70,6 +70,9 @@ packages = ["src/ludowright", "integrations"]
 
 [tool.pytest.ini_options]
 addopts = "--strict-config --strict-markers --cov=ludowright --cov-report=term-missing"
+markers = [
+  "clean_installation: validate published distributions in isolated environments",
+]
 testpaths = ["tests"]
 
 [tool.coverage.run]

@@ -72,8 +72,9 @@ supported checkout installation path, first-project tutorial,
 character/custom-profile workflow, troubleshooting, update, and uninstall
 guides cover Linux, Windows, macOS, `ludowright init`, dry-run, profile
 contracts, deterministic planning, project-local skill setup, conservative
-failure recovery, and safe skill removal; clean-room installation and beta
-readiness remain the next bounded work.
+failure recovery, and safe skill removal; the quality gate now validates
+clean-room wheel and source-distribution installation, while beta readiness
+remains the next bounded work.
 The pure deterministic visual-job planner does not execute providers or persist
 project-local plans.
 
