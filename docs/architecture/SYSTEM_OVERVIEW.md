@@ -197,8 +197,12 @@ project files with deterministic SHA-256 checksums, validates known structured
 sources through existing repositories, records visual provenance and license
 labels, and explicitly excludes transient paths and rebuildable SQLite state.
 It uses the project lock and atomic filesystem writer only for a real output;
-dry-run is read-only. ZIP building and release verification remain separate
-stages.
+dry-run is read-only. The `package build` command in the same CLI module uses
+`src/ludowright/application/package_builder.py` and the deterministic
+`PackageArchiveBuilder` infrastructure adapter to validate the manifest's
+source checksums, create a fixed-metadata ZIP, and write a v1 package index in
+a create-only release directory. Global audit and release verification remain
+separate stages.
 
 ## Persistence and file safety
 

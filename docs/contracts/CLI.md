@@ -61,6 +61,13 @@ The command data contains the deterministic manifest, output path, project and
 package IDs, counts, dry-run state, warnings, and state-store compatibility
 version.
 
+Package builds use the same envelope and return the archive path, index path,
+archive SHA-256, archive size, deterministic index, and final state:
+
+```bash
+ludowright --json package build ./my-game release/package-manifest.json release
+```
+
 Global settings are inherited by nested command groups.
 
 ## JSON envelope
@@ -189,6 +196,9 @@ The shared runtime maps known failures without hiding unexpected programming def
 - technical-sheet rollback or unreadable persisted output → `corrupt-state`, exit 6;
 - package manifest output conflict → `conflict`, exit 5;
 - package manifest path, symlink, scan-limit, or source validation failure → `invalid-input`, exit 4;
+- package release output or source checksum conflict → `conflict`, exit 5;
+- package archive, index, path, symlink, or ZIP validation failure → `invalid-input`, exit 4;
+- package release rollback failure → `corrupt-state`, exit 6;
 - explicit `CliFailure` → its declared code and exit code.
 
 Unrecognized exceptions are re-raised during command execution. They must not be silently converted into a successful or generic result.

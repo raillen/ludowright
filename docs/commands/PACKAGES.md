@@ -1,4 +1,4 @@
-# Package Manifest CLI
+# Packages CLI
 
 ## Command
 
@@ -58,6 +58,50 @@ result and structured entries in the persisted manifest.
 
 ## Scope
 
-This command produces the manifest only. ZIP creation, package indexes,
-release directories, global readiness audits, and release verification are
-separate roadmap stages.
+This command produces the manifest only. ZIP creation and package indexes are
+provided by the separate `package build` command; global readiness audits and
+release verification remain later roadmap stages.
+
+## Build a release package
+
+Build a reproducible ZIP and its external index from an existing manifest:
+
+```bash
+ludowright package build PROJECT MANIFEST_PATH RELEASE_DIRECTORY
+```
+
+For example:
+
+```bash
+ludowright package build ./my-game release/package-manifest.json release
+```
+
+The manifest's `package_id` determines the output names. The example creates:
+
+```text
+release/<package_id>.zip
+release/<package_id>.index.json
+```
+
+The ZIP also contains the source manifest and index under the reserved
+`__ludowright__/` directory. Members, timestamps, compression settings,
+permissions, and ordering are fixed for reproducibility. The builder verifies
+that every file still has the size and checksum recorded by the manifest.
+
+Use `--dry-run` to validate and calculate the exact outputs without creating a
+lock, directory, ZIP, or index:
+
+```bash
+ludowright package build ./my-game release/package-manifest.json release --dry-run
+```
+
+Build outputs are create-only. An exact repeat is `unchanged`; a partial or
+different release is a conflict and is never overwritten. The release directory
+must be project-relative and outside `.ludowright`. A failure during the two
+writes removes artifacts and empty directories created by that invocation.
+
+Machine output uses the same envelope:
+
+```bash
+ludowright --json package build ./my-game release/package-manifest.json release
+```

@@ -27,6 +27,7 @@ It uses JSON Schema Draft 2020-12 and contains:
 |---|---|
 | Project | `project.schema.json` |
 | Package manifest | `package-manifest.schema.json` |
+| Package index | `package-index.schema.json` |
 | Decision | `decision.schema.json` |
 | Approval | `approval.schema.json` |
 | Asset | `asset.schema.json` |
