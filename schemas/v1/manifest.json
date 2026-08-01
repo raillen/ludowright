@@ -141,6 +141,12 @@
       "sha256": "4c8ff3c55ac586d16d784b7f0a94e2dc4dd10bce6e796834c84cfdc5518c0354"
     },
     {
+      "file": "imagegen-operation.schema.json",
+      "name": "imagegen-operation",
+      "schema_id": "https://schemas.ludowright.dev/v1/imagegen-operation.schema.json",
+      "sha256": "2955c0a9ab58bfd29b9b90af5143493aef3ca208d756df3b993af7c241fe0aef"
+    },
+    {
       "file": "humanoid-profile.schema.json",
       "name": "humanoid-profile",
       "schema_id": "https://schemas.ludowright.dev/v1/humanoid-profile.schema.json",

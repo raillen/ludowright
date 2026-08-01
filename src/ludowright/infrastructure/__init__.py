@@ -38,6 +38,12 @@ from ludowright.infrastructure.filesystem import (
     RepositoryPath,
     UnsafeProjectPathError,
 )
+from ludowright.infrastructure.image_artifacts import (
+    MAX_PNG_BYTES,
+    PNG_SIGNATURE,
+    ImageArtifactError,
+    validate_png_payload,
+)
 from ludowright.infrastructure.migrations import (
     STATE_MIGRATIONS,
     TARGET_STATE_SCHEMA_VERSION,
@@ -95,8 +101,10 @@ __all__ = [
     "DEFAULT_EVENT_LOG_PATH",
     "DEFAULT_STATE_STORE_PATH",
     "LOCK_DIRECTORY",
+    "MAX_PNG_BYTES",
     "ODS_LOCK_NAME",
     "ODS_MIMETYPE",
+    "PNG_SIGNATURE",
     "PROJECT_MARKER",
     "STATE_MIGRATIONS",
     "STATE_SCHEMA_VERSION",
@@ -115,6 +123,7 @@ __all__ = [
     "EventLogError",
     "EventLogRecovery",
     "EventLogSnapshot",
+    "ImageArtifactError",
     "IncompleteEventLogTailError",
     "IndexedEntity",
     "JsonDocumentRepository",
@@ -160,4 +169,5 @@ __all__ = [
     "UnsupportedStateSchemaError",
     "WorkflowProgress",
     "YamlDocumentRepository",
+    "validate_png_payload",
 ]

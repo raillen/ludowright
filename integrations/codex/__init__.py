@@ -1,5 +1,19 @@
 """Codex-specific adapters for LudoWright."""
 
+from integrations.codex.imagegen import (
+    IMAGEGEN_LOCK_NAME,
+    IMAGEGEN_MAX_OPERATION_BYTES,
+    IMAGEGEN_OPERATION_FILENAME,
+    ImageGenConflictError,
+    ImageGenExecutionError,
+    ImageGenExecutionResult,
+    ImageGenExecutor,
+    ImageGenOperation,
+    ImageGenProvider,
+    ImageGenProviderError,
+    ImageGenRequest,
+    ImageGenRollbackError,
+)
 from integrations.codex.orchestration import (
     CODEX_ORCHESTRATION_POLICY_FILENAME,
     CodexOrchestrationDefinitionError,
@@ -29,6 +43,9 @@ __all__ = [
     "CODEX_SKILL_INSTALL_PATH",
     "CODEX_SKILL_LOCK_NAME",
     "CODEX_SKILL_MANIFEST_FILENAME",
+    "IMAGEGEN_LOCK_NAME",
+    "IMAGEGEN_MAX_OPERATION_BYTES",
+    "IMAGEGEN_OPERATION_FILENAME",
     "CodexOrchestrationDefinitionError",
     "CodexOrchestrationError",
     "CodexOrchestrationPolicy",
@@ -42,6 +59,15 @@ __all__ = [
     "CodexSkillResult",
     "CodexSkillService",
     "CodexSkillSourceFile",
+    "ImageGenConflictError",
+    "ImageGenExecutionError",
+    "ImageGenExecutionResult",
+    "ImageGenExecutor",
+    "ImageGenOperation",
+    "ImageGenProvider",
+    "ImageGenProviderError",
+    "ImageGenRequest",
+    "ImageGenRollbackError",
     "load_codex_orchestration_policy",
     "load_codex_skill_definition",
 ]

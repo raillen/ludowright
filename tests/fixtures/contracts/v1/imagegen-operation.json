@@ -1,0 +1,32 @@
+{
+  "id": "imagegen-d52bcd14f7d4224da8de31dcd948521e",
+  "input_reference_ids": [],
+  "job_id": "job-hero-front-v1",
+  "job_request_revision": "sha256:job-request",
+  "kind": "imagegen-operation",
+  "negative_prompt": "Avoid: unreadable micro-detail. Negative constraints: Do not add uncontrolled text, logos, or watermarks; Do not present generated views as geometrically exact blueprints.",
+  "operation_revision": "d52bcd14f7d4224da8de31dcd948521eaedb8158857960bf1f88425bfac75e90",
+  "output_directory": "references/hero/job-hero-front-v1",
+  "outputs": [
+    {
+      "index": 1,
+      "path": "references/hero/job-hero-front-v1/01-identity.png",
+      "role": "identity"
+    },
+    {
+      "index": 2,
+      "path": "references/hero/job-hero-front-v1/02-construction.png",
+      "role": "construction"
+    }
+  ],
+  "positive_prompt": "Focused game asset target: asset:hero. Shape language: clean rounded silhouettes; supporting descriptors: soft bevels. Proportions: Humanoid silhouette: Keep the torso readable and the head-to-body relationship consistent across views. Palette: Ink (primary) #1F2937; Paper (background) #F9FAFB; Accent (accent) #F59E0B. Materials: Painted matte (matte): Prefer broad, quiet value transitions and avoid photorealistic surface noise. Lighting: studio lighting with soft shadows. Camera: orthographic projection, 10% framing margin. Detail level: medium (Preserve primary components, material separation, and defining details.). Positive constraints: Use a centered subject with clear silhouette separation; Keep the approved palette relationships stable across views. Approved references: none.",
+  "profile_version": 1,
+  "prompt_hash": "2f20cdf56c599ef2e5d018d56bd33ff4600f50ef7cd0a87f6ed1c17c8b232647",
+  "schema_version": 1,
+  "target": {
+    "asset_id": "hero",
+    "component_id": null,
+    "state_id": null,
+    "variant_id": null
+  }
+}
