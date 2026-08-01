@@ -33,6 +33,8 @@ It uses JSON Schema Draft 2020-12 and contains:
 | Asset discovery candidate | `asset-discovery-candidate.schema.json` |
 | Asset discovery issue | `asset-discovery-issue.schema.json` |
 | Asset discovery report | `asset-discovery-report.schema.json` |
+| Asset decomposition | `asset-decomposition.schema.json` |
+| Asset decomposition report | `asset-decomposition-report.schema.json` |
 | Visual reference | `visual-reference.schema.json` |
 | Visual job | `visual-job.schema.json` |
 | Generation receipt | `generation-receipt.schema.json` |

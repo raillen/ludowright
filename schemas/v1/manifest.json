@@ -57,6 +57,18 @@
       "sha256": "16e279e4b29ba9ac3ff8feaa96bd888d4d113cbc6c38c345be25501c43fa4af7"
     },
     {
+      "file": "asset-decomposition.schema.json",
+      "name": "asset-decomposition",
+      "schema_id": "https://schemas.ludowright.dev/v1/asset-decomposition.schema.json",
+      "sha256": "ef3363477b1ab8758ed237ed2701df073fb05f064e9e24ef694eb482f087d5ee"
+    },
+    {
+      "file": "asset-decomposition-report.schema.json",
+      "name": "asset-decomposition-report",
+      "schema_id": "https://schemas.ludowright.dev/v1/asset-decomposition-report.schema.json",
+      "sha256": "1af7a12790940723924f71d7ccf866805175bb9c612f52d0041d15af09af1b26"
+    },
+    {
       "file": "visual-reference.schema.json",
       "name": "visual-reference",
       "schema_id": "https://schemas.ludowright.dev/v1/visual-reference.schema.json",

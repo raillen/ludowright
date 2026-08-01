@@ -34,10 +34,13 @@ The repository currently establishes:
   event auditing, and derived SQLite indexing.
 - deterministic Markdown asset discovery with explicit candidate confirmation,
   duplicate handling, and source provenance.
+- deterministic asset decomposition with versioned contracts, prerequisite graph
+  edges, guided corrections, dry-run planning, and advisory capture-profile
+  recommendations.
 
-Project initialization, interview-context orchestration, asset decomposition,
-capture profiles, ImageGen execution, review workflows,
-technical sheets, and package generation remain planned work.
+Project initialization, interview-context orchestration, executable capture
+profiles, ImageGen execution, review workflows, technical sheets, and package
+generation remain planned work.
 
 ## Start here
 

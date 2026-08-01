@@ -1,4 +1,4 @@
-# Asset Registry and Discovery CLI
+# Asset Registry, Discovery, and Decomposition CLI
 
 ## Canonical commands
 
@@ -18,11 +18,38 @@ ludowright assets export PROJECT exports/assets.json
 ludowright assets discover PROJECT
 ludowright assets discover PROJECT --source .ludowright/documents/brief.md
 ludowright assets discover PROJECT --confirm candidate-<sha256>
+ludowright assets decompose PROJECT chr-maya
+ludowright assets decompose PROJECT chr-maya --input imports/maya-decomposition.json
 ```
 
 The create and update inputs are individual `asset` contracts. Import inputs
 are `asset-registry` contracts and merge only new IDs into the canonical YAML
 registry. Export produces the same batch contract in the requested format.
+
+## Decomposition
+
+`assets decompose` inspects or replaces the components, variants, states, and
+asset-to-asset prerequisites of one existing asset:
+
+```bash
+ludowright assets decompose PROJECT chr-maya
+ludowright --json assets decompose PROJECT chr-maya \
+  --input imports/maya-decomposition.json --dry-run
+```
+
+Without `--input`, the command is read-only and reports the current aggregate,
+dependency-graph revision, and a recommendation derived from packaged
+versioned data. With input, the path must be a safe project-relative `.json` or
+`.yaml` decomposition contract. The operation validates the complete
+replacement, plans `requires` edges in the canonical dependency graph, and
+reuses the registry's event-log and SQLite rollback boundary.
+
+Recommendations expose a profile ID and version for later visual-foundation
+work; they do not execute or create capture profiles in this slice. Invalid
+dependencies and malformed hierarchies produce guided correction records.
+Repeating the same replacement is a safe no-op. A failed registry write
+restores the graph when an optimistic byte check confirms that no concurrent
+writer changed it.
 
 ## JSON and dry-run output
 
@@ -79,3 +106,6 @@ creates the selected assets through the registry batch operation and appends
 `asset.discovered` with source path and line provenance. See
 [`ASSET_DISCOVERY.md`](../contracts/ASSET_DISCOVERY.md) for the contract and
 marker grammar.
+
+The decomposition contract and report are defined in
+[`ASSET_DECOMPOSITION.md`](../contracts/ASSET_DECOMPOSITION.md).

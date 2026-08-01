@@ -4,6 +4,10 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from ludowright.contracts.asset_decomposition import (
+    AssetDecompositionContract,
+    AssetDecompositionReportContract,
+)
 from ludowright.contracts.asset_discovery import (
     AssetDiscoveryCandidateContract,
     AssetDiscoveryIssueContract,
@@ -93,6 +97,18 @@ CONTRACTS: tuple[ContractDefinition, ...] = (
         "asset-discovery-report.schema.json",
         "LudoWright Asset Discovery Report",
         AssetDiscoveryReportContract,
+    ),
+    ContractDefinition(
+        "asset-decomposition",
+        "asset-decomposition.schema.json",
+        "LudoWright Asset Decomposition",
+        AssetDecompositionContract,
+    ),
+    ContractDefinition(
+        "asset-decomposition-report",
+        "asset-decomposition-report.schema.json",
+        "LudoWright Asset Decomposition Report",
+        AssetDecompositionReportContract,
     ),
     ContractDefinition(
         "visual-reference",

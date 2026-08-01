@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "kind": "asset-decomposition-report",
+  "state": "updated",
+  "dry_run": false,
+  "asset_id": "chr-maya",
+  "asset": {
+    "schema_version": 1,
+    "kind": "asset",
+    "id": "chr-maya",
+    "name": "Maya",
+    "family": "character",
+    "subtype": "humanoid",
+    "priority": "high",
+    "status": "planned",
+    "components": [
+      {
+        "id": "base-body",
+        "name": "Base Body",
+        "status": "planned",
+        "required": true
+      },
+      {
+        "id": "winter-coat",
+        "name": "Winter Coat",
+        "status": "planned",
+        "required": false,
+        "parent_id": "base-body"
+      }
+    ],
+    "variants": [
+      {
+        "id": "winter",
+        "name": "Winter",
+        "status": "planned",
+        "required": false
+      }
+    ],
+    "states": [
+      {
+        "id": "damaged",
+        "name": "Damaged",
+        "status": "planned",
+        "required": false
+      }
+    ]
+  },
+  "decomposition": {
+    "schema_version": 1,
+    "kind": "asset-decomposition",
+    "asset_id": "chr-maya",
+    "components": [
+      {
+        "id": "base-body",
+        "name": "Base Body",
+        "status": "planned",
+        "required": true
+      },
+      {
+        "id": "winter-coat",
+        "name": "Winter Coat",
+        "status": "planned",
+        "required": false,
+        "parent_id": "base-body"
+      }
+    ],
+    "variants": [
+      {
+        "id": "winter",
+        "name": "Winter",
+        "status": "planned",
+        "required": false
+      }
+    ],
+    "states": [
+      {
+        "id": "damaged",
+        "name": "Damaged",
+        "status": "planned",
+        "required": false
+      }
+    ],
+    "dependencies": [
+      {
+        "depends_on": "prop-arcade-cabinet",
+        "invalidation_mode": "stale"
+      }
+    ]
+  },
+  "corrections": [],
+  "capture_profile": {
+    "state": "recommended",
+    "profile_id": "humanoid-character",
+    "profile_version": 1,
+    "family": "character",
+    "subtype": "humanoid",
+    "subject_modes": [
+      "asset",
+      "components",
+      "variants",
+      "states"
+    ],
+    "required_item_ids": [
+      "base-body"
+    ],
+    "reason": "Use the humanoid character capture guidance for the aggregate and its decomposed subjects."
+  },
+  "registry_path": "assets/registry.yaml",
+  "registry_version": 3,
+  "dependency_graph_path": ".ludowright/dependency-graph.json",
+  "dependency_graph_revision": 5,
+  "valid": true
+}

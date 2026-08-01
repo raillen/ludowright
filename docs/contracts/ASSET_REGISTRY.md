@@ -56,6 +56,14 @@ version. A failure after one resource is written restores the prior YAML and
 event bytes and restores the derived index where possible. If restoration
 fails, the original failure remains the cause of a `corrupt-state` error.
 
+The `assets decompose` workflow reuses the registry replacement boundary for
+the asset aggregate and records `asset.decomposed`. Its cross-asset
+prerequisites remain in the canonical dependency graph rather than being
+embedded in this YAML collection. Graph-first persistence is coordinated by
+the application service and restored after a later registry failure when the
+safe optimistic byte check succeeds. See
+[`ASSET_DECOMPOSITION.md`](ASSET_DECOMPOSITION.md).
+
 ## Compatibility and migration
 
 This PR introduces the first persisted registry shape as v1. Existing `asset`
@@ -64,9 +72,8 @@ requires a new schema version, retained fixtures, an explicit migration or
 dual-read policy, and an ADR. The registry revision is not an event-log
 sequence and must not be used as one.
 
-Asset-to-asset dependencies, decomposition workflows,
-capture-profile recommendations, ODS output, and completeness audits remain
-later PRs.
+Capture-profile execution, ODS output, and completeness audits remain later
+PRs. Decomposition recommendations in PR34 are derived guidance only.
 
 Document candidate discovery is defined separately in
 [`ASSET_DISCOVERY.md`](ASSET_DISCOVERY.md). Confirmed candidates reuse this

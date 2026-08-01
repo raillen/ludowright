@@ -1,5 +1,14 @@
 """Versioned serialization contracts and JSON Schema publication."""
 
+from ludowright.contracts.asset_decomposition import (
+    AssetDecompositionContract,
+    AssetDecompositionCorrectionContract,
+    AssetDecompositionRecommendationCatalogContract,
+    AssetDecompositionRecommendationRuleContract,
+    AssetDecompositionReportContract,
+    AssetDependencyContract,
+    CaptureProfileRecommendationContract,
+)
 from ludowright.contracts.asset_discovery import (
     AssetDiscoveryCandidateContract,
     AssetDiscoveryIssueContract,
@@ -97,6 +106,12 @@ __all__ = [
     "AnswerRecordContract",
     "ApprovalContract",
     "AssetContract",
+    "AssetDecompositionContract",
+    "AssetDecompositionCorrectionContract",
+    "AssetDecompositionRecommendationCatalogContract",
+    "AssetDecompositionRecommendationRuleContract",
+    "AssetDecompositionReportContract",
+    "AssetDependencyContract",
     "AssetDiscoveryCandidateContract",
     "AssetDiscoveryIssueContract",
     "AssetDiscoveryReportContract",
@@ -112,6 +127,7 @@ __all__ = [
     "AtlasMetadataContract",
     "AtlasReportContract",
     "CaptureProfileContract",
+    "CaptureProfileRecommendationContract",
     "CliErrorCode",
     "CliErrorContract",
     "CliMetaContract",

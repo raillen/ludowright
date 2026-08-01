@@ -50,7 +50,9 @@ assembly from interview answers remains a later bounded capability.
 - deterministic batch import/export with dry-run and rollback behavior;
 - deterministic candidate discovery from game documentation with explicit confirmation;
 - manual and guided asset creation;
-- components, variants, states, dependencies, priorities, and ownership;
+- components, variants, states, priorities, and ownership;
+- deterministic decomposition with prerequisite-asset dependency edges,
+  guided corrections, and advisory capture-profile recommendations;
 - YAML registry and derived ODS export;
 - orphan and completeness audits.
 

@@ -1,0 +1,696 @@
+{
+  "$defs": {
+    "AssetComponentContract": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "owner": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AssetOwnerContract"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "parent_id": {
+          "anyOf": [
+            {
+              "maxLength": 80,
+              "minLength": 1,
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Parent Id"
+        },
+        "required": {
+          "default": true,
+          "title": "Required",
+          "type": "boolean"
+        },
+        "status": {
+          "$ref": "#/$defs/AssetStatus",
+          "default": "planned"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ],
+      "title": "AssetComponentContract",
+      "type": "object"
+    },
+    "AssetContract": {
+      "additionalProperties": false,
+      "properties": {
+        "components": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/AssetComponentContract"
+          },
+          "title": "Components",
+          "type": "array"
+        },
+        "family": {
+          "$ref": "#/$defs/AssetFamily"
+        },
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "const": "asset",
+          "default": "asset",
+          "title": "Kind",
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "owner": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AssetOwnerContract"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "priority": {
+          "$ref": "#/$defs/AssetPriority",
+          "default": "normal"
+        },
+        "schema_version": {
+          "const": 1,
+          "default": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "states": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/AssetStateContract"
+          },
+          "title": "States",
+          "type": "array"
+        },
+        "status": {
+          "$ref": "#/$defs/AssetStatus",
+          "default": "planned"
+        },
+        "subtype": {
+          "anyOf": [
+            {
+              "maxLength": 80,
+              "minLength": 1,
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Subtype"
+        },
+        "variants": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/AssetVariantContract"
+          },
+          "title": "Variants",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "family"
+      ],
+      "title": "AssetContract",
+      "type": "object"
+    },
+    "AssetDecompositionContract": {
+      "additionalProperties": false,
+      "description": "Complete replacement payload for one asset's decomposition.",
+      "properties": {
+        "asset_id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Asset Id",
+          "type": "string"
+        },
+        "components": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/AssetComponentContract"
+          },
+          "title": "Components",
+          "type": "array"
+        },
+        "dependencies": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/AssetDependencyContract"
+          },
+          "maxItems": 256,
+          "title": "Dependencies",
+          "type": "array"
+        },
+        "kind": {
+          "const": "asset-decomposition",
+          "default": "asset-decomposition",
+          "title": "Kind",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": 1,
+          "default": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "states": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/AssetStateContract"
+          },
+          "title": "States",
+          "type": "array"
+        },
+        "variants": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/AssetVariantContract"
+          },
+          "title": "Variants",
+          "type": "array"
+        }
+      },
+      "required": [
+        "asset_id"
+      ],
+      "title": "AssetDecompositionContract",
+      "type": "object"
+    },
+    "AssetDecompositionCorrectionContract": {
+      "additionalProperties": false,
+      "description": "One actionable validation or review message for a decomposition.",
+      "properties": {
+        "code": {
+          "enum": [
+            "missing-input",
+            "invalid-decomposition",
+            "unknown-dependency",
+            "self-dependency",
+            "duplicate-dependency",
+            "input-asset-mismatch",
+            "graph-reconciliation-required",
+            "profile-review",
+            "required-item-blocks-completion"
+          ],
+          "title": "Code",
+          "type": "string"
+        },
+        "message": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Message",
+          "type": "string"
+        },
+        "severity": {
+          "enum": [
+            "error",
+            "warning",
+            "info"
+          ],
+          "title": "Severity",
+          "type": "string"
+        },
+        "subject": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Subject",
+          "type": "string"
+        },
+        "suggestion": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Suggestion",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "severity",
+        "subject",
+        "message",
+        "suggestion"
+      ],
+      "title": "AssetDecompositionCorrectionContract",
+      "type": "object"
+    },
+    "AssetDependencyContract": {
+      "additionalProperties": false,
+      "description": "One explicit prerequisite asset for the decomposed aggregate.",
+      "properties": {
+        "depends_on": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Depends On",
+          "type": "string"
+        },
+        "invalidation_mode": {
+          "$ref": "#/$defs/InvalidationMode",
+          "default": "stale"
+        }
+      },
+      "required": [
+        "depends_on"
+      ],
+      "title": "AssetDependencyContract",
+      "type": "object"
+    },
+    "AssetFamily": {
+      "description": "Stable top-level production families.",
+      "enum": [
+        "character",
+        "creature",
+        "environment",
+        "architecture",
+        "prop",
+        "vehicle",
+        "vegetation",
+        "terrain",
+        "material",
+        "texture",
+        "animation",
+        "ui",
+        "vfx",
+        "audio",
+        "other"
+      ],
+      "title": "AssetFamily",
+      "type": "string"
+    },
+    "AssetOwnerContract": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/OwnerKind"
+        },
+        "label": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Label",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "label",
+        "kind"
+      ],
+      "title": "AssetOwnerContract",
+      "type": "object"
+    },
+    "AssetPriority": {
+      "description": "Relative production priority, independent of current status.",
+      "enum": [
+        "critical",
+        "high",
+        "normal",
+        "low",
+        "backlog"
+      ],
+      "title": "AssetPriority",
+      "type": "string"
+    },
+    "AssetStateContract": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "owner": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AssetOwnerContract"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "required": {
+          "default": true,
+          "title": "Required",
+          "type": "boolean"
+        },
+        "status": {
+          "$ref": "#/$defs/AssetStatus",
+          "default": "planned"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ],
+      "title": "AssetStateContract",
+      "type": "object"
+    },
+    "AssetStatus": {
+      "description": "Production progress shared by assets and decomposed items.",
+      "enum": [
+        "planned",
+        "specified",
+        "ready",
+        "in-production",
+        "in-review",
+        "completed",
+        "cancelled",
+        "archived"
+      ],
+      "title": "AssetStatus",
+      "type": "string"
+    },
+    "AssetVariantContract": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "owner": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AssetOwnerContract"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "required": {
+          "default": true,
+          "title": "Required",
+          "type": "boolean"
+        },
+        "status": {
+          "$ref": "#/$defs/AssetStatus",
+          "default": "planned"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ],
+      "title": "AssetVariantContract",
+      "type": "object"
+    },
+    "CaptureProfileRecommendationContract": {
+      "additionalProperties": false,
+      "description": "A deterministic, non-executable capture-profile recommendation.",
+      "properties": {
+        "family": {
+          "$ref": "#/$defs/AssetFamily"
+        },
+        "profile_id": {
+          "anyOf": [
+            {
+              "maxLength": 80,
+              "minLength": 1,
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Profile Id"
+        },
+        "profile_version": {
+          "anyOf": [
+            {
+              "maximum": 2147483647,
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Profile Version"
+        },
+        "reason": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Reason",
+          "type": "string"
+        },
+        "required_item_ids": {
+          "default": [],
+          "items": {
+            "maxLength": 80,
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "maxItems": 512,
+          "title": "Required Item Ids",
+          "type": "array"
+        },
+        "state": {
+          "enum": [
+            "recommended",
+            "needs-review",
+            "unavailable"
+          ],
+          "title": "State",
+          "type": "string"
+        },
+        "subject_modes": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/CaptureSubjectMode"
+          },
+          "title": "Subject Modes",
+          "type": "array"
+        },
+        "subtype": {
+          "anyOf": [
+            {
+              "maxLength": 80,
+              "minLength": 1,
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Subtype"
+        }
+      },
+      "required": [
+        "state",
+        "family",
+        "reason"
+      ],
+      "title": "CaptureProfileRecommendationContract",
+      "type": "object"
+    },
+    "CaptureSubjectMode": {
+      "enum": [
+        "asset",
+        "components",
+        "variants",
+        "states"
+      ],
+      "title": "CaptureSubjectMode",
+      "type": "string"
+    },
+    "InvalidationMode": {
+      "description": "How a source problem affects a dependent target.",
+      "enum": [
+        "stale",
+        "review",
+        "none"
+      ],
+      "title": "InvalidationMode",
+      "type": "string"
+    },
+    "OwnerKind": {
+      "description": "Kind of owner responsible for a production item.",
+      "enum": [
+        "person",
+        "team",
+        "role",
+        "automation"
+      ],
+      "title": "OwnerKind",
+      "type": "string"
+    }
+  },
+  "$id": "https://schemas.ludowright.dev/v1/asset-decomposition-report.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Stable result returned by the decomposition command.",
+  "properties": {
+    "asset": {
+      "$ref": "#/$defs/AssetContract"
+    },
+    "asset_id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Asset Id",
+      "type": "string"
+    },
+    "capture_profile": {
+      "$ref": "#/$defs/CaptureProfileRecommendationContract"
+    },
+    "corrections": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/AssetDecompositionCorrectionContract"
+      },
+      "maxItems": 256,
+      "title": "Corrections",
+      "type": "array"
+    },
+    "decomposition": {
+      "$ref": "#/$defs/AssetDecompositionContract"
+    },
+    "dependency_graph_path": {
+      "maxLength": 1024,
+      "minLength": 1,
+      "pattern": "^[a-z0-9._-]+(?:/[a-z0-9._-]+)*$",
+      "title": "Dependency Graph Path",
+      "type": "string"
+    },
+    "dependency_graph_revision": {
+      "maximum": 2147483647,
+      "minimum": 1,
+      "title": "Dependency Graph Revision",
+      "type": "integer"
+    },
+    "dry_run": {
+      "title": "Dry Run",
+      "type": "boolean"
+    },
+    "kind": {
+      "const": "asset-decomposition-report",
+      "default": "asset-decomposition-report",
+      "title": "Kind",
+      "type": "string"
+    },
+    "registry_path": {
+      "maxLength": 1024,
+      "minLength": 1,
+      "pattern": "^[a-z0-9._-]+(?:/[a-z0-9._-]+)*$",
+      "title": "Registry Path",
+      "type": "string"
+    },
+    "registry_version": {
+      "maximum": 2147483647,
+      "minimum": 1,
+      "title": "Registry Version",
+      "type": "integer"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "state": {
+      "enum": [
+        "current",
+        "planned",
+        "updated",
+        "invalid"
+      ],
+      "title": "State",
+      "type": "string"
+    },
+    "valid": {
+      "default": true,
+      "title": "Valid",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "state",
+    "dry_run",
+    "asset_id",
+    "asset",
+    "decomposition",
+    "capture_profile",
+    "registry_path",
+    "registry_version",
+    "dependency_graph_path",
+    "dependency_graph_revision"
+  ],
+  "title": "LudoWright Asset Decomposition Report",
+  "type": "object"
+}

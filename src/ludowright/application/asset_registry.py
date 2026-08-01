@@ -185,22 +185,42 @@ class AssetRegistryService:
     ) -> AssetRegistryResult:
         """Replace one asset while preserving its ID and valid status transitions."""
         asset = self._load_asset(input_path)
-        self._validate_asset(asset)
         asset_id = _canonical_asset_id(asset_id)
         if asset.id != asset_id:
             raise AssetRegistryError(
                 f"update input ID {asset.id!r} does not match requested asset {asset_id!r}"
             )
+        return self.replace_contract(asset, dry_run=dry_run)
+
+    def replace_contract(
+        self,
+        asset: AssetContract,
+        *,
+        dry_run: bool = False,
+        expected_asset: AssetContract | None = None,
+        event_type: str = "asset.updated",
+        event_payload: Mapping[str, FrozenJsonValue] | None = None,
+        operation: str = "update",
+    ) -> AssetRegistryResult:
+        """Replace one validated asset contract through the canonical mutation boundary."""
+        if not isinstance(asset, AssetContract):
+            raise TypeError("asset replacement requires an AssetContract")
+        self._validate_asset(asset)
+        asset_id = _canonical_asset_id(asset.id)
         with self._operation_lock(dry_run):
             snapshot, current = self._load_current(required=True)
             existing = _asset_by_id(current, asset_id)
             if existing is None:
                 raise AssetRegistryNotFoundError(f"asset does not exist: {asset_id}")
+            if expected_asset is not None and existing != expected_asset:
+                raise AssetRegistryConflictError(
+                    f"asset changed while the replacement was being planned: {asset_id}"
+                )
             existing.to_domain().transition_status(asset.to_domain().status)
             updated = _with_assets(current, (asset,), replace_id=asset_id)
             if dry_run:
                 return self._result(
-                    "update",
+                    operation,
                     "planned",
                     True,
                     updated,
@@ -210,10 +230,18 @@ class AssetRegistryService:
             self._persist_registry(
                 snapshot,
                 updated,
-                event_type="asset.updated",
+                event_type=event_type,
                 asset_ids=(asset.id,),
+                event_payload=event_payload,
             )
-            return self._result("update", "updated", False, updated, asset=asset, assets=(asset,))
+            return self._result(
+                operation,
+                "updated",
+                False,
+                updated,
+                asset=asset,
+                assets=(asset,),
+            )
 
     def list_assets(self) -> AssetRegistryResult:
         """Return all valid assets in stable ID order without creating state."""
