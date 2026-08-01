@@ -772,7 +772,14 @@ of PR62.
 
 ### PR 62 — Public beta and 1.0 readiness
 
-- clean-room installation tests;
+Status: the clean-room installation sub-slice is implemented in the current
+chain. The quality gate now builds the wheel and source distribution in a
+temporary directory, installs each format into a fresh virtual environment,
+and runs the installed CLI from outside the checkout. End-to-end validation,
+migration coverage, security review, documentation audit, beta feedback, and
+release-candidate work remain bounded follow-up slices of PR62.
+
+- clean-room installation tests (implemented in the current slice);
 - end-to-end validation;
 - migration matrix;
 - security review;

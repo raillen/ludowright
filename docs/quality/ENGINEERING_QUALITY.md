@@ -56,11 +56,23 @@ The command executes, in order:
 
 1. all pre-commit hooks;
 2. the pytest suite with coverage;
-3. generated JSON Schema drift verification;
-4. ATLAS canonical-source, link, and orphan validation;
-5. the deterministic documentation audit;
-6. the strict documentation build;
-7. the Python dependency audit.
+3. a clean-room installation test for the wheel and source distribution;
+4. generated JSON Schema drift verification;
+5. ATLAS canonical-source, link, and orphan validation;
+6. the deterministic documentation audit;
+7. the strict documentation build;
+8. the Python dependency audit.
+
+The clean-room check builds both publishable formats into a temporary
+directory, creates a new virtual environment for each format, installs the
+artifact with its runtime dependencies, and executes `ludowright --version`
+and JSON diagnostics from outside the checkout. It removes checkout-related
+Python environment variables and never writes to the repository. Run only this
+bounded check with:
+
+```bash
+uv run pytest -m clean_installation --no-cov
+```
 
 Inspect the planned commands without executing them:
 
@@ -109,7 +121,8 @@ Before publishing a release, run:
 uv run ludowright quality release
 ```
 
-This runs the normal quality checks and then verifies that source and wheel distributions build with `uv build`.
+This runs the normal quality checks, including clean-room installation, and
+then verifies that source and wheel distributions build with `uv build`.
 
 ## Coverage policy
 
