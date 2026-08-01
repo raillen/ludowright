@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "kind": "visual-profile",
+  "capture_profile": {
+    "schema_version": 1,
+    "kind": "capture-profile",
+    "id": "visual-locomotion",
+    "version": 1,
+    "name": "Locomotion Visual Profile",
+    "family": "animation",
+    "subtype": "locomotion",
+    "camera": {"projection": "orthographic", "framing_margin_percent": 15},
+    "background": {"mode": "neutral"},
+    "lighting": {"mode": "studio", "shadows": "soft"},
+    "validation": {"width": 2048, "height": 2048, "require_full_subject": true, "require_consistent_scale": true, "require_neutral_pose": false, "allow_occlusion": false},
+    "views": [
+      {"id": "front", "name": "Front", "azimuth_degrees": 0, "elevation_degrees": 0, "role": "identity"},
+      {"id": "side", "name": "Side", "azimuth_degrees": 90, "elevation_degrees": 0, "role": "construction"},
+      {"id": "rear", "name": "Rear", "azimuth_degrees": 180, "elevation_degrees": 0, "role": "construction"},
+      {"id": "start", "name": "Start", "azimuth_degrees": 90, "elevation_degrees": 10, "role": "construction"},
+      {"id": "loop", "name": "Loop", "azimuth_degrees": 90, "elevation_degrees": 10, "role": "construction"},
+      {"id": "end", "name": "End", "azimuth_degrees": 90, "elevation_degrees": 10, "role": "construction"},
+      {"id": "contact", "name": "Contact", "azimuth_degrees": 90, "elevation_degrees": -10, "role": "silhouette"}
+    ],
+    "requirements": [
+      {"id": "subject", "name": "Subject", "requirement_kind": "component"},
+      {"id": "rig", "name": "Rig", "requirement_kind": "component"},
+      {"id": "pose", "name": "Pose", "requirement_kind": "component"},
+      {"id": "contact", "name": "Contact", "requirement_kind": "component", "required": false},
+      {"id": "forward", "name": "Forward", "requirement_kind": "variant", "required": false},
+      {"id": "backward", "name": "Backward", "requirement_kind": "variant", "required": false},
+      {"id": "idle", "name": "Idle", "requirement_kind": "state"},
+      {"id": "action", "name": "Action", "requirement_kind": "state"},
+      {"id": "recovery", "name": "Recovery", "requirement_kind": "state", "required": false}
+    ],
+    "sheets": []
+  },
+  "profile_kind": "locomotion",
+  "guidance": "Show locomotion as a readable sequence with consistent subject scale, contact points, direction, and recovery rather than a single decorative pose.",
+  "views": [
+    {"view_id": "front", "role": "whole-subject", "guidance": "Establish the subject, facing, and neutral scale reference."},
+    {"view_id": "side", "role": "side", "guidance": "Show stride length, balance, and forward motion."},
+    {"view_id": "rear", "role": "rear", "guidance": "Show rear alignment and foot or contact spacing."},
+    {"view_id": "start", "role": "start", "guidance": "Show anticipation or entry into the movement."},
+    {"view_id": "loop", "role": "loop", "guidance": "Show the stable repeated movement phase."},
+    {"view_id": "end", "role": "end", "guidance": "Show the approved exit or recovery setup."},
+    {"view_id": "contact", "role": "contact", "guidance": "Show foot, wheel, or ground contact cues."}
+  ],
+  "components": [
+    {"id": "subject", "name": "Subject", "kind": "subject"},
+    {"id": "rig", "name": "Rig", "kind": "rig"},
+    {"id": "pose", "name": "Pose", "kind": "pose"},
+    {"id": "contact", "name": "Contact", "kind": "contact", "required": false}
+  ],
+  "variants": [
+    {"id": "forward", "name": "Forward", "guidance": "Show the primary forward locomotion direction.", "required": false},
+    {"id": "backward", "name": "Backward", "guidance": "Show the approved backward movement variant.", "required": false}
+  ],
+  "states": [
+    {"id": "idle", "name": "Idle", "guidance": "Use the neutral state before movement begins."},
+    {"id": "action", "name": "Action", "guidance": "Show the readable movement cycle."},
+    {"id": "recovery", "name": "Recovery", "guidance": "Show the return toward the next stable state.", "required": false}
+  ],
+  "outputs": [
+    {"id": "locomotion-keyframes", "name": "Locomotion Keyframes", "layout": "grid", "view_ids": ["front", "side", "rear", "start", "loop", "end", "contact"], "subject_modes": ["asset", "components", "variants", "states"], "separate_files": true, "assembled_sheet": true}
+  ]
+}

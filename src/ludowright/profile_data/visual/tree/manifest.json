@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "kind": "visual-profile",
+  "capture_profile": {
+    "schema_version": 1,
+    "kind": "capture-profile",
+    "id": "visual-tree",
+    "version": 1,
+    "name": "Tree Visual Profile",
+    "family": "vegetation",
+    "subtype": "large-tree",
+    "camera": {"projection": "orthographic", "framing_margin_percent": 12},
+    "background": {"mode": "neutral"},
+    "lighting": {"mode": "natural", "shadows": "soft"},
+    "validation": {"width": 2048, "height": 2048, "require_full_subject": true, "require_consistent_scale": true, "allow_occlusion": false},
+    "views": [
+      {"id": "front", "name": "Front", "azimuth_degrees": 0, "elevation_degrees": 0, "role": "identity"},
+      {"id": "side", "name": "Side", "azimuth_degrees": 90, "elevation_degrees": 0, "role": "construction"},
+      {"id": "rear", "name": "Rear", "azimuth_degrees": 180, "elevation_degrees": 0, "role": "construction"},
+      {"id": "top", "name": "Top", "azimuth_degrees": 0, "elevation_degrees": 90, "role": "silhouette"},
+      {"id": "silhouette", "name": "Silhouette", "azimuth_degrees": 45, "elevation_degrees": 10, "role": "silhouette"},
+      {"id": "detail", "name": "Detail", "azimuth_degrees": 25, "elevation_degrees": 20, "role": "construction"}
+    ],
+    "requirements": [
+      {"id": "subject", "name": "Subject", "requirement_kind": "component"},
+      {"id": "trunk", "name": "Trunk", "requirement_kind": "component"},
+      {"id": "canopy", "name": "Canopy", "requirement_kind": "component"},
+      {"id": "branches", "name": "Branches", "requirement_kind": "component", "required": false},
+      {"id": "spring", "name": "Spring", "requirement_kind": "variant", "required": false},
+      {"id": "autumn", "name": "Autumn", "requirement_kind": "variant", "required": false},
+      {"id": "leaf-on", "name": "Leaf On", "requirement_kind": "state"},
+      {"id": "leaf-off", "name": "Leaf Off", "requirement_kind": "state", "required": false},
+      {"id": "damaged", "name": "Damaged", "requirement_kind": "state", "required": false}
+    ],
+    "sheets": []
+  },
+  "profile_kind": "tree",
+  "guidance": "Keep trunk structure, canopy mass, seasonal variation, and ground contact readable without treating the reference as exact geometry.",
+  "views": [
+    {"view_id": "front", "role": "whole-subject", "guidance": "Establish the complete tree silhouette and primary growth direction."},
+    {"view_id": "side", "role": "side", "guidance": "Show canopy depth, trunk taper, and major branch spacing."},
+    {"view_id": "rear", "role": "rear", "guidance": "Show rear branch structure and canopy breakup."},
+    {"view_id": "top", "role": "top", "guidance": "Show crown footprint and branch distribution from above."},
+    {"view_id": "silhouette", "role": "silhouette", "guidance": "Prioritize the readable outer mass at gameplay distance."},
+    {"view_id": "detail", "role": "detail", "guidance": "Show bark, leaf clusters, branch junctions, and contact cues."}
+  ],
+  "components": [
+    {"id": "subject", "name": "Subject", "kind": "subject"},
+    {"id": "trunk", "name": "Trunk", "kind": "trunk"},
+    {"id": "canopy", "name": "Canopy", "kind": "canopy"},
+    {"id": "branches", "name": "Branches", "kind": "other", "required": false}
+  ],
+  "variants": [
+    {"id": "spring", "name": "Spring", "guidance": "Show fresh growth and the approved spring palette.", "required": false},
+    {"id": "autumn", "name": "Autumn", "guidance": "Show seasonal color without changing the stable silhouette.", "required": false}
+  ],
+  "states": [
+    {"id": "leaf-on", "name": "Leaf On", "guidance": "Use the full approved canopy state."},
+    {"id": "leaf-off", "name": "Leaf Off", "guidance": "Expose trunk and branch structure for technical review.", "required": false},
+    {"id": "damaged", "name": "Damaged", "guidance": "Show only approved damage that changes production decisions.", "required": false}
+  ],
+  "outputs": [
+    {"id": "assembled-turnaround", "name": "Assembled Turnaround", "layout": "turnaround", "view_ids": ["front", "side", "rear", "top"], "subject_modes": ["asset", "components", "variants", "states"], "separate_files": true, "assembled_sheet": true},
+    {"id": "silhouette-details", "name": "Silhouette Details", "layout": "grid", "view_ids": ["silhouette", "detail"], "subject_modes": ["components", "variants", "states"], "separate_files": true, "assembled_sheet": false}
+  ]
+}

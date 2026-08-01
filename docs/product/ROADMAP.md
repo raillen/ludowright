@@ -79,7 +79,7 @@ assembly from interview answers remains a later bounded capability.
 - initial environment and hard-surface profiles for props, vehicles, buildings,
   modular kits, and interiors with directed connection matrices (implemented
   through PR41; project-local profile persistence remains later);
-- initial profiles for foliage, UI, VFX, and animation references;
+- initial foliage, UI, VFX, and animation profiles (implemented through PR42);
 - visual-job planning and profile-aware job derivation.
 
 ### 0.6 Codex and ImageGen Workflow

@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "kind": "visual-profile",
+  "capture_profile": {
+    "schema_version": 1,
+    "kind": "capture-profile",
+    "id": "visual-plant",
+    "version": 1,
+    "name": "Plant Visual Profile",
+    "family": "vegetation",
+    "subtype": "plant",
+    "camera": {"projection": "orthographic", "framing_margin_percent": 12},
+    "background": {"mode": "neutral"},
+    "lighting": {"mode": "natural", "shadows": "soft"},
+    "validation": {"width": 2048, "height": 2048, "require_full_subject": true, "require_consistent_scale": true, "allow_occlusion": false},
+    "views": [
+      {"id": "front", "name": "Front", "azimuth_degrees": 0, "elevation_degrees": 0, "role": "identity"},
+      {"id": "side", "name": "Side", "azimuth_degrees": 90, "elevation_degrees": 0, "role": "construction"},
+      {"id": "top", "name": "Top", "azimuth_degrees": 0, "elevation_degrees": 90, "role": "silhouette"},
+      {"id": "silhouette", "name": "Silhouette", "azimuth_degrees": 45, "elevation_degrees": 10, "role": "silhouette"},
+      {"id": "detail", "name": "Detail", "azimuth_degrees": 25, "elevation_degrees": 20, "role": "construction"}
+    ],
+    "requirements": [
+      {"id": "subject", "name": "Subject", "requirement_kind": "component"},
+      {"id": "stem", "name": "Stem", "requirement_kind": "component"},
+      {"id": "leaves", "name": "Leaves", "requirement_kind": "component"},
+      {"id": "flower", "name": "Flower", "requirement_kind": "component", "required": false},
+      {"id": "seedling", "name": "Seedling", "requirement_kind": "variant", "required": false},
+      {"id": "flowering", "name": "Flowering", "requirement_kind": "variant", "required": false},
+      {"id": "healthy", "name": "Healthy", "requirement_kind": "state"},
+      {"id": "wilted", "name": "Wilted", "requirement_kind": "state", "required": false},
+      {"id": "damaged", "name": "Damaged", "requirement_kind": "state", "required": false}
+    ],
+    "sheets": []
+  },
+  "profile_kind": "plant",
+  "guidance": "Keep the plant silhouette, growth habit, leaf grouping, and ground contact readable at intended gameplay scale.",
+  "views": [
+    {"view_id": "front", "role": "whole-subject", "guidance": "Establish the complete plant silhouette and dominant growth axis."},
+    {"view_id": "side", "role": "side", "guidance": "Show stem depth, leaf layering, and balance."},
+    {"view_id": "top", "role": "top", "guidance": "Show leaf and flower distribution from above."},
+    {"view_id": "silhouette", "role": "silhouette", "guidance": "Prioritize the outer mass and negative spaces."},
+    {"view_id": "detail", "role": "detail", "guidance": "Show leaf edges, stem junctions, flowers, and contact cues."}
+  ],
+  "components": [
+    {"id": "subject", "name": "Subject", "kind": "subject"},
+    {"id": "stem", "name": "Stem", "kind": "stem"},
+    {"id": "leaves", "name": "Leaves", "kind": "leaf"},
+    {"id": "flower", "name": "Flower", "kind": "flower", "required": false}
+  ],
+  "variants": [
+    {"id": "seedling", "name": "Seedling", "guidance": "Show the reduced growth stage without changing identity.", "required": false},
+    {"id": "flowering", "name": "Flowering", "guidance": "Show the approved flowering presentation and palette.", "required": false}
+  ],
+  "states": [
+    {"id": "healthy", "name": "Healthy", "guidance": "Use the standard healthy growth state."},
+    {"id": "wilted", "name": "Wilted", "guidance": "Show reduced vitality while keeping the structure readable.", "required": false},
+    {"id": "damaged", "name": "Damaged", "guidance": "Show only approved damage relevant to production.", "required": false}
+  ],
+  "outputs": [
+    {"id": "assembled-turnaround", "name": "Assembled Turnaround", "layout": "turnaround", "view_ids": ["front", "side", "top"], "subject_modes": ["asset", "components", "variants", "states"], "separate_files": true, "assembled_sheet": true},
+    {"id": "lifecycle-details", "name": "Lifecycle Details", "layout": "grid", "view_ids": ["silhouette", "detail"], "subject_modes": ["components", "variants", "states"], "separate_files": true, "assembled_sheet": false}
+  ]
+}

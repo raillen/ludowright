@@ -40,6 +40,7 @@ This is the main navigation map for humans and agents. Each subject should have 
 - [`contracts/HUMANOID_PROFILES.md`](contracts/HUMANOID_PROFILES.md) — neutral body bases, humanoid views, wearable categories, assembled outputs, and data-defined specialization of capture profiles.
 - [`contracts/CREATURE_PROFILES.md`](contracts/CREATURE_PROFILES.md) — data-defined quadruped, bird, fish, insect, and fantasy-creature anatomy, components, states, views, and outputs.
 - [`contracts/HARD_SURFACE_PROFILES.md`](contracts/HARD_SURFACE_PROFILES.md) — data-defined props, vehicles, buildings, modular kits, interiors, construction components, connection matrices, states, views, and outputs.
+- [`contracts/VISUAL_PROFILES.md`](contracts/VISUAL_PROFILES.md) — data-defined tree, plant, UI, VFX, locomotion, and motion-set profiles with typed components, variants, states, views, and outputs.
 - [`contracts/VISUAL_BIBLE.md`](contracts/VISUAL_BIBLE.md) — project-level visual direction, palette, materials, detail levels, budgets, and prompt constraints.
 - [`contracts/PROMPT_COMPILER.md`](contracts/PROMPT_COMPILER.md) — versioned prompt layers, approved-reference resolution, structured constraints, deterministic rendering, and prompt hashing.
 - [`contracts/JSON_SCHEMAS.md`](contracts/JSON_SCHEMAS.md) — generated Draft 2020-12 schemas, registry, fixtures, checksums, drift checking, and compatibility policy.
@@ -157,7 +158,6 @@ Planned detailed documents:
 
 - segmented character references;
 - garments and props;
-- foliage, UI, VFX, and animation references;
 - deterministic technical-sheet assembly;
 - provenance and licensing operations.
 
@@ -244,6 +244,7 @@ Planned operational documents:
 - [`decisions/0029-data-defined-humanoid-wearable-profiles.md`](decisions/0029-data-defined-humanoid-wearable-profiles.md) — accepted data-defined humanoid specialization, closed neutral representation policy, and reuse of generic capture-profile semantics.
 - [`decisions/0030-data-defined-creature-animal-profiles.md`](decisions/0030-data-defined-creature-animal-profiles.md) — accepted data-defined creature specialization, closed anatomy catalog, explicit states, and reuse of generic capture-profile semantics.
 - [`decisions/0031-data-defined-hard-surface-profiles.md`](decisions/0031-data-defined-hard-surface-profiles.md) — accepted data-defined environment and hard-surface specialization, exact family/subtype mapping, and directed construction connection matrices.
+- [`decisions/0032-data-defined-visual-specialty-profiles.md`](decisions/0032-data-defined-visual-specialty-profiles.md) — accepted data-defined foliage, UI, VFX, and animation specialization with typed requirements and deterministic generic-profile derivation.
 - [`decisions/0013-versioned-acyclic-dependency-invalidation-graph.md`](decisions/0013-versioned-acyclic-dependency-invalidation-graph.md) — accepted typed revision-aware DAG dependencies, stale and review propagation, persisted impact paths, safe refresh, and canonical JSON persistence.
 - [`decisions/0012-explicit-backed-up-schema-migrations.md`](decisions/0012-explicit-backed-up-schema-migrations.md) — accepted explicit contiguous migration plans, dry runs, durable SQLite backups, strict receipts, transactional apply, and guarded rollback.
 - [`decisions/0011-rebuildable-sqlite-state-index.md`](decisions/0011-rebuildable-sqlite-state-index.md) — accepted SQLite as a rebuildable derived index with WAL, strict short transactions, source digests, event checkpoints, and explicit consistency states.

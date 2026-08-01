@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kind": "visual-profile",
+  "capture_profile": {
+    "schema_version": 1,
+    "kind": "capture-profile",
+    "id": "visual-fixture",
+    "version": 1,
+    "name": "Visual Fixture",
+    "family": "ui",
+    "subtype": "interface-icon",
+    "camera": {"projection": "orthographic"},
+    "background": {"mode": "transparent"},
+    "lighting": {"mode": "flat", "shadows": "none"},
+    "validation": {"width": 1024, "height": 1024, "require_full_subject": true, "require_consistent_scale": true, "allow_occlusion": false},
+    "views": [
+      {"id": "front", "name": "Front", "azimuth_degrees": 0, "elevation_degrees": 0, "role": "identity"},
+      {"id": "detail", "name": "Detail", "azimuth_degrees": 0, "elevation_degrees": 15, "role": "construction"}
+    ],
+    "requirements": [
+      {"id": "subject", "name": "Subject", "requirement_kind": "component"},
+      {"id": "icon", "name": "Icon", "requirement_kind": "component", "required": false},
+      {"id": "light", "name": "Light", "requirement_kind": "variant"},
+      {"id": "default", "name": "Default", "requirement_kind": "state"}
+    ],
+    "sheets": []
+  },
+  "profile_kind": "interface-icon",
+  "guidance": "Keep the icon readable at target sizes and preserve its transparent-background intent.",
+  "views": [
+    {"view_id": "front", "role": "whole-subject", "guidance": "Show the complete icon at canonical scale."},
+    {"view_id": "detail", "role": "detail", "guidance": "Show edge treatment and small-scale alignment details."}
+  ],
+  "components": [
+    {"id": "subject", "name": "Subject", "kind": "subject"},
+    {"id": "icon", "name": "Icon", "kind": "icon", "required": false}
+  ],
+  "variants": [
+    {"id": "light", "name": "Light", "guidance": "Use the approved light-theme contrast."}
+  ],
+  "states": [
+    {"id": "default", "name": "Default", "guidance": "Show the resting interaction state."}
+  ],
+  "outputs": [
+    {"id": "icon-sheet", "name": "Icon Sheet", "layout": "grid", "view_ids": ["front", "detail"], "subject_modes": ["asset", "components", "variants", "states"], "separate_files": true, "assembled_sheet": true}
+  ]
+}

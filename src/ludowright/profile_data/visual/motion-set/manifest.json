@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "kind": "visual-profile",
+  "capture_profile": {
+    "schema_version": 1,
+    "kind": "capture-profile",
+    "id": "visual-motion-set",
+    "version": 1,
+    "name": "Motion Set Visual Profile",
+    "family": "animation",
+    "subtype": "motion-set",
+    "camera": {"projection": "orthographic", "framing_margin_percent": 15},
+    "background": {"mode": "neutral"},
+    "lighting": {"mode": "studio", "shadows": "soft"},
+    "validation": {"width": 2048, "height": 2048, "require_full_subject": true, "require_consistent_scale": true, "require_neutral_pose": false, "allow_occlusion": false},
+    "views": [
+      {"id": "front", "name": "Front", "azimuth_degrees": 0, "elevation_degrees": 0, "role": "identity"},
+      {"id": "side", "name": "Side", "azimuth_degrees": 90, "elevation_degrees": 0, "role": "construction"},
+      {"id": "start", "name": "Start", "azimuth_degrees": 45, "elevation_degrees": 10, "role": "construction"},
+      {"id": "contact", "name": "Contact", "azimuth_degrees": 90, "elevation_degrees": -10, "role": "silhouette"},
+      {"id": "end", "name": "End", "azimuth_degrees": 45, "elevation_degrees": 10, "role": "construction"},
+      {"id": "detail", "name": "Detail", "azimuth_degrees": 25, "elevation_degrees": 20, "role": "construction"}
+    ],
+    "requirements": [
+      {"id": "subject", "name": "Subject", "requirement_kind": "component"},
+      {"id": "pose", "name": "Pose", "requirement_kind": "component"},
+      {"id": "contact", "name": "Contact", "requirement_kind": "component", "required": false},
+      {"id": "root-motion", "name": "Root Motion", "requirement_kind": "component", "required": false},
+      {"id": "neutral", "name": "Neutral", "requirement_kind": "variant", "required": false},
+      {"id": "expressive", "name": "Expressive", "requirement_kind": "variant", "required": false},
+      {"id": "ready", "name": "Ready", "requirement_kind": "state"},
+      {"id": "action", "name": "Action", "requirement_kind": "state"},
+      {"id": "recovery", "name": "Recovery", "requirement_kind": "state", "required": false}
+    ],
+    "sheets": []
+  },
+  "profile_kind": "motion-set",
+  "guidance": "Keep pose intent, balance, contact, and readable action arcs explicit for animation-reference review.",
+  "views": [
+    {"view_id": "front", "role": "whole-subject", "guidance": "Establish subject proportions and neutral facing."},
+    {"view_id": "side", "role": "side", "guidance": "Show the action arc, balance, and depth."},
+    {"view_id": "start", "role": "start", "guidance": "Show the pose or action preparation."},
+    {"view_id": "contact", "role": "contact", "guidance": "Show the key contact or weight-transfer cue."},
+    {"view_id": "end", "role": "end", "guidance": "Show the terminal pose and readable silhouette."},
+    {"view_id": "detail", "role": "detail", "guidance": "Show hands, feet, props, or other action-critical details."}
+  ],
+  "components": [
+    {"id": "subject", "name": "Subject", "kind": "subject"},
+    {"id": "pose", "name": "Pose", "kind": "pose"},
+    {"id": "contact", "name": "Contact", "kind": "contact", "required": false},
+    {"id": "root-motion", "name": "Root Motion", "kind": "other", "required": false}
+  ],
+  "variants": [
+    {"id": "neutral", "name": "Neutral", "guidance": "Show the restrained neutral presentation for pose comparison.", "required": false},
+    {"id": "expressive", "name": "Expressive", "guidance": "Show the approved expressive range without losing the action read.", "required": false}
+  ],
+  "states": [
+    {"id": "ready", "name": "Ready", "guidance": "Show the stable pre-action state."},
+    {"id": "action", "name": "Action", "guidance": "Show the key action pose or motion state."},
+    {"id": "recovery", "name": "Recovery", "guidance": "Show the return to a stable pose.", "required": false}
+  ],
+  "outputs": [
+    {"id": "motion-keyframes", "name": "Motion Keyframes", "layout": "grid", "view_ids": ["front", "side", "start", "contact", "end", "detail"], "subject_modes": ["asset", "components", "variants", "states"], "separate_files": true, "assembled_sheet": true}
+  ]
+}

@@ -54,6 +54,8 @@ The repository currently establishes:
 - initial data-defined environment/hard-surface profiles for props, vehicles,
   buildings, modular kits, and interiors with construction components,
   connection matrices, states, views, and outputs.
+- initial data-defined visual-specialty profiles for trees, plants, UI,
+  particle and shader effects, locomotion, and motion sets.
 
 Project-local profile persistence, visual-job planning, ImageGen execution,
 review workflows, technical sheets, global audits, and package generation

@@ -121,6 +121,12 @@
       "title": "Environment and Hard-Surface Profiles"
     },
     {
+      "canonical_source": "contracts/VISUAL_PROFILES.md",
+      "path": "contracts/VISUAL_PROFILES.md",
+      "section": "contracts",
+      "title": "Foliage, UI, VFX, and Animation Profiles"
+    },
+    {
       "canonical_source": "contracts/VISUAL_BIBLE.md",
       "path": "contracts/VISUAL_BIBLE.md",
       "section": "contracts",
@@ -419,6 +425,12 @@
       "path": "decisions/0031-data-defined-hard-surface-profiles.md",
       "section": "decisions",
       "title": "ADR 0031: Data-Defined Environment and Hard-Surface Profiles"
+    },
+    {
+      "canonical_source": "decisions/0032-data-defined-visual-specialty-profiles.md",
+      "path": "decisions/0032-data-defined-visual-specialty-profiles.md",
+      "section": "decisions",
+      "title": "ADR 0032: Data-Defined Visual Specialty Profiles"
     },
     {
       "canonical_source": "governance/RFC_TEMPLATE.md",

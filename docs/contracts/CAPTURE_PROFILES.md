@@ -227,4 +227,4 @@ Capture profiles do not define:
 - sheet-rendering implementation;
 - schema serialization.
 
-Those concerns belong to visual jobs, storage adapters, approvals, deterministic sheet assembly, and the forthcoming JSON Schema publication.
+Those concerns belong to visual jobs, storage adapters, approvals, deterministic sheet assembly, and the forthcoming JSON Schema publication. Specialized package-data contracts for [humanoids](HUMANOID_PROFILES.md), [creatures](CREATURE_PROFILES.md), [hard surfaces](HARD_SURFACE_PROFILES.md), and [visual specialties](VISUAL_PROFILES.md) reuse this boundary without duplicating it.

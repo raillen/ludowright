@@ -46,6 +46,7 @@ It uses JSON Schema Draft 2020-12 and contains:
 | Humanoid profile | `humanoid-profile.schema.json` |
 | Hard-surface profile | `hard-surface-profile.schema.json` |
 | Creature profile | `creature-profile.schema.json` |
+| Visual profile | `visual-profile.schema.json` |
 | Visual bible | `visual-bible.schema.json` |
 | Prompt template | `prompt-template.schema.json` |
 | Compiled prompt | `compiled-prompt.schema.json` |

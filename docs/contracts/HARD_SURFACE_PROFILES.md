@@ -102,6 +102,6 @@ image execution. Existing project, asset, capture-profile, visual-reference,
 visual-job, event-log, dependency-graph, and state-store formats remain
 compatible; no migration is required.
 
-Future foliage, UI, VFX, and animation profiles should reuse the generic
-capture boundary while defining their own data-defined vocabulary and
-invariants.
+The visual-specialty profile contract uses the same generic capture boundary
+for foliage, UI, VFX, and animation references while defining its own
+data-defined vocabulary and invariants.

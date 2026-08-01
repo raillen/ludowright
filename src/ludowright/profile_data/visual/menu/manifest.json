@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "kind": "visual-profile",
+  "capture_profile": {
+    "schema_version": 1,
+    "kind": "capture-profile",
+    "id": "visual-menu",
+    "version": 1,
+    "name": "Menu Visual Profile",
+    "family": "ui",
+    "subtype": "menu",
+    "camera": {"projection": "orthographic", "framing_margin_percent": 10},
+    "background": {"mode": "solid", "color": "#202020"},
+    "lighting": {"mode": "flat", "shadows": "none"},
+    "validation": {"width": 2048, "height": 2048, "require_full_subject": true, "require_consistent_scale": true, "allow_occlusion": false},
+    "views": [
+      {"id": "front", "name": "Front", "azimuth_degrees": 0, "elevation_degrees": 0, "role": "identity"},
+      {"id": "compact", "name": "Compact", "azimuth_degrees": 0, "elevation_degrees": 0, "role": "construction"},
+      {"id": "expanded", "name": "Expanded", "azimuth_degrees": 0, "elevation_degrees": 0, "role": "construction"},
+      {"id": "detail", "name": "Detail", "azimuth_degrees": 0, "elevation_degrees": 15, "role": "construction"}
+    ],
+    "requirements": [
+      {"id": "subject", "name": "Subject", "requirement_kind": "component"},
+      {"id": "panel", "name": "Panel", "requirement_kind": "component"},
+      {"id": "title", "name": "Title", "requirement_kind": "component", "required": false},
+      {"id": "item", "name": "Item", "requirement_kind": "component", "required": false},
+      {"id": "desktop", "name": "Desktop", "requirement_kind": "variant", "required": false},
+      {"id": "controller", "name": "Controller", "requirement_kind": "variant", "required": false},
+      {"id": "default", "name": "Default", "requirement_kind": "state"},
+      {"id": "focused", "name": "Focused", "requirement_kind": "state", "required": false},
+      {"id": "disabled", "name": "Disabled", "requirement_kind": "state", "required": false}
+    ],
+    "sheets": []
+  },
+  "profile_kind": "menu",
+  "guidance": "Keep hierarchy, spacing, focus visibility, and input affordances explicit across compact and expanded layouts.",
+  "views": [
+    {"view_id": "front", "role": "whole-subject", "guidance": "Show the complete default menu hierarchy and alignment."},
+    {"view_id": "compact", "role": "variant", "guidance": "Show the compact layout with all essential controls readable."},
+    {"view_id": "expanded", "role": "variant", "guidance": "Show the expanded layout and content density."},
+    {"view_id": "detail", "role": "detail", "guidance": "Show typography, control states, spacing, and focus treatment."}
+  ],
+  "components": [
+    {"id": "subject", "name": "Subject", "kind": "subject"},
+    {"id": "panel", "name": "Panel", "kind": "panel"},
+    {"id": "title", "name": "Title", "kind": "label", "required": false},
+    {"id": "item", "name": "Item", "kind": "item", "required": false}
+  ],
+  "variants": [
+    {"id": "desktop", "name": "Desktop", "guidance": "Use the approved desktop interaction density.", "required": false},
+    {"id": "controller", "name": "Controller", "guidance": "Make navigation focus and controller affordances explicit.", "required": false}
+  ],
+  "states": [
+    {"id": "default", "name": "Default", "guidance": "Show the resting menu state."},
+    {"id": "focused", "name": "Focused", "guidance": "Show the current keyboard or controller focus target.", "required": false},
+    {"id": "disabled", "name": "Disabled", "guidance": "Show unavailable actions with approved contrast.", "required": false}
+  ],
+  "outputs": [
+    {"id": "menu-layouts", "name": "Menu Layouts", "layout": "grid", "view_ids": ["front", "compact", "expanded"], "subject_modes": ["asset", "components", "variants", "states"], "separate_files": true, "assembled_sheet": true},
+    {"id": "menu-details", "name": "Menu Details", "layout": "contact-sheet", "view_ids": ["detail"], "subject_modes": ["components", "variants", "states"], "separate_files": true, "assembled_sheet": false}
+  ]
+}
