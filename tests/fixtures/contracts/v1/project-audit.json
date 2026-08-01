@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "kind": "project-audit",
+  "dry_run": true,
+  "project_id": "locadora-2000",
+  "project_name": "Locadora 2000",
+  "state": "ready",
+  "valid": true,
+  "source_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+  "sources": [],
+  "categories": [
+    {"category": "product", "state": "ready", "item_count": 0, "error_count": 0, "warning_count": 0},
+    {"category": "documents", "state": "ready", "item_count": 0, "error_count": 0, "warning_count": 0},
+    {"category": "assets", "state": "ready", "item_count": 0, "error_count": 0, "warning_count": 0},
+    {"category": "references", "state": "ready", "item_count": 0, "error_count": 0, "warning_count": 0},
+    {"category": "jobs", "state": "ready", "item_count": 0, "error_count": 0, "warning_count": 0},
+    {"category": "approvals", "state": "ready", "item_count": 0, "error_count": 0, "warning_count": 0},
+    {"category": "sheets", "state": "ready", "item_count": 0, "error_count": 0, "warning_count": 0},
+    {"category": "package", "state": "ready", "item_count": 0, "error_count": 0, "warning_count": 0}
+  ],
+  "findings": [],
+  "recommended_actions": []
+}

@@ -145,6 +145,18 @@ from ludowright.contracts.package_manifest import (
     PackageSourceVersionContract,
 )
 from ludowright.contracts.project import ProjectContract
+from ludowright.contracts.project_audit import (
+    PROJECT_AUDIT_CATEGORY_ORDER,
+    ProjectAuditActionContract,
+    ProjectAuditCategory,
+    ProjectAuditCategoryContract,
+    ProjectAuditFindingContract,
+    ProjectAuditReportContract,
+    ProjectAuditSeverity,
+    ProjectAuditSourceContract,
+    ProjectAuditSourceState,
+    ProjectAuditState,
+)
 from ludowright.contracts.prompt_compiler import (
     CompiledPromptContract,
     CompiledPromptReferenceContract,
@@ -220,6 +232,7 @@ __all__ = [
     "PACKAGE_INDEX_ARCHIVE_PATH",
     "PACKAGE_MANIFEST_ARCHIVE_PATH",
     "PACKAGE_ZIP_TIMESTAMP",
+    "PROJECT_AUDIT_CATEGORY_ORDER",
     "SCHEMA_VERSION",
     "AnswerProvenanceContract",
     "AnswerRecordContract",
@@ -337,6 +350,15 @@ __all__ = [
     "PackageProvenanceContract",
     "PackageSourceVersionContract",
     "PaletteColorContract",
+    "ProjectAuditActionContract",
+    "ProjectAuditCategory",
+    "ProjectAuditCategoryContract",
+    "ProjectAuditFindingContract",
+    "ProjectAuditReportContract",
+    "ProjectAuditSeverity",
+    "ProjectAuditSourceContract",
+    "ProjectAuditSourceState",
+    "ProjectAuditState",
     "ProjectContract",
     "PromptLayerContract",
     "PromptTemplateContract",

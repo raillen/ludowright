@@ -115,6 +115,47 @@ def test_state_store_initializes_strict_wal_schema(tmp_path: Path) -> None:
         connection.close()
 
 
+def test_state_store_read_only_inspection_does_not_write_or_create_sidecars(
+    tmp_path: Path,
+) -> None:
+    state = store(tmp_path)
+    state.save_workflow(workflow())
+    database = tmp_path / ".ludowright/state.sqlite3"
+    before = database.read_bytes()
+
+    read_only = StateStore(ProjectFilesystem(tmp_path), read_only=True)
+
+    assert read_only.get_workflow("project-intake") == workflow()
+    with pytest.raises(StateStoreError, match="read-only"):
+        read_only.save_workflow(workflow("another-workflow"))
+    assert database.read_bytes() == before
+    assert not database.with_name("state.sqlite3-wal").exists()
+    assert not database.with_name("state.sqlite3-shm").exists()
+
+
+def test_state_store_read_only_rejects_active_wal_without_touching_it(tmp_path: Path) -> None:
+    state = store(tmp_path)
+    state.save_workflow(workflow())
+    database = tmp_path / ".ludowright/state.sqlite3"
+    connection = sqlite3.connect(database)
+    connection.execute("PRAGMA journal_mode = WAL")
+    connection.execute("BEGIN IMMEDIATE")
+    connection.execute(
+        "UPDATE workflow_progress SET status = ? WHERE workflow_id = ?",
+        ("active", "project-intake"),
+    )
+    connection_path = database.with_name("state.sqlite3-wal")
+    assert connection_path.exists()
+    before = connection_path.read_bytes()
+
+    with pytest.raises(StateStoreError, match="active SQLite WAL"):
+        StateStore(ProjectFilesystem(tmp_path), read_only=True)
+
+    assert connection_path.read_bytes() == before
+    connection.rollback()
+    connection.close()
+
+
 def test_state_store_rejects_invalid_configuration(tmp_path: Path) -> None:
     filesystem = ProjectFilesystem(tmp_path)
 

@@ -1,0 +1,370 @@
+{
+  "$defs": {
+    "ProjectAuditActionContract": {
+      "additionalProperties": false,
+      "description": "Deterministic remediation suggestion derived from findings.",
+      "properties": {
+        "category": {
+          "enum": [
+            "product",
+            "documents",
+            "assets",
+            "references",
+            "jobs",
+            "approvals",
+            "sheets",
+            "package"
+          ],
+          "title": "Category",
+          "type": "string"
+        },
+        "code": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Code",
+          "type": "string"
+        },
+        "detail": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Detail",
+          "type": "string"
+        },
+        "finding_codes": {
+          "default": [],
+          "items": {
+            "maxLength": 80,
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "maxItems": 32,
+          "title": "Finding Codes",
+          "type": "array"
+        }
+      },
+      "required": [
+        "code",
+        "category",
+        "detail"
+      ],
+      "title": "ProjectAuditActionContract",
+      "type": "object"
+    },
+    "ProjectAuditCategoryContract": {
+      "additionalProperties": false,
+      "description": "Summary of one audited readiness category.",
+      "properties": {
+        "category": {
+          "enum": [
+            "product",
+            "documents",
+            "assets",
+            "references",
+            "jobs",
+            "approvals",
+            "sheets",
+            "package"
+          ],
+          "title": "Category",
+          "type": "string"
+        },
+        "error_count": {
+          "default": 0,
+          "maximum": 2147483647,
+          "minimum": 0,
+          "title": "Error Count",
+          "type": "integer"
+        },
+        "item_count": {
+          "default": 0,
+          "maximum": 2147483647,
+          "minimum": 0,
+          "title": "Item Count",
+          "type": "integer"
+        },
+        "state": {
+          "enum": [
+            "ready",
+            "needs-review",
+            "blocked"
+          ],
+          "title": "State",
+          "type": "string"
+        },
+        "warning_count": {
+          "default": 0,
+          "maximum": 2147483647,
+          "minimum": 0,
+          "title": "Warning Count",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "category",
+        "state"
+      ],
+      "title": "ProjectAuditCategoryContract",
+      "type": "object"
+    },
+    "ProjectAuditFindingContract": {
+      "additionalProperties": false,
+      "description": "One deterministic blocking or review-required audit finding.",
+      "properties": {
+        "category": {
+          "enum": [
+            "product",
+            "documents",
+            "assets",
+            "references",
+            "jobs",
+            "approvals",
+            "sheets",
+            "package"
+          ],
+          "title": "Category",
+          "type": "string"
+        },
+        "code": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Code",
+          "type": "string"
+        },
+        "message": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Message",
+          "type": "string"
+        },
+        "paths": {
+          "default": [],
+          "items": {
+            "maxLength": 1024,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)*$",
+            "type": "string"
+          },
+          "maxItems": 32,
+          "title": "Paths",
+          "type": "array"
+        },
+        "related_ids": {
+          "default": [],
+          "items": {
+            "maxLength": 80,
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "maxItems": 64,
+          "title": "Related Ids",
+          "type": "array"
+        },
+        "remediation": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Remediation",
+          "type": "string"
+        },
+        "severity": {
+          "enum": [
+            "error",
+            "warning"
+          ],
+          "title": "Severity",
+          "type": "string"
+        },
+        "subject": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Subject",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "category",
+        "severity",
+        "subject",
+        "message",
+        "remediation"
+      ],
+      "title": "ProjectAuditFindingContract",
+      "type": "object"
+    },
+    "ProjectAuditSourceContract": {
+      "additionalProperties": false,
+      "description": "One canonical file observed by the audit.",
+      "properties": {
+        "detail": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Detail",
+          "type": "string"
+        },
+        "digest": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 64,
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Digest"
+        },
+        "item_count": {
+          "default": 0,
+          "maximum": 2147483647,
+          "minimum": 0,
+          "title": "Item Count",
+          "type": "integer"
+        },
+        "path": {
+          "maxLength": 1024,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)*$",
+          "title": "Path",
+          "type": "string"
+        },
+        "size_bytes": {
+          "anyOf": [
+            {
+              "maximum": 2147483647,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Size Bytes"
+        },
+        "state": {
+          "enum": [
+            "current",
+            "missing",
+            "invalid"
+          ],
+          "title": "State",
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "state",
+        "detail"
+      ],
+      "title": "ProjectAuditSourceContract",
+      "type": "object"
+    }
+  },
+  "$id": "https://schemas.ludowright.dev/v1/project-audit.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Machine-readable readiness report across the project production chain.",
+  "properties": {
+    "categories": {
+      "items": {
+        "$ref": "#/$defs/ProjectAuditCategoryContract"
+      },
+      "title": "Categories",
+      "type": "array"
+    },
+    "dry_run": {
+      "title": "Dry Run",
+      "type": "boolean"
+    },
+    "findings": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/ProjectAuditFindingContract"
+      },
+      "maxItems": 100000,
+      "title": "Findings",
+      "type": "array"
+    },
+    "kind": {
+      "const": "project-audit",
+      "default": "project-audit",
+      "title": "Kind",
+      "type": "string"
+    },
+    "project_id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Project Id",
+      "type": "string"
+    },
+    "project_name": {
+      "maxLength": 120,
+      "minLength": 1,
+      "title": "Project Name",
+      "type": "string"
+    },
+    "recommended_actions": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/ProjectAuditActionContract"
+      },
+      "maxItems": 100,
+      "title": "Recommended Actions",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "source_digest": {
+      "maxLength": 64,
+      "minLength": 64,
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Digest",
+      "type": "string"
+    },
+    "sources": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/ProjectAuditSourceContract"
+      },
+      "maxItems": 100000,
+      "title": "Sources",
+      "type": "array"
+    },
+    "state": {
+      "enum": [
+        "ready",
+        "needs-review",
+        "blocked"
+      ],
+      "title": "State",
+      "type": "string"
+    },
+    "valid": {
+      "title": "Valid",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "dry_run",
+    "project_id",
+    "project_name",
+    "state",
+    "valid",
+    "source_digest",
+    "categories"
+  ],
+  "title": "LudoWright Project Audit Report",
+  "type": "object"
+}

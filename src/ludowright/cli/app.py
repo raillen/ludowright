@@ -10,6 +10,7 @@ from rich.console import Console
 from ludowright import __version__
 from ludowright.cli.assets import assets_app
 from ludowright.cli.atlas import generate_atlas
+from ludowright.cli.audit import audit_project
 from ludowright.cli.codex import codex_app
 from ludowright.cli.diagnostics import collect_diagnostics, render_diagnostics
 from ludowright.cli.docs import docs_app
@@ -46,6 +47,7 @@ app.add_typer(package_app, name="package")
 app.add_typer(docs_app, name="docs")
 app.command("atlas")(generate_atlas)
 app.command("review")(review_command)
+app.command("audit")(audit_project)
 
 
 @app.callback()
