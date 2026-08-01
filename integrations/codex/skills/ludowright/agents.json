@@ -1,0 +1,487 @@
+{
+  "agents": [
+    {
+      "allowed_actions": [
+        "execute-phase",
+        "resume-workflow",
+        "run-validations"
+      ],
+      "capabilities": [
+        "asset-decomposition",
+        "asset-registry",
+        "dependency-analysis",
+        "taxonomy-validation"
+      ],
+      "can_approve": false,
+      "forbidden_actions": [
+        "approve-reference",
+        "invent-decision",
+        "overwrite-approved-artifact"
+      ],
+      "guidance": [
+        "Use the canonical asset registry and taxonomy before proposing a new asset.",
+        "Preserve aggregate boundaries and explain prerequisite dependencies.",
+        "Send ambiguous scope or destructive changes to the human checkpoint."
+      ],
+      "id": "asset-planner",
+      "name": "Asset planner",
+      "phase_ids": [
+        "asset-planning",
+        "validate"
+      ],
+      "purpose": "Translate canonical game requirements into a complete, prioritized, and dependency-aware asset plan.",
+      "reads": [
+        "asset-decomposition",
+        "asset-registry",
+        "asset-taxonomy",
+        "dependency-graph",
+        "project-status"
+      ],
+      "requires_human_checkpoint": true,
+      "version": 1,
+      "writes": [
+        "asset-decomposition-report",
+        "asset-registry-proposal"
+      ]
+    },
+    {
+      "allowed_actions": [
+        "await-approval",
+        "resume-workflow",
+        "review-status",
+        "run-validations"
+      ],
+      "capabilities": [
+        "dependency-analysis",
+        "reference-review",
+        "review-reporting",
+        "visual-consistency"
+      ],
+      "can_approve": false,
+      "forbidden_actions": [
+        "approve-reference",
+        "invent-decision",
+        "overwrite-approved-artifact"
+      ],
+      "guidance": [
+        "Compare outputs with the exact receipt, provenance, and approved references.",
+        "Describe corrections as review outcomes instead of rewriting approved files.",
+        "Stop at a human approval checkpoint and never infer acceptance."
+      ],
+      "id": "consistency-reviewer",
+      "name": "Consistency reviewer",
+      "phase_ids": [
+        "approve",
+        "consistency-review"
+      ],
+      "purpose": "Check consistency between canonical decisions, references, jobs, receipts, and dependency impacts.",
+      "reads": [
+        "dependency-graph",
+        "generation-receipt",
+        "project-status",
+        "visual-references",
+        "visual-reviews"
+      ],
+      "requires_human_checkpoint": true,
+      "version": 1,
+      "writes": [
+        "consistency-report",
+        "visual-review-proposal"
+      ]
+    },
+    {
+      "allowed_actions": [
+        "execute-phase",
+        "record-decision",
+        "resume-workflow",
+        "run-validations"
+      ],
+      "capabilities": [
+        "decision-analysis",
+        "game-design",
+        "requirements-synthesis",
+        "scope-analysis"
+      ],
+      "can_approve": false,
+      "forbidden_actions": [
+        "approve-reference",
+        "invent-decision",
+        "overwrite-approved-artifact"
+      ],
+      "guidance": [
+        "Synthesize requirements from canonical interview answers and existing decisions.",
+        "Propose a decision record before using an unresolved product choice.",
+        "Keep scope explicit and escalate contradictions instead of silently choosing."
+      ],
+      "id": "game-design-architect",
+      "name": "Game-design architect",
+      "phase_ids": [
+        "decide",
+        "game-design"
+      ],
+      "purpose": "Turn resolved game requirements into coherent, scoped, and traceable design decisions.",
+      "reads": [
+        "decisions",
+        "interview-session",
+        "product-documents",
+        "project-status"
+      ],
+      "requires_human_checkpoint": true,
+      "version": 1,
+      "writes": [
+        "decision-proposal",
+        "product-document-proposal"
+      ]
+    },
+    {
+      "allowed_actions": [
+        "execute-phase",
+        "resume-workflow"
+      ],
+      "capabilities": [
+        "generation-execution",
+        "imagegen-operation",
+        "prompt-verification",
+        "receipt-verification"
+      ],
+      "can_approve": false,
+      "forbidden_actions": [
+        "approve-reference",
+        "invent-decision",
+        "overwrite-approved-artifact"
+      ],
+      "guidance": [
+        "Execute only a ready job with its matching compiled prompt and output paths.",
+        "Preserve one-view-per-image, receipt, checksum, and rollback invariants.",
+        "Report provider or validation failures without fabricating successful output."
+      ],
+      "id": "generation-operator",
+      "name": "Generation operator",
+      "phase_ids": [
+        "generation",
+        "resume"
+      ],
+      "purpose": "Operate bounded visual-generation jobs and preserve their provider, prompt, output, and receipt provenance.",
+      "reads": [
+        "compiled-prompt",
+        "project-status",
+        "visual-job-plan"
+      ],
+      "requires_human_checkpoint": true,
+      "version": 1,
+      "writes": [
+        "generation-receipt",
+        "imagegen-operation"
+      ]
+    },
+    {
+      "allowed_actions": [
+        "ask-question",
+        "execute-phase",
+        "resume-workflow"
+      ],
+      "capabilities": [
+        "answer-provenance",
+        "interview-flow",
+        "pending-question-analysis",
+        "questionnaire-validation"
+      ],
+      "can_approve": false,
+      "forbidden_actions": [
+        "approve-reference",
+        "invent-decision",
+        "overwrite-approved-artifact"
+      ],
+      "guidance": [
+        "Ask only the first unresolved question from the canonical questionnaire.",
+        "Preserve answer provenance, disposition, and resumable session state.",
+        "Do not turn an unanswered question into an implicit project decision."
+      ],
+      "id": "interviewer",
+      "name": "Interviewer",
+      "phase_ids": [
+        "clarify",
+        "interview"
+      ],
+      "purpose": "Guide unresolved project intake questions while preserving typed answers and their provenance.",
+      "reads": [
+        "interview-questionnaire",
+        "interview-session",
+        "project-status"
+      ],
+      "requires_human_checkpoint": true,
+      "version": 1,
+      "writes": [
+        "interview-session-proposal"
+      ]
+    },
+    {
+      "allowed_actions": [
+        "resolve-validation",
+        "resume-workflow",
+        "run-validations"
+      ],
+      "capabilities": [
+        "atlas-validation",
+        "quality-gates",
+        "structural-audit",
+        "test-analysis"
+      ],
+      "can_approve": false,
+      "forbidden_actions": [
+        "approve-reference",
+        "invent-decision",
+        "overwrite-approved-artifact"
+      ],
+      "guidance": [
+        "Inspect canonical status and quality evidence before proposing remediation.",
+        "Report blocking findings with their source and impact.",
+        "Never weaken a gate or hide a failing validation to make the workflow pass."
+      ],
+      "id": "quality-auditor",
+      "name": "Quality auditor",
+      "phase_ids": [
+        "quality-audit",
+        "validate"
+      ],
+      "purpose": "Audit project quality, structural integrity, and validation evidence without weakening release gates.",
+      "reads": [
+        "atlas-report",
+        "dependency-graph",
+        "event-log",
+        "project-status",
+        "quality-report"
+      ],
+      "requires_human_checkpoint": true,
+      "version": 1,
+      "writes": [
+        "quality-audit-report"
+      ]
+    },
+    {
+      "allowed_actions": [
+        "await-approval",
+        "resume-workflow",
+        "run-validations"
+      ],
+      "capabilities": [
+        "manifest-verification",
+        "package-readiness",
+        "release-gates",
+        "reproducibility-check"
+      ],
+      "can_approve": false,
+      "forbidden_actions": [
+        "approve-reference",
+        "invent-decision",
+        "overwrite-approved-artifact"
+      ],
+      "guidance": [
+        "Verify package contents, checksums, provenance, and exclusion reasons.",
+        "Treat missing or irreproducible evidence as a blocking release finding.",
+        "Prepare the release summary but leave final authorization to the human owner."
+      ],
+      "id": "release-verifier",
+      "name": "Release verifier",
+      "phase_ids": [
+        "release-verification",
+        "validate"
+      ],
+      "purpose": "Verify release readiness, reproducibility, manifests, and blocking gates before human authorization.",
+      "reads": [
+        "package-manifest",
+        "package-report",
+        "project-status",
+        "quality-report"
+      ],
+      "requires_human_checkpoint": true,
+      "version": 1,
+      "writes": [
+        "release-verification-report"
+      ]
+    },
+    {
+      "allowed_actions": [
+        "execute-phase",
+        "record-decision",
+        "resume-workflow",
+        "run-validations"
+      ],
+      "capabilities": [
+        "architecture-analysis",
+        "compatibility-analysis",
+        "dependency-analysis",
+        "technical-design"
+      ],
+      "can_approve": false,
+      "forbidden_actions": [
+        "approve-reference",
+        "invent-decision",
+        "overwrite-approved-artifact"
+      ],
+      "guidance": [
+        "Map technical decisions to the existing architecture and published contracts.",
+        "Identify compatibility, migration, ownership, and rollback consequences.",
+        "Record an ADR or decision proposal when the choice changes a boundary."
+      ],
+      "id": "technical-architect",
+      "name": "Technical architect",
+      "phase_ids": [
+        "decide",
+        "technical-architecture"
+      ],
+      "purpose": "Translate product needs into compatible technical boundaries, contracts, and implementation decisions.",
+      "reads": [
+        "architecture-documents",
+        "decisions",
+        "dependency-graph",
+        "project-status"
+      ],
+      "requires_human_checkpoint": true,
+      "version": 1,
+      "writes": [
+        "architecture-document-proposal",
+        "decision-proposal"
+      ]
+    },
+    {
+      "allowed_actions": [
+        "await-approval",
+        "execute-phase",
+        "record-decision",
+        "resume-workflow",
+        "run-validations"
+      ],
+      "capabilities": [
+        "capture-profile-analysis",
+        "prompt-direction",
+        "reference-selection",
+        "visual-bible-analysis"
+      ],
+      "can_approve": false,
+      "forbidden_actions": [
+        "approve-reference",
+        "invent-decision",
+        "overwrite-approved-artifact"
+      ],
+      "guidance": [
+        "Keep visual direction bound to the visual bible, profiles, and approved references.",
+        "Select only exact approved inputs and preserve their revisions and provenance.",
+        "Prepare review evidence without accepting generated output."
+      ],
+      "id": "visual-director",
+      "name": "Visual director",
+      "phase_ids": [
+        "decide",
+        "visual-direction"
+      ],
+      "purpose": "Coordinate visual direction, profile requirements, prompt constraints, and approved-reference inputs.",
+      "reads": [
+        "capture-profiles",
+        "decisions",
+        "project-status",
+        "visual-bible",
+        "visual-job-plan",
+        "visual-references"
+      ],
+      "requires_human_checkpoint": true,
+      "version": 1,
+      "writes": [
+        "compiled-prompt-proposal",
+        "visual-direction-proposal"
+      ]
+    }
+  ],
+  "id": "default",
+  "kind": "codex-agent-catalog",
+  "routes": [
+    {
+      "agent_id": "asset-planner",
+      "allowed_actions": [
+        "execute-phase",
+        "resume-workflow",
+        "run-validations"
+      ],
+      "task_id": "asset-planning"
+    },
+    {
+      "agent_id": "consistency-reviewer",
+      "allowed_actions": [
+        "await-approval",
+        "resume-workflow",
+        "review-status",
+        "run-validations"
+      ],
+      "task_id": "consistency-review"
+    },
+    {
+      "agent_id": "game-design-architect",
+      "allowed_actions": [
+        "execute-phase",
+        "record-decision",
+        "resume-workflow",
+        "run-validations"
+      ],
+      "task_id": "game-design"
+    },
+    {
+      "agent_id": "generation-operator",
+      "allowed_actions": [
+        "execute-phase",
+        "resume-workflow"
+      ],
+      "task_id": "generation"
+    },
+    {
+      "agent_id": "interviewer",
+      "allowed_actions": [
+        "ask-question",
+        "execute-phase",
+        "resume-workflow"
+      ],
+      "task_id": "interview"
+    },
+    {
+      "agent_id": "quality-auditor",
+      "allowed_actions": [
+        "resolve-validation",
+        "resume-workflow",
+        "run-validations"
+      ],
+      "task_id": "quality-audit"
+    },
+    {
+      "agent_id": "release-verifier",
+      "allowed_actions": [
+        "await-approval",
+        "resume-workflow",
+        "run-validations"
+      ],
+      "task_id": "release-verification"
+    },
+    {
+      "agent_id": "technical-architect",
+      "allowed_actions": [
+        "execute-phase",
+        "record-decision",
+        "resume-workflow",
+        "run-validations"
+      ],
+      "task_id": "technical-architecture"
+    },
+    {
+      "agent_id": "visual-director",
+      "allowed_actions": [
+        "await-approval",
+        "execute-phase",
+        "record-decision",
+        "resume-workflow",
+        "run-validations"
+      ],
+      "task_id": "visual-direction"
+    }
+  ],
+  "schema_version": 1,
+  "skill_id": "ludowright",
+  "version": 1
+}

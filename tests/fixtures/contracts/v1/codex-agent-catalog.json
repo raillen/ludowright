@@ -1,0 +1,47 @@
+{
+  "agents": [
+    {
+      "allowed_actions": [
+        "execute-phase"
+      ],
+      "capabilities": [
+        "catalog-validation"
+      ],
+      "can_approve": false,
+      "forbidden_actions": [
+        "approve-reference",
+        "invent-decision",
+        "overwrite-approved-artifact"
+      ],
+      "guidance": [
+        "Validate the published catalog."
+      ],
+      "id": "catalog-auditor",
+      "name": "Catalog auditor",
+      "phase_ids": [
+        "validate"
+      ],
+      "purpose": "Validate the specialist catalog fixture.",
+      "reads": [
+        "catalog"
+      ],
+      "requires_human_checkpoint": true,
+      "version": 1,
+      "writes": []
+    }
+  ],
+  "id": "fixture",
+  "kind": "codex-agent-catalog",
+  "routes": [
+    {
+      "agent_id": "catalog-auditor",
+      "allowed_actions": [
+        "execute-phase"
+      ],
+      "task_id": "catalog-validation"
+    }
+  ],
+  "schema_version": 1,
+  "skill_id": "ludowright",
+  "version": 1
+}

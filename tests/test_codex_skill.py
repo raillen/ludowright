@@ -62,10 +62,11 @@ def test_packaged_skill_definition_is_versioned_and_checksumed() -> None:
     definition = load_codex_skill_definition()
 
     assert definition.manifest.id == "ludowright"
-    assert definition.manifest.version == 2
+    assert definition.manifest.version == 3
     assert definition.manifest.entrypoint == "SKILL.md"
     assert definition.files[0].path == "SKILL.md"
     assert definition.files[1].path == "orchestration.json"
+    assert definition.files[2].path == "agents.json"
     assert (
         hashlib.sha256(definition.files[0].payload).hexdigest()
         == definition.manifest.files[0].sha256
