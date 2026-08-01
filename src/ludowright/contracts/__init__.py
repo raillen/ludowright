@@ -84,6 +84,12 @@ from ludowright.contracts.migrations import (
     MigrationRunStatus,
 )
 from ludowright.contracts.project import ProjectContract
+from ludowright.contracts.prompt_compiler import (
+    CompiledPromptContract,
+    CompiledPromptReferenceContract,
+    PromptLayerContract,
+    PromptTemplateContract,
+)
 from ludowright.contracts.publication import (
     DEFAULT_SCHEMA_ROOT,
     build_schema,
@@ -157,6 +163,8 @@ __all__ = [
     "CliErrorContract",
     "CliMetaContract",
     "CliResponseContract",
+    "CompiledPromptContract",
+    "CompiledPromptReferenceContract",
     "DecisionContract",
     "DependencyEdgeContract",
     "DependencyGraphContract",
@@ -189,6 +197,8 @@ __all__ = [
     "MigrationRunStatus",
     "PaletteColorContract",
     "ProjectContract",
+    "PromptLayerContract",
+    "PromptTemplateContract",
     "ProportionRuleContract",
     "QuestionnaireContract",
     "ShapeLanguageContract",

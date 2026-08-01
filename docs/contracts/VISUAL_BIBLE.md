@@ -5,7 +5,9 @@
 Atual: contrato `visual-bible` v1 publicado em `schemas/v1/visual-bible.schema.json`.
 
 Esta etapa define a direção visual compartilhada de um projeto. Ela não cria
-arquivos de imagem, não executa provedores e não compila prompts.
+arquivos de imagem, não executa provedores e não persiste jobs. A compilação
+determinística desta direção é definida no contrato
+[`PROMPT_COMPILER.md`](PROMPT_COMPILER.md).
 
 ## Objetivo
 
@@ -92,8 +94,8 @@ afirmações não vazias, com no máximo 1.000 caracteres por item. Cada lista
 deve ser única e uma afirmação não pode aparecer nas duas listas.
 
 O v1 exige pelo menos uma afirmação em cada lista para tornar a ausência de
-restrições explícita durante a revisão. A compilação em camadas e o hashing
-dessas restrições pertencem ao PR38.
+restrições explícita durante a revisão. O PR38 compila essas listas em camadas
+e inclui seu conteúdo no hash do prompt.
 
 ## Compatibilidade e segurança
 
@@ -113,8 +115,9 @@ Ainda não fazem parte do visual bible:
 
 - perfis executáveis por família de asset;
 - herança ou catálogo de capture profiles;
-- resolução de referências aprovadas;
-- compilação de prompts;
+- resolução de referências aprovadas no documento do projeto;
+- compilação e hashing de prompts; consulte
+  [`PROMPT_COMPILER.md`](PROMPT_COMPILER.md);
 - planejamento ou execução de visual jobs;
 - persistência de um arquivo de projeto ou comandos CLI.
 

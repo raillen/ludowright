@@ -354,6 +354,15 @@ persist project files, compile prompts, or execute visual jobs.
 
 ### PR 38 — Prompt compiler
 
+Status: implemented in the current slice. The provider-neutral compiler loads
+the versioned `minimal` template from package data, renders positive and
+negative layers from a validated visual bible, resolves only explicitly
+selected approved references for the exact target, and publishes strict v1
+`prompt-template` and `compiled-prompt` contracts. The canonical SHA-256 hash
+covers template, visual bible, target, layers, constraints, and reference
+revisions. No provider, CLI, persistence, SQLite migration, event-log change,
+or visual-job schema change is introduced.
+
 - layered prompt templates;
 - structured constraints;
 - negative constraints;

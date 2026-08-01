@@ -109,6 +109,12 @@
       "title": "Visual Bible Contract"
     },
     {
+      "canonical_source": "contracts/PROMPT_COMPILER.md",
+      "path": "contracts/PROMPT_COMPILER.md",
+      "section": "contracts",
+      "title": "Prompt Compiler Contract"
+    },
+    {
       "canonical_source": "contracts/CLI.md",
       "path": "contracts/CLI.md",
       "section": "contracts",
@@ -371,6 +377,12 @@
       "path": "decisions/0027-versioned-visual-bible-contract.md",
       "section": "decisions",
       "title": "ADR 0027: Versioned Visual Bible Contract"
+    },
+    {
+      "canonical_source": "decisions/0028-deterministic-provider-neutral-prompt-compiler.md",
+      "path": "decisions/0028-deterministic-provider-neutral-prompt-compiler.md",
+      "section": "decisions",
+      "title": "ADR 0028: Deterministic Provider-Neutral Prompt Compiler"
     },
     {
       "canonical_source": "governance/RFC_TEMPLATE.md",

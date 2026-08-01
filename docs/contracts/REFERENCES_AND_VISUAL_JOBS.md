@@ -124,6 +124,11 @@ A `VisualJob` is an immutable request specification containing:
 
 A job can be executed multiple times without changing the job itself.
 
+The provider-neutral `compiled-prompt` output is produced before execution by
+the prompt compiler. It is not yet a field in the v1 `VisualJob` contract;
+future planning and execution slices will bind that immutable output to a job
+and its request fingerprint.
+
 Changing prompts, references, profile revision, output count, target, or another request input creates a **new job**, normally with a new request fingerprint and an explicit superseding relationship.
 
 ## Retries versus superseding jobs

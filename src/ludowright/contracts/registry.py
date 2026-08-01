@@ -42,6 +42,7 @@ from ludowright.contracts.interviews import (
 )
 from ludowright.contracts.migrations import MigrationReceiptContract
 from ludowright.contracts.project import ProjectContract
+from ludowright.contracts.prompt_compiler import CompiledPromptContract, PromptTemplateContract
 from ludowright.contracts.visual import (
     GenerationReceiptContract,
     VisualJobContract,
@@ -169,6 +170,18 @@ CONTRACTS: tuple[ContractDefinition, ...] = (
         "visual-bible.schema.json",
         "LudoWright Visual Bible",
         VisualBibleContract,
+    ),
+    ContractDefinition(
+        "prompt-template",
+        "prompt-template.schema.json",
+        "LudoWright Prompt Template",
+        PromptTemplateContract,
+    ),
+    ContractDefinition(
+        "compiled-prompt",
+        "compiled-prompt.schema.json",
+        "LudoWright Compiled Prompt",
+        CompiledPromptContract,
     ),
     ContractDefinition(
         "migration-receipt",
