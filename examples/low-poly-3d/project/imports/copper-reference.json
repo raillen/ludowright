@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "kind": "visual-reference",
+  "id": "ref-copper-front",
+  "name": "Copper front turnaround reference",
+  "target": {"asset_id": "chr-copper"},
+  "role": "identity",
+  "provenance": {
+    "origin": "captured",
+    "content_revision": "sha256:copper-front-v1",
+    "creator": "LudoWright example fixture"
+  },
+  "status": "candidate"
+}

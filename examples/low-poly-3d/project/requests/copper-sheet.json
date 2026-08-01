@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "kind": "technical-sheet-request",
+  "id": "copper-turnaround-sheet",
+  "name": "Copper turnaround sheet",
+  "template_id": "minimal",
+  "template_version": 1,
+  "sheet_kind": "turnaround",
+  "inputs": [{
+    "id": "front",
+    "label": "Copper front",
+    "reference_id": "ref-copper-front",
+    "image_path": "normalized/copper-front.png",
+    "sha256": "2dfce186478b8e10407a0cd1897840a5e86bf4c40f89695466fdb168821b2cae"
+  }]
+}

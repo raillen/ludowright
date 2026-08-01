@@ -261,6 +261,8 @@ Future bounded changes should receive their own plan under `plans/`.
   example inputs, fixture checksum, workflow boundaries, and local execution.
 - [`examples/2D.md`](examples/2D.md) — Starfall Courier sprite workflow,
   custom capture profile, approval gate, and deterministic fixture.
+- [`examples/LOW_POLY_3D.md`](examples/LOW_POLY_3D.md) — Copper & Forge
+  humanoid/building workflow with segmented components and approval gates.
 
 ## Quality
 

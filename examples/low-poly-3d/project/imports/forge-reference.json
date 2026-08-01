@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "kind": "visual-reference",
+  "id": "ref-forge-front",
+  "name": "Forge building front reference",
+  "target": {"asset_id": "bldg-forge"},
+  "role": "identity",
+  "provenance": {
+    "origin": "captured",
+    "content_revision": "sha256:forge-front-v1",
+    "creator": "LudoWright example fixture"
+  },
+  "status": "candidate"
+}

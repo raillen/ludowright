@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "kind": "approval",
+  "id": "approval-forge-front-v1",
+  "subject": {
+    "subject_kind": "reference",
+    "id": "ref-forge-front",
+    "revision": "sha256:forge-front-v1",
+    "label": "Forge building front reference"
+  },
+  "history": [{
+    "sequence": 1,
+    "status": "pending",
+    "note": "Review massing, roof, openings, and construction state."
+  }]
+}

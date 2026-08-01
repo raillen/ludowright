@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "kind": "visual-job",
+  "id": "job-copper-turnaround-v1",
+  "name": "Copper humanoid turnaround",
+  "target": {"asset_id": "chr-copper"},
+  "profile_version": 1,
+  "request_revision": "sha256:copper-turnaround-request-v1",
+  "input_reference_ids": ["ref-copper-front"],
+  "output_roles": ["identity", "construction", "construction"],
+  "expected_output_count": 3
+}
