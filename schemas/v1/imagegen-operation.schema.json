@@ -1,0 +1,230 @@
+{
+  "$defs": {
+    "ImageGenOutputContract": {
+      "additionalProperties": false,
+      "description": "One output request, representing exactly one visual view.",
+      "properties": {
+        "index": {
+          "maximum": 64,
+          "minimum": 1,
+          "title": "Index",
+          "type": "integer"
+        },
+        "path": {
+          "maxLength": 1024,
+          "minLength": 1,
+          "pattern": "^[a-z0-9._-]+(?:/[a-z0-9._-]+)*$",
+          "title": "Path",
+          "type": "string"
+        },
+        "role": {
+          "$ref": "#/$defs/ReferenceRole"
+        }
+      },
+      "required": [
+        "index",
+        "role",
+        "path"
+      ],
+      "title": "ImageGenOutputContract",
+      "type": "object"
+    },
+    "ReferenceRole": {
+      "description": "Production purpose served by a visual reference.",
+      "enum": [
+        "identity",
+        "silhouette",
+        "proportion",
+        "construction",
+        "material",
+        "color",
+        "style",
+        "context",
+        "negative",
+        "output",
+        "other"
+      ],
+      "title": "ReferenceRole",
+      "type": "string"
+    },
+    "ReferenceTargetContract": {
+      "additionalProperties": false,
+      "properties": {
+        "asset_id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Asset Id",
+          "type": "string"
+        },
+        "component_id": {
+          "anyOf": [
+            {
+              "maxLength": 80,
+              "minLength": 1,
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Component Id"
+        },
+        "state_id": {
+          "anyOf": [
+            {
+              "maxLength": 80,
+              "minLength": 1,
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "State Id"
+        },
+        "variant_id": {
+          "anyOf": [
+            {
+              "maxLength": 80,
+              "minLength": 1,
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Variant Id"
+        }
+      },
+      "required": [
+        "asset_id"
+      ],
+      "title": "ReferenceTargetContract",
+      "type": "object"
+    }
+  },
+  "$id": "https://schemas.ludowright.dev/v1/imagegen-operation.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Immutable provider request recorded before one ImageGen execution.",
+  "properties": {
+    "id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Id",
+      "type": "string"
+    },
+    "input_reference_ids": {
+      "default": [],
+      "items": {
+        "maxLength": 80,
+        "minLength": 1,
+        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+        "type": "string"
+      },
+      "maxItems": 64,
+      "title": "Input Reference Ids",
+      "type": "array"
+    },
+    "job_id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Job Id",
+      "type": "string"
+    },
+    "job_request_revision": {
+      "maxLength": 128,
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+-]*$",
+      "title": "Job Request Revision",
+      "type": "string"
+    },
+    "kind": {
+      "const": "imagegen-operation",
+      "default": "imagegen-operation",
+      "title": "Kind",
+      "type": "string"
+    },
+    "negative_prompt": {
+      "maxLength": 12000,
+      "minLength": 1,
+      "title": "Negative Prompt",
+      "type": "string"
+    },
+    "operation_revision": {
+      "maxLength": 64,
+      "minLength": 64,
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Operation Revision",
+      "type": "string"
+    },
+    "output_directory": {
+      "maxLength": 1024,
+      "minLength": 1,
+      "pattern": "^[a-z0-9._-]+(?:/[a-z0-9._-]+)*$",
+      "title": "Output Directory",
+      "type": "string"
+    },
+    "outputs": {
+      "items": {
+        "$ref": "#/$defs/ImageGenOutputContract"
+      },
+      "maxItems": 64,
+      "minItems": 1,
+      "title": "Outputs",
+      "type": "array"
+    },
+    "positive_prompt": {
+      "maxLength": 12000,
+      "minLength": 1,
+      "title": "Positive Prompt",
+      "type": "string"
+    },
+    "profile_version": {
+      "maximum": 2147483647,
+      "minimum": 1,
+      "title": "Profile Version",
+      "type": "integer"
+    },
+    "prompt_hash": {
+      "maxLength": 64,
+      "minLength": 64,
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Prompt Hash",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "target": {
+      "$ref": "#/$defs/ReferenceTargetContract"
+    }
+  },
+  "required": [
+    "id",
+    "job_id",
+    "target",
+    "profile_version",
+    "job_request_revision",
+    "prompt_hash",
+    "positive_prompt",
+    "negative_prompt",
+    "output_directory",
+    "outputs",
+    "operation_revision"
+  ],
+  "title": "LudoWright ImageGen Operation",
+  "type": "object"
+}

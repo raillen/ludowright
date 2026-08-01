@@ -74,9 +74,11 @@ The PR44 installer lives in `integrations/codex/skill_installer.py` and ships
 the versioned data from `integrations/codex/skills/ludowright/`. The PR45
 orchestration policy and pure next-action planner live in
 `integrations/codex/orchestration.py`; they consume read-only observations and
-delegate all mutations to canonical application/CLI boundaries. A typed
-in-process or MCP-like adapter may be added only if CLI boundaries prove
-insufficient.
+delegate all mutations to canonical application/CLI boundaries. The PR46
+provider boundary lives in `integrations/codex/imagegen.py`; it records one
+deterministic operation and validated output per view. Receipts, references,
+approvals, and review remain separate boundaries. A typed MCP-like adapter may
+be added only if CLI boundaries prove insufficient.
 
 ### Infrastructure
 
@@ -154,9 +156,10 @@ Examples:
 
 ## Visual-generation architecture
 
-The core creates a structured visual-job plan and immutable jobs. Codex will
-execute ready jobs through ImageGen in a later slice, then record the result. A
-visual job identifies:
+The core creates a structured visual-job plan and immutable jobs. Codex executes
+jobs selected from ready plans through the provider-neutral ImageGen boundary;
+generation receipts record the terminal result in a later slice. A visual job
+identifies:
 
 - asset and component;
 - operation and required view;

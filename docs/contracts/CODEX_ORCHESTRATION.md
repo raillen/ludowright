@@ -72,5 +72,8 @@ contratos de jobs visuais. O JSON da política é um recurso da skill; a instala
 ou atualização continua usando o lock, a escrita atômica e o rollback definidos
 em [`CODEX_SKILL.md`](CODEX_SKILL.md).
 
-Execução ImageGen, receipts, revisão visual e agentes especialistas permanecem
-nos PRs 46–50.
+O planejador continua sem efeitos colaterais e não executa ImageGen. A execução
+de um job pronto é uma responsabilidade separada do adaptador em
+`integrations/codex/imagegen.py`, que reutiliza esta política para chegar ao
+checkpoint correto. Receipts, revisão visual e agentes especialistas permanecem
+nos PRs 47–50. Consulte o [contrato de execução ImageGen](IMAGEGEN_EXECUTION.md).

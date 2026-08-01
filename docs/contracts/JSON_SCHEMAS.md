@@ -50,6 +50,7 @@ It uses JSON Schema Draft 2020-12 and contains:
 | Visual bible | `visual-bible.schema.json` |
 | Prompt template | `prompt-template.schema.json` |
 | Compiled prompt | `compiled-prompt.schema.json` |
+| ImageGen operation | `imagegen-operation.schema.json` |
 | Migration receipt | `migration-receipt.schema.json` |
 | Dependency graph | `dependency-graph.schema.json` |
 | Document template | `document-template.schema.json` |

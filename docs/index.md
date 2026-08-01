@@ -60,11 +60,13 @@ The repository currently establishes:
   update, verification, removal, checksums, and rollback.
 
 The Codex orchestration policy now enforces status-first inspection, durable
-decisions, validations, approval checkpoints, and safe resume planning.
-Project-local profile persistence, ImageGen execution, review workflows,
-technical sheets, global audits, and package generation remain planned work. The
-pure deterministic visual-job planner is implemented, but it does not yet
-execute providers or persist project-local plans.
+decisions, validations, approval checkpoints, and safe resume planning. The
+ImageGen adapter now executes a selected ready job through an injected provider,
+records a deterministic operation manifest, validates one PNG per view, and
+rolls back partial failures. Project-local profile persistence, generation
+receipts, review workflows, technical sheets, global audits, and package
+generation remain planned work. The pure deterministic visual-job planner is
+implemented, but it does not execute providers or persist project-local plans.
 
 ## Start here
 

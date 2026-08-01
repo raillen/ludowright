@@ -91,3 +91,16 @@ própria.
 
 Consulte o [contrato da política](../contracts/CODEX_ORCHESTRATION.md) para a
 ordem completa, os contratos publicados e os limites desta etapa.
+
+## Execução ImageGen
+
+O PR46 não adiciona um comando CLI independente. A integração Codex expõe
+`ImageGenExecutor` para o host fornecer um `VisualJob` selecionado de um plano
+`ready`, seu `CompiledPrompt`, um diretório relativo e um provider ImageGen.
+Cada view gera uma chamada e um PNG; o adaptador persiste `operation.json` com
+prompt, inputs, paths e revisões.
+
+O modo `dry_run` retorna o mesmo plano determinístico sem lock, chamada ao
+provider ou escrita. Execução real é create-only: manifesto ou PNG existente
+gera conflito, e falhas removem os artefatos criados pela tentativa. Receipts,
+referências geradas e aprovação ainda são etapas posteriores.

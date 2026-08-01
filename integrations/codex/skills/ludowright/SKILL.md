@@ -21,10 +21,18 @@ O fluxo normativo está em `orchestration.json`. Aplique estas regras nesta orde
 
 Use `--json` para automações, mantenha caminhos relativos ao projeto e preserve contratos, IDs, versões, aprovações e artefatos existentes. Se uma capacidade necessária ainda não estiver publicada no CLI, trate-a como bloqueada em vez de improvisar um armazenamento paralelo.
 
+## Execução ImageGen
+
+Quando um plano visual estiver `ready`, encaminhe o job selecionado e seu
+`CompiledPrompt` ao `ImageGenExecutor` da integração Codex. O provider é
+injetado pelo host; a execução registra um `imagegen-operation`, faz exatamente
+uma chamada por view, valida PNG não animado, usa paths relativos, lock,
+escrita atômica, dry-run e rollback. Não trate a presença do manifesto como um
+receipt: checksums, referências geradas e aprovação são etapas posteriores.
+
 ## Limite desta versão
 
 A política seleciona a próxima ação e orienta o Codex; o planejador não executa
 providers nem grava decisões, aprovações ou receipts por conta própria. Essas
-mutações continuam nas superfícies canônicas do núcleo. Execução de ImageGen,
-receipts, revisão visual e agentes especialistas pertencem às etapas posteriores
-do roadmap.
+mutações continuam nas superfícies canônicas do núcleo. Receipts, revisão visual
+e agentes especialistas pertencem às etapas posteriores do roadmap.

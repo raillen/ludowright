@@ -3,11 +3,11 @@
   "files": [
     {
       "path": "SKILL.md",
-      "sha256": "048dadd8c7e5d40d1d0c567ec28779def423da58e264cf7445715fe56f732db1"
+      "sha256": "537d2160a32d324653cf71c8fdadd37ead91b49ea4955d185757ec2540a4639e"
     },
     {
       "path": "manifest.json",
-      "sha256": "ff70c59d338a3e4e74e3e48462823d1483ac525ebeec8b30892e6e958782092a"
+      "sha256": "39d58e2f72b773aaed14d2d253a5d57e380ab11e91b24f3037e75306403dbe67"
     },
     {
       "path": "orchestration.json",

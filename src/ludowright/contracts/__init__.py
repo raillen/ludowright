@@ -151,6 +151,10 @@ from ludowright.contracts.visual_bible import (
     VisualBibleContract,
     VisualBudgetContract,
 )
+from ludowright.contracts.visual_execution import (
+    ImageGenOperationContract,
+    ImageGenOutputContract,
+)
 from ludowright.contracts.visual_planning import (
     VisualJobBatchContract,
     VisualJobDependencyContract,
@@ -254,6 +258,8 @@ __all__ = [
     "HumanoidBodyBaseContract",
     "HumanoidProfileContract",
     "HumanoidWearableContract",
+    "ImageGenOperationContract",
+    "ImageGenOutputContract",
     "InterviewBlockedQuestionContract",
     "InterviewInteractionContract",
     "InterviewProgressContract",

@@ -59,6 +59,7 @@ from ludowright.contracts.visual import (
     VisualReviewContract,
 )
 from ludowright.contracts.visual_bible import VisualBibleContract
+from ludowright.contracts.visual_execution import ImageGenOperationContract
 from ludowright.contracts.visual_planning import VisualJobPlanContract
 from ludowright.contracts.visual_profiles import VisualProfileContract
 
@@ -199,6 +200,12 @@ CONTRACTS: tuple[ContractDefinition, ...] = (
         "compiled-prompt.schema.json",
         "LudoWright Compiled Prompt",
         CompiledPromptContract,
+    ),
+    ContractDefinition(
+        "imagegen-operation",
+        "imagegen-operation.schema.json",
+        "LudoWright ImageGen Operation",
+        ImageGenOperationContract,
     ),
     ContractDefinition(
         "humanoid-profile",
