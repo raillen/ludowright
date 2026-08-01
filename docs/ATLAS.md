@@ -15,6 +15,7 @@ This is the main navigation map for humans and agents. Each subject should have 
 - [`getting-started/FIRST_PROJECT.md`](getting-started/FIRST_PROJECT.md) — deterministic first-project flow with `init`, dry-run, and project-local skill installation.
 - [`getting-started/CHARACTER_WORKFLOW.md`](getting-started/CHARACTER_WORKFLOW.md) — character workflow, custom capture profile, humanoid package profile, planning, and approval boundaries.
 - [`getting-started/TROUBLESHOOTING.md`](getting-started/TROUBLESHOOTING.md) — conservative diagnosis and recovery for checkout installation, project initialization, Codex skill, and quality-gate failures.
+- [`getting-started/UPDATING.md`](getting-started/UPDATING.md) — safe checkout, environment, and project-local skill update flow.
 
 ## Product
 
