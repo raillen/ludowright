@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "kind": "hard-surface-profile",
+  "capture_profile": {
+    "schema_version": 1,
+    "kind": "capture-profile",
+    "id": "hard-surface-fixture",
+    "version": 1,
+    "name": "Hard-Surface Fixture",
+    "family": "prop",
+    "camera": {"projection": "orthographic"},
+    "background": {"mode": "neutral"},
+    "lighting": {"mode": "studio", "shadows": "soft"},
+    "validation": {"width": 1024, "height": 1024, "require_full_subject": true, "require_consistent_scale": true, "allow_occlusion": false},
+    "views": [
+      {"id": "front", "name": "Front", "azimuth_degrees": 0, "elevation_degrees": 0, "role": "identity"},
+      {"id": "detail", "name": "Detail", "azimuth_degrees": 45, "elevation_degrees": 20, "role": "construction"}
+    ],
+    "requirements": [
+      {"id": "root", "name": "Root", "requirement_kind": "component"},
+      {"id": "panel", "name": "Panel", "requirement_kind": "component", "required": false},
+      {"id": "neutral", "name": "Neutral", "requirement_kind": "state"}
+    ],
+    "sheets": []
+  },
+  "profile_kind": "prop",
+  "construction_views": [
+    {"view_id": "front", "role": "whole-asset", "guidance": "Establish the complete prop silhouette and primary orientation."},
+    {"view_id": "detail", "role": "detail", "guidance": "Show the panel interface and attachment details."}
+  ],
+  "components": [
+    {"id": "root", "name": "Root", "kind": "root"},
+    {"id": "panel", "name": "Panel", "kind": "panel", "required": false}
+  ],
+  "connection_matrix": [
+    {"source_component_id": "root", "target_component_id": "panel", "kind": "attachment", "guidance": "Show the panel mounting surface and seam."}
+  ],
+  "states": [
+    {"id": "neutral", "name": "Neutral", "guidance": "Use the standard resting configuration."}
+  ],
+  "outputs": [
+    {"id": "assembled", "name": "Assembled", "layout": "turnaround", "view_ids": ["front"], "subject_modes": ["asset", "components", "states"], "separate_files": true, "assembled_sheet": true}
+  ]
+}

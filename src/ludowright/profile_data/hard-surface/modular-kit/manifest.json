@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "kind": "hard-surface-profile",
+  "capture_profile": {
+    "schema_version": 1,
+    "kind": "capture-profile",
+    "id": "hard-surface-modular-kit",
+    "version": 1,
+    "name": "Hard-Surface Modular Kit",
+    "family": "environment",
+    "subtype": "modular-environment",
+    "camera": {"projection": "orthographic", "framing_margin_percent": 12},
+    "background": {"mode": "neutral"},
+    "lighting": {"mode": "studio", "shadows": "soft"},
+    "validation": {"width": 2048, "height": 2048, "require_full_subject": true, "require_consistent_scale": true, "allow_occlusion": false},
+    "views": [
+      {"id": "front", "name": "Front", "azimuth_degrees": 0, "elevation_degrees": 0, "role": "identity"},
+      {"id": "side", "name": "Side", "azimuth_degrees": 90, "elevation_degrees": 0, "role": "construction"},
+      {"id": "top", "name": "Top", "azimuth_degrees": 0, "elevation_degrees": 90, "role": "silhouette"},
+      {"id": "exploded", "name": "Exploded", "azimuth_degrees": 45, "elevation_degrees": 20, "role": "construction"},
+      {"id": "connections", "name": "Connections", "azimuth_degrees": 0, "elevation_degrees": 20, "role": "construction"},
+      {"id": "underside", "name": "Underside", "azimuth_degrees": 0, "elevation_degrees": -90, "role": "construction"}
+    ],
+    "requirements": [
+      {"id": "root", "name": "Root", "requirement_kind": "component"},
+      {"id": "floor-module", "name": "Floor Module", "requirement_kind": "component"},
+      {"id": "wall-module", "name": "Wall Module", "requirement_kind": "component"},
+      {"id": "corner-module", "name": "Corner Module", "requirement_kind": "component", "required": false},
+      {"id": "connector", "name": "Connector", "requirement_kind": "component"},
+      {"id": "assembled", "name": "Assembled", "requirement_kind": "state"},
+      {"id": "construction", "name": "Construction", "requirement_kind": "state"},
+      {"id": "damaged", "name": "Damaged", "requirement_kind": "state", "required": false}
+    ],
+    "sheets": []
+  },
+  "profile_kind": "modular-kit",
+  "construction_views": [
+    {"view_id": "front", "role": "whole-asset", "guidance": "Establish module dimensions, grid alignment, and the primary assembled silhouette."},
+    {"view_id": "side", "role": "side", "guidance": "Show depth, floor-to-wall transitions, and repeatable profile edges."},
+    {"view_id": "top", "role": "top", "guidance": "Show the module footprint, grid, and corner alignment."},
+    {"view_id": "exploded", "role": "exploded", "guidance": "Separate floor, wall, corner, and connector parts while keeping assembly order readable."},
+    {"view_id": "connections", "role": "connections", "guidance": "Show every connection edge, socket, and clearance needed for composition."},
+    {"view_id": "underside", "role": "underside", "guidance": "Show underside sockets, supports, and snap alignment."}
+  ],
+  "components": [
+    {"id": "root", "name": "Root", "kind": "root"},
+    {"id": "floor-module", "name": "Floor Module", "kind": "module"},
+    {"id": "wall-module", "name": "Wall Module", "kind": "module"},
+    {"id": "corner-module", "name": "Corner Module", "kind": "module", "required": false},
+    {"id": "connector", "name": "Connector", "kind": "connector"}
+  ],
+  "connection_matrix": [
+    {"source_component_id": "root", "target_component_id": "floor-module", "kind": "edge", "guidance": "Define the repeatable floor edge and grid alignment."},
+    {"source_component_id": "root", "target_component_id": "wall-module", "kind": "edge", "guidance": "Define wall edge dimensions, orientation, and snap tolerance."},
+    {"source_component_id": "wall-module", "target_component_id": "corner-module", "kind": "edge", "guidance": "Keep corner handoff and inside/outside orientation explicit.", "required": false},
+    {"source_component_id": "root", "target_component_id": "connector", "kind": "socket", "guidance": "Show connector placement, polarity, and clearance."}
+  ],
+  "states": [
+    {"id": "assembled", "name": "Assembled", "guidance": "Show a valid composition with all required module connections aligned."},
+    {"id": "construction", "name": "Construction", "guidance": "Show module boundaries and connection logic without hiding reusable parts."},
+    {"id": "damaged", "name": "Damaged", "guidance": "Show only approved damage that affects a module or connection.", "required": false}
+  ],
+  "outputs": [
+    {"id": "assembled-kit", "name": "Assembled Kit", "layout": "turnaround", "view_ids": ["front", "side", "top", "underside"], "subject_modes": ["asset", "components", "states"], "separate_files": true, "assembled_sheet": true},
+    {"id": "connection-matrix", "name": "Connection Matrix", "layout": "grid", "view_ids": ["connections", "exploded"], "subject_modes": ["components", "states"], "separate_files": true, "assembled_sheet": false}
+  ]
+}

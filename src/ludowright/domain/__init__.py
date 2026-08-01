@@ -110,6 +110,17 @@ from ludowright.domain.governance import (
     ReviewNote,
     SubjectRevision,
 )
+from ludowright.domain.hard_surface_profiles import (
+    HardSurfaceComponent,
+    HardSurfaceComponentKind,
+    HardSurfaceConnection,
+    HardSurfaceConnectionKind,
+    HardSurfaceProfile,
+    HardSurfaceProfileKind,
+    HardSurfaceState,
+    HardSurfaceView,
+    HardSurfaceViewRole,
+)
 from ludowright.domain.humanoid_profiles import (
     HumanoidBodyBase,
     HumanoidProfile,
@@ -307,6 +318,15 @@ __all__ = [
     "FrozenJsonValue",
     "GenerationReceipt",
     "GenerationSeries",
+    "HardSurfaceComponent",
+    "HardSurfaceComponentKind",
+    "HardSurfaceConnection",
+    "HardSurfaceConnectionKind",
+    "HardSurfaceProfile",
+    "HardSurfaceProfileKind",
+    "HardSurfaceState",
+    "HardSurfaceView",
+    "HardSurfaceViewRole",
     "HexColor",
     "HumanoidBodyBase",
     "HumanoidProfile",

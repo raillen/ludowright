@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "kind": "hard-surface-profile",
+  "capture_profile": {
+    "schema_version": 1,
+    "kind": "capture-profile",
+    "id": "hard-surface-interior",
+    "version": 1,
+    "name": "Hard-Surface Interior",
+    "family": "environment",
+    "subtype": "interior",
+    "camera": {"projection": "orthographic", "framing_margin_percent": 12},
+    "background": {"mode": "neutral"},
+    "lighting": {"mode": "studio", "shadows": "soft"},
+    "validation": {"width": 2048, "height": 2048, "require_full_subject": true, "require_consistent_scale": true, "allow_occlusion": false},
+    "views": [
+      {"id": "entry", "name": "Entry", "azimuth_degrees": 0, "elevation_degrees": 0, "role": "identity"},
+      {"id": "side", "name": "Side", "azimuth_degrees": 90, "elevation_degrees": 0, "role": "construction"},
+      {"id": "top", "name": "Top", "azimuth_degrees": 0, "elevation_degrees": 90, "role": "silhouette"},
+      {"id": "interior", "name": "Interior", "azimuth_degrees": 45, "elevation_degrees": 0, "role": "construction"},
+      {"id": "ceiling", "name": "Ceiling", "azimuth_degrees": 0, "elevation_degrees": -90, "role": "construction"}
+    ],
+    "requirements": [
+      {"id": "root", "name": "Root", "requirement_kind": "component"},
+      {"id": "floor", "name": "Floor", "requirement_kind": "component"},
+      {"id": "walls", "name": "Walls", "requirement_kind": "component"},
+      {"id": "openings", "name": "Openings", "requirement_kind": "component"},
+      {"id": "fixtures", "name": "Fixtures", "requirement_kind": "component", "required": false},
+      {"id": "empty", "name": "Empty", "requirement_kind": "state"},
+      {"id": "furnished", "name": "Furnished", "requirement_kind": "state"},
+      {"id": "damaged", "name": "Damaged", "requirement_kind": "state", "required": false}
+    ],
+    "sheets": []
+  },
+  "profile_kind": "interior",
+  "construction_views": [
+    {"view_id": "entry", "role": "whole-asset", "guidance": "Establish room scale, entry axis, floor boundary, and the complete shell."},
+    {"view_id": "side", "role": "side", "guidance": "Show wall thickness, openings, floor-to-ceiling height, and fixed surfaces."},
+    {"view_id": "top", "role": "top", "guidance": "Show the floor plan, circulation space, and fixture footprint."},
+    {"view_id": "interior", "role": "interior", "guidance": "Show wall, floor, opening, and fixture interfaces in the usable room volume."},
+    {"view_id": "ceiling", "role": "underside", "guidance": "Show ceiling construction, overhead fixtures, and clearance."}
+  ],
+  "components": [
+    {"id": "root", "name": "Root", "kind": "root"},
+    {"id": "floor", "name": "Floor", "kind": "structure"},
+    {"id": "walls", "name": "Walls", "kind": "structure"},
+    {"id": "openings", "name": "Openings", "kind": "opening"},
+    {"id": "fixtures", "name": "Fixtures", "kind": "fixture", "required": false}
+  ],
+  "connection_matrix": [
+    {"source_component_id": "root", "target_component_id": "floor", "kind": "floor", "guidance": "Define the floor datum, perimeter, and transition to the room shell."},
+    {"source_component_id": "root", "target_component_id": "walls", "kind": "wall", "guidance": "Define wall junctions, thickness, and usable interior boundary."},
+    {"source_component_id": "walls", "target_component_id": "openings", "kind": "socket", "guidance": "Show opening dimensions, swing or slide clearance, and wall interface."},
+    {"source_component_id": "root", "target_component_id": "fixtures", "kind": "mount", "guidance": "Show fixed-fixture attachment and service clearance.", "required": false}
+  ],
+  "states": [
+    {"id": "empty", "name": "Empty", "guidance": "Show the clean shell and circulation volume without movable furnishings."},
+    {"id": "furnished", "name": "Furnished", "guidance": "Show approved fixtures while preserving the room construction and walkable clearances."},
+    {"id": "damaged", "name": "Damaged", "guidance": "Show only approved interior damage that affects construction or access.", "required": false}
+  ],
+  "outputs": [
+    {"id": "assembled-interior", "name": "Assembled Interior", "layout": "turnaround", "view_ids": ["entry", "side", "top", "interior", "ceiling"], "subject_modes": ["asset", "components", "states"], "separate_files": true, "assembled_sheet": true},
+    {"id": "interior-construction", "name": "Interior Construction", "layout": "exploded", "view_ids": ["top", "interior", "ceiling"], "subject_modes": ["components", "states"], "separate_files": true, "assembled_sheet": false}
+  ]
+}

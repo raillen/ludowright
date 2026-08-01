@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "kind": "hard-surface-profile",
+  "capture_profile": {
+    "schema_version": 1,
+    "kind": "capture-profile",
+    "id": "hard-surface-prop",
+    "version": 1,
+    "name": "Hard-Surface Prop",
+    "family": "prop",
+    "camera": {"projection": "orthographic", "framing_margin_percent": 12},
+    "background": {"mode": "neutral"},
+    "lighting": {"mode": "studio", "shadows": "soft"},
+    "validation": {"width": 2048, "height": 2048, "require_full_subject": true, "require_consistent_scale": true, "allow_occlusion": false},
+    "views": [
+      {"id": "front", "name": "Front", "azimuth_degrees": 0, "elevation_degrees": 0, "role": "identity"},
+      {"id": "side", "name": "Side", "azimuth_degrees": 90, "elevation_degrees": 0, "role": "construction"},
+      {"id": "rear", "name": "Rear", "azimuth_degrees": 180, "elevation_degrees": 0, "role": "construction"},
+      {"id": "top", "name": "Top", "azimuth_degrees": 0, "elevation_degrees": 90, "role": "silhouette"},
+      {"id": "underside", "name": "Underside", "azimuth_degrees": 0, "elevation_degrees": -90, "role": "construction"},
+      {"id": "detail", "name": "Detail", "azimuth_degrees": 45, "elevation_degrees": 20, "role": "construction"}
+    ],
+    "requirements": [
+      {"id": "root", "name": "Root", "requirement_kind": "component"},
+      {"id": "moving-part", "name": "Moving Part", "requirement_kind": "component", "required": false},
+      {"id": "hardware", "name": "Hardware", "requirement_kind": "component", "required": false},
+      {"id": "neutral", "name": "Neutral", "requirement_kind": "state"},
+      {"id": "open", "name": "Open", "requirement_kind": "state"},
+      {"id": "damaged", "name": "Damaged", "requirement_kind": "state", "required": false}
+    ],
+    "sheets": []
+  },
+  "profile_kind": "prop",
+  "construction_views": [
+    {"view_id": "front", "role": "whole-asset", "guidance": "Establish the complete prop silhouette, scale cues, and primary orientation."},
+    {"view_id": "side", "role": "side", "guidance": "Show depth, balance, and construction seams."},
+    {"view_id": "rear", "role": "rear", "guidance": "Show rear interfaces and hidden structural features."},
+    {"view_id": "top", "role": "top", "guidance": "Show the footprint, controls, and top-facing details."},
+    {"view_id": "underside", "role": "underside", "guidance": "Show supports, contact points, and underside construction."},
+    {"view_id": "detail", "role": "detail", "guidance": "Show the moving part, hardware, and attachment details at useful scale."}
+  ],
+  "components": [
+    {"id": "root", "name": "Root", "kind": "root"},
+    {"id": "moving-part", "name": "Moving Part", "kind": "moving-part", "required": false},
+    {"id": "hardware", "name": "Hardware", "kind": "fixture", "required": false}
+  ],
+  "connection_matrix": [
+    {"source_component_id": "root", "target_component_id": "moving-part", "kind": "hinge", "guidance": "Keep the moving-part axis and clearance visible.", "required": false},
+    {"source_component_id": "root", "target_component_id": "hardware", "kind": "mount", "guidance": "Show the hardware mounting surface and fastener relationship.", "required": false}
+  ],
+  "states": [
+    {"id": "neutral", "name": "Neutral", "guidance": "Use the standard closed or resting configuration."},
+    {"id": "open", "name": "Open", "guidance": "Show the functional opening without hiding the construction interface."},
+    {"id": "damaged", "name": "Damaged", "guidance": "Show only approved damage that changes the readable construction.", "required": false}
+  ],
+  "outputs": [
+    {"id": "assembled-turnaround", "name": "Assembled Turnaround", "layout": "turnaround", "view_ids": ["front", "side", "rear", "top", "underside"], "subject_modes": ["asset", "components", "states"], "separate_files": true, "assembled_sheet": true},
+    {"id": "exploded-details", "name": "Exploded Details", "layout": "exploded", "view_ids": ["detail", "underside"], "subject_modes": ["components", "states"], "separate_files": true, "assembled_sheet": false}
+  ]
+}

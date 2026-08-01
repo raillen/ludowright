@@ -69,6 +69,12 @@ from ludowright.application.documentation_audit import (
     DocumentationAuditor,
     render_documentation_audit,
 )
+from ludowright.application.hard_surface_profiles import (
+    HardSurfaceProfileDefinitionError,
+    HardSurfaceProfileError,
+    HardSurfaceProfileNotFoundError,
+    load_hard_surface_profile,
+)
 from ludowright.application.humanoid_profiles import (
     HumanoidProfileDefinitionError,
     HumanoidProfileError,
@@ -134,6 +140,9 @@ __all__ = [
     "DocumentationAudit",
     "DocumentationAuditError",
     "DocumentationAuditor",
+    "HardSurfaceProfileDefinitionError",
+    "HardSurfaceProfileError",
+    "HardSurfaceProfileNotFoundError",
     "HumanoidProfileDefinitionError",
     "HumanoidProfileError",
     "HumanoidProfileNotFoundError",
@@ -148,6 +157,7 @@ __all__ = [
     "load_asset_taxonomy",
     "load_creature_profile",
     "load_document_template_manifest",
+    "load_hard_surface_profile",
     "load_humanoid_profile",
     "load_prompt_template",
     "render_atlas_markdown",
