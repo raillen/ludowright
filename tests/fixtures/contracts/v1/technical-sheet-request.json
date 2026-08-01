@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "kind": "technical-sheet-request",
+  "id": "lantern-component",
+  "name": "Lantern component sheet",
+  "template_id": "minimal",
+  "template_version": 1,
+  "sheet_kind": "component",
+  "inputs": [
+    {
+      "id": "front",
+      "label": "Front",
+      "reference_id": "ref-front",
+      "image_path": "normalized/front.png",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    }
+  ]
+}

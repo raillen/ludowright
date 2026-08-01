@@ -23,6 +23,12 @@ from ludowright.application.image_normalization import (
     ImageNormalizationConflictError,
     ImageNormalizationRollbackError,
 )
+from ludowright.application.technical_sheets import (
+    TechnicalSheetConflictError,
+    TechnicalSheetError,
+    TechnicalSheetRequestError,
+    TechnicalSheetRollbackError,
+)
 from ludowright.application.visual_review import (
     VisualReviewConflictError,
     VisualReviewError,
@@ -283,6 +289,24 @@ def _known_failure(error: Exception) -> CliFailure | None:
             exit_code=CliExitCode.VALIDATION,
         )
     if isinstance(error, ImageNormalizationError):
+        return CliFailure(
+            CliErrorCode.INVALID_INPUT,
+            str(error),
+            exit_code=CliExitCode.VALIDATION,
+        )
+    if isinstance(error, TechnicalSheetConflictError):
+        return CliFailure(
+            CliErrorCode.CONFLICT,
+            str(error),
+            exit_code=CliExitCode.CONFLICT,
+        )
+    if isinstance(error, TechnicalSheetRollbackError):
+        return CliFailure(
+            CliErrorCode.CORRUPT_STATE,
+            str(error),
+            exit_code=CliExitCode.CORRUPT_STATE,
+        )
+    if isinstance(error, (TechnicalSheetRequestError, TechnicalSheetError)):
         return CliFailure(
             CliErrorCode.INVALID_INPUT,
             str(error),

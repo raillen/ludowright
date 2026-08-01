@@ -1,0 +1,125 @@
+{
+  "$defs": {
+    "TechnicalSheetInputContract": {
+      "additionalProperties": false,
+      "description": "One approved reference and its exact normalized PNG input.",
+      "properties": {
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "image_path": {
+          "maxLength": 1024,
+          "minLength": 1,
+          "pattern": "^[a-z0-9._-]+(?:/[a-z0-9._-]+)*$",
+          "title": "Image Path",
+          "type": "string"
+        },
+        "label": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Label",
+          "type": "string"
+        },
+        "reference_id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Reference Id",
+          "type": "string"
+        },
+        "sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "label",
+        "reference_id",
+        "image_path",
+        "sha256"
+      ],
+      "title": "TechnicalSheetInputContract",
+      "type": "object"
+    }
+  },
+  "$id": "https://schemas.ludowright.dev/v1/technical-sheet-request.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Canonical request consumed by the local sheet assembler.",
+  "properties": {
+    "id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Id",
+      "type": "string"
+    },
+    "inputs": {
+      "items": {
+        "$ref": "#/$defs/TechnicalSheetInputContract"
+      },
+      "title": "Inputs",
+      "type": "array"
+    },
+    "kind": {
+      "const": "technical-sheet-request",
+      "default": "technical-sheet-request",
+      "title": "Kind",
+      "type": "string"
+    },
+    "name": {
+      "maxLength": 120,
+      "minLength": 1,
+      "title": "Name",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "sheet_kind": {
+      "enum": [
+        "turnaround",
+        "component",
+        "prop",
+        "detail",
+        "scale"
+      ],
+      "title": "Sheet Kind",
+      "type": "string"
+    },
+    "template_id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Template Id",
+      "type": "string"
+    },
+    "template_version": {
+      "maximum": 2147483647,
+      "minimum": 1,
+      "title": "Template Version",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "template_id",
+    "template_version",
+    "sheet_kind",
+    "inputs"
+  ],
+  "title": "LudoWright Technical Sheet Request",
+  "type": "object"
+}

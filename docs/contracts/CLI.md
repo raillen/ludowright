@@ -174,6 +174,9 @@ The shared runtime maps known failures without hiding unexpected programming def
 - structured-document conflict → `conflict`, exit 5;
 - corrupt event log, state store, or structured document → `corrupt-state`, exit 6;
 - domain validation error → `invalid-input`, exit 4;
+- technical-sheet input, path, template, PNG, or checksum validation → `invalid-input`, exit 4;
+- technical-sheet partial or divergent output → `conflict`, exit 5;
+- technical-sheet rollback or unreadable persisted output → `corrupt-state`, exit 6;
 - explicit `CliFailure` → its declared code and exit code.
 
 Unrecognized exceptions are re-raised during command execution. They must not be silently converted into a successful or generic result.

@@ -110,9 +110,11 @@ assembly from interview answers remains a later bounded capability.
 ### 0.7 Sheets and Packages
 
 - image normalization and alignment (initial deterministic workflow implemented
-  through PR51; technical-sheet composition remains later);
-- turnarounds, component sheets, contact sheets, detail sheets, and scale sheets;
-- deterministic assembly from approved images;
+  through PR51);
+- turnarounds, component sheets, prop sheets, detail sheets, and scale sheets
+  (initial deterministic assembly implemented through PR52; contact-sheet
+  packaging remains later);
+- deterministic assembly from approved images (implemented through PR52);
 - package manifests, indexes, checksums, and ZIP output;
 - release-readiness checks.
 

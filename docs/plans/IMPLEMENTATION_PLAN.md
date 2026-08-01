@@ -592,6 +592,17 @@ technical-sheet composition remains PR52.
 
 ### PR 52 — Technical sheet assembly
 
+Status: implemented in the current slice. The non-interactive `sheets
+assemble` command consumes explicit requests, approved references, and exact
+normalized PNG checksums. It loads the data-defined version 1 `minimal`
+template and creates deterministic turnaround, component, prop, detail, or
+scale sheets plus a `technical-sheet` provenance report. The workflow supports
+human and JSON CLI output, dry-run, exact-repeat `unchanged`, create-only
+conflict detection, project locking, atomic writes, and rollback of artifacts
+created after a partial failure. Paths and symlinks use the shared filesystem
+boundary. It does not mutate approvals, references, the event log, dependency
+graph, or SQLite; package manifests and global audits remain later PRs.
+
 - turnarounds;
 - component and prop sheets;
 - detail and scale sheets;

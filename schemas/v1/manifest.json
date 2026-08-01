@@ -177,6 +177,24 @@
       "sha256": "36d95963c0b26950348f2cf57d46e093c8d2ec0145312b9d2f037e5670654270"
     },
     {
+      "file": "technical-sheet-template.schema.json",
+      "name": "technical-sheet-template",
+      "schema_id": "https://schemas.ludowright.dev/v1/technical-sheet-template.schema.json",
+      "sha256": "74b6c93aa30adef9d860187f2f3c65ae0a76c2bf5c22ac8f3f9a4d8d3ef10ec1"
+    },
+    {
+      "file": "technical-sheet-request.schema.json",
+      "name": "technical-sheet-request",
+      "schema_id": "https://schemas.ludowright.dev/v1/technical-sheet-request.schema.json",
+      "sha256": "ad6ee3bded441e4611a439d3b69f0bb52582df87486ce51f0f4fb725dde62cbf"
+    },
+    {
+      "file": "technical-sheet.schema.json",
+      "name": "technical-sheet",
+      "schema_id": "https://schemas.ludowright.dev/v1/technical-sheet.schema.json",
+      "sha256": "81fa3dd0fa27093d2fcbb905ba88382b31b8fbbcb15dc4a00278884295f8908d"
+    },
+    {
       "file": "migration-receipt.schema.json",
       "name": "migration-receipt",
       "schema_id": "https://schemas.ludowright.dev/v1/migration-receipt.schema.json",

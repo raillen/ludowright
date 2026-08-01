@@ -1,0 +1,352 @@
+{
+  "$defs": {
+    "SheetLayout": {
+      "enum": [
+        "grid",
+        "turnaround",
+        "exploded",
+        "contact-sheet"
+      ],
+      "title": "SheetLayout",
+      "type": "string"
+    },
+    "TechnicalSheetInputReportContract": {
+      "additionalProperties": false,
+      "description": "Validated facts for one input used by an assembled sheet.",
+      "properties": {
+        "height": {
+          "maximum": 16384,
+          "minimum": 1,
+          "title": "Height",
+          "type": "integer"
+        },
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "image_path": {
+          "maxLength": 1024,
+          "minLength": 1,
+          "pattern": "^[a-z0-9._-]+(?:/[a-z0-9._-]+)*$",
+          "title": "Image Path",
+          "type": "string"
+        },
+        "reference_id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Reference Id",
+          "type": "string"
+        },
+        "sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "width": {
+          "maximum": 16384,
+          "minimum": 1,
+          "title": "Width",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "reference_id",
+        "image_path",
+        "sha256",
+        "width",
+        "height"
+      ],
+      "title": "TechnicalSheetInputReportContract",
+      "type": "object"
+    },
+    "TechnicalSheetOutputContract": {
+      "additionalProperties": false,
+      "description": "The atomically-created PNG sheet artifact.",
+      "properties": {
+        "format": {
+          "const": "png",
+          "default": "png",
+          "title": "Format",
+          "type": "string"
+        },
+        "height": {
+          "maximum": 16384,
+          "minimum": 1,
+          "title": "Height",
+          "type": "integer"
+        },
+        "path": {
+          "maxLength": 1024,
+          "minLength": 1,
+          "pattern": "^[a-z0-9._-]+(?:/[a-z0-9._-]+)*$",
+          "title": "Path",
+          "type": "string"
+        },
+        "sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "size_bytes": {
+          "maximum": 67108864,
+          "minimum": 1,
+          "title": "Size Bytes",
+          "type": "integer"
+        },
+        "width": {
+          "maximum": 16384,
+          "minimum": 1,
+          "title": "Width",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "path",
+        "sha256",
+        "size_bytes",
+        "width",
+        "height"
+      ],
+      "title": "TechnicalSheetOutputContract",
+      "type": "object"
+    },
+    "TechnicalSheetPlacementContract": {
+      "additionalProperties": false,
+      "description": "Deterministic position of one input inside the output canvas.",
+      "properties": {
+        "height": {
+          "maximum": 16384,
+          "minimum": 1,
+          "title": "Height",
+          "type": "integer"
+        },
+        "index": {
+          "maximum": 64,
+          "minimum": 1,
+          "title": "Index",
+          "type": "integer"
+        },
+        "input_id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Input Id",
+          "type": "string"
+        },
+        "label": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Label",
+          "type": "string"
+        },
+        "width": {
+          "maximum": 16384,
+          "minimum": 1,
+          "title": "Width",
+          "type": "integer"
+        },
+        "x": {
+          "maximum": 16383,
+          "minimum": 0,
+          "title": "X",
+          "type": "integer"
+        },
+        "y": {
+          "maximum": 16383,
+          "minimum": 0,
+          "title": "Y",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "index",
+        "input_id",
+        "label",
+        "x",
+        "y",
+        "width",
+        "height"
+      ],
+      "title": "TechnicalSheetPlacementContract",
+      "type": "object"
+    }
+  },
+  "$id": "https://schemas.ludowright.dev/v1/technical-sheet.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Canonical provenance and placement report for one technical sheet.",
+  "properties": {
+    "background": {
+      "pattern": "^#[0-9A-F]{6}$",
+      "title": "Background",
+      "type": "string"
+    },
+    "canvas_height": {
+      "maximum": 16384,
+      "minimum": 64,
+      "title": "Canvas Height",
+      "type": "integer"
+    },
+    "canvas_width": {
+      "maximum": 16384,
+      "minimum": 64,
+      "title": "Canvas Width",
+      "type": "integer"
+    },
+    "cell_height": {
+      "maximum": 4096,
+      "minimum": 64,
+      "title": "Cell Height",
+      "type": "integer"
+    },
+    "cell_width": {
+      "maximum": 4096,
+      "minimum": 64,
+      "title": "Cell Width",
+      "type": "integer"
+    },
+    "gutter": {
+      "maximum": 512,
+      "minimum": 0,
+      "title": "Gutter",
+      "type": "integer"
+    },
+    "id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Id",
+      "type": "string"
+    },
+    "inputs": {
+      "items": {
+        "$ref": "#/$defs/TechnicalSheetInputReportContract"
+      },
+      "title": "Inputs",
+      "type": "array"
+    },
+    "kind": {
+      "const": "technical-sheet",
+      "default": "technical-sheet",
+      "title": "Kind",
+      "type": "string"
+    },
+    "label_height": {
+      "maximum": 512,
+      "minimum": 0,
+      "title": "Label Height",
+      "type": "integer"
+    },
+    "layout": {
+      "$ref": "#/$defs/SheetLayout"
+    },
+    "margin": {
+      "maximum": 512,
+      "minimum": 0,
+      "title": "Margin",
+      "type": "integer"
+    },
+    "name": {
+      "maxLength": 120,
+      "minLength": 1,
+      "title": "Name",
+      "type": "string"
+    },
+    "output": {
+      "$ref": "#/$defs/TechnicalSheetOutputContract"
+    },
+    "placements": {
+      "items": {
+        "$ref": "#/$defs/TechnicalSheetPlacementContract"
+      },
+      "title": "Placements",
+      "type": "array"
+    },
+    "request_path": {
+      "maxLength": 1024,
+      "minLength": 1,
+      "pattern": "^[a-z0-9._-]+(?:/[a-z0-9._-]+)*$",
+      "title": "Request Path",
+      "type": "string"
+    },
+    "request_sha256": {
+      "maxLength": 64,
+      "minLength": 64,
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Request Sha256",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "sheet_kind": {
+      "enum": [
+        "turnaround",
+        "component",
+        "prop",
+        "detail",
+        "scale"
+      ],
+      "title": "Sheet Kind",
+      "type": "string"
+    },
+    "template_id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Template Id",
+      "type": "string"
+    },
+    "template_version": {
+      "maximum": 2147483647,
+      "minimum": 1,
+      "title": "Template Version",
+      "type": "integer"
+    },
+    "warnings": {
+      "default": [],
+      "items": {
+        "maxLength": 120,
+        "minLength": 1,
+        "type": "string"
+      },
+      "title": "Warnings",
+      "type": "array"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "request_path",
+    "request_sha256",
+    "template_id",
+    "template_version",
+    "sheet_kind",
+    "layout",
+    "background",
+    "canvas_width",
+    "canvas_height",
+    "cell_width",
+    "cell_height",
+    "margin",
+    "gutter",
+    "label_height",
+    "inputs",
+    "placements",
+    "output"
+  ],
+  "title": "LudoWright Technical Sheet Report",
+  "type": "object"
+}

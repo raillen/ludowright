@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "kind": "technical-sheet",
+  "id": "lantern-component",
+  "name": "Lantern component sheet",
+  "request_path": "requests/lantern.json",
+  "request_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+  "template_id": "minimal",
+  "template_version": 1,
+  "sheet_kind": "component",
+  "layout": "grid",
+  "background": "#F2F2F2",
+  "canvas_width": 864,
+  "canvas_height": 344,
+  "cell_width": 256,
+  "cell_height": 256,
+  "margin": 32,
+  "gutter": 16,
+  "label_height": 24,
+  "inputs": [
+    {
+      "id": "front",
+      "reference_id": "ref-front",
+      "image_path": "normalized/front.png",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "width": 80,
+      "height": 40
+    }
+  ],
+  "placements": [
+    {
+      "index": 1,
+      "input_id": "front",
+      "label": "Front",
+      "x": 32,
+      "y": 32,
+      "width": 256,
+      "height": 256
+    }
+  ],
+  "output": {
+    "path": "sheets/lantern/sheet.png",
+    "format": "png",
+    "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "size_bytes": 100,
+    "width": 864,
+    "height": 344
+  },
+  "warnings": []
+}

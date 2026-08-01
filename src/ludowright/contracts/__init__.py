@@ -148,6 +148,17 @@ from ludowright.contracts.registry import (
     JSON_SCHEMA_DRAFT,
     SCHEMA_VERSION,
 )
+from ludowright.contracts.technical_sheets import (
+    TechnicalSheetInputContract,
+    TechnicalSheetInputReportContract,
+    TechnicalSheetKind,
+    TechnicalSheetOutputContract,
+    TechnicalSheetPlacementContract,
+    TechnicalSheetReportContract,
+    TechnicalSheetRequestContract,
+    TechnicalSheetTemplateContract,
+    TechnicalSheetTemplateLayoutContract,
+)
 from ludowright.contracts.visual import (
     GenerationOutputContract,
     GenerationOutputValidationContract,
@@ -305,6 +316,15 @@ __all__ = [
     "QuestionnaireContract",
     "ReviewActorContract",
     "ShapeLanguageContract",
+    "TechnicalSheetInputContract",
+    "TechnicalSheetInputReportContract",
+    "TechnicalSheetKind",
+    "TechnicalSheetOutputContract",
+    "TechnicalSheetPlacementContract",
+    "TechnicalSheetReportContract",
+    "TechnicalSheetRequestContract",
+    "TechnicalSheetTemplateContract",
+    "TechnicalSheetTemplateLayoutContract",
     "VisualBibleContract",
     "VisualBudgetContract",
     "VisualComponentContract",

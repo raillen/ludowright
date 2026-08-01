@@ -187,6 +187,12 @@
       "title": "Image Normalization Contract"
     },
     {
+      "canonical_source": "contracts/TECHNICAL_SHEETS.md",
+      "path": "contracts/TECHNICAL_SHEETS.md",
+      "section": "contracts",
+      "title": "Technical Sheet Contract"
+    },
+    {
       "canonical_source": "contracts/DECISIONS_AND_APPROVALS.md",
       "path": "contracts/DECISIONS_AND_APPROVALS.md",
       "section": "contracts",
@@ -529,6 +535,12 @@
       "title": "ADR 0040: Deterministic Image Normalization Boundary"
     },
     {
+      "canonical_source": "decisions/0041-deterministic-technical-sheet-assembly.md",
+      "path": "decisions/0041-deterministic-technical-sheet-assembly.md",
+      "section": "decisions",
+      "title": "ADR 0041: Deterministic Technical Sheet Assembly"
+    },
+    {
       "canonical_source": "governance/RFC_TEMPLATE.md",
       "path": "governance/RFC_TEMPLATE.md",
       "section": "governance",
@@ -587,6 +599,12 @@
       "path": "commands/IMAGES.md",
       "section": "commands",
       "title": "Images CLI"
+    },
+    {
+      "canonical_source": "commands/SHEETS.md",
+      "path": "commands/SHEETS.md",
+      "section": "commands",
+      "title": "Technical Sheets CLI"
     }
   ],
   "kind": "atlas-metadata",
