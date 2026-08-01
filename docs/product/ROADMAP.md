@@ -72,7 +72,12 @@ assembly from interview answers remains a later bounded capability.
 - initial data-defined humanoid and wearable profile with neutral body-base
   policy, per-view requirements, isolated categories, and assembled outputs
   (implemented through PR39; project-local profile persistence remains later);
-- initial profiles for creatures, props, architecture, modular environments, foliage, UI, VFX, and animation references;
+- initial creature and animal profiles for quadrupeds, birds, fish, insects, and
+  fantasy creatures with anatomy-specific views, components, states, and
+  outputs (implemented through PR40; project-local profile persistence remains
+  later);
+- initial profiles for props, architecture, modular environments, foliage, UI,
+  VFX, and animation references;
 - visual-job planning and profile-aware job derivation.
 
 ### 0.6 Codex and ImageGen Workflow

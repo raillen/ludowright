@@ -58,8 +58,9 @@ only in prompts or agent instructions.
 - body-base policy is explicit and provider-neutral;
 - profile derivation is deterministic and testable without filesystem or
   network side effects;
-- later creature, hard-surface, foliage, UI, and VFX profiles can use the same
-  data-driven boundary without inheriting humanoid categories.
+- later hard-surface, foliage, UI, and VFX profiles can use the same data-driven
+  boundary without inheriting humanoid categories; creature profiles now use
+  that boundary in the dedicated `creature-profile` contract.
 
 ### Negative
 

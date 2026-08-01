@@ -30,7 +30,7 @@ Owns:
 - decisions and approvals;
 - documents and canonical-source relationships;
 - assets, components, variants, states, and dependencies;
-- visual bibles, generic capture profiles, and specialized humanoid/wearable profiles;
+- visual bibles, generic capture profiles, and specialized humanoid/wearable and creature/animal profiles;
 - prompt templates and compiled prompt hashes;
 - visual jobs, generations, references, and receipts;
 - audits, issues, milestones, packages, and releases;

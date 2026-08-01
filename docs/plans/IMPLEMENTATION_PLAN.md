@@ -385,8 +385,17 @@ event-log change, SQLite migration, or image generation is introduced.
 
 ### PR 40 — Creature and animal profiles
 
+Status: implemented in the current slice. The v1 `creature-profile` contract
+loads five versioned package manifests for quadrupeds, birds, fish, insects,
+and fantasy creatures. It validates anatomy-specific views, components, and
+states against the existing generic capture profile and deterministically
+derives assembled and detail outputs. No project-local profile persistence,
+visual-job planning, provider execution, event-log change, SQLite migration,
+or image generation is introduced.
+
 - quadrupeds, birds, fish, insects, and fantasy creatures;
-- anatomy-specific views and states.
+- anatomy-specific views, components, and states;
+- deterministic assembled and anatomy-detail outputs.
 
 ### PR 41 — Environment and hard-surface profiles
 

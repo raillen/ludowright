@@ -109,6 +109,12 @@
       "title": "Humanoid and Wearable Profiles"
     },
     {
+      "canonical_source": "contracts/CREATURE_PROFILES.md",
+      "path": "contracts/CREATURE_PROFILES.md",
+      "section": "contracts",
+      "title": "Creature and Animal Profiles"
+    },
+    {
       "canonical_source": "contracts/VISUAL_BIBLE.md",
       "path": "contracts/VISUAL_BIBLE.md",
       "section": "contracts",
@@ -395,6 +401,12 @@
       "path": "decisions/0029-data-defined-humanoid-wearable-profiles.md",
       "section": "decisions",
       "title": "ADR 0029: Data-Defined Humanoid and Wearable Profiles"
+    },
+    {
+      "canonical_source": "decisions/0030-data-defined-creature-animal-profiles.md",
+      "path": "decisions/0030-data-defined-creature-animal-profiles.md",
+      "section": "decisions",
+      "title": "ADR 0030: Data-Defined Creature and Animal Profiles"
     },
     {
       "canonical_source": "governance/RFC_TEMPLATE.md",

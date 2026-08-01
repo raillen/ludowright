@@ -38,6 +38,7 @@ This is the main navigation map for humans and agents. Each subject should have 
 - [`contracts/REFERENCES_AND_VISUAL_JOBS.md`](contracts/REFERENCES_AND_VISUAL_JOBS.md) — visual provenance, revision-bound references, immutable generation jobs, attempt receipts, retries, and reviews.
 - [`contracts/CAPTURE_PROFILES.md`](contracts/CAPTURE_PROFILES.md) — camera, background, lighting, validation, required views, isolated items, technical sheets, and exact versioned inheritance.
 - [`contracts/HUMANOID_PROFILES.md`](contracts/HUMANOID_PROFILES.md) — neutral body bases, humanoid views, wearable categories, assembled outputs, and data-defined specialization of capture profiles.
+- [`contracts/CREATURE_PROFILES.md`](contracts/CREATURE_PROFILES.md) — data-defined quadruped, bird, fish, insect, and fantasy-creature anatomy, components, states, views, and outputs.
 - [`contracts/VISUAL_BIBLE.md`](contracts/VISUAL_BIBLE.md) — project-level visual direction, palette, materials, detail levels, budgets, and prompt constraints.
 - [`contracts/PROMPT_COMPILER.md`](contracts/PROMPT_COMPILER.md) — versioned prompt layers, approved-reference resolution, structured constraints, deterministic rendering, and prompt hashing.
 - [`contracts/JSON_SCHEMAS.md`](contracts/JSON_SCHEMAS.md) — generated Draft 2020-12 schemas, registry, fixtures, checksums, drift checking, and compatibility policy.
@@ -115,6 +116,13 @@ Humanoid profiles are implemented by
 capture-profile and sheet contracts, and derive immutable outputs without
 creating project state or image files.
 
+Creature and animal profiles are implemented by
+`src/ludowright/domain/creature_profiles.py` and
+`src/ludowright/application/creature_profiles.py`; they load the five
+versioned manifests from `src/ludowright/profile_data/creature/`, reuse the
+generic capture-profile and sheet contracts, and derive anatomy-specific
+outputs without creating project state or image files.
+
 ## Codex integration
 
 Planned documents:
@@ -131,6 +139,7 @@ Planned documents:
 - [`contracts/REFERENCES_AND_VISUAL_JOBS.md`](contracts/REFERENCES_AND_VISUAL_JOBS.md) — provenance, immutable generation jobs, receipts, retries, and reviews.
 - [`contracts/CAPTURE_PROFILES.md`](contracts/CAPTURE_PROFILES.md) — reusable camera, view, isolation, validation, and technical-sheet requirements.
 - [`contracts/HUMANOID_PROFILES.md`](contracts/HUMANOID_PROFILES.md) — initial humanoid body-base, wearable, per-view, and assembled-output profile data.
+- [`contracts/CREATURE_PROFILES.md`](contracts/CREATURE_PROFILES.md) — initial creature and animal anatomy, component, state, per-view, and assembled-output profile data.
 - [`contracts/VISUAL_BIBLE.md`](contracts/VISUAL_BIBLE.md) — shared visual direction and constraints consumed by later visual-foundation slices.
 - [`contracts/DEPENDENCY_GRAPH.md`](contracts/DEPENDENCY_GRAPH.md) — revision-aware invalidation from approved references and asset components to jobs, outputs, sheets, and packages.
 
@@ -138,7 +147,7 @@ Planned detailed documents:
 
 - segmented character references;
 - garments and props;
-- creatures, vehicles, architecture, foliage, UI, VFX, and modular kits;
+- vehicles, architecture, foliage, UI, VFX, and modular kits;
 - deterministic technical-sheet assembly;
 - provenance and licensing operations.
 
@@ -223,6 +232,7 @@ Planned operational documents:
 - [`decisions/0027-versioned-visual-bible-contract.md`](decisions/0027-versioned-visual-bible-contract.md) — accepted strict project-level visual direction schema and provider-neutral boundaries.
 - [`decisions/0028-deterministic-provider-neutral-prompt-compiler.md`](decisions/0028-deterministic-provider-neutral-prompt-compiler.md) — accepted data-defined prompt layers, approved-reference binding, allow-listed rendering, and canonical hashing.
 - [`decisions/0029-data-defined-humanoid-wearable-profiles.md`](decisions/0029-data-defined-humanoid-wearable-profiles.md) — accepted data-defined humanoid specialization, closed neutral representation policy, and reuse of generic capture-profile semantics.
+- [`decisions/0030-data-defined-creature-animal-profiles.md`](decisions/0030-data-defined-creature-animal-profiles.md) — accepted data-defined creature specialization, closed anatomy catalog, explicit states, and reuse of generic capture-profile semantics.
 - [`decisions/0013-versioned-acyclic-dependency-invalidation-graph.md`](decisions/0013-versioned-acyclic-dependency-invalidation-graph.md) — accepted typed revision-aware DAG dependencies, stale and review propagation, persisted impact paths, safe refresh, and canonical JSON persistence.
 - [`decisions/0012-explicit-backed-up-schema-migrations.md`](decisions/0012-explicit-backed-up-schema-migrations.md) — accepted explicit contiguous migration plans, dry runs, durable SQLite backups, strict receipts, transactional apply, and guarded rollback.
 - [`decisions/0011-rebuildable-sqlite-state-index.md`](decisions/0011-rebuildable-sqlite-state-index.md) — accepted SQLite as a rebuildable derived index with WAL, strict short transactions, source digests, event checkpoints, and explicit consistency states.

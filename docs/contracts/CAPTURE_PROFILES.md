@@ -23,9 +23,10 @@ the v1 [`VISUAL_BIBLE.md`](VISUAL_BIBLE.md) contract. Asset decomposition
 still derives a recommendation report from versioned data in
 `src/ludowright/decomposition_data/recommendations.json`. The reported profile
 ID and version are advisory and do not create or resolve an executable capture
-profile. The first specialized package profile is the v1
-[`HUMANOID_PROFILES.md`](HUMANOID_PROFILES.md). Project-local profile catalogs
-and visual-job planning remain later visual-foundation slices.
+profile. The first specialized package profiles are the v1
+[`HUMANOID_PROFILES.md`](HUMANOID_PROFILES.md) and
+[`CREATURE_PROFILES.md`](CREATURE_PROFILES.md) contracts. Project-local profile
+catalogs and visual-job planning remain later visual-foundation slices.
 
 ## Identity and revisions
 
