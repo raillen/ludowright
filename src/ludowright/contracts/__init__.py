@@ -144,7 +144,7 @@ from ludowright.contracts.package_manifest import (
     PackageProvenanceContract,
     PackageSourceVersionContract,
 )
-from ludowright.contracts.project import ProjectContract
+from ludowright.contracts.project import ProjectContract, TemplateSelectionContract
 from ludowright.contracts.project_audit import (
     PROJECT_AUDIT_CATEGORY_ORDER,
     ProjectAuditActionContract,
@@ -199,6 +199,11 @@ from ludowright.contracts.technical_sheets import (
     TechnicalSheetRequestContract,
     TechnicalSheetTemplateContract,
     TechnicalSheetTemplateLayoutContract,
+)
+from ludowright.contracts.templates import (
+    TemplateDefinitionContract,
+    TemplateFileContract,
+    TemplateProjectDefaultsContract,
 )
 from ludowright.contracts.visual import (
     GenerationOutputContract,
@@ -399,6 +404,10 @@ __all__ = [
     "TechnicalSheetRequestContract",
     "TechnicalSheetTemplateContract",
     "TechnicalSheetTemplateLayoutContract",
+    "TemplateDefinitionContract",
+    "TemplateFileContract",
+    "TemplateProjectDefaultsContract",
+    "TemplateSelectionContract",
     "VisualBibleContract",
     "VisualBudgetContract",
     "VisualComponentContract",

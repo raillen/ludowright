@@ -65,7 +65,7 @@ def test_status_local_json_contract() -> None:
     assert payload["command"] == "status"
     assert payload["ok"] is True
     assert payload["data"] == {
-        "status": "foundation",
+        "status": "beta-preparation",
         "version": __version__,
     }
     assert payload["error"] is None
@@ -83,7 +83,7 @@ def test_status_human_output() -> None:
     result = runner.invoke(app, ["status"])
 
     assert result.exit_code == int(CliExitCode.SUCCESS)
-    assert "LudoWright is in the foundation phase." in result.stdout
+    assert "LudoWright is in the beta-preparation phase." in result.stdout
     assert f"Version: {__version__}" in result.stdout
 
 

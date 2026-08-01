@@ -2,12 +2,20 @@
 
 from __future__ import annotations
 
+from pathlib import Path
 from typing import Annotated
 
 import typer
 from rich.console import Console
 
 from ludowright import __version__
+from ludowright.application.initialization import (
+    ProjectInitializationConflictError,
+    ProjectInitializationError,
+    ProjectInitializationFailureError,
+    ProjectInitializationInputError,
+    ProjectInitializationService,
+)
 from ludowright.cli.assets import assets_app
 from ludowright.cli.atlas import generate_atlas
 from ludowright.cli.audit import audit_project
@@ -22,11 +30,14 @@ from ludowright.cli.quality import quality_app
 from ludowright.cli.release import release_app
 from ludowright.cli.review import review_command
 from ludowright.cli.runtime import (
+    CliExitCode,
+    CliFailure,
     CliSettings,
     canonical_json,
     run_command,
 )
 from ludowright.cli.sheets import sheets_app
+from ludowright.contracts import CliErrorCode
 from ludowright.contracts.cli import CliResponseContract
 
 app = typer.Typer(
@@ -103,12 +114,12 @@ def status(
 
     def action() -> dict[str, object]:
         return {
-            "status": "foundation",
+            "status": "beta-preparation",
             "version": __version__,
         }
 
     def render(console: Console, data: dict[str, object]) -> None:
-        console.print("[bold]LudoWright[/bold] is in the foundation phase.")
+        console.print("[bold]LudoWright[/bold] is in the beta-preparation phase.")
         console.print(f"Version: {data['version']}")
 
     run_command(
@@ -118,6 +129,88 @@ def status(
         action=action,
         render_human=render,
     )
+
+
+@app.command()
+def init(
+    context: typer.Context,
+    path: Annotated[Path, typer.Argument(help="Directory for the new project.")],
+    name: Annotated[
+        str,
+        typer.Option("--name", help="Human-readable project name."),
+    ],
+    template: Annotated[
+        str,
+        typer.Option("--template", help="Versioned starter template identifier."),
+    ] = "minimal",
+    non_interactive: Annotated[
+        bool,
+        typer.Option(
+            "--non-interactive",
+            help="Do not prompt; all required values must be supplied as options.",
+        ),
+    ] = False,
+    dry_run: Annotated[
+        bool,
+        typer.Option("--dry-run", help="Plan the project without writing files."),
+    ] = False,
+    json_output: Annotated[
+        bool,
+        typer.Option("--json", help="Return a stable machine-readable response."),
+    ] = False,
+) -> None:
+    """Initialize a new local-first LudoWright project."""
+    del non_interactive  # The command never prompts when required options are present.
+
+    def action() -> dict[str, object]:
+        try:
+            result = ProjectInitializationService().initialize(
+                path,
+                name=name,
+                template_id=template,
+                dry_run=dry_run,
+            )
+            return result.as_data()
+        except ProjectInitializationConflictError as error:
+            raise CliFailure(
+                code=CliErrorCode.CONFLICT,
+                message=str(error),
+                exit_code=CliExitCode.CONFLICT,
+            ) from error
+        except ProjectInitializationFailureError as error:
+            raise CliFailure(
+                code=CliErrorCode.INTERNAL_ERROR,
+                message=str(error),
+                exit_code=CliExitCode.INTERNAL,
+            ) from error
+        except (ProjectInitializationInputError, ProjectInitializationError) as error:
+            raise CliFailure(
+                code=CliErrorCode.INVALID_INPUT,
+                message=str(error),
+                exit_code=CliExitCode.VALIDATION,
+            ) from error
+
+    run_command(
+        context=context,
+        command="init",
+        local_json=json_output,
+        action=action,
+        render_human=_render_init_human,
+    )
+
+
+def _render_init_human(console: Console, data: dict[str, object]) -> None:
+    """Render the initialization summary without exposing unstable internals."""
+    state = data["state"]
+    console.print(f"[bold]LudoWright project {state}.[/bold]")
+    console.print(f"Directory: {data['project_directory']}")
+    console.print(f"ProjectId: {data['project_id']}")
+    template = data["template"]
+    if isinstance(template, dict):
+        console.print(f"Template: {template['id']} v{template['version']}")
+    files = data["files"]
+    file_count = len(files) if isinstance(files, list) else 0
+    console.print(f"Files: {file_count}")
 
 
 @app.command()

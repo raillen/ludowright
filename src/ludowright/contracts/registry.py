@@ -66,6 +66,7 @@ from ludowright.contracts.technical_sheets import (
     TechnicalSheetRequestContract,
     TechnicalSheetTemplateContract,
 )
+from ludowright.contracts.templates import TemplateDefinitionContract
 from ludowright.contracts.visual import (
     GenerationReceiptContract,
     VisualJobContract,
@@ -98,6 +99,12 @@ class ContractDefinition:
 
 CONTRACTS: tuple[ContractDefinition, ...] = (
     ContractDefinition("project", "project.schema.json", "LudoWright Project", ProjectContract),
+    ContractDefinition(
+        "template",
+        "template.schema.json",
+        "LudoWright Project Template",
+        TemplateDefinitionContract,
+    ),
     ContractDefinition(
         "project-audit",
         "project-audit.schema.json",
