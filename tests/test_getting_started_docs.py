@@ -7,11 +7,19 @@ from pathlib import Path
 
 from typer.testing import CliRunner
 
+from ludowright.application import VisualJobPlanner, load_humanoid_profile
 from ludowright.cli.app import app
+from ludowright.contracts import (
+    AssetContract,
+    CaptureProfileContract,
+    VisualReferenceContract,
+)
+from ludowright.domain import ReferenceId, VisualPlanBlockerCode, VisualPlanTarget
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 INSTALLATION_GUIDE = REPOSITORY_ROOT / "docs/getting-started/INSTALLATION.md"
 FIRST_PROJECT_GUIDE = REPOSITORY_ROOT / "docs/getting-started/FIRST_PROJECT.md"
+CHARACTER_WORKFLOW_GUIDE = REPOSITORY_ROOT / "docs/getting-started/CHARACTER_WORKFLOW.md"
 
 
 def test_installation_guide_covers_supported_platforms_and_verification() -> None:
@@ -97,6 +105,50 @@ def test_first_project_guide_documents_create_only_behavior() -> None:
     assert "recusa um diretório não vazio" in guide
     assert "conflict" in guide
     assert "arquivos desconhecidos são preservados" in guide
+
+
+def test_character_workflow_uses_current_profile_and_approval_boundaries() -> None:
+    guide = CHARACTER_WORKFLOW_GUIDE.read_text(encoding="utf-8")
+
+    assert "Starfall Courier" in guide
+    assert "Copper & Forge" in guide
+    assert "capture-profile" in guide
+    assert "reference-not-approved" in guide
+    assert "não existe um catálogo de perfis persistido" in guide
+
+    example_root = REPOSITORY_ROOT / "examples/2d/project"
+    asset = AssetContract.model_validate(
+        json.loads((example_root / "imports/courier.json").read_text(encoding="utf-8"))
+    )
+    profile = CaptureProfileContract.model_validate(
+        json.loads((example_root / "profiles/courier-sprite.json").read_text(encoding="utf-8"))
+    )
+    reference = VisualReferenceContract.model_validate(
+        json.loads((example_root / "imports/courier-reference.json").read_text(encoding="utf-8"))
+    )
+
+    plan = VisualJobPlanner().plan(
+        "courier-getting-started-plan",
+        "Courier getting started plan",
+        (
+            VisualPlanTarget(
+                asset.to_domain(),
+                profile.to_domain(),
+                (ReferenceId(reference.id),),
+            ),
+        ),
+        references=(reference.to_domain(),),
+    )
+
+    assert plan.jobs
+    assert plan.state.value == "blocked"
+    assert VisualPlanBlockerCode.REFERENCE_NOT_APPROVED in {
+        blocker.code for blocker in plan.blockers
+    }
+
+    humanoid = load_humanoid_profile("minimal")
+    assert humanoid.to_capture_profile().sheets
+    assert humanoid.neutral_representation.mode.value == "neutral-bodysuit"
 
 
 __all__ = []
