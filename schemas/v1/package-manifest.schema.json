@@ -1,0 +1,456 @@
+{
+  "$defs": {
+    "PackageExcludedPathContract": {
+      "additionalProperties": false,
+      "description": "A path deliberately excluded from package contents.",
+      "properties": {
+        "path": {
+          "maxLength": 1024,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)*$",
+          "title": "Path",
+          "type": "string"
+        },
+        "reason": {
+          "enum": [
+            "manifest-output",
+            "derived-state",
+            "transient",
+            "tool-cache"
+          ],
+          "title": "Reason",
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "reason"
+      ],
+      "title": "PackageExcludedPathContract",
+      "type": "object"
+    },
+    "PackageFileContract": {
+      "additionalProperties": false,
+      "description": "One included regular file and its exact content identity.",
+      "properties": {
+        "path": {
+          "maxLength": 1024,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)*$",
+          "title": "Path",
+          "type": "string"
+        },
+        "sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "size_bytes": {
+          "maximum": 1073741824,
+          "minimum": 0,
+          "title": "Size Bytes",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "path",
+        "size_bytes",
+        "sha256"
+      ],
+      "title": "PackageFileContract",
+      "type": "object"
+    },
+    "PackageLicenseContract": {
+      "additionalProperties": false,
+      "description": "One distinct license label and the references that declare it.",
+      "properties": {
+        "label": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Label",
+          "type": "string"
+        },
+        "reference_ids": {
+          "default": [],
+          "items": {
+            "maxLength": 80,
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "title": "Reference Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "label"
+      ],
+      "title": "PackageLicenseContract",
+      "type": "object"
+    },
+    "PackageMissingItemContract": {
+      "additionalProperties": false,
+      "description": "A known source that is absent from the project at scan time.",
+      "properties": {
+        "detail": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Detail",
+          "type": "string"
+        },
+        "path": {
+          "maxLength": 1024,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)*$",
+          "title": "Path",
+          "type": "string"
+        },
+        "reason": {
+          "enum": [
+            "required-source",
+            "optional-source"
+          ],
+          "title": "Reason",
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "reason",
+        "detail"
+      ],
+      "title": "PackageMissingItemContract",
+      "type": "object"
+    },
+    "PackageProvenanceContract": {
+      "additionalProperties": false,
+      "description": "Traceability fields copied from a persisted visual reference.",
+      "properties": {
+        "approval_id": {
+          "anyOf": [
+            {
+              "maxLength": 80,
+              "minLength": 1,
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Approval Id"
+        },
+        "content_revision": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+-]*$",
+          "title": "Content Revision",
+          "type": "string"
+        },
+        "creator": {
+          "anyOf": [
+            {
+              "maxLength": 120,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Creator"
+        },
+        "license_label": {
+          "anyOf": [
+            {
+              "maxLength": 120,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "License Label"
+        },
+        "origin": {
+          "$ref": "#/$defs/ReferenceOrigin"
+        },
+        "parent_reference_ids": {
+          "default": [],
+          "items": {
+            "maxLength": 80,
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "title": "Parent Reference Ids",
+          "type": "array"
+        },
+        "path": {
+          "maxLength": 1024,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)*$",
+          "title": "Path",
+          "type": "string"
+        },
+        "reference_id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Reference Id",
+          "type": "string"
+        },
+        "source_job_id": {
+          "anyOf": [
+            {
+              "maxLength": 80,
+              "minLength": 1,
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Job Id"
+        },
+        "source_receipt_id": {
+          "anyOf": [
+            {
+              "maxLength": 80,
+              "minLength": 1,
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Receipt Id"
+        },
+        "source_uri": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 9,
+              "pattern": "^https://",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Uri"
+        },
+        "status": {
+          "$ref": "#/$defs/ReferenceStatus"
+        }
+      },
+      "required": [
+        "path",
+        "reference_id",
+        "status",
+        "origin",
+        "content_revision"
+      ],
+      "title": "PackageProvenanceContract",
+      "type": "object"
+    },
+    "PackageSourceVersionContract": {
+      "additionalProperties": false,
+      "description": "Version and digest facts for one canonical or derived source.",
+      "properties": {
+        "kind": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Kind",
+          "type": "string"
+        },
+        "path": {
+          "maxLength": 1024,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)*$",
+          "title": "Path",
+          "type": "string"
+        },
+        "revision": {
+          "anyOf": [
+            {
+              "maximum": 2147483647,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Revision"
+        },
+        "schema_version": {
+          "anyOf": [
+            {
+              "maximum": 2147483647,
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Schema Version"
+        },
+        "sha256": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 64,
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sha256"
+        }
+      },
+      "required": [
+        "path",
+        "kind"
+      ],
+      "title": "PackageSourceVersionContract",
+      "type": "object"
+    },
+    "ReferenceOrigin": {
+      "description": "How a visual reference entered the project.",
+      "enum": [
+        "external",
+        "generated",
+        "captured",
+        "derived"
+      ],
+      "title": "ReferenceOrigin",
+      "type": "string"
+    },
+    "ReferenceStatus": {
+      "description": "Catalog status projected from review and approval records.",
+      "enum": [
+        "candidate",
+        "approved",
+        "rejected",
+        "revoked",
+        "superseded",
+        "archived"
+      ],
+      "title": "ReferenceStatus",
+      "type": "string"
+    }
+  },
+  "$id": "https://schemas.ludowright.dev/v1/package-manifest.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Canonical v1 package inventory, independent of ZIP generation.",
+  "properties": {
+    "excluded": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/PackageExcludedPathContract"
+      },
+      "title": "Excluded",
+      "type": "array"
+    },
+    "included_files": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/PackageFileContract"
+      },
+      "title": "Included Files",
+      "type": "array"
+    },
+    "kind": {
+      "const": "package-manifest",
+      "default": "package-manifest",
+      "title": "Kind",
+      "type": "string"
+    },
+    "licenses": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/PackageLicenseContract"
+      },
+      "title": "Licenses",
+      "type": "array"
+    },
+    "manifest_path": {
+      "maxLength": 1024,
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)*$",
+      "title": "Manifest Path",
+      "type": "string"
+    },
+    "missing": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/PackageMissingItemContract"
+      },
+      "title": "Missing",
+      "type": "array"
+    },
+    "package_id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Package Id",
+      "type": "string"
+    },
+    "project_id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Project Id",
+      "type": "string"
+    },
+    "provenance": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/PackageProvenanceContract"
+      },
+      "title": "Provenance",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "source_versions": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/PackageSourceVersionContract"
+      },
+      "title": "Source Versions",
+      "type": "array"
+    }
+  },
+  "required": [
+    "package_id",
+    "project_id",
+    "manifest_path"
+  ],
+  "title": "LudoWright Package Manifest",
+  "type": "object"
+}

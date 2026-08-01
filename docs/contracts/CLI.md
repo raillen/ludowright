@@ -51,6 +51,16 @@ ludowright diagnostics --json
 ludowright quality check --json
 ```
 
+Package manifests use the same envelope:
+
+```text
+ludowright --json package manifest ./my-game release/package-manifest.json
+```
+
+The command data contains the deterministic manifest, output path, project and
+package IDs, counts, dry-run state, warnings, and state-store compatibility
+version.
+
 Global settings are inherited by nested command groups.
 
 ## JSON envelope
@@ -177,6 +187,8 @@ The shared runtime maps known failures without hiding unexpected programming def
 - technical-sheet input, path, template, PNG, or checksum validation → `invalid-input`, exit 4;
 - technical-sheet partial or divergent output → `conflict`, exit 5;
 - technical-sheet rollback or unreadable persisted output → `corrupt-state`, exit 6;
+- package manifest output conflict → `conflict`, exit 5;
+- package manifest path, symlink, scan-limit, or source validation failure → `invalid-input`, exit 4;
 - explicit `CliFailure` → its declared code and exit code.
 
 Unrecognized exceptions are re-raised during command execution. They must not be silently converted into a successful or generic result.

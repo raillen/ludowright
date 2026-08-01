@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "kind": "package-manifest",
+  "package_id": "default",
+  "project_id": "locadora-2000",
+  "manifest_path": "release/package-manifest.json",
+  "included_files": [
+    {
+      "path": "README.md",
+      "size_bytes": 12,
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    }
+  ],
+  "source_versions": [
+    {
+      "path": ".ludowright/project.json",
+      "kind": "project",
+      "schema_version": 1,
+      "sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+    }
+  ],
+  "provenance": [],
+  "licenses": [],
+  "missing": [],
+  "excluded": [
+    {
+      "path": "release/package-manifest.json",
+      "reason": "manifest-output"
+    }
+  ]
+}

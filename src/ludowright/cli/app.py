@@ -16,6 +16,7 @@ from ludowright.cli.docs import docs_app
 from ludowright.cli.documents import documents_app
 from ludowright.cli.images import images_app
 from ludowright.cli.interview import interview_app
+from ludowright.cli.packages import package_app
 from ludowright.cli.quality import quality_app
 from ludowright.cli.review import review_command
 from ludowright.cli.runtime import (
@@ -41,6 +42,7 @@ app.add_typer(interview_app, name="interview")
 app.add_typer(images_app, name="images")
 app.add_typer(sheets_app, name="sheets")
 app.add_typer(documents_app, name="documents")
+app.add_typer(package_app, name="package")
 app.add_typer(docs_app, name="docs")
 app.command("atlas")(generate_atlas)
 app.command("review")(review_command)

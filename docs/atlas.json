@@ -605,6 +605,24 @@
       "path": "commands/SHEETS.md",
       "section": "commands",
       "title": "Technical Sheets CLI"
+    },
+    {
+      "canonical_source": "commands/PACKAGES.md",
+      "path": "commands/PACKAGES.md",
+      "section": "commands",
+      "title": "Package Manifest CLI"
+    },
+    {
+      "canonical_source": "contracts/PACKAGE_MANIFESTS.md",
+      "path": "contracts/PACKAGE_MANIFESTS.md",
+      "section": "contracts",
+      "title": "Package Manifest Contract"
+    },
+    {
+      "canonical_source": "decisions/0042-deterministic-package-manifest.md",
+      "path": "decisions/0042-deterministic-package-manifest.md",
+      "section": "decisions",
+      "title": "ADR 0042: Deterministic Package Manifest Boundary"
     }
   ],
   "kind": "atlas-metadata",

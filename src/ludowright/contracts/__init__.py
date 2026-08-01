@@ -128,6 +128,15 @@ from ludowright.contracts.migrations import (
     MigrationReceiptContract,
     MigrationRunStatus,
 )
+from ludowright.contracts.package_manifest import (
+    PackageExcludedPathContract,
+    PackageFileContract,
+    PackageLicenseContract,
+    PackageManifestContract,
+    PackageMissingItemContract,
+    PackageProvenanceContract,
+    PackageSourceVersionContract,
+)
 from ludowright.contracts.project import ProjectContract
 from ludowright.contracts.prompt_compiler import (
     CompiledPromptContract,
@@ -308,6 +317,13 @@ __all__ = [
     "MigrationReceiptContract",
     "MigrationRunStatus",
     "NeutralRepresentationPolicyContract",
+    "PackageExcludedPathContract",
+    "PackageFileContract",
+    "PackageLicenseContract",
+    "PackageManifestContract",
+    "PackageMissingItemContract",
+    "PackageProvenanceContract",
+    "PackageSourceVersionContract",
     "PaletteColorContract",
     "ProjectContract",
     "PromptLayerContract",

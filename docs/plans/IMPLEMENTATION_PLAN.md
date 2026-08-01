@@ -601,7 +601,8 @@ human and JSON CLI output, dry-run, exact-repeat `unchanged`, create-only
 conflict detection, project locking, atomic writes, and rollback of artifacts
 created after a partial failure. Paths and symlinks use the shared filesystem
 boundary. It does not mutate approvals, references, the event log, dependency
-graph, or SQLite; package manifests and global audits remain later PRs.
+graph, or SQLite; package builder, global audits, and release verification
+remain later PRs.
 
 - turnarounds;
 - component and prop sheets;
@@ -610,11 +611,16 @@ graph, or SQLite; package manifests and global audits remain later PRs.
 
 ### PR 53 — Package manifest
 
-- included files;
-- checksums;
-- source versions;
-- licensing and provenance;
-- missing or excluded items.
+Status: implemented in the current slice. The `package manifest` command
+creates a versioned, deterministic JSON inventory with sorted regular-file
+checksums, known source versions, visual provenance and license summaries, and
+explicit missing/excluded items. It uses a bounded symlink-free scanner, the
+existing structured repositories, a project lock, atomic create-only output,
+exact-repeat idempotency, Rich/JSON output, and a strictly read-only dry run.
+The published SQLite state remains excluded as rebuildable derived state and
+is reported at schema version 2. The published contract, schema, fixture,
+tests, ADR, command documentation, and ATLAS entries are included. ZIP
+building, global readiness audits, and release verification remain PR54–PR56.
 
 ### PR 54 — Package builder
 

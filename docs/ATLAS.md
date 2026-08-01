@@ -71,7 +71,9 @@ This is the main navigation map for humans and agents. Each subject should have 
 - [`commands/REVIEWS.md`](commands/REVIEWS.md) — apply receipt-bound visual reviews with approval, correction, rejection, supersession, dry-run, and rollback semantics.
 - [`commands/IMAGES.md`](commands/IMAGES.md) — normalize local images into deterministic PNG outputs and reports.
 - [`commands/SHEETS.md`](commands/SHEETS.md) — assemble approved PNGs into deterministic technical sheets and reports.
+- [`commands/PACKAGES.md`](commands/PACKAGES.md) — create deterministic package manifests with checksums, provenance, dry-run, and create-only behavior.
 - [`contracts/CLI.md`](contracts/CLI.md) — dual human/JSON surfaces, response envelope, error codes, exit codes, version output, diagnostics, and compatibility rules.
+- [`contracts/PACKAGE_MANIFESTS.md`](contracts/PACKAGE_MANIFESTS.md) — package inventory shape, path policy, source versions, provenance, exclusions, and compatibility.
 
 Published machine-readable contracts are stored under `schemas/v1/`. The source models live under `src/ludowright/contracts/`.
 
@@ -124,6 +126,14 @@ approved references, and normalized PNG checksums, loads the data-defined
 `minimal` template, and creates a deterministic sheet plus provenance report.
 It does not mutate canonical references, approvals, the event log, the
 dependency graph, or SQLite.
+
+Package manifest generation is implemented by
+`src/ludowright/application/package_manifest.py` over the bounded scanner in
+`src/ludowright/infrastructure/package_manifest.py`; the `package manifest`
+command is presented by `src/ludowright/cli/packages.py`. The v1 contract,
+schema, fixture, provenance summary, explicit exclusions, deterministic
+checksums, and create-only/dry-run semantics are published. ZIP packaging,
+global audit, and release verification remain PR54–PR56.
 
 The initial asset taxonomy is loaded by
 `src/ludowright/application/asset_taxonomy.py` from versioned JSON data under
