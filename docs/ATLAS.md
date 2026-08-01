@@ -48,6 +48,7 @@ This is the main navigation map for humans and agents. Each subject should have 
 - [`contracts/CODEX_AGENTS.md`](contracts/CODEX_AGENTS.md) — versioned specialist roles, capabilities, routing, evidence boundaries, and human approval limits.
 - [`contracts/CODEX_SKILL.md`](contracts/CODEX_SKILL.md) — versioned project-local `$ludowright` skill package, lifecycle semantics, checksums, and safe failure behavior.
 - [`contracts/IMAGEGEN_EXECUTION.md`](contracts/IMAGEGEN_EXECUTION.md) — provider boundary, deterministic operation manifests, one-view execution, PNG validation, conflicts, dry-run, and rollback.
+- [`contracts/IMAGE_NORMALIZATION.md`](contracts/IMAGE_NORMALIZATION.md) — bounded image inputs, EXIF orientation, dimensions, padding, backgrounds, thumbnails, guides, checksums, and rollback.
 - [`contracts/JSON_SCHEMAS.md`](contracts/JSON_SCHEMAS.md) — generated Draft 2020-12 schemas, registry, fixtures, checksums, drift checking, and compatibility policy.
 - [`contracts/PROJECT_FILESYSTEM.md`](contracts/PROJECT_FILESYSTEM.md) — root discovery, canonical repository paths, symlink rejection, atomic writes, bounded reads, and exclusive locks.
 - [`contracts/STRUCTURED_REPOSITORIES.md`](contracts/STRUCTURED_REPOSITORIES.md) — strict JSON/YAML parsing, canonical serialization, document digests, snapshots, and conflict detection.
@@ -67,6 +68,7 @@ This is the main navigation map for humans and agents. Each subject should have 
 - [`commands/ASSETS.md`](commands/ASSETS.md) — asset registry CRUD, discovery, decomposition, ODS export, audit, validation, batch import/export, dry-run, and failure behavior.
 - [`commands/CODEX.md`](commands/CODEX.md) — install, update, verify, and remove the project-local Codex skill.
 - [`commands/REVIEWS.md`](commands/REVIEWS.md) — apply receipt-bound visual reviews with approval, correction, rejection, supersession, dry-run, and rollback semantics.
+- [`commands/IMAGES.md`](commands/IMAGES.md) — normalize local images into deterministic PNG outputs and reports.
 - [`contracts/CLI.md`](contracts/CLI.md) — dual human/JSON surfaces, response envelope, error codes, exit codes, version output, diagnostics, and compatibility rules.
 
 Published machine-readable contracts are stored under `schemas/v1/`. The source models live under `src/ludowright/contracts/`.
@@ -104,6 +106,13 @@ references with checksums and provenance. Reviews, approvals, event-log
 projection, and SQLite indexing are coordinated by
 `src/ludowright/application/visual_review.py` and its canonical repositories;
 SQLite remains a derived index.
+
+Image normalization is implemented by
+`src/ludowright/infrastructure/image_normalization.py` and orchestrated by
+`src/ludowright/application/image_normalization.py`; the `images normalize`
+command lives in `src/ludowright/cli/images.py`. It creates only derived PNGs
+and an `image-normalization` report, using Pillow behind the infrastructure
+boundary and the shared filesystem lock/atomic-write rules.
 
 The initial asset taxonomy is loaded by
 `src/ludowright/application/asset_taxonomy.py` from versioned JSON data under
@@ -169,6 +178,7 @@ state or image files.
 - [`decisions/0037-generation-receipts.md`](decisions/0037-generation-receipts.md) — durable terminal receipts, generated references, checksums, and rollback semantics.
 - [`decisions/0038-visual-review-workflow.md`](decisions/0038-visual-review-workflow.md) — receipt-bound human approval, reviewer separation, dependency invalidation, supersession, and rollback.
 - [`decisions/0039-codex-specialist-agents.md`](decisions/0039-codex-specialist-agents.md) — versioned specialist catalog, deterministic routing, and no agent approval authority.
+- [`decisions/0040-image-normalization.md`](decisions/0040-image-normalization.md) — Pillow boundary, deterministic derived outputs, metadata handling, and safe persistence.
 
 Planned documents:
 

@@ -304,6 +304,11 @@ registry and dependency graph, and uses `checks-failed` with `--check` when
 blocking findings exist. The complete report remains in failed JSON response
 data.
 
+The `images normalize` command returns an `image-normalization` report
+projection inside the same envelope. It is local-only, supports `--dry-run`,
+uses `invalid-input` for unsupported or unsafe images, `conflict` for existing
+artifacts, and `corrupt-state` when rollback cannot complete.
+
 The `codex skill` commands install, update, verify, and remove the versioned
 project-local `$ludowright` skill. Their `data` payload is the published
 `codex-skill-report` contract. Installation and update support `--dry-run`;

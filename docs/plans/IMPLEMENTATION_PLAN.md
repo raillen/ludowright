@@ -574,6 +574,15 @@ execution and provider-backed model evaluation remain future work.
 
 ### PR 51 — Image normalization
 
+Status: implemented in the current slice. The `images normalize` command
+accepts bounded local PNG, JPEG, and WebP inputs, applies EXIF orientation,
+fits visible content to a deterministic canvas, and creates transparent,
+neutral, thumbnail, and alignment-guide PNGs plus a versioned report. The
+workflow uses Pillow only in infrastructure, shared project paths and locks,
+atomic create-only writes, dry-run, exact-repeat idempotency, and rollback.
+No approved reference, event log, SQLite state, or migration is changed;
+technical-sheet composition remains PR52.
+
 - dimensions;
 - padding;
 - orientation metadata;
