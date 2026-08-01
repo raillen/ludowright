@@ -93,11 +93,13 @@ the same package-data directory. The CLI adapter lives in
 CLI envelope. The policy planner does not change canonical project state, the
 event log, SQLite, or provider outputs.
 
-ImageGen operation execution is implemented by
-`integrations/codex/imagegen.py`. It consumes a selected job and matching
-compiled prompt, reuses `ProjectFilesystem`, `JsonDocumentRepository`, and the
-project lock, and leaves receipts and generated-reference provenance to later
-slices.
+ImageGen operation execution and terminal receipt recording are implemented by
+`integrations/codex/imagegen.py` and
+`src/ludowright/infrastructure/generation_receipts.py`. They consume a
+selected job and matching compiled prompt, reuse `ProjectFilesystem`,
+`JsonDocumentRepository`, and the project lock, and persist candidate generated
+references with checksums and provenance. Reviews, approvals, event-log
+projection, and SQLite indexing remain separate concerns.
 
 The initial asset taxonomy is loaded by
 `src/ludowright/application/asset_taxonomy.py` from versioned JSON data under
@@ -160,6 +162,7 @@ state or image files.
 - [`decisions/0034-versioned-codex-skill-installer.md`](decisions/0034-versioned-codex-skill-installer.md) — adapter boundary and atomic-install decision.
 - [`decisions/0035-codex-orchestration-policy.md`](decisions/0035-codex-orchestration-policy.md) — declarative policy boundary and deterministic planning.
 - [`decisions/0036-imagegen-job-execution.md`](decisions/0036-imagegen-job-execution.md) — provider boundary, immutable operation record, and safe rollback.
+- [`decisions/0037-generation-receipts.md`](decisions/0037-generation-receipts.md) — durable terminal receipts, generated references, checksums, and rollback semantics.
 
 Planned documents:
 

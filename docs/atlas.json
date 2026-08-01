@@ -487,6 +487,12 @@
       "title": "ADR 0036: Provider-Bound ImageGen Job Execution"
     },
     {
+      "canonical_source": "decisions/0037-generation-receipts.md",
+      "path": "decisions/0037-generation-receipts.md",
+      "section": "decisions",
+      "title": "ADR 0037: Durable ImageGen Generation Receipts"
+    },
+    {
       "canonical_source": "governance/RFC_TEMPLATE.md",
       "path": "governance/RFC_TEMPLATE.md",
       "section": "governance",
