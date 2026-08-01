@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "kind": "asset-decomposition",
+  "asset_id": "chr-maya",
+  "components": [
+    {
+      "id": "base-body",
+      "name": "Base Body",
+      "status": "planned",
+      "required": true
+    },
+    {
+      "id": "winter-coat",
+      "name": "Winter Coat",
+      "status": "planned",
+      "required": false,
+      "parent_id": "base-body"
+    }
+  ],
+  "variants": [
+    {
+      "id": "winter",
+      "name": "Winter",
+      "status": "planned",
+      "required": false
+    }
+  ],
+  "states": [
+    {
+      "id": "damaged",
+      "name": "Damaged",
+      "status": "planned",
+      "required": false
+    }
+  ],
+  "dependencies": [
+    {
+      "depends_on": "prop-arcade-cabinet",
+      "invalidation_mode": "stale"
+    }
+  ]
+}

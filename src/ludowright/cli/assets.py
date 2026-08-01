@@ -12,6 +12,9 @@ from rich.console import Console
 from rich.table import Table
 
 from ludowright.application import (
+    AssetDecompositionError,
+    AssetDecompositionService,
+    AssetDecompositionValidationError,
     AssetDiscoveryConfirmationError,
     AssetDiscoveryError,
     AssetDiscoveryService,
@@ -27,6 +30,67 @@ assets_app = typer.Typer(
     help="Create and maintain the canonical asset registry.",
     no_args_is_help=True,
 )
+
+
+@assets_app.command("decompose")
+def decompose_asset(
+    context: typer.Context,
+    project: Annotated[Path, typer.Argument(help="Project directory or a path below it.")],
+    asset_id: Annotated[str, typer.Argument(help="Asset ID to inspect or decompose.")],
+    input_path: Annotated[
+        str | None,
+        typer.Option(
+            "--input",
+            "-i",
+            help="Project-relative asset-decomposition JSON or YAML input; omit to inspect.",
+        ),
+    ] = None,
+    dry_run: Annotated[
+        bool,
+        typer.Option("--dry-run", help="Plan the replacement without changing project files."),
+    ] = False,
+    json_output: Annotated[
+        bool,
+        typer.Option("--json", help="Return a stable machine-readable response."),
+    ] = False,
+) -> None:
+    """Inspect or replace components, variants, states, and dependencies."""
+
+    def action() -> dict[str, object]:
+        try:
+            service = AssetDecompositionService(ProjectFilesystem.discover(project))
+            return service.decompose(
+                asset_id,
+                input_path=_path(input_path) if input_path is not None else None,
+                dry_run=dry_run,
+            ).as_data()
+        except AssetDecompositionValidationError as error:
+            raise CliFailure(
+                code=CliErrorCode.INVALID_INPUT,
+                message=str(error),
+                exit_code=CliExitCode.VALIDATION,
+                data=error.report.model_dump(mode="json"),
+            ) from error
+        except AssetDecompositionError as error:
+            raise CliFailure(
+                code=CliErrorCode.INVALID_INPUT,
+                message=str(error),
+                exit_code=CliExitCode.VALIDATION,
+            ) from error
+        except (FileNotFoundError, ValidationError) as error:
+            raise CliFailure(
+                code=CliErrorCode.INVALID_INPUT,
+                message=str(error),
+                exit_code=CliExitCode.VALIDATION,
+            ) from error
+
+    run_command(
+        context=context,
+        command="assets decompose",
+        local_json=json_output,
+        action=action,
+        render_human=_render_decomposition_human,
+    )
 
 
 @assets_app.command("discover")
@@ -373,3 +437,45 @@ def _render_discovery_human(console: Console, data: dict[str, object]) -> None:
         for value in issues:
             if isinstance(value, dict):
                 console.print(f"- {value.get('code', '')}: {value.get('message', '')}")
+
+
+def _render_decomposition_human(console: Console, data: dict[str, object]) -> None:
+    """Render decomposition state, recommendation, and guided corrections."""
+    console.print("[bold]Asset decomposition[/bold]")
+    console.print(f"Asset: {data['asset_id']} | State: {data['state']}")
+    console.print(f"Registry: {data['registry_path']} (v{data['registry_version']})")
+    console.print(
+        f"Dependency graph: {data['dependency_graph_path']} (v{data['dependency_graph_revision']})"
+    )
+    decomposition = data.get("decomposition")
+    if isinstance(decomposition, dict):
+        table = Table("Kind", "ID", "Name", "Required", "Status")
+        for kind in ("components", "variants", "states"):
+            values = decomposition.get(kind)
+            if not isinstance(values, list):
+                continue
+            for value in values:
+                if isinstance(value, dict):
+                    table.add_row(
+                        kind[:-1],
+                        str(value.get("id", "")),
+                        str(value.get("name", "")),
+                        str(value.get("required", "")),
+                        str(value.get("status", "")),
+                    )
+        console.print(table)
+    profile = data.get("capture_profile")
+    if isinstance(profile, dict):
+        console.print(
+            f"Capture profile: {profile.get('profile_id', 'none')} "
+            f"(state: {profile.get('state', '')})"
+        )
+    corrections = data.get("corrections")
+    if isinstance(corrections, list) and corrections:
+        console.print("Guided corrections:")
+        for value in corrections:
+            if isinstance(value, dict):
+                console.print(
+                    f"- {value.get('severity', '')} {value.get('code', '')}: "
+                    f"{value.get('suggestion', '')}"
+                )

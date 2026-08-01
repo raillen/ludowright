@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "kind": "asset-decomposition-recommendations",
+  "rules": [
+    {
+      "family": "animation",
+      "profile_id": "animation-base",
+      "profile_version": 1,
+      "subject_modes": ["asset", "states"],
+      "rationale": "Animation assets benefit from an asset capture and explicit functional states."
+    },
+    {
+      "family": "architecture",
+      "profile_id": "architecture-base",
+      "profile_version": 1,
+      "subject_modes": ["asset", "components", "states"],
+      "rationale": "Architecture assets benefit from component isolation and open/closed or construction states."
+    },
+    {
+      "family": "architecture",
+      "subtype": "modular-building",
+      "profile_id": "modular-building",
+      "profile_version": 1,
+      "subject_modes": ["asset", "components", "states"],
+      "rationale": "Modular buildings need isolated modules and explicit connection or construction states."
+    },
+    {
+      "family": "audio",
+      "profile_id": "audio-base",
+      "profile_version": 1,
+      "subject_modes": ["asset", "variants", "states"],
+      "rationale": "Audio assets benefit from variant and playback-state tracking even when no image capture is required."
+    },
+    {
+      "family": "character",
+      "profile_id": "character-base",
+      "profile_version": 1,
+      "subject_modes": ["asset", "components", "states"],
+      "rationale": "Character assets benefit from a complete subject capture, isolated components, and functional states."
+    },
+    {
+      "family": "character",
+      "subtype": "humanoid",
+      "profile_id": "humanoid-character",
+      "profile_version": 1,
+      "subject_modes": ["asset", "components", "variants", "states"],
+      "rationale": "Humanoid characters benefit from isolated body, garment, accessory, variant, and state references."
+    },
+    {
+      "family": "creature",
+      "profile_id": "creature-base",
+      "profile_version": 1,
+      "subject_modes": ["asset", "components", "states"],
+      "rationale": "Creature assets benefit from complete subject, anatomical component, and state references."
+    },
+    {
+      "family": "environment",
+      "profile_id": "environment-base",
+      "profile_version": 1,
+      "subject_modes": ["asset", "components", "states"],
+      "rationale": "Environment assets benefit from modular component and condition-state references."
+    },
+    {
+      "family": "material",
+      "profile_id": "material-base",
+      "profile_version": 1,
+      "subject_modes": ["asset", "variants", "states"],
+      "rationale": "Material assets benefit from palette variants and surface-condition states."
+    },
+    {
+      "family": "other",
+      "subtype": "generic",
+      "profile_id": "other-generic",
+      "profile_version": 1,
+      "subject_modes": ["asset", "components", "variants", "states"],
+      "rationale": "Generic assets need an explicit review of their component, variant, and state capture scope."
+    },
+    {
+      "family": "prop",
+      "profile_id": "prop-base",
+      "profile_version": 1,
+      "subject_modes": ["asset", "components", "states"],
+      "rationale": "Props benefit from complete subject, isolated parts, and functional state references."
+    },
+    {
+      "family": "prop",
+      "subtype": "handheld-tool",
+      "profile_id": "handheld-tool",
+      "profile_version": 1,
+      "subject_modes": ["asset", "components", "variants", "states"],
+      "rationale": "Handheld tools benefit from grip components, visual variants, and operational states."
+    },
+    {
+      "family": "terrain",
+      "profile_id": "terrain-base",
+      "profile_version": 1,
+      "subject_modes": ["asset", "components", "variants", "states"],
+      "rationale": "Terrain assets benefit from modular pieces, palette variants, and terrain-condition states."
+    },
+    {
+      "family": "texture",
+      "profile_id": "texture-base",
+      "profile_version": 1,
+      "subject_modes": ["asset", "variants", "states"],
+      "rationale": "Texture assets benefit from material variants and usage-condition states."
+    },
+    {
+      "family": "ui",
+      "profile_id": "ui-base",
+      "profile_version": 1,
+      "subject_modes": ["asset", "variants", "states"],
+      "rationale": "UI assets benefit from visual variants and interaction states."
+    },
+    {
+      "family": "vegetation",
+      "profile_id": "vegetation-base",
+      "profile_version": 1,
+      "subject_modes": ["asset", "components", "variants", "states"],
+      "rationale": "Vegetation assets benefit from modular parts, growth variants, and seasonal states."
+    },
+    {
+      "family": "vehicle",
+      "profile_id": "vehicle-base",
+      "profile_version": 1,
+      "subject_modes": ["asset", "components", "variants", "states"],
+      "rationale": "Vehicles benefit from isolated parts, configuration variants, and operational states."
+    },
+    {
+      "family": "vfx",
+      "profile_id": "vfx-base",
+      "profile_version": 1,
+      "subject_modes": ["asset", "variants", "states"],
+      "rationale": "VFX assets benefit from variant and lifecycle-state references."
+    }
+  ]
+}
