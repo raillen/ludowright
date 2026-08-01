@@ -207,8 +207,10 @@ dry-run is read-only. The `package build` command in the same CLI module uses
 `PackageArchiveBuilder` infrastructure adapter to validate the manifest's
 source checksums, create a fixed-metadata ZIP, and write a v1 package index in
 a create-only release directory. The `audit` command validates the complete
-chain without writing project files or SQLite sidecars; release verification
-remains a separate stage.
+chain without writing project files or SQLite sidecars. The `release verify`
+use case consumes that report and the existing package artifacts, validates the
+final ZIP without extracting it, and prepares a create-only checksum manifest;
+it does not sign or publish the release.
 
 ## Persistence and file safety
 

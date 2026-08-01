@@ -655,10 +655,19 @@ and ATLAS updates are included. Release verification remains PR56.
 
 ### PR 56 — Release verifier
 
-- blocking gates;
-- warning policy;
-- release summary;
-- signed or checksum-verifiable manifest preparation.
+Status: implemented in the current slice. `ludowright release verify` now
+consumes the global audit and existing package artifacts, applies deterministic
+blocking gates with an explicit warning policy, inspects the canonical ZIP
+without extraction, and prepares a create-only SHA-256 release manifest.
+The v1 contracts, schemas, fixtures, focused failure/concurrency tests, ADR,
+CLI documentation, ATLAS, and compatibility notes are included. Digital
+signing and remote publication remain outside this PR.
+
+- audit, package manifest, package index, ZIP, member, and cross-checksum gates;
+- default warning blocking with explicit `--allow-warnings`;
+- deterministic release summary and checksum-verifiable manifest preparation;
+- read-only `--dry-run`, `--check`, Rich/JSON output, conflict handling, and
+  bounded archive inspection.
 
 ## Phase J — Examples and public beta
 

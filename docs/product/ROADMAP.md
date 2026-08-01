@@ -118,7 +118,8 @@ assembly from interview answers remains a later bounded capability.
 - package manifest inventory, checksums, source versions, provenance, and
   exclusions (manifest implemented through PR53; archive indexes and ZIP output
   implemented through PR54; global readiness audit implemented through PR55;
-  release verification remains PR56);
+  release verification implemented through PR56; digital signing and remote
+  publication remain outside this slice);
 - release-readiness checks.
 
 ### 0.8 Guided Orchestration

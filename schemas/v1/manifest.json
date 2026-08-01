@@ -15,6 +15,18 @@
       "sha256": "631059275dbae77eb3dd7304cc4a176d33d10b324e10f94c148cf613b255a6bc"
     },
     {
+      "file": "release-manifest.schema.json",
+      "name": "release-manifest",
+      "schema_id": "https://schemas.ludowright.dev/v1/release-manifest.schema.json",
+      "sha256": "dcdb0c14437ba950c071bcce43c5cc300aecda308b95c131b59d07de7b97d2f5"
+    },
+    {
+      "file": "release-verification.schema.json",
+      "name": "release-verification",
+      "schema_id": "https://schemas.ludowright.dev/v1/release-verification.schema.json",
+      "sha256": "b9b076b2dcfd6132c17d0a306c02b74c9e6b02d31c43d02820b3276fab879c3c"
+    },
+    {
       "file": "package-manifest.schema.json",
       "name": "package-manifest",
       "schema_id": "https://schemas.ludowright.dev/v1/package-manifest.schema.json",

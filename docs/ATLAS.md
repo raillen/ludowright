@@ -73,16 +73,18 @@ This is the main navigation map for humans and agents. Each subject should have 
 - [`commands/SHEETS.md`](commands/SHEETS.md) — assemble approved PNGs into deterministic technical sheets and reports.
 - [`commands/PACKAGES.md`](commands/PACKAGES.md) — create manifests and build reproducible ZIP releases with checksums, dry-run, and create-only behavior.
 - [`commands/AUDIT.md`](commands/AUDIT.md) — read-only global readiness audit syntax, Rich/JSON output, check policy, and failure behavior.
+- [`commands/RELEASES.md`](commands/RELEASES.md) — local release verification, warning policy, checksum manifest, dry-run, and create-only behavior.
 - [`contracts/CLI.md`](contracts/CLI.md) — dual human/JSON surfaces, response envelope, error codes, exit codes, version output, diagnostics, and compatibility rules.
 - [`contracts/PROJECT_AUDITS.md`](contracts/PROJECT_AUDITS.md) — global readiness categories, source evidence, deterministic findings, immutable SQLite inspection, and conflict policy.
+- [`contracts/RELEASE_VERIFICATION.md`](contracts/RELEASE_VERIFICATION.md) — release gates, warning policy, checksum-verifiable manifest, archive inspection, and compatibility.
 - [`contracts/PACKAGE_MANIFESTS.md`](contracts/PACKAGE_MANIFESTS.md) — package inventory shape, path policy, source versions, provenance, exclusions, and compatibility.
 - [`contracts/PACKAGE_BUILDS.md`](contracts/PACKAGE_BUILDS.md) — reproducible ZIP members, package index, release directory, safety limits, and rollback.
 
 Published machine-readable contracts are stored under `schemas/v1/`. The source models live under `src/ludowright/contracts/`.
 
 Published canonical contracts include the project manifest, package manifest,
-package index, and project-audit report. The release manifest and release
-verification contract remain planned for PR56.
+package index, project-audit report, release manifest, and release verification
+report. Digital signing and remote publication remain outside PR56.
 
 The guided-documentation model is implemented in `src/ludowright/domain/interviews.py`, orchestrated by `src/ludowright/application/interviews.py`, and adapted at the external boundary by `src/ludowright/contracts/interviews.py`. The published interview contracts are `interview-questionnaire` and `interview-session`; CLI presentation lives in `src/ludowright/cli/interview.py`.
 
@@ -139,7 +141,10 @@ building is implemented by `src/ludowright/application/package_builder.py`
 over `PackageArchiveBuilder` in `src/ludowright/infrastructure/package_manifest.py`;
 it consumes the manifest, validates source checksums, writes fixed ZIP metadata,
 and publishes a v1 `package-index` alongside the release archive. Release
-verification remains a later stage.
+verification is implemented by `src/ludowright/application/release_verification.py`
+and presented by `src/ludowright/cli/release.py`; it validates the audit,
+manifest, index, canonical ZIP, and cross-checksums before creating a local
+SHA-256 release manifest.
 
 The global project audit is implemented by
 `src/ludowright/application/project_audit.py` and presented by
@@ -147,7 +152,9 @@ The global project audit is implemented by
 and audits product, documents, assets, references, jobs, approvals, sheets,
 and package readiness without writing project state. The v1 `project-audit`
 contract records source evidence, stable findings, category summaries, and
-recommended actions; release verification remains a separate stage.
+recommended actions. Release verification consumes that report as its first
+gate and applies the explicit `block` or `allow` warning policy without
+mutating project state.
 
 The initial asset taxonomy is loaded by
 `src/ludowright/application/asset_taxonomy.py` from versioned JSON data under
@@ -262,7 +269,7 @@ Future bounded changes should receive their own plan under `plans/`.
 Planned detailed documents:
 
 - snapshot testing;
-- release verification;
+- digital release signing and remote publication;
 - performance budgets.
 
 ## Security

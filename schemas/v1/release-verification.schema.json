@@ -1,0 +1,462 @@
+{
+  "$defs": {
+    "ProjectAuditFindingContract": {
+      "additionalProperties": false,
+      "description": "One deterministic blocking or review-required audit finding.",
+      "properties": {
+        "category": {
+          "enum": [
+            "product",
+            "documents",
+            "assets",
+            "references",
+            "jobs",
+            "approvals",
+            "sheets",
+            "package"
+          ],
+          "title": "Category",
+          "type": "string"
+        },
+        "code": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Code",
+          "type": "string"
+        },
+        "message": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Message",
+          "type": "string"
+        },
+        "paths": {
+          "default": [],
+          "items": {
+            "maxLength": 1024,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)*$",
+            "type": "string"
+          },
+          "maxItems": 32,
+          "title": "Paths",
+          "type": "array"
+        },
+        "related_ids": {
+          "default": [],
+          "items": {
+            "maxLength": 80,
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "maxItems": 64,
+          "title": "Related Ids",
+          "type": "array"
+        },
+        "remediation": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Remediation",
+          "type": "string"
+        },
+        "severity": {
+          "enum": [
+            "error",
+            "warning"
+          ],
+          "title": "Severity",
+          "type": "string"
+        },
+        "subject": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Subject",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "category",
+        "severity",
+        "subject",
+        "message",
+        "remediation"
+      ],
+      "title": "ProjectAuditFindingContract",
+      "type": "object"
+    },
+    "ReleaseArtifactContract": {
+      "additionalProperties": false,
+      "description": "One release artifact and its exact SHA-256 identity.",
+      "properties": {
+        "kind": {
+          "enum": [
+            "package-manifest",
+            "package-index",
+            "package-archive"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "path": {
+          "maxLength": 1024,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)*$",
+          "title": "Path",
+          "type": "string"
+        },
+        "sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "size_bytes": {
+          "maximum": 2147483647,
+          "minimum": 0,
+          "title": "Size Bytes",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "kind",
+        "path",
+        "size_bytes",
+        "sha256"
+      ],
+      "title": "ReleaseArtifactContract",
+      "type": "object"
+    },
+    "ReleaseGateContract": {
+      "additionalProperties": false,
+      "description": "One deterministic release gate result.",
+      "properties": {
+        "code": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Code",
+          "type": "string"
+        },
+        "detail": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Detail",
+          "type": "string"
+        },
+        "paths": {
+          "default": [],
+          "items": {
+            "maxLength": 1024,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)*$",
+            "type": "string"
+          },
+          "maxItems": 16,
+          "title": "Paths",
+          "type": "array"
+        },
+        "state": {
+          "enum": [
+            "passed",
+            "warning",
+            "failed"
+          ],
+          "title": "State",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "state",
+        "detail"
+      ],
+      "title": "ReleaseGateContract",
+      "type": "object"
+    },
+    "ReleaseManifestContract": {
+      "additionalProperties": false,
+      "description": "Checksum-verifiable manifest prepared beside a local package release.",
+      "properties": {
+        "archive_member_count": {
+          "maximum": 2147483647,
+          "minimum": 0,
+          "title": "Archive Member Count",
+          "type": "integer"
+        },
+        "artifacts": {
+          "items": {
+            "$ref": "#/$defs/ReleaseArtifactContract"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "title": "Artifacts",
+          "type": "array"
+        },
+        "integrity": {
+          "const": "sha256",
+          "default": "sha256",
+          "title": "Integrity",
+          "type": "string"
+        },
+        "kind": {
+          "const": "release-manifest",
+          "default": "release-manifest",
+          "title": "Kind",
+          "type": "string"
+        },
+        "package_id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Package Id",
+          "type": "string"
+        },
+        "project_id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Project Id",
+          "type": "string"
+        },
+        "release_directory": {
+          "maxLength": 1024,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)*$",
+          "title": "Release Directory",
+          "type": "string"
+        },
+        "release_manifest_path": {
+          "maxLength": 1024,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)*$",
+          "title": "Release Manifest Path",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": 1,
+          "default": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "project_id",
+        "package_id",
+        "release_directory",
+        "release_manifest_path",
+        "archive_member_count",
+        "artifacts"
+      ],
+      "title": "ReleaseManifestContract",
+      "type": "object"
+    },
+    "ReleaseSummaryContract": {
+      "additionalProperties": false,
+      "description": "Stable summary projections for human and automation consumers.",
+      "properties": {
+        "archive_member_count": {
+          "maximum": 2147483647,
+          "minimum": 0,
+          "title": "Archive Member Count",
+          "type": "integer"
+        },
+        "archive_size_bytes": {
+          "maximum": 2147483647,
+          "minimum": 0,
+          "title": "Archive Size Bytes",
+          "type": "integer"
+        },
+        "artifact_count": {
+          "maximum": 2147483647,
+          "minimum": 0,
+          "title": "Artifact Count",
+          "type": "integer"
+        },
+        "audit_error_count": {
+          "maximum": 2147483647,
+          "minimum": 0,
+          "title": "Audit Error Count",
+          "type": "integer"
+        },
+        "audit_warning_count": {
+          "maximum": 2147483647,
+          "minimum": 0,
+          "title": "Audit Warning Count",
+          "type": "integer"
+        },
+        "gate_count": {
+          "maximum": 2147483647,
+          "minimum": 0,
+          "title": "Gate Count",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "artifact_count",
+        "archive_member_count",
+        "archive_size_bytes",
+        "audit_error_count",
+        "audit_warning_count",
+        "gate_count"
+      ],
+      "title": "ReleaseSummaryContract",
+      "type": "object"
+    }
+  },
+  "$id": "https://schemas.ludowright.dev/v1/release-verification.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Published result of local project and package release verification.",
+  "properties": {
+    "audit_findings": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/ProjectAuditFindingContract"
+      },
+      "maxItems": 100000,
+      "title": "Audit Findings",
+      "type": "array"
+    },
+    "audit_source_digest": {
+      "maxLength": 64,
+      "minLength": 64,
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Audit Source Digest",
+      "type": "string"
+    },
+    "audit_state": {
+      "enum": [
+        "ready",
+        "needs-review",
+        "blocked"
+      ],
+      "title": "Audit State",
+      "type": "string"
+    },
+    "dry_run": {
+      "title": "Dry Run",
+      "type": "boolean"
+    },
+    "gates": {
+      "items": {
+        "$ref": "#/$defs/ReleaseGateContract"
+      },
+      "maxItems": 32,
+      "title": "Gates",
+      "type": "array"
+    },
+    "kind": {
+      "const": "release-verification",
+      "default": "release-verification",
+      "title": "Kind",
+      "type": "string"
+    },
+    "manifest_state": {
+      "enum": [
+        "planned",
+        "created",
+        "unchanged",
+        "not-created"
+      ],
+      "title": "Manifest State",
+      "type": "string"
+    },
+    "package_id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Package Id",
+      "type": "string"
+    },
+    "project_id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Project Id",
+      "type": "string"
+    },
+    "project_name": {
+      "maxLength": 120,
+      "minLength": 1,
+      "title": "Project Name",
+      "type": "string"
+    },
+    "release_directory": {
+      "maxLength": 1024,
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)*$",
+      "title": "Release Directory",
+      "type": "string"
+    },
+    "release_manifest": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ReleaseManifestContract"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "release_manifest_path": {
+      "maxLength": 1024,
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)*$",
+      "title": "Release Manifest Path",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "state": {
+      "enum": [
+        "ready",
+        "ready-with-warnings",
+        "blocked"
+      ],
+      "title": "State",
+      "type": "string"
+    },
+    "summary": {
+      "$ref": "#/$defs/ReleaseSummaryContract"
+    },
+    "valid": {
+      "title": "Valid",
+      "type": "boolean"
+    },
+    "warning_policy": {
+      "enum": [
+        "block",
+        "allow"
+      ],
+      "title": "Warning Policy",
+      "type": "string"
+    }
+  },
+  "required": [
+    "dry_run",
+    "project_id",
+    "project_name",
+    "package_id",
+    "release_directory",
+    "release_manifest_path",
+    "warning_policy",
+    "audit_state",
+    "audit_source_digest",
+    "state",
+    "valid",
+    "manifest_state",
+    "summary",
+    "gates"
+  ],
+  "title": "LudoWright Release Verification Report",
+  "type": "object"
+}

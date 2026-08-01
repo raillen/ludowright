@@ -60,6 +60,7 @@ nav:
       - Documentation Audit: contracts/DOCUMENTATION_AUDIT.md
       - ATLAS Contract: contracts/ATLAS.md
       - Command-Line Interface: contracts/CLI.md
+      - Release Verification: contracts/RELEASE_VERIFICATION.md
   - Commands:
       - Interview CLI: commands/INTERVIEW.md
       - Documents CLI: commands/DOCUMENTS.md
@@ -72,6 +73,7 @@ nav:
       - Technical Sheets CLI: commands/SHEETS.md
       - Packages CLI: commands/PACKAGES.md
       - Project Audit CLI: commands/AUDIT.md
+      - Release Verification CLI: commands/RELEASES.md
   - Implementation:
       - Plan to 1.0: plans/IMPLEMENTATION_PLAN.md
   - Quality:
@@ -123,6 +125,7 @@ nav:
       - ADR 0042 — Package Manifest: decisions/0042-deterministic-package-manifest.md
       - ADR 0043 — Package Builder: decisions/0043-deterministic-package-builder.md
       - ADR 0044 — Project Audit: decisions/0044-deterministic-project-audit.md
+      - ADR 0045 — Release Verification: decisions/0045-deterministic-release-verification.md
       - ADR Template: decisions/0000-template.md
   - Operations:
       - Documentation Site: operations/DOCUMENTATION_SITE.md

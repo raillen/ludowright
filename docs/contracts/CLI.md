@@ -82,6 +82,22 @@ sheets, and package readiness. `--check` returns exit code `1` with
 successful envelope when it found warnings or blockers. The canonical report
 contract is documented in [`PROJECT_AUDITS.md`](PROJECT_AUDITS.md).
 
+Release verification uses a separate top-level group and consumes an existing
+package release:
+
+```bash
+ludowright release verify ./my-game release --package-id nightly --check
+ludowright --json release verify ./my-game release --package-id nightly \
+  --allow-warnings --dry-run
+```
+
+The command returns the published `release-verification` report and, when the
+gates allow it, prepares a create-only `release-manifest` with SHA-256 facts
+for the package manifest, package index, and ZIP. Warnings block by default;
+`--allow-warnings` produces `ready-with-warnings`. `--dry-run` does not create
+the checksum manifest or a lock. The canonical contract is documented in
+[`RELEASE_VERIFICATION.md`](RELEASE_VERIFICATION.md).
+
 Global settings are inherited by nested command groups.
 
 ## JSON envelope
@@ -213,6 +229,11 @@ The shared runtime maps known failures without hiding unexpected programming def
 - package release output or source checksum conflict → `conflict`, exit 5;
 - package archive, index, path, symlink, or ZIP validation failure → `invalid-input`, exit 4;
 - package release rollback failure → `corrupt-state`, exit 6;
+- release verification input, package identity, archive, or checksum failure → `invalid-input`, exit 4;
+- release checksum manifest write divergence → `conflict`, exit 5; a declared
+  or verified artifact mismatch is reported as an invalid release and only
+  becomes `checks-failed`, exit 1, when `--check` is requested;
+- release project audit corruption → `corrupt-state`, exit 6;
 - explicit `CliFailure` → its declared code and exit code.
 
 Unrecognized exceptions are re-raised during command execution. They must not be silently converted into a successful or generic result.
