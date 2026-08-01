@@ -1,0 +1,113 @@
+{
+  "$defs": {
+    "AssetWorkbookColumnContract": {
+      "additionalProperties": false,
+      "description": "One data-defined column in a workbook view.",
+      "properties": {
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "label": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Label",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "label"
+      ],
+      "title": "AssetWorkbookColumnContract",
+      "type": "object"
+    },
+    "AssetWorkbookSheetContract": {
+      "additionalProperties": false,
+      "description": "One ordered workbook sheet definition.",
+      "properties": {
+        "columns": {
+          "items": {
+            "$ref": "#/$defs/AssetWorkbookColumnContract"
+          },
+          "title": "Columns",
+          "type": "array"
+        },
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "enum": [
+            "Overview",
+            "Components",
+            "References",
+            "Status",
+            "Priority",
+            "Dependencies"
+          ],
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "columns"
+      ],
+      "title": "AssetWorkbookSheetContract",
+      "type": "object"
+    }
+  },
+  "$id": "https://schemas.ludowright.dev/v1/asset-workbook-template.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Versioned packaged data defining the asset workbook views.",
+  "properties": {
+    "kind": {
+      "const": "asset-workbook-template",
+      "default": "asset-workbook-template",
+      "title": "Kind",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "sheets": {
+      "items": {
+        "$ref": "#/$defs/AssetWorkbookSheetContract"
+      },
+      "title": "Sheets",
+      "type": "array"
+    },
+    "template_id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Template Id",
+      "type": "string"
+    },
+    "template_version": {
+      "maximum": 2147483647,
+      "minimum": 1,
+      "title": "Template Version",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "template_id",
+    "template_version",
+    "sheets"
+  ],
+  "title": "LudoWright Asset Workbook Template",
+  "type": "object"
+}

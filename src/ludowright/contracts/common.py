@@ -14,6 +14,14 @@ Slug = Annotated[
         pattern=r"^[a-z0-9]+(?:-[a-z0-9]+)*$",
     ),
 ]
+RepositoryPathText = Annotated[
+    str,
+    StringConstraints(
+        min_length=1,
+        max_length=1_024,
+        pattern=r"^[a-z0-9._-]+(?:/[a-z0-9._-]+)*$",
+    ),
+]
 DisplayText = Annotated[str, StringConstraints(min_length=1, max_length=120)]
 ReviewText = Annotated[str, StringConstraints(min_length=1, max_length=4_000)]
 RevisionText = Annotated[
@@ -34,6 +42,7 @@ HttpsUriText = Annotated[
     StringConstraints(min_length=9, max_length=2_048, pattern=r"^https://"),
 ]
 PositiveRevision = Annotated[int, Field(ge=1, le=2_147_483_647)]
+NonNegativeRevision = Annotated[int, Field(ge=0, le=2_147_483_647)]
 
 
 class ContractModel(BaseModel):

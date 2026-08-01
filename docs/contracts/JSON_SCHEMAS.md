@@ -35,6 +35,8 @@ It uses JSON Schema Draft 2020-12 and contains:
 | Asset discovery report | `asset-discovery-report.schema.json` |
 | Asset decomposition | `asset-decomposition.schema.json` |
 | Asset decomposition report | `asset-decomposition-report.schema.json` |
+| Asset workbook template | `asset-workbook-template.schema.json` |
+| Asset workbook export report | `asset-workbook-export-report.schema.json` |
 | Visual reference | `visual-reference.schema.json` |
 | Visual job | `visual-job.schema.json` |
 | Generation receipt | `generation-receipt.schema.json` |

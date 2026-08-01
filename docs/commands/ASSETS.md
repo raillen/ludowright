@@ -1,4 +1,4 @@
-# Asset Registry, Discovery, and Decomposition CLI
+# Asset Registry, Discovery, Decomposition, and Workbook CLI
 
 ## Canonical commands
 
@@ -20,11 +20,35 @@ ludowright assets discover PROJECT --source .ludowright/documents/brief.md
 ludowright assets discover PROJECT --confirm candidate-<sha256>
 ludowright assets decompose PROJECT chr-maya
 ludowright assets decompose PROJECT chr-maya --input imports/maya-decomposition.json
+ludowright assets export-ods PROJECT exports/assets.ods
+ludowright assets export-ods PROJECT exports/assets.ods --dry-run
 ```
 
 The create and update inputs are individual `asset` contracts. Import inputs
 are `asset-registry` contracts and merge only new IDs into the canonical YAML
 registry. Export produces the same batch contract in the requested format.
+
+## ODS workbook export
+
+`assets export-ods` creates a derived ODS workbook from the canonical YAML
+registry and dependency graph. It produces the six versioned views documented
+in [`ASSET_WORKBOOK.md`](../contracts/ASSET_WORKBOOK.md). The workbook is
+create-only: an existing output is a `conflict`, and paths are subject to the
+same traversal and symlink checks as every other project-relative write.
+
+The command is non-interactive and supports both output surfaces:
+
+```bash
+ludowright assets export-ods PROJECT exports/assets.ods
+ludowright --json assets export-ods PROJECT exports/assets.ods --dry-run
+```
+
+Dry-run validates the complete in-memory workbook and reports its planned
+hashes and row counts without creating directories, locks, or files. Normal
+exports lock the source read boundaries, validate the ODS package, and create
+the output atomically. A partial failure does not leave a workbook that looks
+valid. Repeating the command for the same output intentionally returns a
+conflict; choose a new output path for a new derived snapshot.
 
 ## Decomposition
 
@@ -109,3 +133,5 @@ marker grammar.
 
 The decomposition contract and report are defined in
 [`ASSET_DECOMPOSITION.md`](../contracts/ASSET_DECOMPOSITION.md).
+The workbook report and versioned template are defined in
+[`ASSET_WORKBOOK.md`](../contracts/ASSET_WORKBOOK.md).

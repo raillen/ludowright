@@ -53,7 +53,9 @@ assembly from interview answers remains a later bounded capability.
 - components, variants, states, priorities, and ownership;
 - deterministic decomposition with prerequisite-asset dependency edges,
   guided corrections, and advisory capture-profile recommendations;
-- YAML registry and derived ODS export;
+- YAML registry and derived ODS export (implemented through PR35, including
+  overview, decomposition, reference-availability, status, priority, and
+  dependency views);
 - orphan and completeness audits.
 
 ### 0.5 Visual Foundation

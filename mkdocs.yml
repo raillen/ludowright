@@ -27,6 +27,7 @@ nav:
       - Asset Registry: contracts/ASSET_REGISTRY.md
       - Asset Discovery: contracts/ASSET_DISCOVERY.md
       - Asset Decomposition: contracts/ASSET_DECOMPOSITION.md
+      - Asset Workbook: contracts/ASSET_WORKBOOK.md
       - References and Visual Jobs: contracts/REFERENCES_AND_VISUAL_JOBS.md
       - Capture Profiles: contracts/CAPTURE_PROFILES.md
       - JSON Schema Publication: contracts/JSON_SCHEMAS.md
@@ -47,7 +48,7 @@ nav:
       - Documents CLI: commands/DOCUMENTS.md
       - Documentation Audit CLI: commands/DOCS.md
       - ATLAS CLI: commands/ATLAS.md
-      - Asset Registry, Discovery, and Decomposition CLI: commands/ASSETS.md
+      - Asset Registry, Discovery, Decomposition, and Workbook CLI: commands/ASSETS.md
   - Implementation:
       - Plan to 1.0: plans/IMPLEMENTATION_PLAN.md
   - Quality:
@@ -78,6 +79,7 @@ nav:
       - ADR 0022 — Versioned Asset Registry: decisions/0022-versioned-asset-registry-persistence.md
       - ADR 0023 — Asset Discovery: decisions/0023-deterministic-asset-discovery.md
       - ADR 0024 — Asset Decomposition: decisions/0024-asset-decomposition-workflow.md
+      - ADR 0025 — Derived Asset ODS Export: decisions/0025-deterministic-asset-ods-export.md
       - ADR Template: decisions/0000-template.md
   - Operations:
       - Documentation Site: operations/DOCUMENTATION_SITE.md

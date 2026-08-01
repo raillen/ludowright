@@ -27,6 +27,11 @@ from ludowright.application.asset_taxonomy import (
     AssetTaxonomyValidationError,
     load_asset_taxonomy,
 )
+from ludowright.application.asset_workbook import (
+    AssetWorkbookError,
+    AssetWorkbookExportService,
+    AssetWorkbookResult,
+)
 from ludowright.application.atlas import (
     AtlasGeneration,
     AtlasGenerationError,
@@ -82,6 +87,9 @@ __all__ = [
     "AssetTaxonomy",
     "AssetTaxonomyError",
     "AssetTaxonomyValidationError",
+    "AssetWorkbookError",
+    "AssetWorkbookExportService",
+    "AssetWorkbookResult",
     "AtlasGeneration",
     "AtlasGenerationError",
     "AtlasGenerator",

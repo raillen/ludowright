@@ -310,6 +310,15 @@ visual-foundation work.
 
 ### PR 35 — ODS export
 
+Status: implemented in the current slice. `assets export-ods` creates a
+validated, deterministic, create-only ODS projection from the canonical asset
+registry and dependency graph. The six views are defined by versioned data,
+the report contract records source/output hashes and revisions, and Rich/JSON,
+dry-run, path safety, locking, concurrency, and failure-cleanup behavior are
+covered by tests. Visual-reference details are explicitly reported as
+unavailable until their canonical contract exists. ODFPy is constrained to
+the current 1.4.x line and no SQLite migration is introduced.
+
 - derived workbook;
 - views for overview, components, references, status, priority, and dependencies;
 - deterministic formatting and validation.
