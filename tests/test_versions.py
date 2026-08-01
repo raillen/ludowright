@@ -11,6 +11,7 @@ from ludowright.domain import (
     ProfileVersion,
     SchemaVersion,
     TemplateVersion,
+    VisualBibleVersion,
 )
 
 
@@ -51,10 +52,12 @@ def test_revision_types_do_not_compare_equal() -> None:
     schema = SchemaVersion(1)
     template = TemplateVersion(1)
     profile = ProfileVersion(1)
+    visual_bible = VisualBibleVersion(1)
 
     assert schema != template
     assert template != profile
-    assert len({schema, template, profile}) == 3
+    assert profile != visual_bible
+    assert len({schema, template, profile, visual_bible}) == 4
 
 
 def test_revisions_are_ordered_within_the_same_contract_type() -> None:

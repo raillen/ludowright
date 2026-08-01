@@ -108,6 +108,12 @@ class CaptureSheetId(Identifier):
     kind = "capture-sheet"
 
 
+class VisualBibleId(Identifier):
+    """Identifier for a versioned project visual bible."""
+
+    kind = "visual-bible"
+
+
 class DecisionId(Identifier):
     """Identifier for a recorded project decision."""
 

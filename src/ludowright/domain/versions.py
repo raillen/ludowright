@@ -69,3 +69,9 @@ class ProfileVersion(RevisionVersion):
     """Version of a capture, asset-family, or production profile."""
 
     kind = "profile"
+
+
+class VisualBibleVersion(RevisionVersion):
+    """Version of a project's visual direction contract."""
+
+    kind = "visual-bible"
