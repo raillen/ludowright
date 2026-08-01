@@ -51,6 +51,10 @@ optimistic byte check proves that restoration is safe. The graph remains the
 only authority for cross-asset relationships; component, variant, and state
 collections remain inside the asset aggregate.
 
+The PR35 asset workbook derives its `Dependencies` and freshness views from
+this graph. The workbook is never authoritative for graph edges or revisions;
+it records the graph revision it observed so a report can be audited.
+
 ## Direction
 
 Every edge points from an input source to a dependent target:

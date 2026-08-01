@@ -33,6 +33,7 @@ This is the main navigation map for humans and agents. Each subject should have 
 - [`contracts/ASSET_REGISTRY.md`](contracts/ASSET_REGISTRY.md) — v1 YAML registry shape, revisioning, commands, import/export, and rollback semantics.
 - [`contracts/ASSET_DISCOVERY.md`](contracts/ASSET_DISCOVERY.md) — explicit Markdown candidate syntax, deterministic reports, confirmation, ambiguity, and provenance.
 - [`contracts/ASSET_DECOMPOSITION.md`](contracts/ASSET_DECOMPOSITION.md) — decomposition input/report contracts, graph coordination, recommendations, guided corrections, and rollback.
+- [`contracts/ASSET_WORKBOOK.md`](contracts/ASSET_WORKBOOK.md) — derived ODS sheets, versioned template data, determinism, dry-run, and failure behavior.
 - [`contracts/REFERENCES_AND_VISUAL_JOBS.md`](contracts/REFERENCES_AND_VISUAL_JOBS.md) — visual provenance, revision-bound references, immutable generation jobs, attempt receipts, retries, and reviews.
 - [`contracts/CAPTURE_PROFILES.md`](contracts/CAPTURE_PROFILES.md) — camera, background, lighting, validation, required views, isolated items, technical sheets, and exact versioned inheritance.
 - [`contracts/JSON_SCHEMAS.md`](contracts/JSON_SCHEMAS.md) — generated Draft 2020-12 schemas, registry, fixtures, checksums, drift checking, and compatibility policy.
@@ -51,7 +52,7 @@ This is the main navigation map for humans and agents. Each subject should have 
 - [`commands/DOCUMENTS.md`](commands/DOCUMENTS.md) — incremental document refresh syntax, dry-run, output, and failure behavior.
 - [`commands/DOCS.md`](commands/DOCS.md) — deterministic documentation audit syntax, policy, findings, and check behavior.
 - [`commands/ATLAS.md`](commands/ATLAS.md) — ATLAS generation, integrity checking, and JSON output.
-- [`commands/ASSETS.md`](commands/ASSETS.md) — asset registry CRUD, discovery, decomposition, validation, batch import/export, dry-run, and failure behavior.
+- [`commands/ASSETS.md`](commands/ASSETS.md) — asset registry CRUD, discovery, decomposition, ODS export, validation, batch import/export, dry-run, and failure behavior.
 - [`contracts/CLI.md`](contracts/CLI.md) — dual human/JSON surfaces, response envelope, error codes, exit codes, version output, diagnostics, and compatibility rules.
 
 Published machine-readable contracts are stored under `schemas/v1/`. The source models live under `src/ludowright/contracts/`.
@@ -84,6 +85,11 @@ Asset decomposition is orchestrated by
 `src/ludowright/application/asset_decomposition.py`; it reuses the registry
 mutation boundary, persists cross-asset prerequisites through the canonical
 dependency graph, and derives recommendations from versioned data.
+Asset workbook export is orchestrated by
+`src/ludowright/application/asset_workbook.py`; it projects the registry and
+dependency graph through the data-defined template in
+`src/ludowright/workbook_data/` and writes validated ODS packages through
+`src/ludowright/infrastructure/ods.py`.
 
 ## Codex integration
 

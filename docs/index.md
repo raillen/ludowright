@@ -37,10 +37,11 @@ The repository currently establishes:
 - deterministic asset decomposition with versioned contracts, prerequisite graph
   edges, guided corrections, dry-run planning, and advisory capture-profile
   recommendations.
+- deterministic derived ODS asset workbooks with six versioned views, dry-run,
+  source/output hashes, and create-only atomic writes.
 
-Project initialization, interview-context orchestration, executable capture
-profiles, ImageGen execution, review workflows, technical sheets, and package
-generation remain planned work.
+Executable capture profiles, ImageGen execution, review workflows, technical
+sheets, audits, and package generation remain planned work.
 
 ## Start here
 

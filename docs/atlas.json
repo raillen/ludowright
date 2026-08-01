@@ -28,7 +28,7 @@
       "canonical_source": "commands/ASSETS.md",
       "path": "commands/ASSETS.md",
       "section": "commands",
-      "title": "Asset Registry, Discovery, and Decomposition CLI"
+      "title": "Asset Registry, Discovery, Decomposition, and Workbook CLI"
     },
     {
       "canonical_source": "commands/INTERVIEW.md",
@@ -83,6 +83,12 @@
       "path": "contracts/ASSET_DECOMPOSITION.md",
       "section": "contracts",
       "title": "Asset Decomposition Contract"
+    },
+    {
+      "canonical_source": "contracts/ASSET_WORKBOOK.md",
+      "path": "contracts/ASSET_WORKBOOK.md",
+      "section": "contracts",
+      "title": "Asset Workbook Contract"
     },
     {
       "canonical_source": "contracts/CAPTURE_PROFILES.md",
@@ -335,6 +341,12 @@
       "path": "decisions/0024-asset-decomposition-workflow.md",
       "section": "decisions",
       "title": "ADR 0024: Deterministic Asset Decomposition Workflow"
+    },
+    {
+      "canonical_source": "decisions/0025-deterministic-asset-ods-export.md",
+      "path": "decisions/0025-deterministic-asset-ods-export.md",
+      "section": "decisions",
+      "title": "ADR 0025: Deterministic Derived Asset ODS Export"
     },
     {
       "canonical_source": "governance/RFC_TEMPLATE.md",

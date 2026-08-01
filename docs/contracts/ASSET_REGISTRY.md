@@ -72,8 +72,10 @@ requires a new schema version, retained fixtures, an explicit migration or
 dual-read policy, and an ADR. The registry revision is not an event-log
 sequence and must not be used as one.
 
-Capture-profile execution, ODS output, and completeness audits remain later
-PRs. Decomposition recommendations in PR34 are derived guidance only.
+ODS output is implemented as a derived projection in PR35; it never changes
+the registry contract or writes back to the YAML document. Completeness audits
+remain a later PR. Decomposition recommendations in PR34 are derived guidance
+only.
 
 Document candidate discovery is defined separately in
 [`ASSET_DISCOVERY.md`](ASSET_DISCOVERY.md). Confirmed candidates reuse this
