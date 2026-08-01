@@ -583,6 +583,12 @@
       "title": "Troubleshooting"
     },
     {
+      "canonical_source": "getting-started/UPDATING.md",
+      "path": "getting-started/UPDATING.md",
+      "section": "getting-started",
+      "title": "Updating"
+    },
+    {
       "canonical_source": "operations/DOCUMENTATION_SITE.md",
       "path": "operations/DOCUMENTATION_SITE.md",
       "section": "operations",

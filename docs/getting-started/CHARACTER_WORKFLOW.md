@@ -181,6 +181,6 @@ planos e diagnósticos, mas não pode aprovar o próprio output.
 
 Este guia não adiciona persistência de perfis, execução de provider, geração
 de imagens ou uma nova migração. Essas fronteiras já possuem contratos
-separados e devem continuar sendo compostas pela aplicação. Atualização e
-remoção serão documentadas nas próximas fatias de instalação; clean-room e
-readiness final permanecem na PR62.
+separados e devem continuar sendo compostas pela aplicação. A remoção será
+documentada na próxima fatia de instalação; clean-room e readiness final
+permanecem na PR62.

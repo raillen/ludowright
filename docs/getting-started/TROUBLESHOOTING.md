@@ -164,4 +164,5 @@ manifests que possam conter dados do projeto.
 Para os contratos completos, consulte [CLI](../contracts/CLI.md),
 [Project Filesystem](../contracts/PROJECT_FILESYSTEM.md), [Project
 Initialization](../commands/INIT.md), [Codex Skill](../commands/CODEX.md) e o
-[quality baseline](../quality/ENGINEERING_QUALITY.md).
+[quality baseline](../quality/ENGINEERING_QUALITY.md). Para atualizar o
+checkout ou uma skill intacta, consulte [Atualização segura](UPDATING.md).
