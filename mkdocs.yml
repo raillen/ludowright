@@ -15,6 +15,7 @@ nav:
       - Installation: getting-started/INSTALLATION.md
       - First project: getting-started/FIRST_PROJECT.md
       - Character workflow and custom profile: getting-started/CHARACTER_WORKFLOW.md
+      - Troubleshooting: getting-started/TROUBLESHOOTING.md
   - Product:
       - Product Vision: product/PRODUCT_VISION.md
       - Product Document Set: product/PRODUCT_DOCUMENT_SET.md

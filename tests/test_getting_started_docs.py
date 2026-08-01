@@ -9,6 +9,7 @@ from typer.testing import CliRunner
 
 from ludowright.application import VisualJobPlanner, load_humanoid_profile
 from ludowright.cli.app import app
+from ludowright.cli.runtime import CliExitCode
 from ludowright.contracts import (
     AssetContract,
     CaptureProfileContract,
@@ -20,6 +21,7 @@ REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 INSTALLATION_GUIDE = REPOSITORY_ROOT / "docs/getting-started/INSTALLATION.md"
 FIRST_PROJECT_GUIDE = REPOSITORY_ROOT / "docs/getting-started/FIRST_PROJECT.md"
 CHARACTER_WORKFLOW_GUIDE = REPOSITORY_ROOT / "docs/getting-started/CHARACTER_WORKFLOW.md"
+TROUBLESHOOTING_GUIDE = REPOSITORY_ROOT / "docs/getting-started/TROUBLESHOOTING.md"
 
 
 def test_installation_guide_covers_supported_platforms_and_verification() -> None:
@@ -149,6 +151,60 @@ def test_character_workflow_uses_current_profile_and_approval_boundaries() -> No
     humanoid = load_humanoid_profile("minimal")
     assert humanoid.to_capture_profile().sheets
     assert humanoid.neutral_representation.mode.value == "neutral-bodysuit"
+
+
+def test_troubleshooting_guide_matches_current_cli_recovery_contracts(
+    tmp_path: Path,
+) -> None:
+    guide = TROUBLESHOOTING_GUIDE.read_text(encoding="utf-8")
+
+    for expected in (
+        "uv sync --all-extras",
+        "project-not-found",
+        "invalid-input",
+        "conflict",
+        "checks-failed",
+        "corrupt-state",
+        "error.code",
+        ".ludowright/project.json",
+        "stale lock",
+        "PowerShell",
+    ):
+        assert expected in guide
+
+    runner = CliRunner()
+    occupied = tmp_path / "occupied"
+    occupied.mkdir()
+    (occupied / "keep.txt").write_text("preserve\n", encoding="utf-8")
+
+    conflict = runner.invoke(
+        app,
+        [
+            "--json",
+            "init",
+            str(occupied),
+            "--name",
+            "Occupied Game",
+            "--non-interactive",
+        ],
+    )
+    conflict_payload = json.loads(conflict.stdout)
+    assert conflict.exit_code == int(CliExitCode.CONFLICT)
+    assert conflict_payload["error"]["code"] == "conflict"
+    assert (occupied / "keep.txt").read_text(encoding="utf-8") == "preserve\n"
+
+    missing_project = runner.invoke(
+        app,
+        ["--json", "codex", "skill", "verify", str(tmp_path / "missing")],
+    )
+    missing_payload = json.loads(missing_project.stdout)
+    assert missing_project.exit_code == int(CliExitCode.NOT_FOUND)
+    assert missing_payload["error"]["code"] == "project-not-found"
+
+    quality = runner.invoke(app, ["--json", "quality", "check", "--dry-run"])
+    quality_payload = json.loads(quality.stdout)
+    assert quality.exit_code == int(CliExitCode.SUCCESS)
+    assert quality_payload["data"]["dry_run"] is True
 
 
 __all__ = []
