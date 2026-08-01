@@ -35,7 +35,7 @@ This is the main navigation map for humans and agents. Each subject should have 
 - [`contracts/ASSET_DECOMPOSITION.md`](contracts/ASSET_DECOMPOSITION.md) — decomposition input/report contracts, graph coordination, recommendations, guided corrections, and rollback.
 - [`contracts/ASSET_WORKBOOK.md`](contracts/ASSET_WORKBOOK.md) — derived ODS sheets, versioned template data, determinism, dry-run, and failure behavior.
 - [`contracts/ASSET_AUDIT.md`](contracts/ASSET_AUDIT.md) — deterministic read-only asset findings, severity policy, source consistency, and compatibility.
-- [`contracts/REFERENCES_AND_VISUAL_JOBS.md`](contracts/REFERENCES_AND_VISUAL_JOBS.md) — visual provenance, revision-bound references, immutable generation jobs, attempt receipts, retries, and reviews.
+- [`contracts/REFERENCES_AND_VISUAL_JOBS.md`](contracts/REFERENCES_AND_VISUAL_JOBS.md) — visual provenance, revision-bound references, immutable generation jobs, attempt receipts, retries, and the canonical review workflow.
 - [`contracts/VISUAL_JOB_PLANS.md`](contracts/VISUAL_JOB_PLANS.md) — deterministic profile-aware job derivation, dependency ordering, batching, workload estimates, and readiness blockers.
 - [`contracts/CAPTURE_PROFILES.md`](contracts/CAPTURE_PROFILES.md) — camera, background, lighting, validation, required views, isolated items, technical sheets, and exact versioned inheritance.
 - [`contracts/HUMANOID_PROFILES.md`](contracts/HUMANOID_PROFILES.md) — neutral body bases, humanoid views, wearable categories, assembled outputs, and data-defined specialization of capture profiles.
@@ -65,6 +65,7 @@ This is the main navigation map for humans and agents. Each subject should have 
 - [`commands/ATLAS.md`](commands/ATLAS.md) — ATLAS generation, integrity checking, and JSON output.
 - [`commands/ASSETS.md`](commands/ASSETS.md) — asset registry CRUD, discovery, decomposition, ODS export, audit, validation, batch import/export, dry-run, and failure behavior.
 - [`commands/CODEX.md`](commands/CODEX.md) — install, update, verify, and remove the project-local Codex skill.
+- [`commands/REVIEWS.md`](commands/REVIEWS.md) — apply receipt-bound visual reviews with approval, correction, rejection, supersession, dry-run, and rollback semantics.
 - [`contracts/CLI.md`](contracts/CLI.md) — dual human/JSON surfaces, response envelope, error codes, exit codes, version output, diagnostics, and compatibility rules.
 
 Published machine-readable contracts are stored under `schemas/v1/`. The source models live under `src/ludowright/contracts/`.
@@ -99,7 +100,9 @@ ImageGen operation execution and terminal receipt recording are implemented by
 selected job and matching compiled prompt, reuse `ProjectFilesystem`,
 `JsonDocumentRepository`, and the project lock, and persist candidate generated
 references with checksums and provenance. Reviews, approvals, event-log
-projection, and SQLite indexing remain separate concerns.
+projection, and SQLite indexing are coordinated by
+`src/ludowright/application/visual_review.py` and its canonical repositories;
+SQLite remains a derived index.
 
 The initial asset taxonomy is loaded by
 `src/ludowright/application/asset_taxonomy.py` from versioned JSON data under
@@ -163,6 +166,7 @@ state or image files.
 - [`decisions/0035-codex-orchestration-policy.md`](decisions/0035-codex-orchestration-policy.md) — declarative policy boundary and deterministic planning.
 - [`decisions/0036-imagegen-job-execution.md`](decisions/0036-imagegen-job-execution.md) — provider boundary, immutable operation record, and safe rollback.
 - [`decisions/0037-generation-receipts.md`](decisions/0037-generation-receipts.md) — durable terminal receipts, generated references, checksums, and rollback semantics.
+- [`decisions/0038-visual-review-workflow.md`](decisions/0038-visual-review-workflow.md) — receipt-bound human approval, reviewer separation, dependency invalidation, supersession, and rollback.
 
 Planned documents:
 

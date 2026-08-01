@@ -167,6 +167,47 @@ references, and durable failure history remain the next slice. See the
 [ImageGen execution contract](IMAGEGEN_EXECUTION.md) and
 [ADR 0036](../decisions/0036-imagegen-job-execution.md).
 
+## Review workflow
+
+The `ludowright review` command applies one published `visual-review` contract
+to the exact outputs of a successful receipt. It writes canonical review files
+under `.ludowright/visual-reviews/`, approvals under `.ludowright/approvals/`,
+updates generated references, persists dependency invalidation, and appends a
+hash-chained event only after the required records are ready.
+
+The supported outcome mapping is:
+
+| Review outcome | Reference projection | Dependency effect |
+|---|---|---|
+| `accepted` | creates or completes a revision-bound approval and marks the reference `approved` | clears a prior review-required cause when fresh inputs permit refresh |
+| `changes-requested` | keeps the reference `candidate` | marks the reference and downstream review consumers `review-required` |
+| `rejected` | marks the reference `rejected` | marks the reference and downstream consumers `stale` |
+| `accepted` with `supersedes` | approves the replacement and marks the old approved reference/approval `superseded` | records a non-propagating supersession edge and stale impact for the old reference |
+
+The word “correct” in workflow discussions means `changes-requested` in the
+published contract. Because v1 stores one singular `approval_id`, an accepted
+review conservatively names exactly one output. Corrective and rejected
+reviews may name multiple outputs.
+
+New reviews require distinct reviewer and producer identities. An accepted
+review requires a human reviewer; an agent cannot approve its own output or
+the output of the same stable actor ID. The actor fields are additive and
+optional in the v1 schema for compatibility with old documents, but the new
+application command requires both fields.
+
+The command is local-first and non-interactive. `--dry-run` validates the
+receipt, references, approval policy, and graph plan without creating files or
+events. Repeating the exact same review is idempotent; reusing a review ID with
+different content is a conflict. Existing canonical records are never silently
+overwritten. A project lock, atomic structured repositories, optimistic graph
+digests, and rollback of files written by the current operation protect against
+concurrent or partial execution. No SQLite migration is required: the JSON
+records, dependency graph, and event log remain canonical, while the current
+state store version remains a rebuildable derived index.
+
+See the [Review CLI command](../commands/REVIEWS.md) and
+[ADR 0038](../decisions/0038-visual-review-workflow.md).
+
 ## Retries versus superseding jobs
 
 A retry means:

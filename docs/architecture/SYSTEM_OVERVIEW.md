@@ -76,8 +76,11 @@ orchestration policy and pure next-action planner live in
 `integrations/codex/orchestration.py`; they consume read-only observations and
 delegate all mutations to canonical application/CLI boundaries. The PR46
 provider boundary lives in `integrations/codex/imagegen.py`; it records one
-deterministic operation and validated output per view. Receipts, references,
-approvals, and review remain separate boundaries. A typed MCP-like adapter may
+deterministic operation and validated output per view. PR47 persists receipts
+and candidate references. The PR48 review workflow lives in
+`src/ludowright/application/visual_review.py` and projects human approval,
+reference status, dependency invalidation, and event history through canonical
+repositories. A typed MCP-like adapter may
 be added only if CLI boundaries prove insufficient.
 
 ### Infrastructure

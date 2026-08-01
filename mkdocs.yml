@@ -61,6 +61,7 @@ nav:
       - ATLAS CLI: commands/ATLAS.md
       - Asset Registry, Discovery, Decomposition, Workbook, and Audit CLI: commands/ASSETS.md
       - Codex Skill CLI: commands/CODEX.md
+      - Review CLI: commands/REVIEWS.md
   - Implementation:
       - Plan to 1.0: plans/IMPLEMENTATION_PLAN.md
   - Quality:
@@ -104,6 +105,7 @@ nav:
       - ADR 0035 — Codex Orchestration Policy: decisions/0035-codex-orchestration-policy.md
       - ADR 0036 — ImageGen Job Execution: decisions/0036-imagegen-job-execution.md
       - ADR 0037 — Generation Receipts: decisions/0037-generation-receipts.md
+      - ADR 0038 — Visual Review Workflow: decisions/0038-visual-review-workflow.md
       - ADR Template: decisions/0000-template.md
   - Operations:
       - Documentation Site: operations/DOCUMENTATION_SITE.md
