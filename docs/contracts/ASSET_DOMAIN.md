@@ -230,10 +230,14 @@ This contract does not yet define:
 - filesystem paths;
 - engine import settings;
 - ODS rows;
-- asset discovery from documentation;
+- document candidate discovery syntax and confirmation;
 - capture-profile recommendations;
 - workbook formatting.
 
 Those capabilities will reference the asset aggregate rather than expanding it
 into an all-purpose production object. Project-specific taxonomy extensions
 remain future asset-registry work.
+
+The deterministic document-discovery workflow and marker grammar are defined
+in [`ASSET_DISCOVERY.md`](ASSET_DISCOVERY.md); discovery never changes these
+domain invariants.

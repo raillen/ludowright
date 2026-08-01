@@ -280,6 +280,14 @@ follow-up PRs.
 
 ### PR 33 — Asset discovery from documents
 
+Status: implemented in the current slice. The workflow scans explicit asset
+candidate markers in project Markdown, ignores fenced examples, validates
+taxonomy and domain rules, reports deterministic evidence and ambiguity, and
+requires explicit candidate confirmation before a batch registry mutation.
+Confirmed candidates append `asset.discovered` provenance and reuse the
+registry/event/state rollback boundary. Free-text extraction, decomposition,
+dependencies, and ODS remain separate concerns.
+
 - candidate extraction workflow;
 - user confirmation;
 - duplicate and ambiguity handling.

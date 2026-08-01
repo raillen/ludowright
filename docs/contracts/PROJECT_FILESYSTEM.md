@@ -113,6 +113,13 @@ Concurrent creation is handled idempotently. If another process replaces the seg
 
 Default mode is `0755`. More restrictive internal directories, such as the lock directory, request `0700`.
 
+`ProjectFilesystem.list_files()` recursively enumerates regular files below a
+safe repository-relative directory. Results are sorted by canonical path,
+optional suffix filters are applied before returning, and symlinks or
+non-directory ancestors fail closed. The method returns an empty tuple when
+the requested directory does not exist and enforces a caller-provided file
+count limit.
+
 ## Atomic writes
 
 `write_bytes()` and `write_text()` use a sibling temporary file in the destination directory.

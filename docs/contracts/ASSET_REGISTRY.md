@@ -64,6 +64,11 @@ requires a new schema version, retained fixtures, an explicit migration or
 dual-read policy, and an ADR. The registry revision is not an event-log
 sequence and must not be used as one.
 
-Asset-to-asset dependencies, document discovery, decomposition workflows,
+Asset-to-asset dependencies, decomposition workflows,
 capture-profile recommendations, ODS output, and completeness audits remain
 later PRs.
+
+Document candidate discovery is defined separately in
+[`ASSET_DISCOVERY.md`](ASSET_DISCOVERY.md). Confirmed candidates reuse this
+registry's batch mutation and event/state rollback boundary; discovery does not
+change the registry contract shape.

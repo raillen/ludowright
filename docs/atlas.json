@@ -28,7 +28,7 @@
       "canonical_source": "commands/ASSETS.md",
       "path": "commands/ASSETS.md",
       "section": "commands",
-      "title": "Asset Registry CLI"
+      "title": "Asset Registry and Discovery CLI"
     },
     {
       "canonical_source": "commands/INTERVIEW.md",
@@ -71,6 +71,12 @@
       "path": "contracts/ASSET_REGISTRY.md",
       "section": "contracts",
       "title": "Asset Registry Contract"
+    },
+    {
+      "canonical_source": "contracts/ASSET_DISCOVERY.md",
+      "path": "contracts/ASSET_DISCOVERY.md",
+      "section": "contracts",
+      "title": "Asset Discovery Contract"
     },
     {
       "canonical_source": "contracts/CAPTURE_PROFILES.md",
@@ -311,6 +317,12 @@
       "path": "decisions/0022-versioned-asset-registry-persistence.md",
       "section": "decisions",
       "title": "ADR 0022 — Versioned Asset Registry Persistence"
+    },
+    {
+      "canonical_source": "decisions/0023-deterministic-asset-discovery.md",
+      "path": "decisions/0023-deterministic-asset-discovery.md",
+      "section": "decisions",
+      "title": "ADR 0023 — Deterministic Asset Discovery and Explicit Confirmation"
     },
     {
       "canonical_source": "governance/RFC_TEMPLATE.md",

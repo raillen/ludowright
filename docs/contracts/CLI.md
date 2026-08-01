@@ -292,3 +292,8 @@ The `assets` command group returns an `asset-registry-report` projection. Its
 canonical registry is YAML, batch import accepts the published registry
 contract, export refuses existing targets, and mutations use the shared event
 log and derived state-store index.
+
+`assets discover` returns an `asset-discovery-report` projection. It scans
+explicit declarations under `.ludowright/documents/`, remains read-only until
+selected candidate IDs are passed through repeated `--confirm`, and uses
+`invalid-input` for ambiguous, duplicate, missing, or malformed confirmations.
